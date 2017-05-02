@@ -12,8 +12,8 @@ Provides functions to estimate fixed and adaptive kernel-smoothed relative risk 
 \details{
 \tabular{ll}{
 Package: \tab sparr\cr
-Version: \tab 2.0-01\cr
-Date: \tab 2017-05-01\cr
+Version: \tab 2.0-02\cr
+Date: \tab 2017-05-02\cr
 License: \tab GPL (>= 2) \cr
 }
 Kernel smoothing, and the flexibility afforded by this methodology, provides an attractive approach to estimating complex probability density functions. This is particularly of interest when exploring problems in geographical epidemiology, the study of disease dispersion throughout some spatial region, given a population. The so-called `relative risk surface', constructed as a ratio of estimated case to control densities (Bithell, 1990; 1991), describes the variation in the `risk' of the disease, given the underlying at-risk population. This is a technique that has been applied successfully for mainly exploratory purposes in a number of different examples (see for example Sabel et al., 2000; Prince et al., 2001; Wheeler, 2007).

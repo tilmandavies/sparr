@@ -1,9 +1,11 @@
 importFrom("MASS","mvrnorm")
-importFrom("grDevices", "contourLines", "heat.colors")
+importFrom("grDevices", "contourLines", "heat.colors", "dev.hold")
 importFrom("graphics", "contour", "plot", "axis", "box", "points", "title", "pairs", "par")
 importFrom("stats", "IQR", "sd", "var", "density", "median", "na.omit", "optimise","pnorm", "quantile", "dnorm", "fft", "rnorm")
 importFrom("utils", "setTxtProgressBar", "txtProgressBar")
 importFrom("spatstat.utils", "prange", "inside.range","tapplysum")
+importFrom("animation", "ani.pause", "ani.options")
+
 
 import(spatstat,doParallel,parallel,foreach)
 
