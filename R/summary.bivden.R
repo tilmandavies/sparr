@@ -1,3 +1,13 @@
+#' Summarising an estimated bivariate density/intensity object
+#' 
+#' \code{print} and \code{summary} methods for class \code{\link{bivden}}.
+#' 
+#' 
+#' @aliases summary.bivden print.bivden
+#' @param x,object An object of class \code{\link{bivden}} resulting from a
+#' call to \code{\link{bivariate.density}}.
+#' @param ...  Ignored.
+#' @author T.M. Davies
 summary.bivden <- function(object, ...){
 
 	print.bivden(x=object)

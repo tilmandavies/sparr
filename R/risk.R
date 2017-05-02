@@ -1,3 +1,131 @@
+#' Spatial relative risk/density ratio
+#' 
+#' Estimates a \emph{relative risk} function based on the ratio of two 2D
+#' kernel density estimates.
+#' 
+#' The relative risk function is defined here as the ratio of the `case'
+#' density to the `control' (Bithell, 1990; 1991). Using kernel density
+#' estimation to model these densities (Diggle, 1985), we obtain a workable
+#' estimate thereof. This function defines the risk function \emph{r} in the
+#' following fashion: \cr\cr \emph{r}\code{ = (fd + epsilon*max(gd))/(gd +
+#' epsilon*max(gd))}, \cr\cr where \code{fd} and \code{gd} denote the case and
+#' control density estimates respectively. Note the (optional) additive
+#' constants defined by \code{epsilon} times the maximum of each of the
+#' densities in the numerator and denominator respectively (see Bowman and
+#' Azzalini, 1997).
+#' 
+#' The log-risk function \emph{rho}, given by \emph{rho} = log[\emph{r}], is
+#' argued to be preferable in practice as it imparts a sense of symmetry in the
+#' way the case and control densities are treated (Kelsall and Diggle,
+#' 1995a;b). The option of log-transforming the returned risk function is
+#' therefore selected by default.
+#' 
+#' When computing adaptive relative risk functions, the user has the option of
+#' obtaining a so-called \emph{symmetric} estimate (Davies et al. 2016) via
+#' \code{pilot.symmetry}. This amounts to choosing the same pilot density for
+#' both case and control densities. By choosing \code{"none"} (default), the
+#' result uses the case and control data separately for the fixed-bandwidth
+#' pilots, providing the original asymmetric density-ratio of Davies and
+#' Hazelton (2010). By selecting either of \code{"f"}, \code{"g"}, or
+#' \code{"pooled"}, the pilot density is calculated based on the case, control,
+#' or pooled case/control data respectively (using \code{hp[1]} as the fixed
+#' bandwidth). Davies et al. (2016) noted some beneficial practical behaviour
+#' of the symmetric adaptive surface over the asymmetric.
+#' 
+#' If the user selects \code{tolerate = TRUE}, the function internally computes
+#' asymptotic tolerance contours as per Hazelton and Davies (2009) and Davies
+#' and Hazelton (2010). When \code{adapt = FALSE}, the reference density
+#' estimate (argument \code{ref.density} in \code{\link{tolerance}}) is taken
+#' to be the estimated control density. The returned pixel
+#' \code{\link[spatstat]{im}}age of \emph{p}-values (see `Value') is
+#' interpreted as an upper-tailed test i.e. smaller \emph{p}-values represent
+#' greater evidence in favour of significantly increased risk. For greater
+#' control over calculation of tolerance contours, use \code{\link{tolerance}}.
+#' 
+#' @aliases risk rrs
+#' @param f Either a pre-calculated object of class \code{\link{bivden}}
+#' representing the `case' (numerator) density estimate, or an object of class
+#' \code{\link[spatstat]{ppp}} giving the observed case data. Alternatively, if
+#' \code{f} is \code{\link[spatstat]{ppp}} object with dichotomous
+#' factor-valued \code{\link[spatstat]{marks}}, the function treats the first
+#' level as the case data, and the second as the control data, obviating the
+#' need to supply \code{g}.
+#' @param g As for \code{f}, for the `control' (denominator) density; this
+#' object must be of the same class as \code{f}. Ignored if, as stated above,
+#' \code{f} contains both case and control observations.
+#' @param log Logical value indicating whether to return the (natural)
+#' log-transformed relative risk function as recommended by Kelsall and Diggle
+#' (1995a). Defaults to \code{TRUE}, with the alternative being the raw density
+#' ratio.
+#' @param h0 A single positive numeric value or a vector of length 2 giving the
+#' global bandwidth(s) to be used for case/control density estimates;
+#' defaulting to a common oversmoothing bandwidth computed via \code{\link{OS}}
+#' on the pooled data if unsupplied. Ignored if \code{f} and \code{g} are
+#' already \code{\link{bivden}} objects.
+#' @param hp A single numeric value or a vector of length 2 giving the pilot
+#' bandwidth(s) to be used for fixed-bandwidth estimation of the pilot
+#' densities for adaptive risk surfaces. Ignored if \code{adapt = FALSE} or if
+#' \code{f} and \code{g} are already \code{\link{bivden}} objects.
+#' @param adapt A logical value indicating whether to employ adaptive smoothing
+#' for internally estimating the densities. Ignored if \code{f} and \code{g}
+#' are already \code{\link{bivden}} objects.
+#' @param tolerate A logical value indicating whether to internally calculate a
+#' corresponding asymptotic p-value surface (for tolerance contours) for the
+#' estimated relative risk function. See `Details'.
+#' @param doplot Logical. If \code{TRUE}, an image plot of the estimated
+#' relative risk function is produced using various visual presets. If
+#' additionally \code{tolerate} was \code{TRUE}, asymptotic tolerance contours
+#' are automatically added to the plot at a significance level of 0.05 for
+#' elevated risk (for more flexible options for calculating and plotting
+#' tolerance contours, see \code{\link{tolerance}} and
+#' \code{\link{tol.contour}}).
+#' @param pilot.symmetry A character string used to control the type of
+#' symmetry, if any, to use for the bandwidth factors when computing an
+#' adaptive relative risk surface. See `Details'. Ignored if \code{adapt =
+#' FALSE}.
+#' @param epsilon A single non-negative numeric value used for optional scaling
+#' to produce additive constant to each density in the raw ratio (see
+#' `Details'). A zero value requests no additive constant (default).
+#' @param verbose Logical value indicating whether to print function progress
+#' during execution.
+#' @param ...  Additional arguments passed to any internal calls of
+#' \code{\link{bivariate.density}} for estimation of the requisite densities.
+#' Ignored if \code{f} and \code{g} are already \code{\link{bivden}} objects.
+#' @return An object of class \code{"rrs"}. This is a named list with the
+#' following components: \item{rr}{A pixel \code{\link[spatstat]{im}}age of the
+#' estimated risk surface.} \item{f}{An object of class \code{\link{bivden}}
+#' used as the numerator or `case' density estimate.} \item{g}{An object of
+#' class \code{\link{bivden}} used as the denominator or `control' density
+#' estimate.} \item{P}{Only included if \code{tolerate = TRUE}. A pixel
+#' \code{\link[spatstat]{im}}age of the \emph{p}-value surface for tolerance
+#' contours; \code{NULL} otherwise.}
+#' @author T.M. Davies
+#' @references Bithell, J.F. (1990), An application of density estimation to
+#' geographical epidemiology, \emph{Statistics in Medicine}, \bold{9},
+#' 691-701.\cr\cr Bithell, J.F. (1991), Estimation of relative risk functions,
+#' \emph{Statistics in Medicine}, \bold{10}, 1745-1751.\cr\cr Bowman, A.W. and
+#' Azzalini A. (1997), \emph{Applied Smoothing Techniques for Data Analysis:
+#' The Kernel Approach with S-Plus Illustrations}, Oxford University Press
+#' Inc., New York.\cr\cr Davies, T.M. and Hazelton, M.L. (2010), Adaptive
+#' kernel estimation of spatial relative risk, \emph{Statistics in Medicine},
+#' \bold{29}(23) 2423-2437.\cr\cr Davies, T.M., Jones, K. and Hazelton, M.L.
+#' (2016), Symmetric adaptive smoothing regimens for estimation of the spatial
+#' relative risk function, \emph{Computational Statistics & Data Analysis},
+#' \bold{101}, 12-28.\cr\cr Diggle, P.J. (1985), A kernel method for smoothing
+#' point process data, \emph{Journal of the Royal Statistical Society Series
+#' C}, \bold{34}(2), 138-147.\cr\cr Hazelton, M.L. and Davies, T.M. (2009),
+#' Inference based on kernel estimates of the relative risk function in
+#' geographical epidemiology, \emph{Biometrical Journal}, \bold{51}(1),
+#' 98-109.\cr\cr Kelsall, J.E. and Diggle, P.J. (1995a), Kernel estimation of
+#' relative risk, \emph{Bernoulli}, \bold{1}, 3-16.\cr\cr Kelsall, J.E. and
+#' Diggle, P.J. (1995b), Non-parametric estimation of spatial variation in
+#' relative risk, \emph{Statistics in Medicine}, \bold{14}, 2335-2342.
+#' @examples
+#' 
+#' \dontrun{
+#' # to be filled
+#' }
+#' 
 risk <- function(f, g = NULL, log = TRUE, h0 = NULL, hp = h0, adapt = FALSE,
                   tolerate = FALSE, doplot = FALSE,
                   pilot.symmetry = c("none","f","g","pooled"), epsilon = 0,
