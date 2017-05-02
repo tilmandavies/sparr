@@ -1,0 +1,109 @@
+\name{multiscale.density}
+\Rdversion{1.1}
+\alias{multiscale.density}
+\alias{msden}
+%- Also NEED an '\alias' for EACH other topic documented here.
+\title{
+Multi-scale adaptive kernel density/intensity estimation
+}
+\description{
+Computes adaptive kernel estimates of spatial density/intensity using a 3D FFT for multiple global bandwidth scales.
+}
+\usage{
+multiscale.density(pp, h0, hp = NULL, h0fac = c(0.25, 1.5),
+                   edge = c("uniform", "none"), resolution = 128, dimz = 64,
+                   gamma.scale = "geometric", trim = 5, intensity = FALSE,
+                   pilot.density = NULL, xy = NULL, taper = TRUE,
+                   verbose = TRUE)
+}
+\arguments{
+  \item{pp}{
+An object of class \code{\link[spatstat]{ppp}} giving the observed 2D data set to be smoothed.
+}
+  \item{h0}{
+Reference global bandwidth for adaptive smoothing; numeric value > 0. Multiscale estimates will be computed by rescaling this value as per \code{h0fac}.
+}
+  \item{hp}{
+Pilot bandwidth (scalar, numeric > 0) to be used for fixed bandwidth estimation of the pilot density. If \code{NULL} (default), it will take on the value of \code{h0}. Ignored when \code{pilot.density} is supplied as a pre-defined pixel image.
+}
+  \item{h0fac}{
+A numeric vector of length 2 stipulating the span of the global bandwidths in the multiscale estimates. Interpreted as a multiplicative factor on \code{h0}. See `Details'.
+}
+  \item{edge}{
+Character string dictating edge correction. \code{"uniform"} (default) corrects based on evaluation grid coordinate. Setting \code{edge = "none"} requests no edge correction.
+}
+  \item{resolution}{
+Numeric value > 0. Resolution of evaluation grid in the spatial domain; the densities/intensities will be returned on a [\code{resolution} \eqn{\times}{x} \code{resolution}] grid.
+}
+  \item{dimz}{
+Resolution of z- (rescaled bandwidth)-axis in the trivariate convolution. Higher values increase precision of the multiscale estimates at a computational cost. See `Details'.
+}
+  \item{gamma.scale}{
+Scalar, numeric value > 0; controls rescaling of the variable bandwidths. Defaults to the geometric mean of the bandwidth factors given the pilot density (as per Silverman, 1986). See the documentation for \code{\link{bivariate.density}}.
+}
+  \item{trim}{
+Numeric value > 0; controls bandwidth truncation for adaptive estimation. See the documentation for \code{\link{bivariate.density}}.
+}
+  \item{intensity}{
+Logical value indicating whether to return an intensity estimate (integrates to the sample size over the study region), or a density estimate (default, integrates to 1).
+}
+  \item{pilot.density}{
+An optional pixel image (class \code{\link[spatstat]{im}}) giving the pilot density to be used for calculation of the variable bandwidths in adaptive estimation, \bold{or} a \code{\link[spatstat]{ppp.object}} giving the data upon which to base a fixed-bandwidth pilot estimate using \code{hp}. See the documentation for \code{\link{bivariate.density}}.
+}
+  \item{xy}{
+Optional alternative specification of the spatial evaluation grid; matches the argument of the same tag in \code{\link[spatstat]{as.mask}}. If supplied, \code{resolution} is ignored.
+}
+  \item{taper}{
+Logical value indicating whether to taper off the trivariate kernel outside the range of \code{h0*h0fac} in the scale space; see Davies & Baddeley (2017). Keep at the default \code{TRUE} if you don't know what this means.
+}
+  \item{verbose}{
+Logical value indicating whether to print function progress.
+}
+}
+
+  
+\details{
+Davies & Baddeley (2017) investigated computational aspects of Abramson's (1982) adaptive kernel smoother for spatial (2D) data. This function is the implementation of the 3D convolution via a fast-Fourier transform (FFT) which allows simultaneous calculation of an adaptive kernel estimate at multiple global bandwidth scales.
+
+These `multiple global bandwidth scales' are computed with respect to rescaling a reference value of the global bandwidth passed to the \code{h0} argument. This rescaling is defined by the range provided to the argument \code{h0fac}. For example, by default, the function will compute the adaptive kernel estimate for a range of global bandwidths between 0.25*\code{h0} and 1.5*\code{h0}. The exact numeric limits are subject to discretisation, and so the returned valid range of global bandwidths will differ slightly. The exact resulting range following function execution is returned as the \code{h0range} element of the result, see `Value' below.
+
+The distinct values of global bandwidth used (which define the aforementioned \code{h0range}) and hence the total number of pixel \code{\link[spatstat]{im}ages} returned depend on both the width of the span \code{h0fac} and the discretisation applied to the bandwidth axis through \code{dimz}. Increasing this z-resolution will provide more pixel images and hence greater numeric precision, but increases computational cost. The returned pixel \code{\link[spatstat]{im}ages} that represent the multiscale estimates are stored in a named list (see `Value'), whose names reflect the corresponding distinct global bandwidth. See `Examples' for the easy way to extract these distinct global bandwidths.
+
+The user can request an interpolated density/intensity estimate for any global bandwidth value within \code{h0range} by using the \code{\link{multiscale.slice}} function, which returns an object of class \code{\link{bivden}}.
+}
+
+\value{
+An object of class \code{"msden"}. This is very similar to a \code{\link{bivden}} object, with lists of pixel \code{\link[spatstat]{im}}ages in the \code{z}, \code{him}, and \code{q} components (instead of standalone images).
+\item{z}{A list of the resulting density/intensity estimates; each member being a pixel image object of class \code{\link[spatstat]{im}}. They are placed in increasing order of the discretised values of \code{h0}.}
+\item{h0}{A copy of the reference value of \code{h0} used.}
+\item{h0range}{A vector of length 2 giving the actual range of global bandwidth values available (inclusive).}
+\item{hp}{A copy of the value of \code{hp} used.}
+\item{h}{A numeric vector of length equal to the number of data points, giving the bandwidth used for the corresponding observation in \code{pp} with respect to the reference global bandwidth \code{h0}.}
+\item{him}{A list of pixel images (class \code{\link[spatstat]{im}}), corresponding to \code{z}, giving the `hypothetical' Abramson bandwidth at each pixel coordinate conditional upon the observed data and the global bandwidth used.}
+\item{q}{Edge-correction weights; list of pixel \code{\link[spatstat]{im}}ages corresponding to \code{z} if \code{edge = "uniform"}, and \code{NULL} if \code{edge = "none"}.}
+\item{gamma}{The numeric value of \code{gamma.scale} used in scaling the bandwidths.}
+\item{geometric}{The geometric mean of the untrimmed variable bandwidth factors. This will be identical to \code{gamma} if \code{gamma.scale = "geometric"} as per default.}
+\item{pp}{A copy of the \code{\link[spatstat]{ppp.object}} initially passed to the \code{pp} argument, containing the data that were smoothed.}
+}
+
+
+\author{
+T.M. Davies and A. Baddeley
+}
+
+\seealso{
+\code{\link{bivariate.density}}, \code{\link{multiscale.slice}}
+}
+
+\examples{
+
+\dontrun{
+# to be filled
+}
+}
+
+\references{
+Abramson, I. (1982). On bandwidth variation in kernel estimates --- a square root law, \emph{Annals of Statistics}, \bold{10}(4), 1217-1223.\cr\cr
+Davies, T.M. and Baddeley A. (2017), Fast computation of spatially adaptive kernel estimates, \emph{Submitted}.\cr\cr
+Silverman, B.W. (1986), \emph{Density Estimation for Statistics and Data Analysis}, Chapman & Hall, New York. \cr\cr
+}

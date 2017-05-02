@@ -1,0 +1,86 @@
+\name{tolerance}
+\alias{tolerance}
+%- Also NEED an '\alias' for EACH other topic documented here.
+\title{
+Tolerance by \emph{p}-value surfaces
+}
+\description{
+Calculates a gridded \emph{p}-value surface based on asymptotic theory or Monte-Carlo (MC) permutations describing the extremity of risk given a fixed or adaptive kernel-smoothed density-ratio, allowing the drawing of \emph{tolerance contours}.
+
+}
+\usage{
+tolerance(rs, method = c("ASY", "MC"), ref.density = NULL,
+          beta = 0.025, ITER = 100, parallelise = NULL,
+          verbose = TRUE, ...)
+}
+%- maybe also 'usage' for other objects documented here.
+\arguments{
+  \item{rs}{An object of class \code{\link{rrs}} giving the estimated relative risk function for which to calculate the \emph{p}-value surface. 
+}
+  \item{method}{
+A character string specifying the method of calculation. \code{"ASY"} (default) instructs the function to compute the \emph{p}-values using asymptotic theory. \code{"MC"} computes the values by random permutations of the data. See `Details'.
+}
+  \item{ref.density}{
+Required if \code{rs} is based on fixed-bandwidth estimates of the case and control densities and \code{method = "ASY"}. Either a pixel \code{\link[spatstat]{im}}age or an object of class \code{\link{bivden}} giving the reference density to use in asymptotic formulae. May be unnormalised. Ignored if \code{rs} is based on adaptive kernel estimates or if \code{method = "MC"}.
+}
+  \item{beta}{
+A numeric value \eqn{0 <} \code{beta} \eqn{< 1} giving the fineness of the adaptive bandwidth partitioning to use for calculation of the required quantities for asymptotic adaptive \emph{p}-value surfaces. Smaller values provide more accurate bandwidth bins at the cost of additional computing time, see Davies and Baddeley (2017); the default is sensible in most cases. Ignored if \code{rs} is based on fixed-bandwidth kernel estimates.
+}
+  \item{ITER}{
+Number of iterations for the Monte-Carlo permutations. Ignored if \code{method = "ASY"}.
+}
+  \item{parallelise}{
+Numeric argument to invoke parallel processing, giving the number of CPU cores to use when \code{method = "MC"}. Experimental. Test your system first using \code{parallel::detectCores()} to identify the number of cores available to you.
+}
+  \item{verbose}{
+Logical value indicating whether to print function progress during execution.
+}
+  \item{...}{
+Additional arguments to be passed to \code{\link{risk}} when \code{method = "MC"}. While most information needed for the MC repetitions is implicitly gleaned from the object passed to \code{rs}, this ellipsis is typically used to set the appropriate \code{epsilon} and \code{pilot.symmetry} values for the internal calls to \code{\link{risk}}.
+}
+}
+\details{
+This function implements developments in Hazelton and Davies (2009) (fixed) and Davies and Hazelton (2010) (adaptive) to compute pointwise \emph{p}-value surfaces based on asymptotic theory of kernel-smoothed relative risk surfaces. Alternatively, the user may elect to calculate the \emph{p}-value surfaces using Monte-Carlo methods (see Kelsall and Diggle, 1995). Superimposition upon a plot of the risk surface contours of these \emph{p}-values at given significance levels (i.e. ``tolerance contours'') can be an informative way of exploring the statistical significance of the extremity of risk across the defined study region.
+
+The Monte-Carlo method, while not dependent on asymptotic theory, is computationally expensive and it has been suggested might have some undesirable practical consequences in certain settings (Hazelton and Davies, 2009). When performing the MC simulations, the same global (and pilot, if necessary) bandwidths and edge-correction regimen is employed as were used in the initial density estimates of the observed data. With regard to arguments to be passed to internal calls of \code{\link{risk}}, the user should take care to use \code{...} to set the \code{epsilon} value to match that which was used in creation of the object passed to \code{rs} (if this was set to a non-default value). Furthermore, if performing MC simulations for the adaptive relative risk function, the function borrows the value of the \code{beta} argument to speed things up via partitioning, and the user should additionally access \code{...} to set the same \code{pilot.symmetry} value as was used for creation of the object passed to \code{rs}, in the same way as for any non-default use of \code{epsilon}. This will ensure the simulations are all performed under the same conditions as the original risk function.
+
+
+%The asymptotic approach to the \emph{p}-value calculation can be advantageous over a Monte-Carlo method, which can lead to excessive computation time for adaptive risk surfaces and large datasets. See the aforementioned references for further comments.
+
+%Choosing different options for the argument \code{test} simply manipulates the `direction' of the p-values. That is, plotting tolerance contours at a significance level of 0.05 for a p-value surface calculated with \code{test = "double"} is equivalent to plotting tolerance contours at significance levels of 0.025 and 0.975 for \code{test = "upper"}.
+
+%Implementation of the Monte-Carlo contours for the fixed-bandwidth estimator simply involves random allocation of case/control marks and re-estimation of the risk surface \code{ITER} times, against which the original estimate is compared. The bandwidth(s) for case and control densities in the permuted estimates are controlled by \code{hpsim}. If your risk surface is adaptive, \code{hpsim} is used to control the pilot bandwidths, \code{h0sim} the global bandwidths. In particular, for the adaptive symmetric estimator (Davies et al. 201), it is assumed that the original estimate was itself calculated as a symmetric estimate via use of the \code{pdef} argument. The \code{symchoice} argument governs the specific permuted data set to use for the pilot estimate, and if \code{hpsim} is \code{NULL}, the pilot bandwidth thereof is taken from the stored \code{pdef} object in the original estimate. An error will occur if you attempt to set \code{symchoice} with an \code{rs} argument in this function that does not contain density estimates with present \code{pdef} objects of class \code{"bivden"}. See the help file for \code{\link{bivariate.density}} for details on using the \code{pdef} argument.
+
+%In addition to the usage noted above, you may define either \code{hpsim} and/or \code{h0sim} as functions which re-calculate the case and control pilot (or fixed) bandwidth(s) and the global bandwidth(s) at each iteration, based on the data set of the permuted case/control marks. If so, these must strictly be functions that take the case data as the first argument and the control data as the second argument, each as a two-column matrix of the x-y coordinates. The function must strictly return a numeric vector of length 1 or 2; these entries to be assigned to the relevant density estimates as per the usage notes on supply of a numeric vector for \code{hpsim}. Take care -- warnings will be issued if, for example, you specify a \code{hpsim} function that returns two numeric values, but your \code{rs} object is a symmetric-adaptive estimate (in which case it only makes sense to yield one pilot bandwidth)!
+}
+
+\value{
+A pixel \code{\link[spatstat]{im}}age of the estimated \emph{p}-value surface.
+}
+
+\note{
+The returned \emph{p}-values are geared so that ``smallness'' corresponds to statistical significance of elevated risk, that is, an upper-tailed test. The complement of the \emph{p}-values will yeild significance of reduced risk; a lower-tailed test. When using \code{\link{tol.contour}}, the user can control what type of contours to display.
+}
+
+
+\author{
+T. M. Davies
+}
+
+
+%\seealso{
+%% ~~objects to See Also as \code{\link{help}}, ~~~
+%}
+
+\examples{
+## to be filled
+}
+% Add one or more standard keywords, see file 'KEYWORDS' in the
+% R documentation directory.
+
+\references{
+Davies, T.M. and Baddeley A. (2017), Fast computation of spatially adaptive kernel estimates, \emph{Submitted}.\cr\cr
+Davies, T.M. and Hazelton, M.L. (2010), Adaptive kernel estimation of spatial relative risk, \emph{Statistics in Medicine}, \bold{29}(23) 2423-2437.\cr\cr
+Hazelton, M.L. and Davies, T.M. (2009), Inference based on kernel estimates of the relative risk function in geographical epidemiology, \emph{Biometrical Journal}, \bold{51}(1), 98-109.\cr\cr
+Kelsall, J.E. and Diggle, P.J. (1995), Kernel estimation of relative risk, \emph{Bernoulli}, \bold{1}, 3-16.
+}

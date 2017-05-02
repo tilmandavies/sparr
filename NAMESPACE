@@ -1,0 +1,22 @@
+importFrom("MASS","mvrnorm")
+importFrom("grDevices", "contourLines", "heat.colors")
+importFrom("graphics", "contour", "plot", "axis", "box", "points", "title", "pairs", "par")
+importFrom("stats", "IQR", "sd", "var", "density", "median", "na.omit", "optimise","pnorm", "quantile", "dnorm", "fft", "rnorm")
+importFrom("utils", "setTxtProgressBar", "txtProgressBar")
+importFrom("spatstat.utils", "prange", "inside.range","tapplysum")
+
+import(spatstat,doParallel,parallel,foreach)
+
+export(bivariate.density,NS,OS,LSCV.density,risk,tolerance,tol.contour,LSCV.risk,multiscale.density,multiscale.slice,available.h0)
+
+S3method(print, bivden)
+S3method(summary, bivden)
+S3method(plot, bivden)
+
+S3method(print, rrs)
+S3method(summary, rrs)
+S3method(plot, rrs)
+
+S3method(print, msden)
+S3method(summary, msden)
+S3method(plot, msden)
