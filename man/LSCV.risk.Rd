@@ -61,30 +61,33 @@ commentary.}
 }
 \value{
 A single numeric value of the estimated bandwidth (if
-\code{auto.optim = TRUE}). Otherwise, a list of two numeric vectors of equal
-length giving the bandwidth sequence (as \code{hs}) and corresponding CV
-function value (as \code{CV}).
+  \code{auto.optim = TRUE}). Otherwise, a list of two numeric vectors of equal
+  length giving the bandwidth sequence (as \code{hs}) and corresponding CV
+  function value (as \code{CV}).
 }
 \description{
 Jointly optimal, common case-control isotropic fixed bandwidth for use in
 the kernel-smoothed relative risk function.
 }
 \details{
-%Given the established preference of using a common bandwidth for both case
+Given the established preference of using a common bandwidth for both case
 and control density estimates when constructing a fixed bandwidth relative
 risk surface, This function calculates a `jointly optimal', common isotropic
 LSCV bandwidth for the (Gaussian) kernel-smoothed relative risk function
 (case-control density-ratio). It can be shown that choosing a bandwidth that
 is equal for both case and control density estimates is preferable to
 computing `separately optimal' bandwidths (Kelsall and Diggle, 1995).
-\itemize{ \item\code{method = "kelsall-diggle"}: the function computes the
-common bandwidth which minimises the approximate mean integrated squared
-error (MISE) of the log-transformed risk surface (Kelsall and Diggle, 1995).
-\item\code{method = "hazelton"}: the function minimises a
-\emph{weighted-by-control} MISE of the (raw) relative risk function
-(Hazelton, 2008). \item\code{method = "davies"}: the optimal bandwidth is
-one that minimises a crude plug-in approximation to the \emph{asymptotic}
-MISE (Davies, 2013). }
+\itemize{
+  \item\code{method = "kelsall-diggle"}: the function computes the
+    common bandwidth which minimises the approximate mean integrated squared
+    error (MISE) of the log-transformed risk surface (Kelsall and Diggle, 1995).
+  \item\code{method = "hazelton"}: the function minimises a
+    \emph{weighted-by-control} MISE of the (raw) relative risk function
+    (Hazelton, 2008).
+  \item\code{method = "davies"}: the optimal bandwidth is
+    one that minimises a crude plug-in approximation to the \emph{asymptotic}
+    MISE (Davies, 2013).
+}
 }
 \section{Warning}{
  The jointly optimal bandwidth selector can be
@@ -101,12 +104,18 @@ find a suitable minimum.
 \references{
 Davies, T. M. (2013), Jointly optimal bandwidth selection for
 the planar kernel-smoothed density-ratio, \emph{Spatial and Spatio-temporal
-Epidemiology}, \bold{5}, 51-65.\cr Hazelton, M. L. (2008), Letter to the
+Epidemiology}, \bold{5}, 51-65.
+
+Hazelton, M. L. (2008), Letter to the
 editor: Kernel estimation of risk surfaces without the need for edge
-correction, \emph{Statistics in Medicine}, \bold{27}, 2269-2272.\cr Kelsall,
-J.E. and Diggle, P.J. (1995), Kernel estimation of relative risk,
-\emph{Bernoulli}, \bold{1}, 3-16.\cr Silverman, B.W. (1986), \emph{Density
-Estimation for Statistics and Data Analysis}, Chapman & Hall, New York. \cr
+correction, \emph{Statistics in Medicine}, \bold{27}, 2269-2272.
+
+Kelsall, J.E. and Diggle, P.J. (1995), Kernel estimation of relative risk,
+\emph{Bernoulli}, \bold{1}, 3-16.
+
+Silverman, B.W. (1986), \emph{Density Estimation for Statistics and Data Analysis},
+Chapman & Hall, New York.
+
 Wand, M.P. and Jones, C.M., 1995. \emph{Kernel Smoothing}, Chapman & Hall,
 London.
 }

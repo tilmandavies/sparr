@@ -56,9 +56,9 @@ selection.}
 }
 \value{
 A single numeric value of the estimated bandwidth (if
-\code{auto.optim = TRUE}). Otherwise, a list of two numeric vectors of equal
-length giving the bandwidth sequence (as \code{hs}) and corresponding CV
-function value (as \code{CV}).
+  \code{auto.optim = TRUE}). Otherwise, a list of two numeric vectors of equal
+  length giving the bandwidth sequence (as \code{hs}) and corresponding CV
+  function value (as \code{CV}).
 }
 \description{
 Isotropic fixed bandwidth selection for standalone 2D density/intensity
@@ -80,14 +80,16 @@ experiment with adjusting \code{hlim} to find a suitable minimum.
 }
 \references{
 Silverman, B.W. (1986), \emph{Density Estimation for Statistics
-and Data Analysis}, Chapman & Hall, New York. \cr\cr Wand, M.P. and Jones,
+and Data Analysis}, Chapman & Hall, New York.
+
+Wand, M.P. and Jones,
 C.M., 1995. \emph{Kernel Smoothing}, Chapman & Hall, London.
 }
 \seealso{
 Functions for bandwidth selection in package
-\code{\link{spatstat}}: \code{\link[spatstat]{bw.diggle}};
-\code{\link[spatstat]{bw.ppl}}; \code{\link[spatstat]{bw.scott}};
-\code{\link[spatstat]{bw.frac}}.
+  \code{\link{spatstat}}: \code{\link[spatstat]{bw.diggle}};
+  \code{\link[spatstat]{bw.ppl}}; \code{\link[spatstat]{bw.scott}};
+  \code{\link[spatstat]{bw.frac}}.
 }
 \author{
 T. M. Davies

@@ -72,13 +72,17 @@ Ignored if \code{f} and \code{g} are already \code{\link{bivden}} objects.}
 }
 \value{
 An object of class \code{"rrs"}. This is a named list with the
-following components: \item{rr}{A pixel \code{\link[spatstat]{im}}age of the
-estimated risk surface.} \item{f}{An object of class \code{\link{bivden}}
-used as the numerator or `case' density estimate.} \item{g}{An object of
-class \code{\link{bivden}} used as the denominator or `control' density
-estimate.} \item{P}{Only included if \code{tolerate = TRUE}. A pixel
-\code{\link[spatstat]{im}}age of the \emph{p}-value surface for tolerance
-contours; \code{NULL} otherwise.}
+following components:
+\item{rr}{A pixel \code{\link[spatstat]{im}}age of the
+  estimated risk surface.}
+\item{f}{An object of class \code{\link{bivden}}
+  used as the numerator or `case' density estimate.}
+\item{g}{An object of
+  class \code{\link{bivden}} used as the denominator or `control' density
+  estimate.}
+\item{P}{Only included if \code{tolerate = TRUE}. A pixel
+  \code{\link[spatstat]{im}}age of the \emph{p}-value surface for tolerance
+  contours; \code{NULL} otherwise.}
 }
 \description{
 Estimates a \emph{relative risk} function based on the ratio of two 2D
@@ -126,30 +130,43 @@ control over calculation of tolerance contours, use \code{\link{tolerance}}.
 }
 \examples{
 
-\dontrun{
 # to be filled
-}
 
 }
 \references{
 Bithell, J.F. (1990), An application of density estimation to
 geographical epidemiology, \emph{Statistics in Medicine}, \bold{9},
-691-701.\cr\cr Bithell, J.F. (1991), Estimation of relative risk functions,
-\emph{Statistics in Medicine}, \bold{10}, 1745-1751.\cr\cr Bowman, A.W. and
-Azzalini A. (1997), \emph{Applied Smoothing Techniques for Data Analysis:
+691-701.
+
+Bithell, J.F. (1991), Estimation of relative risk functions,
+\emph{Statistics in Medicine}, \bold{10}, 1745-1751.
+
+Bowman, A.W. and Azzalini A. (1997), \emph{Applied Smoothing Techniques for Data Analysis:
 The Kernel Approach with S-Plus Illustrations}, Oxford University Press
-Inc., New York.\cr\cr Davies, T.M. and Hazelton, M.L. (2010), Adaptive
+Inc., New York.
+
+Davies, T.M. and Hazelton, M.L. (2010), Adaptive
 kernel estimation of spatial relative risk, \emph{Statistics in Medicine},
-\bold{29}(23) 2423-2437.\cr\cr Davies, T.M., Jones, K. and Hazelton, M.L.
+\bold{29}(23) 2423-2437.
+
+Davies, T.M., Jones, K. and Hazelton, M.L.
 (2016), Symmetric adaptive smoothing regimens for estimation of the spatial
 relative risk function, \emph{Computational Statistics & Data Analysis},
-\bold{101}, 12-28.\cr\cr Diggle, P.J. (1985), A kernel method for smoothing
+\bold{101}, 12-28.
+
+Diggle, P.J. (1985), A kernel method for smoothing
 point process data, \emph{Journal of the Royal Statistical Society Series
-C}, \bold{34}(2), 138-147.\cr\cr Hazelton, M.L. and Davies, T.M. (2009),
+C}, \bold{34}(2), 138-147.
+
+Hazelton, M.L. and Davies, T.M. (2009),
 Inference based on kernel estimates of the relative risk function in
 geographical epidemiology, \emph{Biometrical Journal}, \bold{51}(1),
-98-109.\cr\cr Kelsall, J.E. and Diggle, P.J. (1995a), Kernel estimation of
-relative risk, \emph{Bernoulli}, \bold{1}, 3-16.\cr\cr Kelsall, J.E. and
+98-109.
+
+Kelsall, J.E. and Diggle, P.J. (1995a), Kernel estimation of
+relative risk, \emph{Bernoulli}, \bold{1}, 3-16.
+
+Kelsall, J.E. and
 Diggle, P.J. (1995b), Non-parametric estimation of spatial variation in
 relative risk, \emph{Statistics in Medicine}, \bold{14}, 2335-2342.
 }

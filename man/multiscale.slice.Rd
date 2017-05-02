@@ -51,7 +51,7 @@ additional computing time.)
 }
 \references{
 Davies, T.M. and Baddeley A. (2017), Fast computation of
-spatially adaptive kernel estimates, \emph{Submitted}.\cr\cr
+spatially adaptive kernel estimates, \emph{Submitted}.
 }
 \seealso{
 \code{\link{multiscale.density}}, \code{\link{bivariate.density}}

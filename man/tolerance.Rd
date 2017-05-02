@@ -87,18 +87,18 @@ same way as for any non-default use of \code{epsilon}. This will ensure the
 simulations are all performed under the same conditions as the original risk
 function.
 
-%The asymptotic approach to the \emph{p}-value calculation can be
+The asymptotic approach to the \emph{p}-value calculation can be
 advantageous over a Monte-Carlo method, which can lead to excessive
 computation time for adaptive risk surfaces and large datasets. See the
 aforementioned references for further comments.
 
-%Choosing different options for the argument \code{test} simply manipulates
+Choosing different options for the argument \code{test} simply manipulates
 the `direction' of the p-values. That is, plotting tolerance contours at a
 significance level of 0.05 for a p-value surface calculated with \code{test
 = "double"} is equivalent to plotting tolerance contours at significance
 levels of 0.025 and 0.975 for \code{test = "upper"}.
 
-%Implementation of the Monte-Carlo contours for the fixed-bandwidth
+Implementation of the Monte-Carlo contours for the fixed-bandwidth
 estimator simply involves random allocation of case/control marks and
 re-estimation of the risk surface \code{ITER} times, against which the
 original estimate is compared. The bandwidth(s) for case and control
@@ -116,7 +116,7 @@ that does not contain density estimates with present \code{pdef} objects of
 class \code{"bivden"}. See the help file for \code{\link{bivariate.density}}
 for details on using the \code{pdef} argument.
 
-%In addition to the usage noted above, you may define either \code{hpsim}
+In addition to the usage noted above, you may define either \code{hpsim}
 and/or \code{h0sim} as functions which re-calculate the case and control
 pilot (or fixed) bandwidth(s) and the global bandwidth(s) at each iteration,
 based on the data set of the permuted case/control marks. If so, these must
@@ -146,13 +146,16 @@ display.
 }
 \references{
 Davies, T.M. and Baddeley A. (2017), Fast computation of
-spatially adaptive kernel estimates, \emph{Submitted}.\cr\cr Davies, T.M.
-and Hazelton, M.L. (2010), Adaptive kernel estimation of spatial relative
-risk, \emph{Statistics in Medicine}, \bold{29}(23) 2423-2437.\cr\cr
+spatially adaptive kernel estimates, \emph{Submitted}.
+
+Davies, T.M. and Hazelton, M.L. (2010), Adaptive kernel estimation of spatial relative
+risk, \emph{Statistics in Medicine}, \bold{29}(23) 2423-2437.
+
 Hazelton, M.L. and Davies, T.M. (2009), Inference based on kernel estimates
 of the relative risk function in geographical epidemiology,
-\emph{Biometrical Journal}, \bold{51}(1), 98-109.\cr\cr Kelsall, J.E. and
-Diggle, P.J. (1995), Kernel estimation of relative risk, \emph{Bernoulli},
+\emph{Biometrical Journal}, \bold{51}(1), 98-109.
+
+Kelsall, J.E. and Diggle, P.J. (1995), Kernel estimation of relative risk, \emph{Bernoulli},
 \bold{1}, 3-16.
 }
 \author{
