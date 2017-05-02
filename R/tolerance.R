@@ -33,18 +33,18 @@
 #' simulations are all performed under the same conditions as the original risk
 #' function.
 #' 
-#' %The asymptotic approach to the \emph{p}-value calculation can be
+#' The asymptotic approach to the \emph{p}-value calculation can be
 #' advantageous over a Monte-Carlo method, which can lead to excessive
 #' computation time for adaptive risk surfaces and large datasets. See the
 #' aforementioned references for further comments.
 #' 
-#' %Choosing different options for the argument \code{test} simply manipulates
+#' Choosing different options for the argument \code{test} simply manipulates
 #' the `direction' of the p-values. That is, plotting tolerance contours at a
 #' significance level of 0.05 for a p-value surface calculated with \code{test
 #' = "double"} is equivalent to plotting tolerance contours at significance
 #' levels of 0.025 and 0.975 for \code{test = "upper"}.
 #' 
-#' %Implementation of the Monte-Carlo contours for the fixed-bandwidth
+#' Implementation of the Monte-Carlo contours for the fixed-bandwidth
 #' estimator simply involves random allocation of case/control marks and
 #' re-estimation of the risk surface \code{ITER} times, against which the
 #' original estimate is compared. The bandwidth(s) for case and control
@@ -62,7 +62,7 @@
 #' class \code{"bivden"}. See the help file for \code{\link{bivariate.density}}
 #' for details on using the \code{pdef} argument.
 #' 
-#' %In addition to the usage noted above, you may define either \code{hpsim}
+#' In addition to the usage noted above, you may define either \code{hpsim}
 #' and/or \code{h0sim} as functions which re-calculate the case and control
 #' pilot (or fixed) bandwidth(s) and the global bandwidth(s) at each iteration,
 #' based on the data set of the permuted case/control marks. If so, these must
@@ -77,60 +77,71 @@
 #' pilot bandwidth)!
 #' 
 #' @param rs An object of class \code{\link{rrs}} giving the estimated relative
-#' risk function for which to calculate the \emph{p}-value surface.
+#'   risk function for which to calculate the \emph{p}-value surface.
 #' @param method A character string specifying the method of calculation.
-#' \code{"ASY"} (default) instructs the function to compute the \emph{p}-values
-#' using asymptotic theory. \code{"MC"} computes the values by random
-#' permutations of the data. See `Details'.
+#'   \code{"ASY"} (default) instructs the function to compute the \emph{p}-values
+#'   using asymptotic theory. \code{"MC"} computes the values by random
+#'   permutations of the data. See `Details'.
 #' @param ref.density Required if \code{rs} is based on fixed-bandwidth
-#' estimates of the case and control densities and \code{method = "ASY"}.
-#' Either a pixel \code{\link[spatstat]{im}}age or an object of class
-#' \code{\link{bivden}} giving the reference density to use in asymptotic
-#' formulae. May be unnormalised. Ignored if \code{rs} is based on adaptive
-#' kernel estimates or if \code{method = "MC"}.
+#'   estimates of the case and control densities and \code{method = "ASY"}.
+#'   Either a pixel \code{\link[spatstat]{im}}age or an object of class
+#'   \code{\link{bivden}} giving the reference density to use in asymptotic
+#'   formulae. May be unnormalised. Ignored if \code{rs} is based on adaptive
+#'   kernel estimates or if \code{method = "MC"}.
 #' @param beta A numeric value \eqn{0 <} \code{beta} \eqn{< 1} giving the
-#' fineness of the adaptive bandwidth partitioning to use for calculation of
-#' the required quantities for asymptotic adaptive \emph{p}-value surfaces.
-#' Smaller values provide more accurate bandwidth bins at the cost of
-#' additional computing time, see Davies and Baddeley (2017); the default is
-#' sensible in most cases. Ignored if \code{rs} is based on fixed-bandwidth
-#' kernel estimates.
+#'   fineness of the adaptive bandwidth partitioning to use for calculation of
+#'   the required quantities for asymptotic adaptive \emph{p}-value surfaces.
+#'   Smaller values provide more accurate bandwidth bins at the cost of
+#'   additional computing time, see Davies and Baddeley (2017); the default is
+#'   sensible in most cases. Ignored if \code{rs} is based on fixed-bandwidth
+#'   kernel estimates.
 #' @param ITER Number of iterations for the Monte-Carlo permutations. Ignored
-#' if \code{method = "ASY"}.
+#'   if \code{method = "ASY"}.
 #' @param parallelise Numeric argument to invoke parallel processing, giving
-#' the number of CPU cores to use when \code{method = "MC"}. Experimental. Test
-#' your system first using \code{parallel::detectCores()} to identify the
-#' number of cores available to you.
+#'   the number of CPU cores to use when \code{method = "MC"}. Experimental. Test
+#'   your system first using \code{parallel::detectCores()} to identify the
+#'   number of cores available to you.
 #' @param verbose Logical value indicating whether to print function progress
-#' during execution.
+#'   during execution.
 #' @param ...  Additional arguments to be passed to \code{\link{risk}} when
-#' \code{method = "MC"}. While most information needed for the MC repetitions
-#' is implicitly gleaned from the object passed to \code{rs}, this ellipsis is
-#' typically used to set the appropriate \code{epsilon} and
-#' \code{pilot.symmetry} values for the internal calls to \code{\link{risk}}.
+#'   \code{method = "MC"}. While most information needed for the MC repetitions
+#'   is implicitly gleaned from the object passed to \code{rs}, this ellipsis is
+#'   typically used to set the appropriate \code{epsilon} and
+#'   \code{pilot.symmetry} values for the internal calls to \code{\link{risk}}.
+#'
 #' @return A pixel \code{\link[spatstat]{im}}age of the estimated
 #' \emph{p}-value surface.
+#'
 #' @note The returned \emph{p}-values are geared so that ``smallness''
 #' corresponds to statistical significance of elevated risk, that is, an
 #' upper-tailed test. The complement of the \emph{p}-values will yeild
 #' significance of reduced risk; a lower-tailed test. When using
 #' \code{\link{tol.contour}}, the user can control what type of contours to
 #' display.
+#'
 #' @author T. M. Davies
-#' @references Davies, T.M. and Baddeley A. (2017), Fast computation of
-#' spatially adaptive kernel estimates, \emph{Submitted}.\cr\cr Davies, T.M.
-#' and Hazelton, M.L. (2010), Adaptive kernel estimation of spatial relative
-#' risk, \emph{Statistics in Medicine}, \bold{29}(23) 2423-2437.\cr\cr
+#'
+#' @references
+#'
+#' Davies, T.M. and Baddeley A. (2017), Fast computation of
+#' spatially adaptive kernel estimates, \emph{Submitted}.
+#'
+#' Davies, T.M. and Hazelton, M.L. (2010), Adaptive kernel estimation of spatial relative
+#' risk, \emph{Statistics in Medicine}, \bold{29}(23) 2423-2437.
+#'
 #' Hazelton, M.L. and Davies, T.M. (2009), Inference based on kernel estimates
 #' of the relative risk function in geographical epidemiology,
-#' \emph{Biometrical Journal}, \bold{51}(1), 98-109.\cr\cr Kelsall, J.E. and
-#' Diggle, P.J. (1995), Kernel estimation of relative risk, \emph{Bernoulli},
+#' \emph{Biometrical Journal}, \bold{51}(1), 98-109.
+#'
+#' Kelsall, J.E. and Diggle, P.J. (1995), Kernel estimation of relative risk, \emph{Bernoulli},
 #' \bold{1}, 3-16.
+#'
 #' @examples
 #' 
 #' ## to be filled
 #' 
-tolerance <- function(rs, method = c("ASY", "MC"), ref.density = NULL, beta = 0.025, ITER = 100, parallelise = NULL, verbose = TRUE, ...){
+tolerance <- function(rs, method = c("ASY", "MC"), ref.density = NULL, beta = 0.025,
+                      ITER = 100, parallelise = NULL, verbose = TRUE, ...){
   if(!inherits(rs,"rrs")) stop("'rs' argument must be of class \"rrs\"")
   
   meth <- method[1]

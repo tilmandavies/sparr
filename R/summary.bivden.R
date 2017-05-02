@@ -4,9 +4,11 @@
 #' 
 #' 
 #' @aliases summary.bivden print.bivden
+#'
 #' @param x,object An object of class \code{\link{bivden}} resulting from a
-#' call to \code{\link{bivariate.density}}.
+#'   call to \code{\link{bivariate.density}}.
 #' @param ...  Ignored.
+#'
 #' @author T.M. Davies
 summary.bivden <- function(object, ...){
 

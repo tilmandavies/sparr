@@ -20,10 +20,14 @@
 #' 
 #' @param ...  Any number of objects of class \code{\link{msden}}; possibly
 #' named.
+#'
 #' @return A numeric vector of length 2 providing the range of available global
 #' bandwidths compatible with all supplied multi-scale density estimates.
+#'
 #' @author T.M. Davies
+#'
 #' @seealso \code{\link{multiscale.density}}, \code{\link{multiscale.slice}}
+#'
 #' @examples
 #' 
 #' # To be filled.

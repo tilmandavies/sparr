@@ -28,8 +28,8 @@ bandwidths in the multiscale estimates. Interpreted as a multiplicative
 factor on \code{h0}. See `Details'.}
 
 \item{edge}{Character string dictating edge correction. \code{"uniform"}
-(default) corrects based on evaluation grid coordinate. Setting \code{edge =
-"none"} requests no edge correction.}
+(default) corrects based on evaluation grid coordinate. Setting \code{edge="none"}
+requests no edge correction.}
 
 \item{resolution}{Numeric value > 0. Resolution of evaluation grid in the
 spatial domain; the densities/intensities will be returned on a
@@ -73,27 +73,32 @@ means.}
 An object of class \code{"msden"}. This is very similar to a
 \code{\link{bivden}} object, with lists of pixel
 \code{\link[spatstat]{im}}ages in the \code{z}, \code{him}, and \code{q}
-components (instead of standalone images). \item{z}{A list of the resulting
-density/intensity estimates; each member being a pixel image object of class
-\code{\link[spatstat]{im}}. They are placed in increasing order of the
-discretised values of \code{h0}.} \item{h0}{A copy of the reference value of
-\code{h0} used.} \item{h0range}{A vector of length 2 giving the actual range
-of global bandwidth values available (inclusive).} \item{hp}{A copy of the
-value of \code{hp} used.} \item{h}{A numeric vector of length equal to the
-number of data points, giving the bandwidth used for the corresponding
-observation in \code{pp} with respect to the reference global bandwidth
-\code{h0}.} \item{him}{A list of pixel images (class
-\code{\link[spatstat]{im}}), corresponding to \code{z}, giving the
-`hypothetical' Abramson bandwidth at each pixel coordinate conditional upon
-the observed data and the global bandwidth used.} \item{q}{Edge-correction
-weights; list of pixel \code{\link[spatstat]{im}}ages corresponding to
-\code{z} if \code{edge = "uniform"}, and \code{NULL} if \code{edge =
-"none"}.} \item{gamma}{The numeric value of \code{gamma.scale} used in
-scaling the bandwidths.} \item{geometric}{The geometric mean of the
-untrimmed variable bandwidth factors. This will be identical to \code{gamma}
-if \code{gamma.scale = "geometric"} as per default.} \item{pp}{A copy of the
-\code{\link[spatstat]{ppp.object}} initially passed to the \code{pp}
-argument, containing the data that were smoothed.}
+components (instead of standalone images).
+\item{z}{A list of the resulting
+  density/intensity estimates; each member being a pixel image object of class
+  \code{\link[spatstat]{im}}. They are placed in increasing order of the
+  discretised values of \code{h0}.}
+\item{h0}{A copy of the reference value of \code{h0} used.}
+\item{h0range}{A vector of length 2 giving the actual range
+  of global bandwidth values available (inclusive).}
+\item{hp}{A copy of the value of \code{hp} used.}
+\item{h}{A numeric vector of length equal to the
+  number of data points, giving the bandwidth used for the corresponding
+  observation in \code{pp} with respect to the reference global bandwidth
+  \code{h0}.}
+\item{him}{A list of pixel images (class \code{\link[spatstat]{im}}),
+  corresponding to \code{z}, giving the
+  `hypothetical' Abramson bandwidth at each pixel coordinate conditional upon
+  the observed data and the global bandwidth used.}
+\item{q}{Edge-correction weights; list of pixel \code{\link[spatstat]{im}}ages
+  corresponding to \code{z} if \code{edge = "uniform"}, and \code{NULL} if
+  \code{edge = "none"}.}
+\item{gamma}{The numeric value of \code{gamma.scale} used in scaling the bandwidths.}
+\item{geometric}{The geometric mean of the
+  untrimmed variable bandwidth factors. This will be identical to \code{gamma}
+  if \code{gamma.scale = "geometric"} as per default.}
+\item{pp}{A copy of the \code{\link[spatstat]{ppp.object}} initially passed to the
+  \code{pp} argument, containing the data that were smoothed.}
 }
 \description{
 Computes adaptive kernel estimates of spatial density/intensity using a 3D
@@ -132,13 +137,22 @@ global bandwidth value within \code{h0range} by using the
 \code{\link{multiscale.slice}} function, which returns an object of class
 \code{\link{bivden}}.
 }
+\examples{
+
+# to be filled
+
+convolve window with kernel
+}
 \references{
 Abramson, I. (1982). On bandwidth variation in kernel estimates
 --- a square root law, \emph{Annals of Statistics}, \bold{10}(4),
-1217-1223.\cr\cr Davies, T.M. and Baddeley A. (2017), Fast computation of
-spatially adaptive kernel estimates, \emph{Submitted}.\cr\cr Silverman, B.W.
-(1986), \emph{Density Estimation for Statistics and Data Analysis}, Chapman
-& Hall, New York. \cr\cr
+1217-1223.
+
+Davies, T.M. and Baddeley A. (2017), Fast computation of
+spatially adaptive kernel estimates, \emph{Submitted}.
+
+Silverman, B.W. (1986), \emph{Density Estimation for Statistics and Data Analysis},
+Chapman & Hall, New York.
 }
 \seealso{
 \code{\link{bivariate.density}}, \code{\link{multiscale.slice}}

@@ -25,20 +25,26 @@
 #' additional computing time.)
 #' 
 #' @param msob An object of class \code{"\link{msden}"} giving the multi-scale
-#' estimate from which to take a slice.
+#'   estimate from which to take a slice.
 #' @param h0 Desired global bandwidth; the density/intensity estimate
-#' corresponding to which will be returned. This value \bold{must} be in the
-#' available range provided by \code{msob$h0range}; see `Details'.
+#'   corresponding to which will be returned. This value \bold{must} be in the
+#'   available range provided by \code{msob$h0range}; see `Details'.
 #' @param checkargs Logical value indicating whether to check validity of
-#' \code{msob} and \code{h0}. Disable only if you know this check will be
-#' unnecessary.
+#'   \code{msob} and \code{h0}. Disable only if you know this check will be
+#'   unnecessary.
+#'
 #' @return An object of class \code{\link{bivden}} with components
 #' corresponding to the requested slice at \code{h0}. Note that this object
 #' will have the component \code{fromms} set to \code{TRUE}.
+#'
 #' @author T.M. Davies
+#'
 #' @seealso \code{\link{multiscale.density}}, \code{\link{bivariate.density}}
-#' @references Davies, T.M. and Baddeley A. (2017), Fast computation of
-#' spatially adaptive kernel estimates, \emph{Submitted}.\cr\cr
+#'
+#' @references
+#' Davies, T.M. and Baddeley A. (2017), Fast computation of
+#' spatially adaptive kernel estimates, \emph{Submitted}.
+#'
 multiscale.slice <- function(msob,h0,checkargs=TRUE){
   if(checkargs){
     if(!inherits(msob,"msden")) stop("'msob' must be of class \"msden\"")

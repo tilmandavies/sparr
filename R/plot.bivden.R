@@ -25,27 +25,31 @@
 #' instance, one might also want to set \code{sleep = 0}.
 #' 
 #' @aliases plot.bivden plot.rrs plot.msden
+#'
 #' @param x An object of class \code{\link{bivden}}, \code{\link{rrs}}, or
-#' \code{\link{msden}}.
+#'   \code{\link{msden}}.
 #' @param what A character string to select plotting of result (\code{"z"};
-#' default); edge-correction surface (\code{"edge"}); or variable bandwidth
-#' surface (\code{"bw"}).
+#'   default); edge-correction surface (\code{"edge"}); or variable bandwidth
+#'   surface (\code{"bw"}).
 #' @param add.pts Logical value indicating whether to add the observations to
-#' the image plot using default \code{\link{points}}.
+#'   the image plot using default \code{\link{points}}.
 #' @param auto.axes Logical value indicating whether to display the plot with
-#' automatically added x-y axes and an `L' box in default styles.
+#'   automatically added x-y axes and an `L' box in default styles.
 #' @param sleep Single positive numeric value giving the amount of time (in
-#' seconds) to \code{\link[base]{Sys.sleep}} before drawing the next image in
-#' the animation.
+#'   seconds) to \code{\link[base]{Sys.sleep}} before drawing the next image in
+#'   the animation.
 #' @param override.par Logical value indicating whether to override the
-#' existing graphics device parameters prior to plotting, resetting
-#' \code{mfrow} and \code{mar}. See `Details' for when you might want to
-#' disable this.
+#'   existing graphics device parameters prior to plotting, resetting
+#'   \code{mfrow} and \code{mar}. See `Details' for when you might want to
+#'   disable this.
 #' @param ...  Additional graphical parameters to be passed to
-#' \code{\link[spatstat]{plot.im}}, or in one instance, to
-#' \code{\link[spatstat]{plot.ppp}} (see `Details').
+#'   \code{\link[spatstat]{plot.im}}, or in one instance, to
+#'   \code{\link[spatstat]{plot.ppp}} (see `Details').
+#'
 #' @return Plots to the relevant graphics device.
+#'
 #' @author T.M. Davies
+#'
 #' @examples
 #' 
 #' # to be filled 

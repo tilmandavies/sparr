@@ -4,9 +4,11 @@
 #' 
 #' 
 #' @aliases summary.msden print.msden
+#'
 #' @param x,object An object of class \code{\link{msden}} resulting from a call
-#' to \code{\link{multiscale.density}}.
+#'   to \code{\link{multiscale.density}}.
 #' @param ...  Ignored.
+#'
 #' @author T.M. Davies
 summary.msden <- function(object,...){
   cat("Multi-scale bivariate adaptive kernel density/intensity estimate\n\n")
