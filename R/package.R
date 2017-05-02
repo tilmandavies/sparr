@@ -113,8 +113,7 @@
 #' @section Dependencies: The \code{sparr} package depends upon
 #' \code{\link[spatstat]{spatstat}}. In particular, the user should familiarise
 #' themselves with \code{\link[spatstat]{ppp}} objects and
-#' \code{\link[spatstat]{im}} objects, which are used throughout. Furthermore,
-#' \code{sparr} imports minimal functionality from package \code{MASS}. For the
+#' \code{\link[spatstat]{im}} objects, which are used throughout. For the
 #' experimental capabilities involving parallel processing, \code{sparr} also
 #' currently imports \code{\link[doParallel]{doParallel}},
 #' \code{\link[parallel]{parallel}}, and \code{\link[foreach]{foreach}}.
