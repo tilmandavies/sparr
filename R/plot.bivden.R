@@ -55,7 +55,7 @@
 #' # to be filled 
 #' 
 #' @export
-plot.bivden <- function(x, what = c("z", "edge", "bw"), add.pts = FALSE, auto.axes = TRUE, ...){
+plot.bivden <- function(x, what = c("z", "edge", "bw"), add.pts = FALSE, auto.axes = TRUE, sleep = 0.2, override.par = TRUE, ...){
   
   ellip <- list(...)
   if(is.null(ellip)) ellip <- list()

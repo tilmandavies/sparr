@@ -8,7 +8,7 @@
 multi-scale density/intensity}
 \usage{
 \method{plot}{bivden}(x, what = c("z", "edge", "bw"), add.pts = FALSE,
-  auto.axes = TRUE, ...)
+  auto.axes = TRUE, sleep = 0.2, override.par = TRUE, ...)
 }
 \arguments{
 \item{x}{An object of class \code{\link{bivden}}, \code{\link{rrs}}, or
@@ -24,10 +24,6 @@ the image plot using default \code{\link{points}}.}
 \item{auto.axes}{Logical value indicating whether to display the plot with
 automatically added x-y axes and an `L' box in default styles.}
 
-\item{...}{Additional graphical parameters to be passed to
-\code{\link[spatstat]{plot.im}}, or in one instance, to
-\code{\link[spatstat]{plot.ppp}} (see `Details').}
-
 \item{sleep}{Single positive numeric value giving the amount of time (in
 seconds) to \code{\link[base]{Sys.sleep}} before drawing the next image in
 the animation.}
@@ -36,6 +32,10 @@ the animation.}
 existing graphics device parameters prior to plotting, resetting
 \code{mfrow} and \code{mar}. See `Details' for when you might want to
 disable this.}
+
+\item{...}{Additional graphical parameters to be passed to
+\code{\link[spatstat]{plot.im}}, or in one instance, to
+\code{\link[spatstat]{plot.ppp}} (see `Details').}
 }
 \value{
 Plots to the relevant graphics device.
