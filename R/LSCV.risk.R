@@ -97,6 +97,7 @@
 #' 
 #' ## To be filled
 #' 
+#' @export
 LSCV.risk <- function(f, g = NULL, hlim = NULL, hseq = NULL, method = c("kelsall-diggle", "hazelton", "davies"),
                       resolution = 64, edge = TRUE, auto.optim = TRUE, seqres = 30,
                       parallelise = NULL, verbose = TRUE){

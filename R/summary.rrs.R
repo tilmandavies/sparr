@@ -1,14 +1,4 @@
-#' Summarising an estimated relative risk function object
-#' 
-#' \code{print} and \code{summary} methods for class \code{\link{rrs}}.
-#' 
-#' @aliases summary.rrs print.rrs
-#'
-#' @param x,object An object of class \code{\link{rrs}} resulting from a call
-#'   to \code{\link{risk}}.
-#' @param ...  Ignored.
-#'
-#' @author T.M. Davies
+#' @export
 summary.rrs <- function(object, ...){
     if(all(object$rr>=0)) cat("Relative risk function.\n\n")
     else cat("Log-Relative risk function.\n\n")

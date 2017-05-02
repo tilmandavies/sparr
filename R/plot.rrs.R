@@ -1,3 +1,4 @@
+#' @export
 plot.rrs <- function(x, auto.axes = TRUE, ...){
   ellip <- list(...)
   if(is.null(ellip$main)) ellip$main <- ""

@@ -67,6 +67,7 @@
 #' 
 #' ## To be filled
 #' 
+#' @export
 LSCV.density <- function(pp,hlim=NULL,hseq=NULL,resolution=64,edge=TRUE,auto.optim=TRUE,
                          seqres=30,parallelise=NULL,verbose=TRUE,type="spatial",
                          lambdalim=NULL,lambdaseq=NULL,tlim=NULL){

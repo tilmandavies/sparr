@@ -149,6 +149,7 @@
 #' 
 #' # to be filled
 #' 
+#' @export
 risk <- function(f, g = NULL, log = TRUE, h0 = NULL, hp = h0, adapt = FALSE,
                   tolerate = FALSE, doplot = FALSE,
                   pilot.symmetry = c("none","f","g","pooled"), epsilon = 0,

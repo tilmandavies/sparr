@@ -207,6 +207,7 @@
 #'
 #' # to be filled
 #' 
+#' @export
 bivariate.density <- function(pp,h0,hp=NULL,adapt=FALSE,resolution=128,gamma.scale="geometric",edge=c("uniform","diggle","none"),intensity=FALSE,trim=5,xy=NULL,pilot.density=NULL,leaveoneout=FALSE,parallelise=NULL,davies.baddeley=NULL,verbose=TRUE){
 	if(!inherits(pp,"ppp")) stop("data argument 'pp' must be of spatstat class \"ppp\"; see ?ppp")
 

@@ -45,6 +45,7 @@
 #' Davies, T.M. and Baddeley A. (2017), Fast computation of
 #' spatially adaptive kernel estimates, \emph{Submitted}.
 #'
+#' @export
 multiscale.slice <- function(msob,h0,checkargs=TRUE){
   if(checkargs){
     if(!inherits(msob,"msden")) stop("'msob' must be of class \"msden\"")

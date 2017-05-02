@@ -2,19 +2,22 @@
 % Please edit documentation in R/summary.bivden.R
 \name{summary.bivden}
 \alias{summary.bivden}
-\alias{print.bivden}
-\title{Summarising an estimated bivariate density/intensity object}
+\alias{summary.rrs}
+\alias{summary.msden}
+\title{Summarising a bivariate density/intensity, relative risk surface, or
+multi-scale density/intensity}
 \usage{
 \method{summary}{bivden}(object, ...)
 }
 \arguments{
-\item{...}{Ignored.}
+\item{object}{An object of class \code{\link{bivden}}, \code{\link{rrs}}, or
+\code{\link{msden}}.}
 
-\item{x, object}{An object of class \code{\link{bivden}} resulting from a
-call to \code{\link{bivariate.density}}.}
+\item{...}{Ignored.}
 }
 \description{
-\code{print} and \code{summary} methods for class \code{\link{bivden}}.
+\code{summary} methods for classes \code{"\link{bivden}"}, \code{"\link{rrs}"},
+and \code{"\link{msden}"}.
 }
 \author{
 T.M. Davies

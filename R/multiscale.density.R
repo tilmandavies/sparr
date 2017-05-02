@@ -132,6 +132,7 @@
 #' 
 #' # to be filled
 #' 
+#' @export
 multiscale.density <- function(pp,h0,hp=NULL,h0fac=c(0.25,1.5),edge=c("uniform","none"),resolution=128,dimz=64,gamma.scale="geometric",trim=5,intensity=FALSE,pilot.density=NULL,xy=NULL,taper=TRUE,verbose=TRUE){
   if(!inherits(pp,"ppp")) stop("data argument 'pp' must be of spatstat class \"ppp\"; see ?ppp")
   

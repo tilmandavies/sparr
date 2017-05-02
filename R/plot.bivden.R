@@ -54,6 +54,7 @@
 #' 
 #' # to be filled 
 #' 
+#' @export
 plot.bivden <- function(x, what = c("z", "edge", "bw"), add.pts = FALSE, auto.axes = TRUE, ...){
   
   ellip <- list(...)

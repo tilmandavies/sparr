@@ -33,6 +33,7 @@
 #' 
 #' # to be filled
 #' 
+#' @export
 tol.contour <- function(pim, test = c("upper", "lower", "two-sided"), ...){
   if(!inherits(pim,"im")){
     stop("'pim' must be an object of class 'im', typically arising from a call to 'tolerance2'")

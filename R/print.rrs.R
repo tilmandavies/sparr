@@ -1,3 +1,4 @@
+#' @export
 print.rrs <- function(x, ...){
 	
 	if(all(x$rr>=0)) cat("Relative risk surface\n\n")

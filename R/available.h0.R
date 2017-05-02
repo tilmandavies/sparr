@@ -32,6 +32,7 @@
 #' 
 #' # To be filled.
 #' 
+#' @export
 available.h0 <- function(...){
   unpacked <- list(...)
   

@@ -140,6 +140,7 @@
 #' 
 #' ## to be filled
 #' 
+#' @export
 tolerance <- function(rs, method = c("ASY", "MC"), ref.density = NULL, beta = 0.025,
                       ITER = 100, parallelise = NULL, verbose = TRUE, ...){
   if(!inherits(rs,"rrs")) stop("'rs' argument must be of class \"rrs\"")
