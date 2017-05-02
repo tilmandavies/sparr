@@ -141,7 +141,6 @@ global bandwidth value within \code{h0range} by using the
 
 # to be filled
 
-convolve window with kernel
 }
 \references{
 Abramson, I. (1982). On bandwidth variation in kernel estimates

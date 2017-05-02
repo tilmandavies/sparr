@@ -142,7 +142,6 @@ display.
 
 ## to be filled
 
- was:
 }
 \references{
 Davies, T.M. and Baddeley A. (2017), Fast computation of

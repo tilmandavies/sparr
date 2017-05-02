@@ -158,7 +158,7 @@ tolerance <- function(rs, method = c("ASY", "MC"), ref.density = NULL, beta = 0.
       if((!inherits(ref.density,"bivden"))&&(!inherits(ref.density,"im"))) stop("'ref.density' must be of class \"bivden\" or \"im\"")
       if(is.im(ref.density)){
         ref.density <- list(z=ref.density,q=NULL)
-      #'  was:
+      #  was:
       #   rq <- ref.density
       # 	rq$v[!is.na(rq$v)] <- 1
       # 	ref.density <- list(z=ref.density,q=rq)

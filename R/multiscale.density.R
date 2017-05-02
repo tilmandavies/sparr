@@ -197,7 +197,7 @@ multiscale.density <- function(pp,h0,hp=NULL,h0fac=c(0.25,1.5),edge=c("uniform",
   
   if(verbose) cat("Done.\nDiscretising...")
   
-  #' discretise window
+  # discretise window
   isrect <- is.rectangle(W)
   WM <- as.mask(W,dimyx=dimyx,xy=xy)
   insideW <- WM$m
@@ -207,10 +207,10 @@ multiscale.density <- function(pp,h0,hp=NULL,h0fac=c(0.25,1.5),edge=c("uniform",
   xstep <- WM$xstep
   ystep <- WM$ystep
   
-  #' discretise spatial locations of data points
+  # discretise spatial locations of data points
   ij <- nearest.raster.point(pp$x, pp$y, WM)
   
-  #' z-mapping
+  # z-mapping
   zh <- function(h,hhl) log(h)-hhl #' z map
   zhi <- function(z,hhl) exp(hhl+z) #' inverse z map
   H <- range(rep(as.vector(h.hypo.mat),2)*rep(h0fac,each=prod(dim(h.hypo.mat))),na.rm=TRUE)
@@ -218,31 +218,31 @@ multiscale.density <- function(pp,h0,hp=NULL,h0fac=c(0.25,1.5),edge=c("uniform",
   zlim <- zh(H,hhash.log)
   zrange <- c(diff(rev(zlim)),diff(zlim))
   
-  #' discretise bandwidth values
+  # discretise bandwidth values
   zbreaks <- seq(zrange[1], zrange[2], length=dimz+1)
   zstep <- diff(zbreaks[1:2])
   zvalues <- zbreaks[-1] - zstep/2
   kslice <- findInterval(zh(h.spec,hhash.log),zbreaks,all.inside=TRUE)
   
-  #' grid coordinates (padded)
+  # grid coordinates (padded)
   xcol.pad <- WM$xcol[1] + xstep * (0:(2*nc-1))
   yrow.pad <- WM$yrow[1] + ystep * (0:(2*nr-1))
   z.pad <- zvalues[1] + zstep * (0:(2*dimz - 1))
   
   if(verbose) cat("Done.\nForming kernel...")
   
-  #' set up kernel
+  # set up kernel
   xcol.ker <- xstep * c(0:(nc-1),-(nc:1))
   yrow.ker <- ystep * c(0:(nr-1),-(nr:1))
   z.ker <- zstep * c(0:(dimz-1), -(dimz:1))
   pixarea <- xstep * ystep
   kerpixvol <- xstep * ystep * zstep
   
-  #' calculating tapering values for z-coordinate
+  # calculating tapering values for z-coordinate
   ztap <- rep(1,2*dimz)
   if(taper){
-    #' get 'zero points' to lie somewhere in the middle of the extremes beyond the raw
-    #'   zrange (zrange) and within the extended zrange (zkrange)
+    # get 'zero points' to lie somewhere in the middle of the extremes beyond the raw
+    #   zrange (zrange) and within the extended zrange (zkrange)
     zkrange <- range(z.ker)
     zlo <- zkrange[1]+(zrange[1]-zkrange[1])/2
     zup <- zkrange[2]-(zkrange[2]-zrange[2])/2
@@ -260,7 +260,7 @@ multiscale.density <- function(pp,h0,hp=NULL,h0fac=c(0.25,1.5),edge=c("uniform",
   
   if(verbose) cat("Done.\nTaking FFT of kernel...")
   
-  #' Fourier transform of kernel
+  # Fourier transform of kernel
   fK <- fft(Kern)
   
   if(verbose) cat("Done.\nDiscretising point locations...")
@@ -270,11 +270,11 @@ multiscale.density <- function(pp,h0,hp=NULL,h0fac=c(0.25,1.5),edge=c("uniform",
   kfac <- factor(kslice, levels=1:(2*dimz))
   
   Xpad <- tapplysum(weights, list(rowfac, colfac, kfac))
-  #' was:
+  # was:
   # Xpad <- tsum(weights, list(rowfac, colfac, kfac))
   # Xpad <- unname(unclass(Xpad))
   
-  #' convolve point masses with kernel
+  # convolve point masses with kernel
   if(verbose) cat("Done.\nFFT of point locations...")
   fX <- fft(Xpad)
   if(verbose) cat("Inverse FFT of smoothed point locations...")
@@ -285,8 +285,8 @@ multiscale.density <- function(pp,h0,hp=NULL,h0fac=c(0.25,1.5),edge=c("uniform",
               signif(max(abs(Im(sm))),3), "]\n"))
   }
   
-  #' identify scaling values based on range of available z-coordinates;
-  #'  restrict attention to those requested by 'h0fac'
+  # identify scaling values based on range of available z-coordinates;
+  #  restrict attention to those requested by 'h0fac'
   ei <- exp(-zvalues)
   eiw <- which(ei>=h0fac[1] & ei<=h0fac[2])
   avals <- ei[eiw]
@@ -294,8 +294,8 @@ multiscale.density <- function(pp,h0,hp=NULL,h0fac=c(0.25,1.5),edge=c("uniform",
   hlist <- list()
   for(i in 1:length(avals)) hlist[[i]] <- avals[i]*h.hypo[WM,drop=FALSE]
   
-  #' turn each relevant layer of the returned FFT array into a pixel image,
-  #'  giving the raw (un-edge-corrected) result for that scaling
+  # turn each relevant layer of the returned FFT array into a pixel image,
+  #  giving the raw (un-edge-corrected) result for that scaling
   raw <- Re(sm)[1:nr,1:nc,1:dimz]
   rawlist <- list()
   for(i in 1:length(eiw)) rawlist[[i]] <- im(raw[,,eiw[i]],xcol=WM$xcol,yrow=WM$yrow)[W,drop=FALSE]
@@ -306,10 +306,10 @@ multiscale.density <- function(pp,h0,hp=NULL,h0fac=c(0.25,1.5),edge=c("uniform",
   WK <- elist <- NULL
   edgeW <- 1
   
-  #' edge-correction
+  # edge-correction
   zeta.index <- which.min((zhi(zvalues,hhash.log)-exp(hhash.log))^2) #' find slice of z corresponding to 'zero plane' (as close as possible) for placement of R^2 (works slightly better on h scale)
   if(edge=="uniform"){
-    #' convolve window with kernel
+    # convolve window with kernel
     Wpad <- array(0, dim=2*c(nr, nc, dimz))
     Wpad[1:nr, 1:nc, zeta.index] <- WM$m * pixarea #' insert W plane here
     if(verbose) cat("FFT of window...")
@@ -325,12 +325,12 @@ multiscale.density <- function(pp,h0,hp=NULL,h0fac=c(0.25,1.5),edge=c("uniform",
     
     elist <- lambda <- list()   
     
-    #' Uniform-type edge correction: edge weights associated with pixels
-    #'  The loop below cycles through each bandwidth adjustment factor 
-    #'  computed above and extracts the edge-correction surface for each.
-    #'  Note that $\zeta$ is still required here since the R^2 plane won't be
-    #'  *exactly* at z=0 in general due to discretisation, but will be close,
-    #'  and is identified as zvalues[zeta.index]
+    # Uniform-type edge correction: edge weights associated with pixels
+    #  The loop below cycles through each bandwidth adjustment factor 
+    #  computed above and extracts the edge-correction surface for each.
+    #  Note that $\zeta$ is still required here since the R^2 plane won't be
+    #  *exactly* at z=0 in general due to discretisation, but will be close,
+    #  and is identified as zvalues[zeta.index]
     
     for(i in 1:length(avals)){
       if(verbose) cat(paste(i," "))
@@ -348,7 +348,7 @@ multiscale.density <- function(pp,h0,hp=NULL,h0fac=c(0.25,1.5),edge=c("uniform",
       lambda[[i]] <- rawlist[[i]]/edgeW
     }
     
-    #' Construct a list of images, with names reflecting the global bandwidth scaling
+    # Construct a list of images, with names reflecting the global bandwidth scaling
     if(!intensity) lambda <- lapply(lambda,function(x) x/integral(x))
     names(elist) <- names(lambda) <- bwvals
     result$q <- rev(elist)
@@ -356,7 +356,7 @@ multiscale.density <- function(pp,h0,hp=NULL,h0fac=c(0.25,1.5),edge=c("uniform",
   }
   if(verbose) cat("\n")
   
-  # if(taper) result$ztap <- cbind(z.ker,ztap) #' For testing/diagnostics
+  # if(taper) result$ztap <- cbind(z.ker,ztap) # For testing/diagnostics
   result$h <- h.spec
   result$h0range <- range(bwvals)
   result$gamma <- gamma
