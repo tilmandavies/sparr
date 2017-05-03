@@ -293,24 +293,30 @@ bivariate.density <- function(pp,h0,hp=NULL,adapt=FALSE,resolution=128,gamma.sca
 		notin <- !inside.owin(x=evalxy[,1],y=evalxy[,2],w=W)
 		surf <- rep(NA,nrow(evalxy))
 		ef <- NULL
-		
+
+		# Bivariate kernel function centered at 0,0 with isotropic bandwidth h
+		kernel2d <- function(x, y, h) {
+		  1/(2*pi*h*h)*exp(-0.5*(x*x+y*y)/(h*h))
+		}
+
+		# Approximation of definite integral of f over a grid with gridsize dx x dy via summation
+		dintegral <- function(f, dx, dy) {
+		  sum(f)*dx*dy
+		}
+
 		if(edge=="uniform"){
 			qhz <- rep(NA,resolution^2)
 			if(verbose) pb <- txtProgressBar(0,nrow(evalxy))
 			for(i in 1:nrow(evalxy)){
 				ht <- h.hypo.mat[which(pilot.density$yrow==evalxy[i,2]),which(pilot.density$xcol==evalxy[i,1])]
 				if(is.na(ht)) next
-		      
-		    	gxy <- ht^(-2)*(exp(-0.5*rowSums((cbind(evalxy[,1]-evalxy[i,1],evalxy[,2]-evalxy[i,2])/ht)^2))/(2*pi))
-		    	gxy[notin] <- NA
-		    	qhz[i] <- integral(im(matrix(gxy,resolution,resolution,byrow=TRUE),xcol=pilot.density$xcol,yrow=pilot.density$yrow))
-		      
-		    	uxy <- cbind(evalxy[i,1]-pp$x,evalxy[i,2]-pp$y)/h.spec
-		    	ivals <- h.spec^(-2)*(exp(-0.5*rowSums(uxy^2))/(2*pi))
-		    
-		    	if(!intensity) surf[i] <- mean(ivals)/qhz[i]
-		    	else surf[i] <- sum(ivals)/qhz[i]
-		    	if(verbose) setTxtProgressBar(pb,i)
+				gxy <- kernel2d(evalxy[!notin,1]-evalxy[i,1], evalxy[!notin,2]-evalxy[i,2], ht)
+		    qhz[i] <- dintegral(gxy, pilot.density$xstep, pilot.density$ystep)
+		    ivals <- kernel2d(pp$x-evalxy[i,1], pp$y-evalxy[i,2], h.spec)
+
+        if(!intensity) surf[i] <- mean(ivals)/qhz[i]
+        else surf[i] <- sum(ivals)/qhz[i]
+        if(verbose) setTxtProgressBar(pb,i)
 			}
 			if(verbose) close(pb)
 			ef <- im(matrix(qhz,resolution,resolution,byrow=TRUE),xcol=pilot.density$xcol,yrow=pilot.density$yrow)
