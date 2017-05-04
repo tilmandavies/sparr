@@ -326,16 +326,13 @@ bivariate.density <- function(pp,h0,hp=NULL,adapt=FALSE,resolution=128,gamma.sca
 		  qx <- rep(1,n)
 		  if(verbose) pb <- txtProgressBar(0,n+nrow(evalxy))
 		  for(i in 1:n){
-		    pxy <- h.spec[i]^(-2)*(exp(-0.5*rowSums((cbind(evalxy[,1]-pp$x[i],evalxy[,2]-pp$y[i])/h.spec[i])^2))/(2*pi))
-		    pxy[notin] <- NA
-		    qx[i] <- integral(im(matrix(pxy,resolution,resolution,byrow=TRUE),xcol=pilot.density$xcol,yrow=pilot.density$yrow))
+		    pxy <- kernel2d(evalxy[!notin,1]-pp$x[i], evalxy[!notin,2]-pp$y[i], h.spec[i])
+		    qx[i] <- dintegral(pxy, pilot.density$xstep, pilot.density$ystep)
 		    if(verbose) setTxtProgressBar(pb,i)
 		  }
 		  
 		  for(i in 1:nrow(evalxy)){
-		    uxy <- cbind(evalxy[i,1]-pp$x,evalxy[i,2]-pp$y)/h.spec
-		    ivals <- h.spec^(-2)*(exp(-0.5*rowSums(uxy^2))/(2*pi))
-		      
+		    ivals <- kernel2d(pp$x-evalxy[i,1], pp$y-evalxy[i,2], h.spec)
 		    if(!intensity) surf[i] <- mean(ivals/qx)
 		    else surf[i] <- sum(ivals/qx)
 		    if(verbose) setTxtProgressBar(pb,n+i)
@@ -347,8 +344,7 @@ bivariate.density <- function(pp,h0,hp=NULL,adapt=FALSE,resolution=128,gamma.sca
 		if(edge=="none"){
 		  if(verbose) pb <- txtProgressBar(0,nrow(evalxy))
 		  for(i in 1:nrow(evalxy)){
-		    uxy <- cbind(evalxy[i,1]-pp$x,evalxy[i,2]-pp$y)/h.spec
-		    ivals <- h.spec^(-2)*(exp(-0.5*rowSums(uxy^2))/(2*pi))
+		    ivals <- kernel2d(pp$x-evalxy[i,1], pp$y-evalxy[i,2], h.spec)
 		    if(!intensity) surf[i] <- mean(ivals)
 		    else surf[i] <- sum(ivals)
 		    if(verbose) setTxtProgressBar(pb,i)
