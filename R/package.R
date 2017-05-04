@@ -219,9 +219,8 @@ NULL
 #' @importFrom utils setTxtProgressBar txtProgressBar
 #' @importFrom stats IQR density dnorm fft optimise pnorm quantile rnorm sd var
 #' @importFrom graphics axis box contour pairs par plot points title
-#' @importFrom grDevices dev.hold
+#' @importFrom grDevices dev.hold dev.flush
 #' @importFrom spatstat.utils prange tapplysum inside.range
-#' @importFrom animation ani.pause ani.options
 #' @importFrom parallel detectCores
 #' @importFrom doParallel registerDoParallel
 #' @importFrom foreach %dopar% foreach
