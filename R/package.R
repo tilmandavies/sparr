@@ -226,4 +226,6 @@ NULL
 #' @importFrom doParallel registerDoParallel
 #' @importFrom foreach %dopar% foreach
 #' @import spatstat
+#' @importFrom Rcpp evalCpp
+#' @useDynLib sparr
 NULL
