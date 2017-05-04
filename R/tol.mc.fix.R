@@ -38,7 +38,7 @@ tol.mc.fix <- function(rs,ITER,parallel,verbose,...){
     if(verbose) cat(paste("Running MC iterations on",parallel,"/",ncores,"cores..."))
     if(parallel>ncores) stop("Parallel cores requested exceeds available count")
     registerDoParallel(cores=parallel)
-    mclist <- foreach(i=1:(ITER-1),.packages=c("spatstat","sparr2")) %dopar% {
+    mclist <- foreach(i=1:(ITER-1),.packages=c("spatstat","sparr")) %dopar% {
       shuff <- sample(indx)
       ftemp <- bivariate.density(pool[shuff[1:nf]],h0=fh,resolution=res,edge=edg)
       gtemp <- bivariate.density(pool[shuff[(nf+1):(nf+ng)]],h0=gh,resolution=res,edge=edg)

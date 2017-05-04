@@ -34,7 +34,7 @@ tol.mc.ada <- function(rs,ITER,parallel,verbose,...){
     if(verbose) cat(paste("Running MC iterations on",parallel,"/",ncores,"cores..."))
     if(parallel>ncores) stop("Parallel cores requested exceeds available count")
     registerDoParallel(cores=parallel)
-    mclist <- foreach(i=1:(ITER-1),.packages=c("spatstat","sparr2")) %dopar% {
+    mclist <- foreach(i=1:(ITER-1),.packages=c("spatstat","sparr")) %dopar% {
       shuff <- sample(indx)
       rtemp <- as.matrix(risk(pool[shuff[1:nf]],pool[shuff[(nf+1):(nf+ng)]],log=logt,verbose=FALSE,h0=c(fd$h0,gd$h0),hp=c(fd$hp,gd$hp),resolution=res,edg=edg,adapt=TRUE,...)$rr)
       return(rtemp>=rmat)
