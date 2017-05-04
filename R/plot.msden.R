@@ -21,7 +21,7 @@ plot.msden <- function(x, what = c("z", "edge", "bw"), sleep = 0.2, override.par
   
   if(override.par) par(mfrow=c(1,1),mar=rep(2,4))
   
-  ani.options(interval=sleep)
+  # ani.options(interval=sleep)
   hv <- as.numeric(names(lst))
   for(i in 1:length(lst)){
   	dev.hold()
@@ -33,7 +33,9 @@ plot.msden <- function(x, what = c("z", "edge", "bw"), sleep = 0.2, override.par
     axis(1)
     axis(2)
     box(bty="l")
-    ani.pause()
+    # ani.pause()
+    dev.flush()
+    Sys.sleep(sleep)
   }
   invisible(NULL)
 }
