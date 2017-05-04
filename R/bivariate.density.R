@@ -295,6 +295,11 @@ bivariate.density <- function(pp,h0,hp=NULL,adapt=FALSE,resolution=128,gamma.sca
 		surf <- rep(NA,nrow(evalxy))
 		ef <- NULL
 
+		# we need only evaluate on points inside the owin
+		evalxy.in <- evalxy[!notin,]
+		h.hypo.in <- h.hypo.vec[!notin]
+		surf.in   <- numeric(nrow(evalxy.in))
+
 		# Bivariate kernel function centered at 0,0 with isotropic bandwidth h
 		kernel2d <- function(x, y, h) {
 		  1/(2*pi*h*h)*exp(-0.5*(x*x+y*y)/(h*h))
@@ -306,36 +311,36 @@ bivariate.density <- function(pp,h0,hp=NULL,adapt=FALSE,resolution=128,gamma.sca
 		}
 
 		if(edge=="uniform"){
-			qhz <- rep(NA,resolution^2)
-			if(verbose) pb <- txtProgressBar(0,nrow(evalxy))
-			for(i in 1:nrow(evalxy)){
-				ht <- h.hypo.vec[i]
-				if(is.na(ht)) next
-				gxy <- kernel2d(evalxy[!notin,1]-evalxy[i,1], evalxy[!notin,2]-evalxy[i,2], ht)
-		    qhz[i] <- dintegral(gxy, pilot.density$xstep, pilot.density$ystep)
-		    ivals <- kernel2d(pp$x-evalxy[i,1], pp$y-evalxy[i,2], h.spec)
+			qhz.in <- numeric(nrow(evalxy.in))
+			if(verbose) pb <- txtProgressBar(0,nrow(evalxy.in))
+			for(i in 1:nrow(evalxy.in)){
+				gxy <- kernel2d(evalxy.in[,1]-evalxy.in[i,1], evalxy.in[,2]-evalxy.in[i,2], h.hypo.in[i])
+				qhz.in[i] <- dintegral(gxy, pilot.density$xstep, pilot.density$ystep)
+		    ivals <- kernel2d(pp$x-evalxy.in[i,1], pp$y-evalxy.in[i,2], h.spec)
 
-        if(!intensity) surf[i] <- mean(ivals)/qhz[i]
-        else surf[i] <- sum(ivals)/qhz[i]
+        if(!intensity) surf.in[i] <- mean(ivals)/qhz.in[i]
+        else surf.in[i] <- sum(ivals)/qhz.in[i]
         if(verbose) setTxtProgressBar(pb,i)
 			}
 			if(verbose) close(pb)
+			qhz <- rep(NA,resolution^2)
+			qhz[!notin] <- qhz.in
 			ef <- im(matrix(qhz,resolution,resolution,byrow=TRUE),xcol=pilot.density$xcol,yrow=pilot.density$yrow)
 		}
 		
 		if(edge=="diggle"){
 		  qx <- rep(1,n)
-		  if(verbose) pb <- txtProgressBar(0,n+nrow(evalxy))
+		  if(verbose) pb <- txtProgressBar(0,n+nrow(evalxy.in))
 		  for(i in 1:n){
-		    pxy <- kernel2d(evalxy[!notin,1]-pp$x[i], evalxy[!notin,2]-pp$y[i], h.spec[i])
+		    pxy <- kernel2d(evalxy.in[,1]-pp$x[i], evalxy.in[,2]-pp$y[i], h.spec[i])
 		    qx[i] <- dintegral(pxy, pilot.density$xstep, pilot.density$ystep)
 		    if(verbose) setTxtProgressBar(pb,i)
 		  }
 		  
-		  for(i in 1:nrow(evalxy)){
-		    ivals <- kernel2d(pp$x-evalxy[i,1], pp$y-evalxy[i,2], h.spec)
-		    if(!intensity) surf[i] <- mean(ivals/qx)
-		    else surf[i] <- sum(ivals/qx)
+		  for(i in 1:nrow(evalxy.in)){
+		    ivals <- kernel2d(pp$x-evalxy.in[i,1], pp$y-evalxy.in[i,2], h.spec)
+		    if(!intensity) surf.in[i] <- mean(ivals/qx)
+		    else surf.in[i] <- sum(ivals/qx)
 		    if(verbose) setTxtProgressBar(pb,n+i)
 		  }
 		  if(verbose) close(pb)
@@ -343,17 +348,17 @@ bivariate.density <- function(pp,h0,hp=NULL,adapt=FALSE,resolution=128,gamma.sca
 		}
 		  
 		if(edge=="none"){
-		  if(verbose) pb <- txtProgressBar(0,nrow(evalxy))
-		  for(i in 1:nrow(evalxy)){
-		    ivals <- kernel2d(pp$x-evalxy[i,1], pp$y-evalxy[i,2], h.spec)
-		    if(!intensity) surf[i] <- mean(ivals)
-		    else surf[i] <- sum(ivals)
+		  if(verbose) pb <- txtProgressBar(0,nrow(evalxy.in))
+		  for(i in 1:nrow(evalxy.in)){
+		    ivals <- kernel2d(pp$x-evalxy.in[i,1], pp$y-evalxy.in[i,2], h.spec)
+		    if(!intensity) surf.in[i] <- mean(ivals)
+		    else surf.in[i] <- sum(ivals)
 		    if(verbose) setTxtProgressBar(pb,i)
 		  }
 		  if(verbose) close(pb)
 		}
 		
-		surf[notin] <- NA
+		surf[!notin] <- surf.in
 		surf <- im(matrix(surf,resolution,resolution,byrow=TRUE),xcol=pilot.density$xcol,yrow=pilot.density$yrow)
 		
 	} else {
