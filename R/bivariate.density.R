@@ -280,6 +280,7 @@ bivariate.density <- function(pp,h0,hp=NULL,adapt=FALSE,resolution=128,gamma.sca
 		h.spec <- h0*pmin(pspec,trim*gspd)/gamma
 		h.hypo <- h0*im(matrix(pmin(as.vector(as.matrix(pilot.density^(-0.5))),trim*gspd),resolution,resolution)/gamma,xcol=pilot.density$xcol,yrow=pilot.density$yrow)
 		h.hypo.mat <- as.matrix(h.hypo)
+		h.hypo.vec <- as.numeric(t(h.hypo.mat))
 
 		if(!is.null(davies.baddeley)){
 			db <- checkdb(davies.baddeley)
@@ -308,7 +309,7 @@ bivariate.density <- function(pp,h0,hp=NULL,adapt=FALSE,resolution=128,gamma.sca
 			qhz <- rep(NA,resolution^2)
 			if(verbose) pb <- txtProgressBar(0,nrow(evalxy))
 			for(i in 1:nrow(evalxy)){
-				ht <- h.hypo.mat[which(pilot.density$yrow==evalxy[i,2]),which(pilot.density$xcol==evalxy[i,1])]
+				ht <- h.hypo.vec[i]
 				if(is.na(ht)) next
 				gxy <- kernel2d(evalxy[!notin,1]-evalxy[i,1], evalxy[!notin,2]-evalxy[i,2], ht)
 		    qhz[i] <- dintegral(gxy, pilot.density$xstep, pilot.density$ystep)
