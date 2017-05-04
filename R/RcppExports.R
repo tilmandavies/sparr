@@ -5,3 +5,23 @@ kernel2d <- function(x, y, h) {
     .Call('sparr_kernel2d', PACKAGE = 'sparr', x, y, h)
 }
 
+kernel2d_adapt_none <- function(x, y, h, ex, ey) {
+    .Call('sparr_kernel2d_adapt_none', PACKAGE = 'sparr', x, y, h, ex, ey)
+}
+
+ec_uniform <- function(ex, ey, h, dA) {
+    .Call('sparr_ec_uniform', PACKAGE = 'sparr', ex, ey, h, dA)
+}
+
+ec_diggle <- function(x, y, h, ex, ey, dA) {
+    .Call('sparr_ec_diggle', PACKAGE = 'sparr', x, y, h, ex, ey, dA)
+}
+
+kernel2d_adapt_uniform <- function(x, y, h, edge, ex, ey) {
+    .Call('sparr_kernel2d_adapt_uniform', PACKAGE = 'sparr', x, y, h, edge, ex, ey)
+}
+
+kernel2d_adapt_diggle <- function(x, y, h, edge, ex, ey) {
+    .Call('sparr_kernel2d_adapt_diggle', PACKAGE = 'sparr', x, y, h, edge, ex, ey)
+}
+

@@ -17,3 +17,75 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// kernel2d_adapt_none
+NumericVector kernel2d_adapt_none(NumericVector x, NumericVector y, NumericVector h, NumericVector ex, NumericVector ey);
+RcppExport SEXP sparr_kernel2d_adapt_none(SEXP xSEXP, SEXP ySEXP, SEXP hSEXP, SEXP exSEXP, SEXP eySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type h(hSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type ex(exSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type ey(eySEXP);
+    rcpp_result_gen = Rcpp::wrap(kernel2d_adapt_none(x, y, h, ex, ey));
+    return rcpp_result_gen;
+END_RCPP
+}
+// ec_uniform
+NumericVector ec_uniform(NumericVector ex, NumericVector ey, NumericVector h, double dA);
+RcppExport SEXP sparr_ec_uniform(SEXP exSEXP, SEXP eySEXP, SEXP hSEXP, SEXP dASEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type ex(exSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type ey(eySEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type h(hSEXP);
+    Rcpp::traits::input_parameter< double >::type dA(dASEXP);
+    rcpp_result_gen = Rcpp::wrap(ec_uniform(ex, ey, h, dA));
+    return rcpp_result_gen;
+END_RCPP
+}
+// ec_diggle
+NumericVector ec_diggle(NumericVector x, NumericVector y, NumericVector h, NumericVector ex, NumericVector ey, double dA);
+RcppExport SEXP sparr_ec_diggle(SEXP xSEXP, SEXP ySEXP, SEXP hSEXP, SEXP exSEXP, SEXP eySEXP, SEXP dASEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type h(hSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type ex(exSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type ey(eySEXP);
+    Rcpp::traits::input_parameter< double >::type dA(dASEXP);
+    rcpp_result_gen = Rcpp::wrap(ec_diggle(x, y, h, ex, ey, dA));
+    return rcpp_result_gen;
+END_RCPP
+}
+// kernel2d_adapt_uniform
+NumericVector kernel2d_adapt_uniform(NumericVector x, NumericVector y, NumericVector h, NumericVector edge, NumericVector ex, NumericVector ey);
+RcppExport SEXP sparr_kernel2d_adapt_uniform(SEXP xSEXP, SEXP ySEXP, SEXP hSEXP, SEXP edgeSEXP, SEXP exSEXP, SEXP eySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type h(hSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type edge(edgeSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type ex(exSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type ey(eySEXP);
+    rcpp_result_gen = Rcpp::wrap(kernel2d_adapt_uniform(x, y, h, edge, ex, ey));
+    return rcpp_result_gen;
+END_RCPP
+}
+// kernel2d_adapt_diggle
+NumericVector kernel2d_adapt_diggle(NumericVector x, NumericVector y, NumericVector h, NumericVector edge, NumericVector ex, NumericVector ey);
+RcppExport SEXP sparr_kernel2d_adapt_diggle(SEXP xSEXP, SEXP ySEXP, SEXP hSEXP, SEXP edgeSEXP, SEXP exSEXP, SEXP eySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type h(hSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type edge(edgeSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type ex(exSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type ey(eySEXP);
+    rcpp_result_gen = Rcpp::wrap(kernel2d_adapt_diggle(x, y, h, edge, ex, ey));
+    return rcpp_result_gen;
+END_RCPP
+}

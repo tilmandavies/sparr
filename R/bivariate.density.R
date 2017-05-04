@@ -299,59 +299,25 @@ bivariate.density <- function(pp,h0,hp=NULL,adapt=FALSE,resolution=128,gamma.sca
 		# we need only evaluate on points inside the owin
 		evalxy.in <- evalxy[!notin,]
 		h.hypo.in <- h.hypo.vec[!notin]
-		surf.in   <- numeric(nrow(evalxy.in))
-
-		# Approximation of definite integral of f over a grid with gridsize dx x dy via summation
-		dintegral <- function(f, dx, dy) {
-		  sum(f)*dx*dy
-		}
 
 		if(edge=="uniform"){
-			qhz.in <- numeric(nrow(evalxy.in))
-			if(verbose) pb <- txtProgressBar(0,nrow(evalxy.in))
-			for(i in 1:nrow(evalxy.in)){
-				gxy <- kernel2d(evalxy.in[,1]-evalxy.in[i,1], evalxy.in[,2]-evalxy.in[i,2], h.hypo.in[i])
-				qhz.in[i] <- dintegral(gxy, pilot.density$xstep, pilot.density$ystep)
-		    ivals <- kernel2d(pp$x-evalxy.in[i,1], pp$y-evalxy.in[i,2], h.spec)
-
-        if(!intensity) surf.in[i] <- mean(ivals)/qhz.in[i]
-        else surf.in[i] <- sum(ivals)/qhz.in[i]
-        if(verbose) setTxtProgressBar(pb,i)
-			}
-			if(verbose) close(pb)
-			qhz <- rep(NA,resolution^2)
-			qhz[!notin] <- qhz.in
+		  qhz.in <- ec_uniform(evalxy.in[,1], evalxy.in[,2], h.hypo.in, pilot.density$xstep*pilot.density$ystep)
+		  surf.in <- kernel2d_adapt_uniform(pp$x, pp$y, h.spec, qhz.in, evalxy.in[,1], evalxy.in[,2])
+			if (!intensity) surf.in = surf.in / n
+		  qhz <- rep(NA,resolution^2)
+		  qhz[!notin] <- qhz.in
 			ef <- im(matrix(qhz,resolution,resolution,byrow=TRUE),xcol=pilot.density$xcol,yrow=pilot.density$yrow)
 		}
 		
 		if(edge=="diggle"){
-		  qx <- rep(1,n)
-		  if(verbose) pb <- txtProgressBar(0,n+nrow(evalxy.in))
-		  for(i in 1:n){
-		    pxy <- kernel2d(evalxy.in[,1]-pp$x[i], evalxy.in[,2]-pp$y[i], h.spec[i])
-		    qx[i] <- dintegral(pxy, pilot.density$xstep, pilot.density$ystep)
-		    if(verbose) setTxtProgressBar(pb,i)
-		  }
-		  
-		  for(i in 1:nrow(evalxy.in)){
-		    ivals <- kernel2d(pp$x-evalxy.in[i,1], pp$y-evalxy.in[i,2], h.spec)
-		    if(!intensity) surf.in[i] <- mean(ivals/qx)
-		    else surf.in[i] <- sum(ivals/qx)
-		    if(verbose) setTxtProgressBar(pb,n+i)
-		  }
-		  if(verbose) close(pb)
-		  ef <- qx
+		  ef <- ec_diggle(pp$x, pp$y, h.spec, evalxy.in[,1], evalxy.in[,2], pilot.density$xstep*pilot.density$ystep);
+		  surf.in <- kernel2d_adapt_diggle(pp$x, pp$y, h.spec, ef, evalxy.in[,1], evalxy.in[,2])
+		  if (!intensity) surf.in = surf.in / n
 		}
 		  
 		if(edge=="none"){
-		  if(verbose) pb <- txtProgressBar(0,nrow(evalxy.in))
-		  for(i in 1:nrow(evalxy.in)){
-		    ivals <- kernel2d(pp$x-evalxy.in[i,1], pp$y-evalxy.in[i,2], h.spec)
-		    if(!intensity) surf.in[i] <- mean(ivals)
-		    else surf.in[i] <- sum(ivals)
-		    if(verbose) setTxtProgressBar(pb,i)
-		  }
-		  if(verbose) close(pb)
+		  surf.in <- kernel2d_adapt_none(pp$x, pp$y, h.spec, evalxy.in[,1], evalxy.in[,2])
+		  if (!intensity) surf.in = surf.in / n
 		}
 		
 		surf[!notin] <- surf.in
