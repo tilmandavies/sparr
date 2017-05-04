@@ -23,7 +23,7 @@ plot.msden <- function(x, what = c("z", "edge", "bw"), sleep = 0.2, override.par
   
   hv <- as.numeric(names(lst))
   for(i in 1:length(lst)){
-  	grDevices::dev.hold()
+  	dev.hold()
     ellip$x <- lst[[i]]
     ellip$main <- paste("h0 =",round(hv[i],5))
     do.call("plot.im",ellip)
@@ -31,7 +31,7 @@ plot.msden <- function(x, what = c("z", "edge", "bw"), sleep = 0.2, override.par
     axis(1)
     axis(2)
     box(bty="l")
-    grDevices::dev.flush()
+    dev.flush()
     Sys.sleep(sleep)
   }
   invisible(NULL)
