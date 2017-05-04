@@ -1,3 +1,4 @@
+#' @export
 summary.msden <- function(object,...){
   cat("Multi-scale bivariate adaptive kernel density/intensity estimate\n\n")
   h0r <- round(object$h0range,4)

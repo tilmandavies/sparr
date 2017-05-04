@@ -2,10 +2,10 @@
 taperoff <- function(x, zeropoint=0, onepoint=1,
                      type=c("smooth", "cosine")) {
   type <- match.arg(type)
-  #'   cosine taper is standard in engineering (apparently)
-  #' 
-  #'   smooth taper is the pure mathematicians' favorite example
-  #'                of a Smooth Partition of Unity
+  #   cosine taper is standard in engineering (apparently)
+  #
+  #   smooth taper is the pure mathematicians' favorite example
+  #                of a Smooth Partition of Unity
   y <- (x-zeropoint)/(onepoint - zeropoint)
   z <- switch(type,
               cosine = ifelse(y <= 0, 0,

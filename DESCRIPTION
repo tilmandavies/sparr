@@ -7,8 +7,9 @@ Author: T.M. Davies
 Maintainer: Tilman M. Davies <tdavies@maths.otago.ac.nz>
 Description: Provides functions to estimate kernel-smoothed spatial (and spatio-temporal in future) relative risk functions and perform subsequent inference.
 Depends: R (>= 2.10.1), spatstat
-Imports: spatstat.utils, MASS, doParallel, parallel, foreach, animation
+Imports: spatstat.utils, doParallel, parallel, foreach, animation
 License: GPL (>= 2)
 LazyLoad: yes
 NeedsCompilation: no
 Packaged: 2017-05-01 22:58:10 UTC; tdavies
+RoxygenNote: 6.0.1

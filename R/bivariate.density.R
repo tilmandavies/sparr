@@ -1,3 +1,213 @@
+#' Bivariate kernel density/intensity estimation
+#' 
+#' Provides an isotropic adaptive or fixed bandwidth kernel density/intensity
+#' estimate of bivariate/planar/2D data.
+#' 
+#' Given a data set \eqn{x_1,\dots,x_n} in 2D, the isotropic kernel estimate of
+#' its probability density function, \eqn{\hat{f}(x)}{\hat{f}(x)}, is given by
+#' \deqn{\hat{f}(y)=n^{-1}\sum_{i=1}^{n}h(x_i)^{-2}K((y-x_i)/h(x_i)) }
+#' where \eqn{h(x)}{h(x)} is the bandwidth function, and \eqn{K(.)} is the
+#' bivariate standard normal smoothing kernel. Edge-correction factors (not
+#' shown above) are also implemented.
+#' 
+#' \describe{
+#'   \item{\bold{Fixed}}{
+#'     The classic fixed bandwidth kernel estimator is used when
+#'     \code{adapt = FALSE}. This amounts to setting \eqn{h(u)=}\code{h0} for all \eqn{u}.
+#'     Further details can be found in the documentation for \code{\link[spatstat]{density.ppp}}.}
+#'   \item{\bold{Adaptive}}{Setting \code{adapt = TRUE} requests computation of Abramson's (1982)
+#'     variable-bandwidth estimator. Under this framework, we have
+#'     \eqn{h(u)=}\code{h0}*min[\eqn{\tilde{f}(u)^{-1/2}},\eqn{G*}\code{trim}]/\eqn{\gamma},
+#'     where \eqn{\tilde{f}(u)} is a fixed-bandwidth kernel density estimate
+#'     computed using the pilot bandwidth \code{hp}.
+#'     \itemize{
+#'       \item Global smoothing of the variable bandwidths is controlled with the global bandwidth
+#'         \code{h0}.
+#'       \item In the above statement, \eqn{G} is the geometric mean of the
+#'         ``bandwidth factors'' \eqn{\tilde{f}(x_i)^{-1/2}}; \eqn{i=1,\dots,n}. By
+#'         default, the variable bandwidths are rescaled by \eqn{\gamma=G}, which is
+#'         set with \code{gamma.scale = "geometric"}. This allows \code{h0} to be
+#'         considered on the same scale as the smoothing parameter in a fixed-bandwidth
+#'         estimate i.e. on the scale of the recorded data. You can use any other
+#'         rescaling of \code{h0} by setting \code{gamma.scale} to be any scalar
+#'         positive numeric value; though note this only affects \eqn{\gamma} -- see
+#'         the next bullet. When using a scale-invariant \code{h0}, set
+#'         \code{gamma.scale = 1}.
+#'      \item The variable bandwidths must be trimmed to
+#'         prevent excessive values (Hall and Marron, 1988). This is achieved through
+#'         \code{trim}, as can be seen in the equation for \eqn{h(u)} above. The
+#'         trimming of the variable bandwidths is universally enforced by the geometric
+#'         mean of the bandwidth factors \eqn{G} independent of the choice of
+#'         \eqn{\gamma}. By default, the function truncates bandwidth factors at five
+#'         times their geometric mean. For stricter trimming, reduce \code{trim}, for
+#'         no trimming, set \code{trim = Inf}.
+#'      \item For even moderately sized data sets
+#'         and evaluation grid \code{resolution}, adaptive kernel estimation can be
+#'         rather computationally expensive. The argument \code{davies.baddeley} is
+#'         used to approximate an adaptive kernel estimate by a sum of fixed bandwidth
+#'         estimates operating on appropriate subsets of \code{pp}. These subsets are
+#'         defined by ``bandwidth bins'', which themselves are delineated by a quantile
+#'         step value \eqn{0<\delta<1}. E.g. setting \eqn{\delta=0.05} will create 20
+#'         bandwidth bins based on the 0.05th quantiles of the Abramson variable
+#'         bandwidths. Adaptive edge-correction also utilises the partitioning, with
+#'         pixel-wise bandwidth bins defined using the value \eqn{0<\beta<1}, and the
+#'         option to decrease the resolution of the edge-correction surface for
+#'         computation to a [\eqn{L} \eqn{\times}{x} \eqn{L}] grid, where \eqn{0 <L
+#'         \le} \code{resolution}. If \code{davies.baddeley} is supplied as a vector of
+#'         length 3, then the values \code{[1], [2], and [3]} correspond to the
+#'         parameters \eqn{\delta}, \eqn{\beta}, and \eqn{L_M=L_N} in Davies and
+#'         Baddeley (2017). If the argument is simply a single numeric value, it is
+#'         used for both \eqn{\delta} and \eqn{\beta}, with
+#'         \eqn{L_M=L_N=}\code{resolution} (i.e. no edge-correction surface
+#'         coarsening).
+#'      \item Computation of leave-one-out values (when
+#'         \code{leaveoneout = TRUE}) is done by brute force, and is therefore very
+#'         computationally expensive for adaptive smoothing. This is because the
+#'         leave-one-out mechanism is applied to both the pilot estimation and the
+#'         final estimation stages. Experimental code to do this via parallel
+#'         processing using the \code{\link{foreach}} routine is implemented.
+#'         Fixed-bandwidth leave-one-out can be performed directly in
+#'         \code{\link[spatstat]{density.ppp}}.
+#'     }
+#'   }
+#' }
+#' 
+#' @aliases bivariate.density bivden
+#' 
+#' @param pp An object of class \code{\link[spatstat]{ppp}} giving the observed
+#'   2D data set to be smoothed.
+#' @param h0 Global bandwidth for adaptive smoothing or fixed bandwidth for
+#'   constant smoothing. A numeric value > 0.
+#' @param hp Pilot bandwidth (scalar, numeric > 0) to be used for fixed
+#'   bandwidth estimation of a pilot density in the case of adaptive smoothing.
+#'   If \code{NULL} (default), it will take on the value of \code{h0}. Ignored
+#'   when \code{adapt = FALSE} or if \code{pilot.density} is supplied as a
+#'   pre-defined pixel image.
+#' @param adapt Logical value indicating whether to perform adaptive kernel
+#'   estimation. See `Details'.
+#' @param resolution Numeric value > 0. Resolution of evaluation grid; the
+#'   density/intensity will be returned on a [\code{resolution} \eqn{\times}{x}
+#'   \code{resolution}] grid.
+#' @param gamma.scale Scalar, numeric value > 0; controls rescaling of the
+#'   variable bandwidths. Defaults to the geometric mean of the bandwidth factors
+#'   given the pilot density (as per Silverman, 1986). See `Details'.
+#' @param edge Character string giving the type of edge correction to employ.
+#'   \code{"uniform"} (default) corrects based on evaluation grid coordinate and
+#'   \code{"diggle"} reweights each observation-specific kernel. Setting
+#'   \code{edge = "none"} requests no edge correction. Further details can be
+#'   found in the documentation for \code{\link[spatstat]{density.ppp}}.
+#' @param intensity Logical value indicating whether to return an intensity
+#'   estimate (integrates to the sample size over the study region), or a density
+#'   estimate (default, integrates to 1).
+#' @param trim Numeric value > 0; controls bandwidth truncation for adaptive
+#'   estimation. See `Details'.
+#' @param xy Optional alternative specification of the evaluation grid; matches
+#'   the argument of the same tag in \code{\link[spatstat]{as.mask}}. If
+#'   supplied, \code{resolution} is ignored.
+#' @param pilot.density An optional pixel image (class
+#'   \code{\link[spatstat]{im}}) giving the pilot density to be used for
+#'   calculation of the variable bandwidths in adaptive estimation, \bold{or} a
+#'   \code{\link[spatstat]{ppp.object}} giving the data upon which to base a
+#'   fixed-bandwidth pilot estimate using \code{hp[1]}. If used, the pixel image
+#'   \emph{must} be defined over the same domain as the data given
+#' \code{resolution} or the supplied pre-set \code{xy} evaluation grid;
+#'   \bold{or} the planar point pattern data must be defined with respect to the
+#'   same polygonal study region as in \code{pp}.
+#' @param leaveoneout Logical value indicating whether to compute and return
+#'   the value of the density/intensity at each data point for an adaptive
+#'   estimate. See `Details'.
+#' @param parallelise Numeric argument to invoke parallel processing, giving
+#'   the number of CPU cores to use when \code{leaveoneout = TRUE}. Experimental.
+#'   Test your system first using \code{parallel::detectCores()} to identify the
+#'   number of cores available to you.
+#' @param davies.baddeley An optional numeric vector of length 3 to control
+#'   bandwidth partitioning for approximate adaptive estimation, giving the
+#'   quantile step values for the variable bandwidths for density/intensity and
+#'   edge correction surfaces and the resolution of the edge correction surface.
+#'   May also be provided as a single numeric value. See `Details'.
+#' @param verbose Logical value indicating whether to print a function progress
+#'   bar to the console when \code{adapt = TRUE}.
+#' 
+#' @return If \code{leaveoneout = FALSE}, an object of class \code{"bivden"}.
+#' This is effectively a list with the following components:
+#' \item{z}{The
+#' resulting density/intensity estimate, a pixel image object of class
+#' \code{\link[spatstat]{im}}.}
+#' 
+#' \item{h0}{A copy of the value of \code{h0}
+#' used.} \item{hp}{A copy of the value of \code{hp} used.}
+#' 
+#' \item{h}{A numeric
+#' vector of length equal to the number of data points, giving the bandwidth
+#' used for the corresponding observation in \code{pp}.}
+#' 
+#' \item{him}{A pixel
+#' image (class \code{\link[spatstat]{im}}), giving the `hypothetical' Abramson
+#' bandwidth at each pixel coordinate conditional upon the observed data.
+#' \code{NULL} for fixed-bandwidth estimates.}
+#' 
+#' \item{q}{Edge-correction
+#' weights; a pixel \code{\link[spatstat]{im}}age if \code{edge = "uniform"}, a
+#' numeric vector if \code{edge = "diggle"}, and \code{NULL} if \code{edge =
+#' "none"}.}
+#' 
+#' \item{gamma}{The value of \eqn{\gamma} used in scaling the
+#' bandwidths. \code{NA} if a fixed bandwidth estimate is computed.}
+#' 
+#' \item{geometric}{The geometric mean \eqn{G} of the untrimmed bandwidth
+#' factors \eqn{\tilde{f}(x_i)^{-1/2}}. \code{NA} if a fixed bandwidth estimate
+#' is computed.}
+#' 
+#' \item{pp}{A copy of the \code{\link[spatstat]{ppp.object}}
+#' initially passed to the \code{pp} argument, containing the data that were
+#' smoothed.}
+#' 
+#' \item{fromms}{A logical value indicating whether the object has
+#' arisen from a call to \code{\link{multiscale.slice}}.}
+#' 
+#' Else, if \code{leaveoneout = TRUE}, simply a numeric vector of length equal to the
+#' number of data points, giving the leave-one-out value of the function at the
+#' corresponding coordinate.
+#' 
+#' @author T.M. Davies
+#' 
+#' @references
+#' Abramson, I. (1982). On bandwidth variation in kernel estimates
+#' --- a square root law, \emph{Annals of Statistics}, \bold{10}(4),
+#' 1217-1223.
+#' 
+#' Davies, T.M. and Baddeley A. (2017), Fast computation of
+#' spatially adaptive kernel estimates, \emph{Submitted}.
+#' 
+#' Davies, T.M. and Hazelton, M.L. (2010), Adaptive kernel estimation of spatial relative
+#' risk, \emph{Statistics in Medicine}, \bold{29}(23) 2423-2437.
+#' 
+#' Davies, T.M., Jones, K. and Hazelton, M.L. (2016), Symmetric adaptive smoothing
+#' regimens for estimation of the spatial relative risk function,
+#' \emph{Computational Statistics & Data Analysis}, \bold{101}, 12-28.
+#' 
+#' Diggle, P.J. (1985), A kernel method for smoothing point process data,
+#' \emph{Journal of the Royal Statistical Society, Series C}, \bold{34}(2),
+#' 138-147.
+#' 
+#' Hall P. and Marron J.S. (1988) Variable window width kernel
+#' density estimates of probability densities. \emph{Probability Theory and
+#' Related Fields}, \bold{80}, 37-49.
+#' 
+#' Marshall, J.C. and Hazelton, M.L. (2010) Boundary kernels for adaptive density
+#' estimators on regions with irregular boundaries, \emph{Journal of Multivariate
+#' Analysis}, \bold{101}, 949-963.
+#' 
+#' Silverman, B.W. (1986), \emph{Density Estimation for
+#' Statistics and Data Analysis}, Chapman & Hall, New York.
+#' 
+#' Wand, M.P. and Jones, C.M., 1995. \emph{Kernel Smoothing}, Chapman & Hall, London.
+#' 
+#' @examples
+#'
+#' # to be filled
+#' 
+#' @export
 bivariate.density <- function(pp,h0,hp=NULL,adapt=FALSE,resolution=128,gamma.scale="geometric",edge=c("uniform","diggle","none"),intensity=FALSE,trim=5,xy=NULL,pilot.density=NULL,leaveoneout=FALSE,parallelise=NULL,davies.baddeley=NULL,verbose=TRUE){
 	if(!inherits(pp,"ppp")) stop("data argument 'pp' must be of spatstat class \"ppp\"; see ?ppp")
 

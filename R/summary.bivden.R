@@ -1,3 +1,17 @@
+#' Summarising a bivariate density/intensity, relative risk surface, or
+#' multi-scale density/intensity
+#' 
+#' \code{summary} methods for classes \code{"\link{bivden}"}, \code{"\link{rrs}"},
+#' and \code{"\link{msden}"}.
+#' 
+#' @aliases summary.rrs summary.msden
+#'
+#' @param object An object of class \code{\link{bivden}}, \code{\link{rrs}}, or
+#'   \code{\link{msden}}.
+#' @param ...  Ignored.
+#'
+#' @author T.M. Davies
+#' @export
 summary.bivden <- function(object, ...){
 
 	print.bivden(x=object)
@@ -11,4 +25,3 @@ summary.bivden <- function(object, ...){
 	#print(summary(as.vector(object$Zm)))
 
 }
-	

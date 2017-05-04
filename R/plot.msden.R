@@ -1,3 +1,4 @@
+#' @export
 plot.msden <- function(x, what = c("z", "edge", "bw"), sleep = 0.2, override.par = TRUE, ...){
   wha <- what[1]
   

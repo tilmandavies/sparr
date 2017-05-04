@@ -1,4 +1,76 @@
-LSCV.density <- function(pp,hlim=NULL,hseq=NULL,resolution=64,edge=TRUE,auto.optim=TRUE,seqres=30,parallelise=NULL,verbose=TRUE,type="spatial",lambdalim=NULL,lambdaseq=NULL,tlim=NULL){
+#' Leave-one-out least-squares cross-validation (LSCV) bandwidth selector
+#' 
+#' Isotropic fixed bandwidth selection for standalone 2D density/intensity
+#' based on classical unbiased cross-validation
+#' 
+#' 
+#' @param pp An object of class \code{\link[spatstat]{ppp}} giving the observed
+#'   2D data to be smoothed.
+#' @param hlim An optional vector of length 2 giving the limits of the
+#'   optimisation routine with respect to the bandwidth. If unspecified, the
+#'   function attempts to choose this automatically.
+#' @param hseq An optional increasing sequence of bandwidth values at which to
+#'   manually evaluate the optimisation criterion. Used only in the case
+#'   \code{(!auto.optim && is.null(hlim))}.
+#' @param resolution Spatial grid size; the optimisation will be based on a
+#'   [\code{resolution} \eqn{\times}{x} \code{resolution}] density estimate.
+#' @param edge Logical value indicating whether to edge-correct the density
+#'   estimates used.
+#' @param auto.optim Logical value indicating whether to automate the numerical
+#'   optimisation using \code{\link{optimise}}. If \code{FALSE}, the optimisation
+#'   criterion is evaluated over \code{hseq} (if supplied), or over a seqence of
+#'   values controlled by \code{hlim} and \code{seqres}.
+#' @param seqres Optional resolution of an increasing sequence of bandwidth
+#'   values. Only used if \code{(!auto.optim && is.null(hseq))}.
+#' @param parallelise Numeric argument to invoke parallel processing, giving
+#'   the number of CPU cores to use when \code{!auto.optim}. Experimental. Test
+#'   your system first using \code{parallel::detectCores()} to identify the
+#'   number of cores available to you.
+#' @param verbose Logical value indicating whether to provide function progress
+#'   commentary.
+#' @param type Unimplemented. Future argument for spatiotemporal bandwidth
+#'   selection.
+#' @param lambdalim Unimplemented. Future argument for spatiotemporal bandwidth
+#'   selection.
+#' @param lambdaseq Unimplemented. Future argument for spatiotemporal bandwidth
+#'   selection.
+#' @param tlim Unimplemented. Future argument for spatiotemporal bandwidth
+#'   selection.
+#'
+#' @return A single numeric value of the estimated bandwidth (if
+#'   \code{auto.optim = TRUE}). Otherwise, a list of two numeric vectors of equal
+#'   length giving the bandwidth sequence (as \code{hs}) and corresponding CV
+#'   function value (as \code{CV}).
+#'
+#' @section Warning: Leave-one-out LSCV for bandwidth selection in kernel
+#' density estimation is notoriously unstable in practice and has a tendency to
+#' produce rather small bandwidths. Satisfactory bandwidths are not guaranteed
+#' for every application. This method can also be computationally expensive for
+#' large data sets and fine evaluation grid resolutions. The user may need to
+#' experiment with adjusting \code{hlim} to find a suitable minimum.
+#'
+#' @author T. M. Davies
+#'
+#' @seealso Functions for bandwidth selection in package
+#'   \code{\link{spatstat}}: \code{\link[spatstat]{bw.diggle}};
+#'   \code{\link[spatstat]{bw.ppl}}; \code{\link[spatstat]{bw.scott}};
+#'   \code{\link[spatstat]{bw.frac}}.
+#'
+#' @references
+#' Silverman, B.W. (1986), \emph{Density Estimation for Statistics
+#' and Data Analysis}, Chapman & Hall, New York.
+#'
+#' Wand, M.P. and Jones,
+#' C.M., 1995. \emph{Kernel Smoothing}, Chapman & Hall, London.
+#'
+#' @examples
+#' 
+#' ## To be filled
+#' 
+#' @export
+LSCV.density <- function(pp,hlim=NULL,hseq=NULL,resolution=64,edge=TRUE,auto.optim=TRUE,
+                         seqres=30,parallelise=NULL,verbose=TRUE,type="spatial",
+                         lambdalim=NULL,lambdaseq=NULL,tlim=NULL){
   if(!is.null(hlim)){
     if(hlim[1]>=hlim[2]) stop("invalid h limits")
   }

@@ -1,3 +1,4 @@
+#' @export
 summary.rrs <- function(object, ...){
     if(all(object$rr>=0)) cat("Relative risk function.\n\n")
     else cat("Log-Relative risk function.\n\n")
