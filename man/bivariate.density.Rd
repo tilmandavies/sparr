@@ -231,7 +231,7 @@ Analysis}, \bold{101}, 949-963.
 Silverman, B.W. (1986), \emph{Density Estimation for
 Statistics and Data Analysis}, Chapman & Hall, New York.
 
-Wand, M.P. and Jones, C.M., 1995. \emph{Kernel Smoothing}, Chapman & Hall, London.
+Wand, M.P. and Jones, M.C., 1995. \emph{Kernel Smoothing}, Chapman & Hall, London.
 }
 \author{
 T.M. Davies
