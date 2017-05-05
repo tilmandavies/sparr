@@ -1,8 +1,11 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
+static const double max_r2 = 6*6; // Number of bandwidths where we make K=0
+
 inline double K(double x, double y, double h) {
-  return 1/(2*M_PI*h*h)*exp(-0.5*(x*x+y*y)/(h*h));
+  double r2 = (x*x+y*y)/(h*h);
+  return (r2 < max_r2) ? 1/(2*M_PI*h*h)*exp(-0.5*r2) : 0;
 }
 
 // [[Rcpp::export(rng = false)]]
