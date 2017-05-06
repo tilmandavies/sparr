@@ -64,7 +64,8 @@
 #' ## To be filled
 #' 
 #' @export
-OS <- function(pp, nstar = c("npoints", "geometric"), scaler = c("silverman", "IQR", "sd", "var")){
+OS <- function(pp, nstar = c("npoints", "geometric"),
+               scaler = c("silverman", "IQR", "sd", "var")){
   if(!inherits(pp,"ppp")) stop("data argument 'pp' must be of spatstat class \"ppp\"; see ?ppp")
   
   nstar <- processnstar(nstar,pp)

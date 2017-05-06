@@ -4,20 +4,21 @@
 \alias{summary.bivden}
 \alias{summary.rrs}
 \alias{summary.msden}
-\title{Summarising a bivariate density/intensity, relative risk surface, or
-multi-scale density/intensity}
+\alias{summary.stden}
+\title{Summarising a bivariate density/intensity, spatiotemporal density,
+spatial/spatiotemporal relative risk function, or multi-scale density/intensity}
 \usage{
 \method{summary}{bivden}(object, ...)
 }
 \arguments{
-\item{object}{An object of class \code{\link{bivden}}, \code{\link{rrs}}, or
-\code{\link{msden}}.}
+\item{object}{An object of class \code{\link{bivden}}, \code{\link{stden}},
+\code{\link{rrs}}, \code{rrst}, or \code{\link{msden}}.}
 
 \item{...}{Ignored.}
 }
 \description{
-\code{summary} methods for classes \code{"\link{bivden}"}, \code{"\link{rrs}"},
-and \code{"\link{msden}"}.
+\code{summary} methods for classes \code{"\link{bivden}"}, \code{"\link{stden}"},
+\code{"\link{rrs}"}, \code{"rrst"} and \code{"\link{msden}"}.
 }
 \author{
 T.M. Davies

@@ -1,13 +1,13 @@
-#' Summarising a bivariate density/intensity, relative risk surface, or
-#' multi-scale density/intensity
+#' Summarising a bivariate density/intensity, spatiotemporal density,
+#' spatial/spatiotemporal relative risk function, or multi-scale density/intensity 
 #' 
-#' \code{summary} methods for classes \code{"\link{bivden}"}, \code{"\link{rrs}"},
-#' and \code{"\link{msden}"}.
+#' \code{summary} methods for classes \code{"\link{bivden}"}, \code{"\link{stden}"},
+#' \code{"\link{rrs}"}, \code{"rrst"} and \code{"\link{msden}"}.
 #' 
-#' @aliases summary.rrs summary.msden
+#' @aliases summary.bivden summary.rrs summary.msden summary.stden
 #'
-#' @param object An object of class \code{\link{bivden}}, \code{\link{rrs}}, or
-#'   \code{\link{msden}}.
+#' @param object An object of class \code{\link{bivden}}, \code{\link{stden}},
+#'   \code{\link{rrs}}, \code{rrst}, or \code{\link{msden}}.
 #' @param ...  Ignored.
 #'
 #' @author T.M. Davies
@@ -16,12 +16,13 @@ summary.bivden <- function(object, ...){
 
 	print.bivden(x=object)
 	
-	cat("\nEvaluated over a",nrow(object$z),"by",ncol(object$z),"rectangular grid.\n",sum(!is.na(as.vector(as.matrix(object$z)))),"grid cells out of",prod(dim(object$z)),"fall inside study region.\n\n")
+  W <- Window(object$pp)
+  wt <- summary(W)$type
+  wx <- W$xrange
+  wy <- W$yrange
+  cat("\nSpatial bound\n  Type: ",wt,"\n  2D enclosure: [",wx[1],", ",wx[2],"] x [",wy[1],", ",wy[2],"]\n",sep="")
+  
+  cat("\nEvaluation\n  ",nrow(object$z)," x ",ncol(object$z)," rectangular grid\n  ",sum(!is.na(as.vector(as.matrix(object$z))))," grid cells out of ",prod(dim(object$z))," fall inside study region\n",sep="")
 	
-	#cat("Estimated density description\n")
-	
-	cat("Estimated density/intensity range [",min(object$z,na.rm=TRUE),",",max(object$z,na.rm=TRUE),"].\n",sep="")
-	
-	#print(summary(as.vector(object$Zm)))
-
+	cat("  Density/intensity range [",min(object$z,na.rm=TRUE),", ",max(object$z,na.rm=TRUE),"]\n",sep="")
 }

@@ -243,6 +243,7 @@ bivariate.density <- function(pp,h0,hp=NULL,adapt=FALSE,resolution=128,gamma.sca
 			    		if((!all(pd$xcol==xy$x))||(!all(pd$yrow==xy$y))) stop("'pilot.density' xcol and yrow must strictly match coords in 'xy'")
 				}
 		  	pilot.density[pd<=0] <- min(pd[pd>0])
+		  	hp <- NULL
 			} else if(is.ppp(pd)){
 				pilot.data <- pd
 				if(!identical_windows(Window(pp),Window(pilot.data))) stop("'pilot.density' window must be identical to 'pp' window")
