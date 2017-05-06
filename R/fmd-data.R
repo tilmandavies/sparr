@@ -1,0 +1,62 @@
+#' Veterinary foot-and-mouth disease outbreak data
+#' 
+#' Data of the spatial locations and time of farms infected by veterinary foot-and-mouth disease
+#' in the county of Cumbria, UK, over a course of nearly 250 days between February and August in 2001.
+#' 418 farms out of a total of 2813 in the region became infected over the course of the study period,
+#' with time of infection recorded to the nearest day since the start of the study.
+#' 
+#' @name fmd
+#' @format \code{fmd} is a named list with four members:
+#' \describe{
+#' \item{\code{$cases}}{
+#' An object of class \code{\link[spatstat]{ppp}} giving the spatial locations of the 418 infected
+#' farms within a polygonal study region representing the county of Cumbria. The \code{\link[spatstat]{marks}}
+#' component of this object contain the integer day of infection (from beginning of study period).
+#' }
+#' 
+#' \item{\code{$controls}}{
+#' An object of class \code{\link[spatstat]{ppp}} defined over the same spatial study region with the locations
+#' of the 2395 farms that remained uninfected over the course of the study period.
+#' }
+#' 
+#' \item{\code{$cases.size}}{
+#' A numeric vector of length 418 giving the size of each infected farm in \code{$cases} as the total animal population.
+#' }
+#' 
+#' \item{\code{$controls.size}}{
+#' As above, for the uninfected farms.
+#' }
+#' }
+#' 
+#' @docType data
+#' 
+#' @keywords data
+#' 
+#' @section Acknowledgements: \bold{UNSURE IF THESE DATA CAN BE RELEASED WITH sparr}
+#' 
+#' @references 
+#' Fernando, W.T.P.S. and Hazelton, M.L. (2014), Generalizing the spatial relative risk function,
+#' \emph{Spatial and Spatio-temporal Epidemiology}, \bold{8}, 1-10.
+#' 
+#' Keeling M, Woolhouse M, Shaw D, Matthews L, Chase-Topping M, Haydon D, et al. (2001),
+#' Dynamics of the 2001 UK foot and mouth epidemic: stochastic dispersal in a heterogeneous landscape,
+#' \emph{Science}, \bold{294}, 813-817.
+#' 
+#' Lawson A, Zhou H. (2005), Spatial statistical modeling of disease outbreaks with particular
+#' reference to the UK foot and mouth disease (FMD) epidemic of 2001,
+#' \emph{Preventative Veterinary Medicine}, \bold{71}, 141-156.
+#' 
+#' @source \bold{UNSURE IF THESE DATA CAN BE RELEASED WITH sparr}
+#' 
+#' @examples
+#' 
+#' data(fmd)
+#' summary(fmd)
+#' 
+#' par(mfrow=c(2,2))
+#' plot(fmd$cases)
+#' hist(fmd$cases.size)
+#' plot(fmd$controls)
+#' hist(fmd$controls.size)
+#' 
+NULL

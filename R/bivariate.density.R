@@ -169,7 +169,7 @@
 #' number of data points, giving the leave-one-out value of the function at the
 #' corresponding coordinate.
 #' 
-#' @author T.M. Davies
+#' @author T.M. Davies and J.C. Marshall
 #' 
 #' @references
 #' Abramson, I. (1982). On bandwidth variation in kernel estimates
