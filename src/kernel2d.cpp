@@ -1,12 +1,8 @@
 #include <Rcpp.h>
+#include "kernel_lut.h"
+
 using namespace Rcpp;
-
-static const double max_r2 = 6*6; // Number of bandwidths where we make K=0
-
-inline double K(double x, double y, double h) {
-  double r2 = (x*x+y*y)/(h*h);
-  return (r2 < max_r2) ? 1/(2*M_PI*h*h)*exp(-0.5*r2) : 0;
-}
+using namespace kernel_lut;
 
 // [[Rcpp::export(rng = false)]]
 NumericVector kernel2d(NumericVector x, NumericVector y, NumericVector h) {
