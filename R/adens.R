@@ -11,10 +11,11 @@ point_image_by_bw <- function(bw_cat, bw, points, weights, WM) {
   # Create a map from the bandwidths for each point to our bandwidth categories
   bw_map <- match(bw, bw_cat)
 
-  # Create output matrices for each surface.
+  # Create output matrices for each surface. We create them twice as large
+  # so they are padded all ready for the FFT that is coming later
   im_bw <- vector('list', length(bw_cat))
   for (i in 1:length(bw_cat)) {
-    im_bw[[i]] <- matrix(0, WM$dim[1], WM$dim[2])
+    im_bw[[i]] <- matrix(0, WM$dim[1]*2, WM$dim[2]*2)
   }
 
   # Iterate over the points, using bw_map to map point to surface, and fill them in
@@ -64,16 +65,13 @@ adens <- function(x,bwim,bwpts,resolution,edge,diggle,weights,intensity,hstep,qs
   if(verbose) pb <- txtProgressBar(0,U)
   for(i in 1:U){
     nn <- sum(hc==hu[i])
-    xi <- imlist[[i]]
-    
-    zpad <- matrix(0,res2,res2)
-    zpad[resseq,resseq] <- xi
+
     densX.ker <- dnorm(xcol.ker,sd=hu[i])
     densY.ker <- dnorm(yrow.ker,sd=hu[i])
     Kern <- outer(densY.ker,densX.ker,"*")*kerpixarea
     
     fK <- fft(Kern)
-    fZ <- fft(zpad)
+    fZ <- fft(imlist[[i]])
     sm <- fft(fZ*fK,inverse=TRUE)/len.pad
     smo <- im(Re(sm)[resseq,resseq],xcol.pad[resseq],yrow.pad[resseq])
     smo$v <- smo$v/kerpixarea
