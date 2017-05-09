@@ -61,7 +61,7 @@ adens <- function(x,bwim,bwpts,resolution,edge,diggle,weights,intensity,hstep,qs
   kerpixarea <- WM$xstep*WM$ystep
   len.pad <- res2^2
   resultlist <- list()
-  result <- im(matrix(0,resolution,resolution),xcol=WM$xcol,yrow=WM$yrow)
+  result <- matrix(0,resolution,resolution)
   if(verbose) pb <- txtProgressBar(0,U)
   for(i in 1:U){
     densX.ker <- dnorm(xcol.ker,sd=hu[i])
@@ -71,16 +71,16 @@ adens <- function(x,bwim,bwpts,resolution,edge,diggle,weights,intensity,hstep,qs
     fK <- fft(Kern)
     fZ <- fft(imlist[[i]])
     sm <- fft(fZ*fK,inverse=TRUE)/len.pad
-    smo <- im(Re(sm)[resseq,resseq],xcol.pad[resseq],yrow.pad[resseq])
-    smo$v <- smo$v/kerpixarea
-    
-    resultlist[[i]] <- smo
+    smo <- matrix(Re(sm)[resseq,resseq]/kerpixarea, resolution, resolution)
+
+    resultlist[[i]] <- im(smo,xcol.pad[resseq],yrow.pad[resseq])
     result <- result + smo 
     if(verbose) setTxtProgressBar(pb,i)
   }
   if(verbose) close(pb)
   result[!insideW] <- NA
-  
+  result <- im(result,xcol=WM$xcol,yrow=WM$yrow)
+
   if(edge && !diggle) result <- result/edg
   if(!intensity) result <- result/integral(result)
   
