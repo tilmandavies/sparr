@@ -64,8 +64,6 @@ adens <- function(x,bwim,bwpts,resolution,edge,diggle,weights,intensity,hstep,qs
   result <- im(matrix(0,resolution,resolution),xcol=WM$xcol,yrow=WM$yrow)
   if(verbose) pb <- txtProgressBar(0,U)
   for(i in 1:U){
-    nn <- sum(hc==hu[i])
-
     densX.ker <- dnorm(xcol.ker,sd=hu[i])
     densY.ker <- dnorm(yrow.ker,sd=hu[i])
     Kern <- outer(densY.ker,densX.ker,"*")*kerpixarea
