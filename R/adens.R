@@ -69,8 +69,8 @@ adens <- function(x,bwim,bwpts,resolution,edge,diggle,weights,intensity,hstep,qs
   weights <- weights*digw
   imlist <- point_image_by_bw(hu, hc, nearest.raster.point(x$x,x$y,w=WM), weights, WM)
 
-  xcol.pad <- WM$xcol[1]+WM$xstep*(0:(res2-1))
-  yrow.pad <- WM$yrow[1]+WM$ystep*(0:(res2-1))
+  xcol.pad <- WM$xcol[1]+WM$xstep*(0:(resolution-1))
+  yrow.pad <- WM$yrow[1]+WM$ystep*(0:(resolution-1))
 
   len.pad <- res2^2
   resultlist <- list()
@@ -82,7 +82,7 @@ adens <- function(x,bwim,bwpts,resolution,edge,diggle,weights,intensity,hstep,qs
     sm <- fft(fZ*fK,inverse=TRUE)/len.pad
     smo <- Re(sm[resseq,resseq])
 
-    resultlist[[i]] <- im(smo,xcol.pad[resseq],yrow.pad[resseq])
+    resultlist[[i]] <- im(smo,xcol.pad,yrow.pad)
     result <- result + smo 
     if(verbose) setTxtProgressBar(pb,i)
   }
