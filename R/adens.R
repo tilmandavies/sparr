@@ -1,3 +1,39 @@
+point_image_by_bw <- function(bw_cat, bw, points, weights, WM) {
+  # bw is the binned bandwidths evaluated at the points
+  # bw_cat is the unique, sorted list of bins
+
+  # We want to create a surface per bin, with each cell containing the
+  # (weighted) sum of points that use that bin.
+
+  # We can do this efficiently by iterating over the points once, and just
+  # adding each point to the appropriate surface.
+
+  # Create a map from the bandwidths for each point to our bandwidth categories
+  bw_map <- match(bw, bw_cat)
+
+  # Create output matrices for each surface.
+  im_bw <- vector('list', length(bw_cat))
+  for (i in 1:length(bw_cat)) {
+    im_bw[[i]] <- matrix(0, WM$dim[1], WM$dim[2])
+  }
+
+  # Iterate over the points, using bw_map to map point to surface, and fill them in
+  for (i in 1:length(bw_map)) {
+    cat = bw_map[i]
+    x = points$row[i]
+    y = points$col[i]
+    im_bw[[cat]][x,y] = im_bw[[cat]][x,y] + weights[i]
+  }
+
+  # Convert the list of matrices to a list of im
+  # The dimnames stuff is so we get consistent with subpix implementation
+  matrix_to_im <- function(x, WM) {
+    dimnames(x) <- list(row=1:WM$dim[1], col=1:WM$dim[2])
+    im(x, xcol=WM$xcol, yrow=WM$yrow, xrange=WM$xrange, yrange=WM$yrange)
+  }
+  lapply(im_bw, matrix_to_im, WM)
+}
+
 adens <- function(x,bwim,bwpts,resolution,edge,diggle,weights,intensity,hstep,qstep,qres,verbose){
   n <- npoints(x)
   hc <- gethcats(bwpts,step=hstep)
@@ -21,7 +57,8 @@ adens <- function(x,bwim,bwpts,resolution,edge,diggle,weights,intensity,hstep,qs
   else digw <- rep(1,n)
   
   weights <- weights*digw
-  imlist <- lapply(hu,subpix,plocs=nearest.raster.point(x$x,x$y,w=WM),hc=hc,WM=WM,weights=weights)
+  imlist <- point_image_by_bw(hu, hc, nearest.raster.point(x$x,x$y,w=WM), weights, WM)
+
   xcol.pad <- WM$xcol[1]+WM$xstep*(0:(res2-1))
   yrow.pad <- WM$yrow[1]+WM$ystep*(0:(res2-1))
   xcol.ker <- WM$xstep*c(0:(resolution-1),-rev(resseq))
