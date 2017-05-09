@@ -29,6 +29,20 @@ point_image_by_bw <- function(bw_cat, bw, points, weights, WM) {
   im_bw
 }
 
+# Fast fourier transform of a 2D Gaussian based on the continuous FT, where
+# sigma is the standard deviation, ds,dt is the time resolution in x,y
+# and 2n*2n the number of points
+
+kernel2d_fft <- function(sigma, ds, dt, n) {
+  kernel_fft <- function(sigma, dt, n) {
+    f <- c(0:(n-1),-n:-1)*pi*sigma/(n*dt)
+    exp(-0.5*f*f)/dt
+  }
+  fZ.x <- kernel_fft(sigma, ds, n)
+  fZ.y <- kernel_fft(sigma, dt, n)
+  fZ.y %*% t(fZ.x)
+}
+
 adens <- function(x,bwim,bwpts,resolution,edge,diggle,weights,intensity,hstep,qstep,qres,verbose){
   n <- npoints(x)
   hc <- gethcats(bwpts,step=hstep)
@@ -56,17 +70,13 @@ adens <- function(x,bwim,bwpts,resolution,edge,diggle,weights,intensity,hstep,qs
 
   xcol.pad <- WM$xcol[1]+WM$xstep*(0:(res2-1))
   yrow.pad <- WM$yrow[1]+WM$ystep*(0:(res2-1))
-  xcol.ker <- WM$xstep*c(0:(resolution-1),-rev(resseq))
-  yrow.ker <- WM$ystep*c(0:(resolution-1),-rev(resseq))
+
   len.pad <- res2^2
   resultlist <- list()
   result <- matrix(0,resolution,resolution)
   if(verbose) pb <- txtProgressBar(0,U)
   for(i in 1:U){
-    densX.ker <- dnorm(xcol.ker,sd=hu[i])
-    densY.ker <- dnorm(yrow.ker,sd=hu[i])
-
-    fK <- Re(fft(densY.ker)) %*% t(Re(fft(densX.ker)))
+    fK <- kernel2d_fft(hu[i], WM$xstep, WM$ystep, resolution)
     fZ <- fft(imlist[[i]])
     sm <- fft(fZ*fK,inverse=TRUE)/len.pad
     smo <- Re(sm[resseq,resseq])
