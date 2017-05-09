@@ -58,7 +58,6 @@ adens <- function(x,bwim,bwpts,resolution,edge,diggle,weights,intensity,hstep,qs
   yrow.pad <- WM$yrow[1]+WM$ystep*(0:(res2-1))
   xcol.ker <- WM$xstep*c(0:(resolution-1),-rev(resseq))
   yrow.ker <- WM$ystep*c(0:(resolution-1),-rev(resseq))
-  kerpixarea <- WM$xstep*WM$ystep
   len.pad <- res2^2
   resultlist <- list()
   result <- matrix(0,resolution,resolution)
@@ -66,12 +65,12 @@ adens <- function(x,bwim,bwpts,resolution,edge,diggle,weights,intensity,hstep,qs
   for(i in 1:U){
     densX.ker <- dnorm(xcol.ker,sd=hu[i])
     densY.ker <- dnorm(yrow.ker,sd=hu[i])
-    Kern <- outer(densY.ker,densX.ker,"*")*kerpixarea
+    Kern <- outer(densY.ker,densX.ker,"*")
     
     fK <- fft(Kern)
     fZ <- fft(imlist[[i]])
     sm <- fft(fZ*fK,inverse=TRUE)/len.pad
-    smo <- matrix(Re(sm)[resseq,resseq]/kerpixarea, resolution, resolution)
+    smo <- matrix(Re(sm)[resseq,resseq], resolution, resolution)
 
     resultlist[[i]] <- im(smo,xcol.pad[resseq],yrow.pad[resseq])
     result <- result + smo 
