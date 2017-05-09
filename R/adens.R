@@ -55,9 +55,10 @@ adens <- function(x,bwim,bwpts,resolution,edge,diggle,weights,intensity,hstep,qs
   res2 <- 2*resolution
   resseq <- 1:resolution
   
-  edg <- im(matrix(1,resolution,resolution),xcol=WM$xcol,yrow=WM$yrow)
   if(edge){
   	edg <- edgeh(bwim,pres=qres,tres=resolution,step=qstep,W=W)
+  } else {
+    edg <- im(matrix(1,resolution,resolution),xcol=WM$xcol,yrow=WM$yrow)
   }
   
   if(is.null(weights)) weights <- rep(1,n)
