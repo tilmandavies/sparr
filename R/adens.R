@@ -66,7 +66,7 @@ adens <- function(x,bwim,bwpts,resolution,edge,diggle,weights,intensity,hstep,qs
     densX.ker <- dnorm(xcol.ker,sd=hu[i])
     densY.ker <- dnorm(yrow.ker,sd=hu[i])
 
-    fK <- fft(densY.ker) %*% t(fft(densX.ker))
+    fK <- Re(fft(densY.ker)) %*% t(Re(fft(densX.ker)))
     fZ <- fft(imlist[[i]])
     sm <- fft(fZ*fK,inverse=TRUE)/len.pad
     smo <- Re(sm[resseq,resseq])
