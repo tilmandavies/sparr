@@ -25,13 +25,7 @@ point_image_by_bw <- function(bw_cat, bw, points, weights, WM) {
     im_bw[[cat]][x,y] = im_bw[[cat]][x,y] + weights[i]
   }
 
-  # Convert the list of matrices to a list of im
-  # The dimnames stuff is so we get consistent with subpix implementation
-  matrix_to_im <- function(x, WM) {
-    dimnames(x) <- list(row=1:WM$dim[1], col=1:WM$dim[2])
-    im(x, xcol=WM$xcol, yrow=WM$yrow, xrange=WM$xrange, yrange=WM$yrange)
-  }
-  lapply(im_bw, matrix_to_im, WM)
+  im_bw
 }
 
 adens <- function(x,bwim,bwpts,resolution,edge,diggle,weights,intensity,hstep,qstep,qres,verbose){
@@ -70,8 +64,7 @@ adens <- function(x,bwim,bwpts,resolution,edge,diggle,weights,intensity,hstep,qs
   if(verbose) pb <- txtProgressBar(0,U)
   for(i in 1:U){
     nn <- sum(hc==hu[i])
-    Xi <- imlist[[i]]
-    xi <- as.matrix(Xi)
+    xi <- imlist[[i]]
     
     zpad <- matrix(0,res2,res2)
     zpad[resseq,resseq] <- xi
