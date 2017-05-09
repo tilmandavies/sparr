@@ -70,7 +70,7 @@ adens <- function(x,bwim,bwpts,resolution,edge,diggle,weights,intensity,hstep,qs
     fK <- fft(Kern)
     fZ <- fft(imlist[[i]])
     sm <- fft(fZ*fK,inverse=TRUE)/len.pad
-    smo <- matrix(Re(sm)[resseq,resseq], resolution, resolution)
+    smo <- Re(sm[resseq,resseq])
 
     resultlist[[i]] <- im(smo,xcol.pad[resseq],yrow.pad[resseq])
     result <- result + smo 
