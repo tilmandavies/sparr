@@ -226,5 +226,6 @@ NULL
 #' @importFrom parallel detectCores
 #' @importFrom doParallel registerDoParallel
 #' @importFrom foreach %dopar% foreach
+#' @importFrom ks kde
 #' @import spatstat
 NULL
