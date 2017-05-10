@@ -19,7 +19,7 @@
 \alias{processgamma}
 \alias{processnstar}
 \alias{processscaler}
-\alias{subpix}
+\alias{point_image_by_bw}
 \alias{taperoff}
 \alias{tol.asy.ada}
 \alias{tol.asy.fix}
@@ -50,7 +50,7 @@ Internal \code{\link{sparr}} functions, only meant to be accessed by the user di
 \code{processgamma(gamma.scale,pds)}\cr
 \code{processnstar(n,pp)}\cr
 \code{processscaler(s,pp)}\cr
-\code{subpix(h,plocs,hc,WM,weights=NULL)}\cr
+\code{point_image_by_bw(h,hc,points,weights,WM)}\cr
 \code{taperoff(x,zeropoint=0,onepoint=1,type=c("smooth", "cosine"))}\cr
 \code{tol.asy.ada(f,g,beta,verbose=FALSE)}\cr
 \code{tol.asy.fix(f,g,pooled,verbose=FALSE)}\cr
