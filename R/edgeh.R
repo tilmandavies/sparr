@@ -17,8 +17,6 @@ edgeh <- function(bwim,pres,tres,step,W,verbose=FALSE){
   lut <- matrix(FALSE, length(corrQ), length(hypoQ))
   lut[cbind(seq_along(corrQ),corrQ)] <- TRUE
 
-  res2 <- 2*pres
-  resseq <- 1:pres
   ifft_scale <- M$xstep*M$ystep/(4*pres^2)
   Mpad <- matrix(0, ncol=2*pres, nrow=2*pres)
   Mpad[1:pres, 1:pres] <- inside
