@@ -228,4 +228,6 @@ NULL
 #' @importFrom foreach %dopar% foreach
 #' @importFrom ks kde
 #' @import spatstat
+#' @importFrom Rcpp evalCpp
+#' @useDynLib sparr
 NULL
