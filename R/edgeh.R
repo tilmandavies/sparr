@@ -14,6 +14,9 @@ edgeh <- function(bwim,pres,tres,step,W,verbose=FALSE){
   corrQ <- as.numeric(cut(as.vector(as.matrix(hfp)),breaks=hypoQ,include.lowest=TRUE))
   if(pres<tres) corrQ[is.na(corrQ)] <- 1
   
+  lut <- matrix(FALSE, length(corrQ), length(hypoQ))
+  lut[cbind(seq_along(corrQ),corrQ)] <- TRUE
+
   res2 <- 2*pres
   resseq <- 1:pres
   ifft_scale <- M$xstep*M$ystep/(4*pres^2)
@@ -28,7 +31,7 @@ edgeh <- function(bwim,pres,tres,step,W,verbose=FALSE){
 
     con <- fft(fM*fK,inverse=TRUE)*ifft_scale
     edg <- Mod(con[1:pres,1:pres])
-    qhz[which(corrQ==i)] <- edg[which(corrQ==i)]
+    qhz[lut[,i]] <- edg[lut[,i]]
     if(verbose) setTxtProgressBar(pb,i)
   }
   if(verbose) close(pb)
