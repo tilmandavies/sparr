@@ -27,8 +27,8 @@ edgeh <- function(bwim,pres,tres,step,W,verbose=FALSE){
     fK <- kernel2d_fft(hypoQ[i], M$xstep, M$ystep, pres)
 
     con <- fft(fM*fK,inverse=TRUE)*ifft_scale
-    edg <- im(Mod(con[1:pres,1:pres]),xcol=M$xcol,yrow=M$yrow)
-    qhz[which(corrQ==i)] <- as.vector(as.matrix(edg))[which(corrQ==i)]
+    edg <- Mod(con[1:pres,1:pres])
+    qhz[which(corrQ==i)] <- edg[which(corrQ==i)]
     if(verbose) setTxtProgressBar(pb,i)
   }
   if(verbose) close(pb)
