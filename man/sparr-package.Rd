@@ -10,8 +10,8 @@ Provides functions to estimate fixed and adaptive kernel-smoothed relative
 risk surfaces via the density-ratio method and perform subsequent inference.
 }
 \details{
-\tabular{ll}{ Package: \tab sparr\cr Version: \tab 2.0-03\cr Date: \tab
-2017-05-06\cr License: \tab GPL (>= 2) \cr } Kernel smoothing, and the
+\tabular{ll}{ Package: \tab sparr\cr Version: \tab 2.0-04\cr Date: \tab
+2017-05-10\cr License: \tab GPL (>= 2) \cr } Kernel smoothing, and the
 flexibility afforded by this methodology, provides an attractive approach to
 estimating complex probability density functions. This is particularly of
 interest when exploring problems in geographical epidemiology, the study of
