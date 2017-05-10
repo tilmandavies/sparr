@@ -29,9 +29,8 @@ edgeh <- function(bwim,pres,tres,step,W,verbose=FALSE){
   for(i in 1:length(hypocen)){
     fK <- kernel2d_fft(hypoQ[i], M$xstep, M$ystep, pres)
 
-    con <- fft(fM*fK,inverse=TRUE)*ifft_scale
-    edg <- Mod(con[1:pres,1:pres])
-    qhz[lut[,i]] <- edg[lut[,i]]
+    con <- fft(fM*fK,inverse=TRUE)[1:pres,1:pres]
+    qhz[lut[,i]] <- Mod(con[lut[,i]])*ifft_scale
     if(verbose) setTxtProgressBar(pb,i)
   }
   if(verbose) close(pb)
