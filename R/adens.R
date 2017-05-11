@@ -65,7 +65,9 @@ adens <- function(x,bwim,bwpts,resolution,edge,diggle,weights,intensity,hstep,qs
   
   if(edge&&diggle) digw <- 1/safelookup(edg,x,warn=FALSE)
   else digw <- rep(1,n)
-  
+
+  use_fftw <- fftw_available()
+
   weights <- weights*digw
   imlist <- point_image_by_bw(hu, hc, nearest.raster.point(x$x,x$y,w=WM), weights, WM)
 
@@ -78,8 +80,8 @@ adens <- function(x,bwim,bwpts,resolution,edge,diggle,weights,intensity,hstep,qs
   if(verbose) pb <- txtProgressBar(0,U)
   for(i in 1:U){
     fK <- kernel2d_fft(hu[i], WM$xstep, WM$ystep, resolution)
-    fZ <- fft2d(imlist[[i]])
-    sm <- fft2d(fZ*fK,inverse=TRUE)/len.pad
+    fZ <- fft2d(imlist[[i]],fftw=use_fftw)
+    sm <- fft2d(fZ*fK,inverse=TRUE,fftw=use_fftw)/len.pad
     smo <- Re(sm[resseq,resseq])
 
     resultlist[[i]] <- im(smo,xcol.pad,yrow.pad)
