@@ -1,13 +1,34 @@
-#' 2D Fast fourier wrapper around fftwtools or stats package
+#' 2D fast-Fourier wrapper around 'fftwtools' or 'stats' package
 #' 
-#' Utilises the Fastest fourier transform in the West via the fftwtools
-#' package if available
+#' Utilises the Fastest Fourier Transform in the West (FFTW) via the 'fftwtools'
+#' package if available, else reverts to built-in functionality
 #' 
-#' @param x the data to transform
-#' @param inverse whether it should compute the inverse transform (defaults to FALSE)
-#' @param fftw whether fftwtools package is available.
-#' @return the fast fourier (inverse) transform of the same size as x, but complex.
-fft2d <- function(x, inverse=FALSE, fftw = fftw_available()) {
+#' This function is called wherever \code{sparr} seeks to perform a 2D fast-Fourier
+#' transform. Where available, computational expense is noticeably reduced by appealing to routines 
+#' in the independent `FFTW' toolbox. The user is encouraged to install the `FFTW' tools 
+#' from \url{http://www.fftw.org} and the corresponding R package \code{fftwtools} from CRAN;
+#' this function will automatically detect and use the faster option, otherwise will 
+#' defers to the built-in \code{\link[stats]{fft}}.
+#' 
+#' 
+#' @param x A numeric matrix to be transformed.
+#' @param inverse Whether it should compute the inverse transform (defaults to \code{FALSE}).
+#' @param fftw Whether the `FFTW' tools and the \code{fftwtools} R package are available.
+#' @return The fast-Fourier (inverse) transform. A complex-valued matrix of the same size as \code{x}.
+#' 
+#' @author J.C. Marshall
+#' 
+#' @examples
+#' 
+#' # To be filled (e.g. as below) if we decide to export this handy little utility...?
+#' 
+#' # System check
+#' # sparr:::fftw_available()
+#' 
+#' # system.time(fft(matrix(1:4,2,2)))
+#' # system.time(fft2d(matrix(1:4,2,2)))
+#' 
+fft2d <- function(x, inverse=FALSE, fftw = sparr:::fftw_available()) {
   if (fftw) {
     fftwtools::fftw2d(data=x, inverse=inverse)
   } else {
@@ -16,5 +37,6 @@ fft2d <- function(x, inverse=FALSE, fftw = fftw_available()) {
 }
 
 fftw_available <- function() {
-  requireNamespace("fftwtools", quietly=TRUE)
+  yeahnah <- (requireNamespace("fftwtools", quietly=TRUE) && (packageVersion("fftwtools") >= "0.9-8"))
+  return(yeahnah)
 }
