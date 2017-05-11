@@ -20,14 +20,14 @@ edgeh <- function(bwim,pres,tres,step,W,verbose=FALSE){
   ifft_scale <- M$xstep*M$ystep/(4*pres^2)
   Mpad <- matrix(0, ncol=2*pres, nrow=2*pres)
   Mpad[1:pres, 1:pres] <- inside
-  fM <- fft(Mpad)
+  fM <- fft2d(Mpad)
   
   qhz <- rep(NA,pres^2)
   if(verbose) pb <- txtProgressBar(0,length(hypoQ),style=3)
   for(i in 1:length(hypocen)){
     fK <- kernel2d_fft(hypoQ[i], M$xstep, M$ystep, pres)
 
-    con <- fft(fM*fK,inverse=TRUE)[1:pres,1:pres]
+    con <- fft2d(fM*fK,inverse=TRUE)[1:pres,1:pres]
     qhz[lut[,i]] <- Mod(con[lut[,i]])*ifft_scale
     if(verbose) setTxtProgressBar(pb,i)
   }

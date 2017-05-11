@@ -78,8 +78,8 @@ adens <- function(x,bwim,bwpts,resolution,edge,diggle,weights,intensity,hstep,qs
   if(verbose) pb <- txtProgressBar(0,U)
   for(i in 1:U){
     fK <- kernel2d_fft(hu[i], WM$xstep, WM$ystep, resolution)
-    fZ <- fft(imlist[[i]])
-    sm <- fft(fZ*fK,inverse=TRUE)/len.pad
+    fZ <- fft2d(imlist[[i]])
+    sm <- fft2d(fZ*fK,inverse=TRUE)/len.pad
     smo <- Re(sm[resseq,resseq])
 
     resultlist[[i]] <- im(smo,xcol.pad,yrow.pad)
