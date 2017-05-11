@@ -11,7 +11,7 @@ fft2d(x, inverse = FALSE, fftw = sparr:::fftw_available())
 
 \item{inverse}{Whether it should compute the inverse transform (defaults to \code{FALSE}).}
 
-\item{fftw}{Whether the `FFTW' tools and the \code{fftwtools} R package are available.}
+\item{fftw}{Whether the \code{fftwtools} R package is available.}
 }
 \value{
 The fast-Fourier (inverse) transform. A complex-valued matrix of the same size as \code{x}.
@@ -23,8 +23,7 @@ package if available, else reverts to built-in functionality
 \details{
 This function is called wherever \code{sparr} seeks to perform a 2D fast-Fourier
 transform. Where available, computational expense is noticeably reduced by appealing to routines 
-in the independent `FFTW' toolbox. The user is encouraged to install the `FFTW' tools 
-from \url{http://www.fftw.org} and the corresponding R package \code{fftwtools} from CRAN;
+in the independent `FFTW' toolbox. The user is encouraged to install the corresponding R package \code{fftwtools} from CRAN;
 this function will automatically detect and use the faster option, otherwise will 
 defers to the built-in \code{\link[stats]{fft}}.
 }
