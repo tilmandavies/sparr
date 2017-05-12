@@ -25,7 +25,7 @@ This function is called wherever \code{sparr} seeks to perform a 2D fast-Fourier
 transform. Where available, computational expense is noticeably reduced by appealing to routines 
 in the independent `FFTW' toolbox. The user is encouraged to install the corresponding R package \code{fftwtools} from CRAN;
 this function will automatically detect and use the faster option, otherwise will 
-defers to the built-in \code{\link[stats]{fft}}.
+defer to the built-in \code{\link[stats]{fft}}.
 }
 \examples{
 
