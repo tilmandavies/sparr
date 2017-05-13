@@ -115,8 +115,6 @@ is computed.}
 initially passed to the \code{pp} argument, containing the data that were
 smoothed.}
 
-\item{fromms}{A logical value indicating whether the object has
-arisen from a call to \code{\link{multiscale.slice}}.}
 
 Else, if \code{leaveoneout = TRUE}, simply a numeric vector of length equal to the
 number of data points, giving the leave-one-out value of the function at the

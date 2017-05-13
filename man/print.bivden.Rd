@@ -5,6 +5,7 @@
 \alias{print.rrs}
 \alias{print.msden}
 \alias{print.stden}
+\alias{print.rrst}
 \title{Printing a bivariate density/intensity, spatiotemporal density,
 spatial/spatiotemporal relative risk function, or multi-scale density/intensity}
 \usage{
@@ -12,13 +13,13 @@ spatial/spatiotemporal relative risk function, or multi-scale density/intensity}
 }
 \arguments{
 \item{x}{An object of class \code{\link{bivden}}, \code{\link{stden}},
-\code{\link{rrs}}, \code{rrst}, or \code{\link{msden}}.}
+\code{\link{rrs}}, \code{\link{rrst}}, or \code{\link{msden}}.}
 
 \item{...}{Ignored.}
 }
 \description{
 \code{print} methods for classes \code{"\link{bivden}"}, \code{"\link{stden}"},
-\code{"\link{rrs}"}, \code{"rrst"} and \code{"\link{msden}"}.
+\code{"\link{rrs}"}, \code{"\link{rrst}"} and \code{"\link{msden}"}.
 }
 \author{
 T.M. Davies

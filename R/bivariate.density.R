@@ -162,8 +162,6 @@
 #' initially passed to the \code{pp} argument, containing the data that were
 #' smoothed.}
 #' 
-#' \item{fromms}{A logical value indicating whether the object has
-#' arisen from a call to \code{\link{multiscale.slice}}.}
 #' 
 #' Else, if \code{leaveoneout = TRUE}, simply a numeric vector of length equal to the
 #' number of data points, giving the leave-one-out value of the function at the
@@ -381,7 +379,7 @@ bivariate.density <- function(pp,h0,hp=NULL,adapt=FALSE,resolution=128,gamma.sca
 		if(!intensity) surf <- surf/integral(surf)
 	}
 	
-	result <- list(z=surf,h0=h0,hp=hp,h=h.spec,him=h.hypo,q=ef,gamma=gamma,geometric=gs,pp=pp,fromms=FALSE)
+	result <- list(z=surf,h0=h0,hp=hp,h=h.spec,him=h.hypo,q=ef,gamma=gamma,geometric=gs,pp=pp)
 	class(result) <- "bivden"		
 	
 	return(result)

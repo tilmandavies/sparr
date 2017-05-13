@@ -1,6 +1,6 @@
 #' Slicing a multi-scale density/intensity object
 #' 
-#' Takes a slice of the multi-scale density/intensity estimate at a desired
+#' Takes slices of a multi-scale density/intensity estimate at a desired
 #' global bandwidth
 #' 
 #' Davies & Baddeley (2017) demonstrate that once a multi-scale
@@ -11,7 +11,7 @@
 #' \code{\link{multiscale.density}}.
 #' 
 #' The function returns an error (unless \code{checkargs = FALSE}) if the
-#' requested slice at \code{h0} is not within the available range of
+#' requested slices at \code{h0} are not all within the available range of
 #' pre-computed global bandwidth scalings as defined by the \code{h0range}
 #' component of \code{msob}.
 #' 
@@ -19,24 +19,24 @@
 #' \code{\link{msden}}, are returned based on a discretised set of global
 #' bandwidth scalings, the function internally computes the desired surface as
 #' a pixel-by-pixel linear interpolation using the two discretised global
-#' bandwidth rescalings that bound the requested \code{h0}. (Thus, numeric
+#' bandwidth rescalings that bound each requested \code{h0}. (Thus, numeric
 #' accuracy of the slices is improved with an increase to the \code{dimz}
 #' argument of the preceding call to \code{multiscale.density} at the cost of
 #' additional computing time.)
 #' 
-#' @param msob An object of class \code{"\link{msden}"} giving the multi-scale
+#' @param msob An object of class \code{\link{msden}} giving the multi-scale
 #'   estimate from which to take a slice.
-#' @param h0 Desired global bandwidth; the density/intensity estimate
-#'   corresponding to which will be returned. This value \bold{must} be in the
+#' @param h0 Desired global bandwidth(s); the density/intensity estimate
+#'   corresponding to which will be returned. A numeric vector. All values \bold{must} be in the
 #'   available range provided by \code{msob$h0range}; see `Details'.
 #' @param checkargs Logical value indicating whether to check validity of
 #'   \code{msob} and \code{h0}. Disable only if you know this check will be
 #'   unnecessary.
 #'
-#' @return An object of class \code{\link{bivden}} with components
-#' corresponding to the requested slice at \code{h0}. Note that this object
-#' will have the component \code{fromms} set to \code{TRUE}.
-#'
+#' @return If \code{h0} is scalar, an object of class \code{\link{bivden}} with components
+#' corresponding to the requested slice at \code{h0}. If \code{h0} is a vector, a list of objects
+#' of class \code{\link{bivden}}. 
+#' 
 #' @author T.M. Davies
 #'
 #' @seealso \code{\link{multiscale.density}}, \code{\link{bivariate.density}}
@@ -49,25 +49,49 @@
 multiscale.slice <- function(msob,h0,checkargs=TRUE){
   if(checkargs){
     if(!inherits(msob,"msden")) stop("'msob' must be of class \"msden\"")
-    h0 <- checkit(h0,"'h0'")
+    if(!is.vector(h0)||!is.numeric(h0)) stop("'h0' must be a numeric vector")
+    
+    h0 <- sapply(h0,checkit,str="'h0'")
     aran <- msob$h0range
-    if(!inside.range(h0,aran)) stop(paste("requested 'h0' outside available range of",prange(aran)))
+    
+    if(!all(sapply(h0,function(x) x>=aran[1]) & sapply(h0,function(x) x<=aran[2]))) stop(paste("at least one requested 'h0' is outside available range of",prange(aran)))
+    # was:
+    # if(!inside.range(h0,aran)) stop(paste("requested 'h0' outside available range of",prange(aran)))
   }
   
-  available.h0 <- as.numeric(names(msob$z))
+  avail <- as.numeric(names(msob$z))
   zz <- msob$z
   hh <- msob$him
   qq <- msob$q
+
+  hlen <- length(h0)
+  if(hlen==1){
+    slc <- ms.slice.single(h0,avail,zz,hh,qq)
+    result <- list(z=slc$z,h0=h0,hp=msob$hp,h=msob$h/msob$h0*h0,him=slc$h,q=slc$q,gamma=msob$gamma,geometric=msob$geometric,pp=msob$pp) 
+    class(result) <- "bivden"
+  } else {
+    result <- list()
+    for(i in 1:hlen){
+      slc <- ms.slice.single(h0[i],avail,zz,hh,qq)
+      retob <- list(z=slc$z,h0=h0[i],hp=msob$hp,h=msob$h/msob$h0[i]*h0[i],him=slc$h,q=slc$q,gamma=msob$gamma,geometric=msob$geometric,pp=msob$pp) 
+      class(retob) <- "bivden"
+      result[[i]] <- retob
+    }
+  }
   
-  if(any(available.h0==h0)){
-    index <- which(available.h0==h0)
+  return(result)
+}
+
+ms.slice.single <- function(h0,avail,zz,hh,qq){
+  if(any(avail==h0)){
+    index <- which(avail==h0)
     zres <- zz[[index]]
     hres <- hh[[index]]
     qres <- qq[[index]]
   } else {
-    marker <- which(available.h0>h0)[1]
+    marker <- which(avail>h0)[1]
     mindex <- c(marker-1,marker)
-    hint <- available.h0[mindex]
+    hint <- avail[mindex]
     move <- (h0-hint[1])/diff(hint)
     zdiff <- zz[[mindex[2]]]-zz[[mindex[1]]]
     hdiff <- hh[[mindex[2]]]-hh[[mindex[1]]]
@@ -77,8 +101,5 @@ multiscale.slice <- function(msob,h0,checkargs=TRUE){
     if(!is.null(qq)) qres <- qq[[mindex[1]]]+move*qdiff
     else qres <- NULL
   }
-  
-  result <- list(z=zres,h0=h0,hp=msob$hp,h=msob$h/msob$h0*h0,him=hres,q=qres,gamma=msob$gamma,geometric=msob$geometric,pp=msob$pp,fromms=TRUE)
-  class(result) <- "bivden"
-  return(result)
+  return(list(z=zres,h=hres,q=qres))
 }
