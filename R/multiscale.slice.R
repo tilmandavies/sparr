@@ -1,7 +1,7 @@
 #' Slicing a multi-scale density/intensity object
 #' 
-#' Takes slices of a multi-scale density/intensity estimate at a desired
-#' global bandwidth
+#' Takes slices of a multi-scale density/intensity estimate at desired
+#' global bandwidths
 #' 
 #' Davies & Baddeley (2017) demonstrate that once a multi-scale
 #' density/intensity estimate has been computed, we may take slices parallel to
@@ -10,7 +10,7 @@
 #' based on a multi-scale estimate resulting from a call to
 #' \code{\link{multiscale.density}}.
 #' 
-#' The function returns an error (unless \code{checkargs = FALSE}) if the
+#' The function returns an error if the
 #' requested slices at \code{h0} are not all within the available range of
 #' pre-computed global bandwidth scalings as defined by the \code{h0range}
 #' component of \code{msob}.
@@ -25,7 +25,7 @@
 #' additional computing time.)
 #' 
 #' @param msob An object of class \code{\link{msden}} giving the multi-scale
-#'   estimate from which to take a slice.
+#'   estimate from which to take slices.
 #' @param h0 Desired global bandwidth(s); the density/intensity estimate
 #'   corresponding to which will be returned. A numeric vector. All values \bold{must} be in the
 #'   available range provided by \code{msob$h0range}; see `Details'.
@@ -82,17 +82,17 @@ multiscale.slice <- function(msob,h0,checkargs=TRUE){
   return(result)
 }
 
-ms.slice.single <- function(h0,avail,zz,hh,qq){
-  if(any(avail==h0)){
-    index <- which(avail==h0)
+ms.slice.single <- function(V,avail,zz,hh,qq){
+  if(any(avail==V)){
+    index <- which(avail==V)
     zres <- zz[[index]]
     hres <- hh[[index]]
     qres <- qq[[index]]
   } else {
-    marker <- which(avail>h0)[1]
+    marker <- which(avail>V)[1]
     mindex <- c(marker-1,marker)
     hint <- avail[mindex]
-    move <- (h0-hint[1])/diff(hint)
+    move <- (V-hint[1])/diff(hint)
     zdiff <- zz[[mindex[2]]]-zz[[mindex[1]]]
     hdiff <- hh[[mindex[2]]]-hh[[mindex[1]]]
     qdiff <- qq[[mindex[2]]]-qq[[mindex[1]]]

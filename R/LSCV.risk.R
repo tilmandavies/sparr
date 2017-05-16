@@ -133,6 +133,8 @@ LSCV.risk <- function(f, g = NULL, hlim = NULL, hseq = NULL, method = c("kelsall
       result <- optimise(LSCV.risk.single,interval=hlim,cases=f,controls=g,res=resolution,edge=edge,hazey=TRUE)$minimum
     } else if(meth=="davies"){
       if(verbose) cat("Searching for optimal Davies h in [",round(hlim[1],3),",",round(hlim[2],3),"]\n  -initialisation...",sep="")
+      marks(f) <- NULL
+      marks(g) <- NULL
       pooled <- suppressWarnings(superimpose(f,g))
       lambda <- LSCV.density(pooled,verbose=FALSE)
       bp <- BAMprep(f,g,lambda,3,resolution)
@@ -184,6 +186,8 @@ LSCV.risk <- function(f, g = NULL, hlim = NULL, hseq = NULL, method = c("kelsall
         if(verbose) cat("Done.\n")
       }
     } else if(meth=="davies"){
+      marks(f) <- NULL
+      marks(g) <- NULL
       pooled <- suppressWarnings(superimpose(f,g))
       lambda <- LSCV.density(pooled,verbose=FALSE)
       bp <- BAMprep(f,g,lambda,3,resolution)

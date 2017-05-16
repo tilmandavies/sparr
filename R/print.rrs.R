@@ -1,3 +1,5 @@
+#' @rdname printsparr
+#' @method print rrs
 #' @export
 print.rrs <- function(x, ...){
 	

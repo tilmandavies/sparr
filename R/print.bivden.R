@@ -1,14 +1,14 @@
-#' Printing a bivariate density/intensity, spatiotemporal density,
-#' spatial/spatiotemporal relative risk function, or multi-scale density/intensity 
+#' Printing sparr objects
 #' 
-#' \code{print} methods for classes \code{"\link{bivden}"}, \code{"stden"},
-#' \code{"\link{rrs}"}, \code{"rrst"} and \code{"\link{msden}"}.
+#' \code{print} methods for classes \code{\link{bivden}}, \code{\link{stden}},
+#' \code{\link{rrs}}, \code{\link{rrst}} and \code{\link{msden}}.
 #' 
-#' @aliases print.bivden print.rrs print.msden 
+#' @aliases print.bivden print.rrs print.msden print.stden print.rrst
 #' 
+#' @rdname printsparr
 #'
-#' @param x An object of class \code{\link{bivden}}, \code{stden},
-#'   \code{\link{rrs}}, \code{rrst}, or \code{\link{msden}}.
+#' @param x An object of class \code{\link{bivden}}, \code{\link{stden}},
+#'   \code{\link{rrs}}, \code{\link{rrst}}, or \code{\link{msden}}.
 #' @param ...  Ignored.
 #'
 #' @author T.M. Davies

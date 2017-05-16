@@ -54,8 +54,21 @@ checkranin <- function(ran,vals,nm1){
   return(ran)
 }
 
+checktsel <- function(tsel){
+  if(!is.vector(tsel)) stop(paste("'tselect' must be a vector",sep=""))
+  if(!is.numeric(tsel)) stop(paste("'tselect' must be numeric",sep=""))
+  if(length(tsel)==2){
+    if(tsel[2]<tsel[1]) stop(paste("'tselect[1]' must be <= 'tselect[2]'",sep=""))
+  } else if(length(tsel)==1){
+    tsel <- rep(tsel,2)
+  } else {
+    stop(paste("'tselect' must be of length 1 or 2"))
+  }
+  return(tsel)
+}
+  
 checktt <- function(tt){
-  if(is.null(tt)) stop("observations times must be supplied as 'tt' or as numeric marks to 'pp'")
+  if(is.null(tt)) stop("observation times must be supplied as 'tt' or as numeric marks to 'pp'")
   if(!is.vector(tt)) stop("'tt' must be a vector")
   if(!is.numeric(tt)) stop("'tt' must be numeric")
   return(tt)

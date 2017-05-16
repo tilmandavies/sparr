@@ -8,7 +8,7 @@ multiscale.slice(msob, h0, checkargs = TRUE)
 }
 \arguments{
 \item{msob}{An object of class \code{\link{msden}} giving the multi-scale
-estimate from which to take a slice.}
+estimate from which to take slices.}
 
 \item{h0}{Desired global bandwidth(s); the density/intensity estimate
 corresponding to which will be returned. A numeric vector. All values \bold{must} be in the
@@ -24,8 +24,8 @@ corresponding to the requested slice at \code{h0}. If \code{h0} is a vector, a l
 of class \code{\link{bivden}}.
 }
 \description{
-Takes slices of a multi-scale density/intensity estimate at a desired
-global bandwidth
+Takes slices of a multi-scale density/intensity estimate at desired
+global bandwidths
 }
 \details{
 Davies & Baddeley (2017) demonstrate that once a multi-scale
@@ -35,7 +35,7 @@ any desired global bandwidth. This function is the implementation thereof
 based on a multi-scale estimate resulting from a call to
 \code{\link{multiscale.density}}.
 
-The function returns an error (unless \code{checkargs = FALSE}) if the
+The function returns an error if the
 requested slices at \code{h0} are not all within the available range of
 pre-computed global bandwidth scalings as defined by the \code{h0range}
 component of \code{msob}.

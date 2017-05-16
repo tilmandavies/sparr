@@ -1,3 +1,5 @@
+#' @rdname plotsparr
+#' @method plot rrs
 #' @export
 plot.rrs <- function(x, auto.axes = TRUE, ...){
   ellip <- list(...)

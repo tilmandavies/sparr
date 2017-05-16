@@ -1,3 +1,5 @@
+#' @rdname summarysparr
+#' @method summary msden
 #' @export
 summary.msden <- function(object,...){
   cat("Multi-scale Adaptive Kernel Density/Intensity Estimate\n\n")

@@ -1,3 +1,5 @@
+#' @rdname printsparr
+#' @method print msden
 #' @export
 print.msden <- function(x,...){
   cat("Multi-scale Adaptive Kernel Density/Intensity Estimate\n\n")

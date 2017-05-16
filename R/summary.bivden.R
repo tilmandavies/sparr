@@ -1,13 +1,14 @@
-#' Summarising a bivariate density/intensity, spatiotemporal density,
-#' spatial/spatiotemporal relative risk function, or multi-scale density/intensity 
+#' Summarising sparr objects
 #' 
-#' \code{summary} methods for classes \code{"\link{bivden}"}, \code{"\link{stden}"},
-#' \code{"\link{rrs}"}, \code{"rrst"} and \code{"\link{msden}"}.
+#' \code{summary} methods for classes \code{\link{bivden}}, \code{\link{stden}},
+#' \code{\link{rrs}}, \code{\link{rrst}} and \code{\link{msden}}.
 #' 
-#' @aliases summary.bivden summary.rrs summary.msden summary.stden
+#' @aliases summary.bivden summary.rrs summary.msden summary.stden summary.rrst
+#' 
+#' @rdname summarysparr
 #'
 #' @param object An object of class \code{\link{bivden}}, \code{\link{stden}},
-#'   \code{\link{rrs}}, \code{rrst}, or \code{\link{msden}}.
+#'   \code{\link{rrs}}, \code{\link{rrst}}, or \code{\link{msden}}.
 #' @param ...  Ignored.
 #'
 #' @author T.M. Davies

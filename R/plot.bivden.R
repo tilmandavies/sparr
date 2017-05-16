@@ -1,8 +1,8 @@
-#' Plotting a bivariate kernel density/intensity, relative risk surface, or
-#' multi-scale density/intensity
+#' Plotting sparr objects
 #' 
-#' \code{plot} methods for classes \code{"\link{bivden}"}, \code{"\link{rrs}"},
-#' and \code{"\link{msden}"}
+#' \code{plot} methods for classes \code{\link{bivden}}, \code{\link{stden}},
+#' \code{\link{rrs}}, \code{\link{rrst}} and \code{\link{msden}}.
+#' 
 #' 
 #' In all instances, visualisation is deferred to
 #' \code{\link[spatstat]{plot.im}}, for which there are a variety of
@@ -17,20 +17,30 @@
 #' flexibility in visualisation is gained by using \code{\link{tolerance}} in
 #' conjunction with \code{\link{contour}}.
 #' 
-#' The \code{\link{msden}} object is plotted as an animation, one pixel image
+#' An \code{\link{msden}}, \code{\link{stden}}, or \code{\link{rrst}} object is plotted as an animation, one pixel image
 #' after another, separated by \code{sleep} seconds. If instead you intend the
 #' individual images to be plotted in an array of images, you should first set
 #' up your plot device layout, and ensure \code{override.par = FALSE} so that
 #' the function does not reset these device parameters itself. In such an
 #' instance, one might also want to set \code{sleep = 0}.
 #' 
-#' @aliases plot.bivden plot.rrs plot.msden
+#' @aliases plot.bivden plot.rrs plot.msden plot.stden plot.rrst
 #'
-#' @param x An object of class \code{\link{bivden}}, \code{\link{rrs}}, or
-#'   \code{\link{msden}}.
+#' @rdname plotsparr
+#'
+#'
+#' @param x An object of class \code{\link{bivden}}, \code{\link{stden}},
+#'   \code{\link{rrs}}, \code{\link{rrst}}, or \code{\link{msden}}.
 #' @param what A character string to select plotting of result (\code{"z"};
 #'   default); edge-correction surface (\code{"edge"}); or variable bandwidth
 #'   surface (\code{"bw"}).
+#' @param tselect Either a single numeric value giving the time at which to return the plot, or a vector of length 2 giving an interval of times over which to plot. This argument must respect the stored temporal bound in \code{x$tlim}, else an error will be thrown. By default, the full set of images (i.e. over the entire available time span) is plotted.
+#' @param type A character string to select plotting of joint/unconditional spatiotemporal
+#'   estimate (default) or conditional spatial density given time.
+#' @param fix.range Logical value indicating whether use the same color scale limits for each plot in the sequence. Ignored if the user supplies a pre-defined \code{\link[spatstat]{colourmap}} to the \code{col} argument, which is matched to \code{...} above and passed to \code{\link[spatstat]{plot.im}}. See `Examples'.
+#' @param tol.show Logical value indicating whether to show pre-computed tolerance contours on the plot(s). The object \code{x} must already have the relevant \emph{p}-value surface(s) stored in order for this argument to have any effect.
+#' @param tol.type A character string used to control the type of tolerance contour displayed; a test for elevated risk (\code{"upper"}), decreased risk (\code{"lower"}), or a two-tailed test (\code{two.sided}).
+#' @param tol.args A named list of valid arguments to be passed directly to \code{\link[graphics]{contour}} to control the appearance of plotted contours. Commonly used items are \code{levels}, \code{lty}, \code{lwd} and \code{drawlabels}.
 #' @param add.pts Logical value indicating whether to add the observations to
 #'   the image plot using default \code{\link{points}}.
 #' @param auto.axes Logical value indicating whether to display the plot with

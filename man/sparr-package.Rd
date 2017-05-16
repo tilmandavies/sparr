@@ -4,16 +4,16 @@
 \name{sparr-package}
 \alias{sparr-package}
 \alias{sparr}
-\title{The sparr Package: SPAtial Relative Risk}
+\title{The sparr Package: Spatial and Spatiotemporal Relative Risk}
 \description{
-Provides functions to estimate fixed and adaptive kernel-smoothed relative
-risk surfaces via the density-ratio method and perform subsequent inference.
+Provides functions to estimate fixed and adaptive kernel-smoothed spatial relative
+risk surfaces via the density-ratio method and perform subsequent inference. Fixed-bandwidth spatiotemporal density and relative risk estimation is also supported.
 }
 \details{
 \tabular{ll}{
 Package: \tab sparr\cr
-Date:\tab 2017-05-11\cr
-Version:\tab 2.0-05\cr
+Date:\tab 2017-05-17\cr
+Version:\tab 2.1-00\cr
 License: \tab GPL (>= 2)\cr
 }
 
@@ -41,16 +41,24 @@ contours of which signal statistically significant sub-regions of extremity
 in a risk surface - Hazelton and Davies, 2009; Davies and Hazelton, 2010) as
 well as some visualisation tools are provided.
 
+Spatiotemporal estimation is also supported, largely following developments
+in Fernando and Hazelton (2014). This includes their fixed-bandwith kernel estimator
+of spatiotemporal densities, relative risk, and asymptotic tolerance contours.
+
 The content of \code{sparr} can be broken up as follows:\cr
 
 \emph{Datasets}
 
-\code{\link{pbc}} a case/control planar point pattern
-(\code{\link[spatstat]{ppp.object}}) concerning liver disease in northern
-England. Also available are a number of built-in datasets in the
+\code{\link{pbc}} a case/control planar point pattern (\code{\link[spatstat]{ppp.object}}) concerning liver disease in northern
+England.
+
+\code{\link{fmd}} a case/control spatiotemporal point pattern of the 2001 outbreak of veterinary foot-and-mouth disease in Cumbria, UK. \bold{[unsure if these data can be released with sparr]}
+
+Also available are a number of built-in datasets in the
 \code{\link[spatstat]{spatstat}} package such as
 \code{\link[spatstat]{chorley}}, which concerns the distribution of
 laryngeal cancer in an area of Lancashire, England.\cr
+
 
 \emph{Bandwidth calculators}
 
@@ -87,12 +95,6 @@ estimates for multiple global bandwidths as per Davies and Baddeley
 \code{\link{multiscale.slice}} a single adaptive kernel estimate
 based on taking a slice from a multi-scale estimate.\cr
 
-\emph{Spatiotemporal functions}
-
---In development--
-
-\emph{Relative risk and \emph{p}-value surfaces}
-
 \code{\link{risk}}
 estimation of a (log) spatial relative risk function, either from data or
 pre-existing bivariate density estimates
@@ -100,25 +102,37 @@ pre-existing bivariate density estimates
 \code{\link{tolerance}}
 calculation of asymptotic or Monte-Carlo \emph{p}-value surfaces
 
+
+\emph{Spatiotemporal functions}
+
+\code{\link{spattemp.density}} fixed-bandwidth kernel density estimate of spatiotemporal data
+
+\code{\link{spattemp.risk}} fixed-bandwidth kernel density estimate of spatiotemporal relative risk, either with a time-static or time-varying control density
+
+\code{\link{spattemp.slice}} extraction function of the spatial density/relative risk at prespecified time(s)
+
+
 \emph{Printing and summarising objects}
 
 \code{S3} methods (\code{\link{print.bivden}}, \code{\link{print.rrs}},
-\code{\link{print.msden}}, \code{\link{summary.bivden}},
-\code{\link{summary.rrs}}, and \code{\link{print.msden}}) are available for
-the bivariate density, risk function, and multi-scale density objects.
+\code{\link{print.msden}}, \code{\link{print.stden}}, \code{\link{print.rrst}}, \code{\link{summary.bivden}},
+\code{\link{summary.rrs}}, \code{\link{print.msden}}, \code{\link{summary.stden}}, and \code{\link{summary.rrst}}) are available for
+the bivariate density, spatial relative risk, multi-scale density, spatiotemporal density, and spatiotemporal relative risk objects respectively.
 
 \emph{Visualisation}
 
 \code{S3} methods of the \code{plot} function; see
 \code{\link{plot.bivden}} for visualising a single bivariate density
 estimate from \code{\link{bivariate.density}}, \code{\link{plot.rrs}} for
-visualisation of an estimated relative risk function from
-\code{\link{risk}}, and \code{\link{plot.msden}} for viewing animations of
-multi-scale density estimates from \code{\link{multiscale.density}}.
+visualisation of a spatial relative risk function from
+\code{\link{risk}}, \code{\link{plot.msden}} for viewing animations of
+multi-scale density estimates from \code{\link{multiscale.density}},
+\code{\link{plot.stden}} for various options (including animation) for visualisation of a spatiotemporal density,
+and \code{\link{plot.rrst}} for viewing spatiotemporal relative risk surfaces (including animation and tolerance contour superimposition).
 
 \code{\link{tol.contour}} provides more flexibility for plotting and
-superimposing tolerance contours upon an existing plot, given output from
-\code{\link{tolerance}}
+superimposing tolerance contours upon an existing plot of spatial relative risk (i.e. given output from
+\code{\link{tolerance}}).
 }
 \section{Dependencies}{
  The \code{sparr} package depends upon
@@ -177,6 +191,8 @@ Davies, T.M., Jones, K. and Hazelton, M.L.
 (2016), Symmetric adaptive smoothing regimens for estimation of the spatial
 relative risk function, \emph{Computational Statistics & Data Analysis},
 \bold{101}, 12-28.
+
+Fernando, W.T.P.S. and Hazelton, M.L. (2014), Generalizing the spatial relative risk function, \emph{Spatial and Spatio-temporal Epidemiology}, \bold{8}, 1-10.
 
 Hazelton, M. L. (2008), Letter to the editor: Kernel
 estimation of risk surfaces without the need for edge correction,
