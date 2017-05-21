@@ -5,8 +5,8 @@
 \title{Leave-one-out least-squares cross-validation (LSCV) bandwidth selector}
 \usage{
 LSCV.density(pp, hlim = NULL, hseq = NULL, resolution = 64, edge = TRUE,
-  auto.optim = TRUE, seqres = 30, parallelise = NULL, verbose = TRUE,
-  type = "spatial", lambdalim = NULL, lambdaseq = NULL, tlim = NULL)
+  auto.optim = TRUE, type = c("fixed", "adaptive"), seqres = 30,
+  parallelise = NULL, verbose = TRUE, ...)
 }
 \arguments{
 \item{pp}{An object of class \code{\link[spatstat]{ppp}} giving the observed
@@ -31,43 +31,43 @@ optimisation using \code{\link{optimise}}. If \code{FALSE}, the optimisation
 criterion is evaluated over \code{hseq} (if supplied), or over a seqence of
 values controlled by \code{hlim} and \code{seqres}.}
 
+\item{type}{A character string; \code{"fixed"} (default) performs classical leave-one-out
+cross-validation for the fixed-bandwidth estimator. Alternatively, \code{"adaptive"} utilises
+multiscale adaptive kernel estimation (Davies & Baddeley, 2017) to run the cross-validation
+in an effort to find a suitable global bandwidth for the adaptive estimator. See the entry for \code{...}.}
+
 \item{seqres}{Optional resolution of an increasing sequence of bandwidth
 values. Only used if \code{(!auto.optim && is.null(hseq))}.}
 
 \item{parallelise}{Numeric argument to invoke parallel processing, giving
-the number of CPU cores to use when \code{!auto.optim}. Experimental. Test
+the number of CPU cores to use when \code{!auto.optim} \bold{and} \code{type = "fixed"}. Experimental. Test
 your system first using \code{parallel::detectCores()} to identify the
 number of cores available to you.}
 
 \item{verbose}{Logical value indicating whether to provide function progress
 commentary.}
 
-\item{type}{Unimplemented. Future argument for spatiotemporal bandwidth
-selection.}
-
-\item{lambdalim}{Unimplemented. Future argument for spatiotemporal bandwidth
-selection.}
-
-\item{lambdaseq}{Unimplemented. Future argument for spatiotemporal bandwidth
-selection.}
-
-\item{tlim}{Unimplemented. Future argument for spatiotemporal bandwidth
-selection.}
+\item{...}{Additional arguments controlling pilot density estimation and multi-scale bandwidth-axis
+resolution when \code{type = "adaptive"}. Relevant arguments are \code{hp}, \code{pilot.density},
+\code{gamma.scale}, and \code{trim} from \code{\link{bivariate.density}}; and \code{dimz} from 
+\code{\link{multiscale.density}}. If \code{hp} is missing and required, the function makes a recursive
+call to itself to set this using fixed-bandwidth LSCV. The remaining defaults are \code{pilot.density = pp},
+\code{gamma.scale = "geometric"}, \code{trim = 5}, and \code{dimz = resolution}.}
 }
 \value{
 A single numeric value of the estimated bandwidth (if
-  \code{auto.optim = TRUE}). Otherwise, a list of two numeric vectors of equal
-  length giving the bandwidth sequence (as \code{hs}) and corresponding CV
-  function value (as \code{CV}).
+  \code{auto.optim = TRUE}). Otherwise, a \eqn{[}\code{seqres} \eqn{x} 2\eqn{]} matrix 
+  giving the bandwidth sequence and corresponding CV
+  function value.
 }
 \description{
-Isotropic fixed bandwidth selection for standalone 2D density/intensity
-based on classical unbiased cross-validation
+Isotropic fixed or global (for adaptive) bandwidth selection for standalone 2D density/intensity
+based on unbiased cross-validation
 }
 \section{Warning}{
  Leave-one-out LSCV for bandwidth selection in kernel
 density estimation is notoriously unstable in practice and has a tendency to
-produce rather small bandwidths. Satisfactory bandwidths are not guaranteed
+produce rather small bandwidths in the fixed bandwidth case. Satisfactory bandwidths are not guaranteed
 for every application. This method can also be computationally expensive for
 large data sets and fine evaluation grid resolutions. The user may need to
 experiment with adjusting \code{hlim} to find a suitable minimum.
@@ -79,6 +79,9 @@ experiment with adjusting \code{hlim} to find a suitable minimum.
 
 }
 \references{
+Davies, T.M. and Baddeley A. (2017), Fast computation of
+spatially adaptive kernel estimates, \emph{Submitted}.
+
 Silverman, B.W. (1986), \emph{Density Estimation for Statistics
 and Data Analysis}, Chapman & Hall, New York.
 

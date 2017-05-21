@@ -1,7 +1,7 @@
 #' Leave-one-out least-squares cross-validation (LSCV) bandwidth selector
 #' 
-#' Isotropic fixed bandwidth selection for standalone 2D density/intensity
-#' based on classical unbiased cross-validation
+#' Isotropic fixed or global (for adaptive) bandwidth selection for standalone 2D density/intensity
+#' based on unbiased cross-validation
 #' 
 #' 
 #' @param pp An object of class \code{\link[spatstat]{ppp}} giving the observed
@@ -23,28 +23,30 @@
 #' @param seqres Optional resolution of an increasing sequence of bandwidth
 #'   values. Only used if \code{(!auto.optim && is.null(hseq))}.
 #' @param parallelise Numeric argument to invoke parallel processing, giving
-#'   the number of CPU cores to use when \code{!auto.optim}. Experimental. Test
+#'   the number of CPU cores to use when \code{!auto.optim} \bold{and} \code{type = "fixed"}. Experimental. Test
 #'   your system first using \code{parallel::detectCores()} to identify the
 #'   number of cores available to you.
 #' @param verbose Logical value indicating whether to provide function progress
 #'   commentary.
-#' @param type Unimplemented. Future argument for spatiotemporal bandwidth
-#'   selection.
-#' @param lambdalim Unimplemented. Future argument for spatiotemporal bandwidth
-#'   selection.
-#' @param lambdaseq Unimplemented. Future argument for spatiotemporal bandwidth
-#'   selection.
-#' @param tlim Unimplemented. Future argument for spatiotemporal bandwidth
-#'   selection.
-#'
+#' @param type A character string; \code{"fixed"} (default) performs classical leave-one-out
+#'   cross-validation for the fixed-bandwidth estimator. Alternatively, \code{"adaptive"} utilises
+#'   multiscale adaptive kernel estimation (Davies & Baddeley, 2017) to run the cross-validation
+#'   in an effort to find a suitable global bandwidth for the adaptive estimator. See the entry for \code{...}.
+#' @param ... Additional arguments controlling pilot density estimation and multi-scale bandwidth-axis
+#'   resolution when \code{type = "adaptive"}. Relevant arguments are \code{hp}, \code{pilot.density},
+#'   \code{gamma.scale}, and \code{trim} from \code{\link{bivariate.density}}; and \code{dimz} from 
+#'   \code{\link{multiscale.density}}. If \code{hp} is missing and required, the function makes a recursive
+#'   call to itself to set this using fixed-bandwidth LSCV. The remaining defaults are \code{pilot.density = pp},
+#'   \code{gamma.scale = "geometric"}, \code{trim = 5}, and \code{dimz = resolution}.
+#'   
 #' @return A single numeric value of the estimated bandwidth (if
-#'   \code{auto.optim = TRUE}). Otherwise, a list of two numeric vectors of equal
-#'   length giving the bandwidth sequence (as \code{hs}) and corresponding CV
-#'   function value (as \code{CV}).
+#'   \code{auto.optim = TRUE}). Otherwise, a \eqn{[}\code{seqres} \eqn{x} 2\eqn{]} matrix 
+#'   giving the bandwidth sequence and corresponding CV
+#'   function value.
 #'
 #' @section Warning: Leave-one-out LSCV for bandwidth selection in kernel
 #' density estimation is notoriously unstable in practice and has a tendency to
-#' produce rather small bandwidths. Satisfactory bandwidths are not guaranteed
+#' produce rather small bandwidths in the fixed bandwidth case. Satisfactory bandwidths are not guaranteed
 #' for every application. This method can also be computationally expensive for
 #' large data sets and fine evaluation grid resolutions. The user may need to
 #' experiment with adjusting \code{hlim} to find a suitable minimum.
@@ -57,6 +59,10 @@
 #'   \code{\link[spatstat]{bw.frac}}.
 #'
 #' @references
+#' 
+#' Davies, T.M. and Baddeley A. (2017), Fast computation of
+#' spatially adaptive kernel estimates, \emph{Submitted}.
+#' 
 #' Silverman, B.W. (1986), \emph{Density Estimation for Statistics
 #' and Data Analysis}, Chapman & Hall, New York.
 #'
@@ -69,25 +75,25 @@
 #' 
 #' @export
 LSCV.density <- function(pp,hlim=NULL,hseq=NULL,resolution=64,edge=TRUE,auto.optim=TRUE,
-                         seqres=30,parallelise=NULL,verbose=TRUE,type="spatial",
-                         lambdalim=NULL,lambdaseq=NULL,tlim=NULL){
+                         type=c("fixed","adaptive"),seqres=30,parallelise=NULL,verbose=TRUE,...){
   if(!is.null(hlim)){
     if(hlim[1]>=hlim[2]) stop("invalid h limits")
   }
-  if(!is.null(lambdalim)){
-    if(lambdalim[1]>=lambdalim[2]) stop("invalid lambda limits")
-  }
+
   if(class(pp)!="ppp") stop("data object 'pp' must be of class \"ppp\"")
   W <- Window(pp)
   
   if(is.null(hlim)){
-    md <- min(nndist(unique(pp)))
+    ppu <- pp
+    marks(ppu) <- NULL
+    md <- min(nndist(unique(ppu)))
     hlim <- c(md,max(md*50,min(diff(W$xrange),diff(W$yrange))/6))
   }
   
-  #if(type=="spatial"){
+  typ <- type[1]
+  if(typ=="fixed"){
     if(auto.optim){
-      if(verbose) cat("Searching for optimal h in [",round(hlim[1],3),",",round(hlim[2],3),"]...",sep="")
+      if(verbose) cat("Searching for optimal h in ",prange(hlim),"...",sep="")
       result <- optimise(LSCV.density.spatial.single,interval=hlim,pp=pp,res=resolution,edge=edge)$minimum
       if(verbose) cat("Done.\n")
     } else {
@@ -114,36 +120,97 @@ LSCV.density <- function(pp,hlim=NULL,hseq=NULL,resolution=64,edge=TRUE,auto.opt
       result <- cbind(hseq,lscv.vec)
       dimnames(result)[[2]] <- c("h","CV")
     }
+  } else if(typ=="adaptive"){
+
+    ellip <- list(...)
+    
+    if(is.null(ellip$hp)){
+      if(verbose) cat("Selecting pilot bandwidth...")
+      hp <- LSCV.density(pp,verbose=FALSE)
+      if(verbose) cat(paste("Done.\n   [ Found hp =",hp,"]\n"))
+    } else {
+      hp <- ellip$hp
+    }
+    
+    if(is.null(ellip$pilot.density)){
+      pilot.density <- pp
+    } else {
+      pilot.density <- ellip$pilot.density
+    }
+    
+    if(is.null(ellip$gamma.scale)){
+      gamma.scale <- "geometric"
+    } else {
+      gamma.scale <- ellip$gamma.scale
+    }
+    
+    if(is.null(ellip$trim)){
+      trim <- 5
+    } else {
+      trim <- ellip$trim
+    }
+    
+    if(is.null(ellip$dimz)){
+      dimz <- resolution
+    } else {
+      dimz <- ellip$dimz
+    }
+    
+    if(verbose) cat("Computing multi-scale estimate...")
+    hhash <- mean(hlim)
+    msobject <- multiscale.density(pp,h0=hhash,hp=hp,h0fac=hlim/hhash,edge=ifelse(edge,"uniform","none"),resolution=resolution,dimz=dimz,gamma.scale=gamma.scale,trim=trim,intensity=TRUE,pilot.density=pilot.density,verbose=FALSE)
+    if(verbose) cat("Done.\n")
+    
+    h0range <- range(as.numeric(names(msobject$z)))
+    if(auto.optim){
+      if(verbose) cat("Searching for optimal h0 in ",prange(h0range),"...",sep="")
+      h0opt <- optimise(ms.loo,interval=h0range,object=msobject)$minimum
+      if(verbose) cat("Done.\n")
+      return(h0opt)
+    } else {
+      if(is.null(hseq)) hseq <- seq(h0range[1],h0range[2],length=seqres)
+      hn <- length(hseq)
+      lscv.vec <- rep(NA,hn)
+      if(verbose) pb <- txtProgressBar(1,hn)
+      for(i in 1:hn){
+        lscv.vec[i] <- ms.loo(hseq[i],msobject)
+        if(verbose) setTxtProgressBar(pb,i)
+      }
+      if(verbose) close(pb)
+      
+      result <- cbind(hseq,lscv.vec)
+      dimnames(result)[[2]] <- c("h0","CV")
+    }
+  } else stop("invalid 'type'")
   
   return(result)
-  
-  # } else if(type=="spattemp"){
-  #   stop("'type' must be provided as \"spatial\"; all else currently unimplemented")
-  #   if(auto.optim){
-  #     strt <- c(NS(pp),bw.nrd0(marks(pp)))
-  #     return(optim(par=strt,LSCV.density.spattemp.single,pp=pp,res=res,tlim=tlim,edge=edge,...)$par)
-  #   } else {
-  #     if(is.null(hseq)) hseq <- seq(hlim[1],hlim[2],length=seqres)
-  #     hn <- length(hseq)
-  #     if(is.null(lambdaseq)) lambdaseq <- seq(lambdalim[1],lambdalim[2],length=seqres)
-  #     ln <- length(lambdaseq)
-  #     hl <- expand.grid(hseq,lambdaseq)
-  #     if(is.na(parallelise)){
-  #       lscv.vec <- rep(NA,hn*ln)
-  #       for(i in 1:(hn*ln)) lscv.vec[i] <- LSCV.density.spattemp.single(as.numeric(hl[i,]),pp,res,tlim,edge)
-  #     } else {
-  #       if(parallelise>detectCores()) stop("cores requested exceeds available count")
-  #       registerDoParallel(cores=parallelise)
-  #       lscv.vec <- foreach(i=1:(hn*ln),.packages="spatstat",.combine=c) %dopar% {
-  #         return(LSCV.density.spattemp.single(as.numeric(hl[i,]),pp,res,tlim,edge))
-  #       }
-  #     }
-  #     return(list(hs=hl[,1],ls=hl[,2],CV=lscv.vec))
-  #   }
-  # } else {
-  #   stop("'type' must be provided as either \"spatial\" (spatial only) or \"spattemp\" (spatiotemporal)")
-  # }
 }
 
 
 
+# } else if(type=="spattemp"){
+#   stop("'type' must be provided as \"spatial\"; all else currently unimplemented")
+#   if(auto.optim){
+#     strt <- c(NS(pp),bw.nrd0(marks(pp)))
+#     return(optim(par=strt,LSCV.density.spattemp.single,pp=pp,res=res,tlim=tlim,edge=edge,...)$par)
+#   } else {
+#     if(is.null(hseq)) hseq <- seq(hlim[1],hlim[2],length=seqres)
+#     hn <- length(hseq)
+#     if(is.null(lambdaseq)) lambdaseq <- seq(lambdalim[1],lambdalim[2],length=seqres)
+#     ln <- length(lambdaseq)
+#     hl <- expand.grid(hseq,lambdaseq)
+#     if(is.na(parallelise)){
+#       lscv.vec <- rep(NA,hn*ln)
+#       for(i in 1:(hn*ln)) lscv.vec[i] <- LSCV.density.spattemp.single(as.numeric(hl[i,]),pp,res,tlim,edge)
+#     } else {
+#       if(parallelise>detectCores()) stop("cores requested exceeds available count")
+#       registerDoParallel(cores=parallelise)
+#       lscv.vec <- foreach(i=1:(hn*ln),.packages="spatstat",.combine=c) %dopar% {
+#         return(LSCV.density.spattemp.single(as.numeric(hl[i,]),pp,res,tlim,edge))
+#       }
+#     }
+#     return(list(hs=hl[,1],ls=hl[,2],CV=lscv.vec))
+#   }
+# } else {
+#   stop("'type' must be provided as either \"spatial\" (spatial only) or \"spattemp\" (spatiotemporal)")
+# }
