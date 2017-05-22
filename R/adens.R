@@ -29,20 +29,6 @@ point_image_by_bw <- function(bw_cat, bw, points, weights, WM) {
   im_bw
 }
 
-# Fast fourier transform of a 2D Gaussian based on the continuous FT, where
-# sigma is the standard deviation, ds,dt is the time resolution in x,y
-# and 2n*2n the number of points
-
-kernel2d_fft <- function(sigma, ds, dt, n) {
-  kernel_fft <- function(sigma, dt, n) {
-    f <- c(0:(n-1),-n:-1)*pi*sigma/(n*dt)
-    exp(-0.5*f*f)/dt
-  }
-  fZ.x <- kernel_fft(sigma, ds, n)
-  fZ.y <- kernel_fft(sigma, dt, n)
-  fZ.y %*% t(fZ.x)
-}
-
 adens <- function(x,bwim,bwpts,resolution,edge,diggle,weights,intensity,hstep,qstep,qres,verbose){
   n <- npoints(x)
   hc <- gethcats(bwpts,step=hstep)
