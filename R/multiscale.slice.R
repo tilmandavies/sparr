@@ -59,7 +59,7 @@ multiscale.slice <- function(msob,h0,checkargs=TRUE){
     # if(!inside.range(h0,aran)) stop(paste("requested 'h0' outside available range of",prange(aran)))
   }
   
-  avail <- as.numeric(names(msob$z))
+  avail <- names(msob$z)
   zz <- msob$z
   hh <- msob$him
   qq <- msob$q
@@ -83,15 +83,15 @@ multiscale.slice <- function(msob,h0,checkargs=TRUE){
 }
 
 ms.slice.single <- function(V,avail,zz,hh,qq){
-  if(any(avail==V)){
-    index <- which(avail==V)
+  if(any(avail==as.character(V))){
+    index <- which(avail==as.character(V))
     zres <- zz[[index]]
     hres <- hh[[index]]
     qres <- qq[[index]]
   } else {
-    marker <- which(avail>V)[1]
+    marker <- which(as.numeric(avail)>V)[1]
     mindex <- c(marker-1,marker)
-    hint <- avail[mindex]
+    hint <- as.numeric(avail)[mindex]
     move <- (V-hint[1])/diff(hint)
     zdiff <- zz[[mindex[2]]]-zz[[mindex[1]]]
     hdiff <- hh[[mindex[2]]]-hh[[mindex[1]]]

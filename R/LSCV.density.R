@@ -76,9 +76,6 @@
 #' @export
 LSCV.density <- function(pp,hlim=NULL,hseq=NULL,resolution=64,edge=TRUE,auto.optim=TRUE,
                          type=c("fixed","adaptive"),seqres=30,parallelise=NULL,verbose=TRUE,...){
-  if(!is.null(hlim)){
-    if(hlim[1]>=hlim[2]) stop("invalid h limits")
-  }
 
   if(class(pp)!="ppp") stop("data object 'pp' must be of class \"ppp\"")
   W <- Window(pp)
@@ -88,6 +85,8 @@ LSCV.density <- function(pp,hlim=NULL,hseq=NULL,resolution=64,edge=TRUE,auto.opt
     marks(ppu) <- NULL
     md <- min(nndist(unique(ppu)))
     hlim <- c(md,max(md*50,min(diff(W$xrange),diff(W$yrange))/6))
+  } else {
+    hlim <- checkran(hlim,"'hlim'")
   }
   
   typ <- type[1]
