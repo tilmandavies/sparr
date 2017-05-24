@@ -290,10 +290,14 @@ multiscale.density <- function(pp,h0,hp=NULL,h0fac=c(0.25,1.5),edge=c("uniform",
   #  restrict attention to those requested by 'h0fac'
   ei <- exp(-zvalues)
   eiw <- which(ei>=h0fac[1] & ei<=h0fac[2])
+  if(length(eiw)==0) stop("'h0fac' too narrow for 'dimz' -- increase either one or both")
   avals <- ei[eiw]
   bwvals <- avals*h0
   hlist <- list()
   for(i in 1:length(avals)) hlist[[i]] <- avals[i]*h.hypo[WM,drop=FALSE]
+  
+  
+  
   
   # turn each relevant layer of the returned FFT array into a pixel image,
   #  giving the raw (un-edge-corrected) result for that scaling
