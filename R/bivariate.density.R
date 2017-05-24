@@ -352,20 +352,23 @@ bivariate.density <- function(pp,h0,hp=NULL,adapt=FALSE,resolution=128,gamma.sca
 		
 	} else {
     h.spec <- rep(h0,n)
-	  h.hypo <- ef <- NULL
+	  h.hypo <- NULL
 	  gs <- gamma <- NA
     
 	  dens <- density.ppp(pp,sigma=h0,dimyx=dimyx,xy=xy,edge=(edge=="diggle"||edge=="uniform"),diggle=(edge=="diggle"),spill=1)
 		surf <- dens$raw[W,drop=FALSE]
 		ef <- dens$edg[W,drop=FALSE]
+		ef[ef>1] <- 1
 		
 		if(edge=="diggle"){
 		  ef <- safelookup(ef,pp,warn=FALSE)
 		} else if(edge=="uniform"){
 		  surf <- surf/ef
 		  surf[surf<0] <- 0
+		} else {
+		  ef <- NULL
 		}
-		ef[ef>1] <- 1
+		
 		if(!intensity) surf <- surf/integral(surf)
 	}
 	

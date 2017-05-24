@@ -34,7 +34,8 @@ values controlled by \code{hlim} and \code{seqres}.}
 \item{type}{A character string; \code{"fixed"} (default) performs classical leave-one-out
 cross-validation for the fixed-bandwidth estimator. Alternatively, \code{"adaptive"} utilises
 multiscale adaptive kernel estimation (Davies & Baddeley, 2017) to run the cross-validation
-in an effort to find a suitable global bandwidth for the adaptive estimator. See the entry for \code{...}.}
+in an effort to find a suitable global bandwidth for the adaptive estimator. Note that data points are not `left out' of
+the pilot density estimate when using this option. See also the entry for \code{...}.}
 
 \item{seqres}{Optional resolution of an increasing sequence of bandwidth
 values. Only used if \code{(!auto.optim && is.null(hseq))}.}
