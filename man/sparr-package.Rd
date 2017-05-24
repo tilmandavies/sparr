@@ -12,8 +12,8 @@ risk surfaces via the density-ratio method and perform subsequent inference. Fix
 \details{
 \tabular{ll}{
 Package: \tab sparr\cr
-Date:\tab 2017-05-21\cr
-Version:\tab 2.1-01\cr
+Date:\tab 2017-05-25\cr
+Version:\tab 2.1-02\cr
 License: \tab GPL (>= 2)\cr
 }
 
