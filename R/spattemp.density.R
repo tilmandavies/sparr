@@ -9,7 +9,6 @@ spattemp.density <- function(pp,h=NULL,tt=NULL,lambda=NULL,tlim=NULL,sedge=c("un
   sedge <- checkedge(sedge,v=2)
   tedge <- checkedge(tedge,v=2)
   
-  sz <- density.ppp(pp,sigma=h,edge=(sedge=="uniform"),dimyx=sres,spill=1)
   WM <- as.mask(W,dimyx=sres)
   inside <- WM$m
   grx <- WM$xcol
@@ -40,16 +39,23 @@ spattemp.density <- function(pp,h=NULL,tt=NULL,lambda=NULL,tlim=NULL,sedge=c("un
   if(is.null(lambda)) lambda <- bw.SJ(tt)
   lam <- checkit(lambda,"'lam'")
   
-  fhat <- kde(cbind(pp$x,pp$y,tt),
-              H=diag(c(h^2,h^2,lam^2)),
-              xmin=c(min(grx),min(gry),kt[1]),
-              xmax=c(max(grx),max(gry),kt[2]),
-              gridsize=c(sres,sres,tres),
-              supp=4,
-              verbose=verbose)
+  # fhat <- kde(cbind(pp$x,pp$y,tt),
+  #             H=diag(c(h^2,h^2,lam^2)),
+  #             xmin=c(min(grx),min(gry),kt[1]),
+  #             xmax=c(max(grx),max(gry),kt[2]),
+  #             gridsize=c(sres,sres,tres),
+  #             supp=4,
+  #             verbose=verbose)
   
+  if(verbose) cat("Calculating trivariate smooth...")
+  fhat <- kde3d(x=pp$x,y=pp$y,z=tt,h=c(h,h,lam),n=c(sres,sres,tres),lims=c(range(grx),range(gry),kt))
+  if(verbose) cat("Done.\n")
+
+  if(verbose&&(sedge=="uniform"||tedge=="uniform")) cat("Edge-correcting...")
+  sz <- density.ppp(pp,sigma=h,edge=(sedge=="uniform"),dimyx=sres,spill=1)
   sq <- im(matrix(1,sres,sres),xcol=grx,yrow=gry)
   if(sedge=="uniform"){
+    sq <- im(matrix(1,sres,sres),xcol=grx,yrow=gry)
     sq <- sz$edg
     sq[sq>1] <- 1
   }
@@ -67,16 +73,20 @@ spattemp.density <- function(pp,h=NULL,tt=NULL,lambda=NULL,tlim=NULL,sedge=c("un
   spatial.z <- spatial.z/integral(spatial.z)
   temporal.z <- density(tt,bw=lam,from=min(grt),to=max(grt),n=tres)
   temporal.z$y <- temporal.z$y/tq
+  if(verbose&&(sedge=="uniform"||tedge=="uniform")) cat("Done.\n")
   
+  if(verbose) cat("Conditioning on time...")
   z <- z.cond <- list()
   for(i in 1:tres){
-    z[[i]] <- im(t(fhat$estimate[,,i]),xcol=grx,yrow=gry)
+    z[[i]] <- im(t(fhat$d[,,i]),xcol=grx,yrow=gry)
     z[[i]] <- z[[i]]/(sq*tq[i])
     z[[i]][!inside] <- NA
     z.cond[[i]] <- z[[i]]/temporal.z$y[i]
     # z.cond[[i]] <- z.cond[[i]]/integral(z.cond[[i]])
   }
   names(z) <- names(z.cond) <- grt
+  if(verbose) cat("Done.\n")
+  
   
   final <- list(z=z)
   final$z.cond <- z.cond
@@ -93,7 +103,7 @@ spattemp.density <- function(pp,h=NULL,tt=NULL,lambda=NULL,tlim=NULL,sedge=c("un
   final$pp <- pp
   final$tt <- tt
   # final$kdee <- fhat
-  
+
   class(final) <- "stden"
   return(final)
 }
