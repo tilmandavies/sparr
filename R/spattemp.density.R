@@ -92,7 +92,7 @@ spattemp.density <- function(pp,h=NULL,tt=NULL,lambda=NULL,tlim=NULL,sedge=c("un
   final$z.cond <- z.cond
   final$h <- h
   final$lambda <- lam
-  final$tlim <- tlim
+  final$tlim <- range(grt)
   final$spatial.z <- spatial.z
   final$temporal.z <- temporal.z
   # final$tstep <- tcw
@@ -101,7 +101,7 @@ spattemp.density <- function(pp,h=NULL,tt=NULL,lambda=NULL,tlim=NULL,sedge=c("un
   final$qs <- sq
   final$qt <- tq
   final$pp <- pp
-  final$tt <- tt
+  final$tt <- grt
   # final$kdee <- fhat
 
   class(final) <- "stden"

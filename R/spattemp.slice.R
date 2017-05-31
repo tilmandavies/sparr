@@ -76,13 +76,13 @@ spattemp.slice <- function(stob,tt,checkargs=TRUE){
   tlen <- length(tt)
   
   if(inherits(stob,"stden")){
-    avail <- as.numeric(names(stob$z))
+    avail <- names(stob$z)
     z <- stob$z
     zc <- stob$z.cond
     p <- pc <- NULL
     result <- list(z=list(),z.cond=list(),P=list(),Pc=list())
   } else {
-    avail <- as.numeric(names(stob$rr))
+    avail <- names(stob$rr)
     z <- stob$rr
     zc <- stob$rr.cond
     p <- stob$P
@@ -91,7 +91,7 @@ spattemp.slice <- function(stob,tt,checkargs=TRUE){
   }
   
   for(i in 1:tlen){
-    slc <- st.slice.single(tt[i],avail,z,zc,p,pc)
+    slc <- st.slice.single(tt[i],avail,z,zc,p,pc,warn=checkargs)
     result[[1]][[i]] <- slc$z
     result[[2]][[i]] <- slc$zc
     result[[3]][[i]] <- slc$p
@@ -107,29 +107,45 @@ spattemp.slice <- function(stob,tt,checkargs=TRUE){
   return(result)
 }
 
-st.slice.single <- function(V,avail,z,zc,p,pc){
-  if(any(avail==V)){
-    index <- which(avail==V)
+st.slice.single <- function(V,avail,z,zc,p,pc,warn=FALSE){
+  la <- length(avail)
+  if(any(avail==as.character(V))){
+    index <- which(avail==as.character(V))
     zres <- z[[index]]
     zcres <- zc[[index]]
     pres <- p[[index]]
     pcres <- pc[[index]]
   } else {
-    marker <- which(avail>V)[1]
-    mindex <- c(marker-1,marker)
-    tint <- avail[mindex]
-    move <- (V-tint[1])/diff(tint)
-    zdiff <- z[[mindex[2]]]-z[[mindex[1]]]
-    zcdiff <- zc[[mindex[2]]]-zc[[mindex[1]]]
-    zres <- z[[mindex[1]]]+move*zdiff
-    zcres <- zc[[mindex[1]]]+move*zcdiff
-    if(!is.null(p)){
-      pdiff <- p[[mindex[2]]]-p[[mindex[1]]]
-      pcdiff <- pc[[mindex[2]]]-pc[[mindex[1]]]
-      pres <- p[[mindex[1]]]+move*pdiff
-      pcres <- pc[[mindex[1]]]+move*pcdiff
+    marker <- as.numeric(avail)>V
+    if(sum(marker)==la){
+      zres <- z[[1]]
+      zcres <- zc[[1]]
+      pres <- p[[1]]
+      pcres <- pc[[1]]
+      if(warn) warning("time point lower than available range")
+    } else if(sum(marker)==0){
+      zres <- z[[la]]
+      zcres <- zc[[la]]
+      pres <- p[[la]]
+      pcres <- pc[[la]]
+      if(warn) warning("time point higher than available range")
     } else {
-      pres <- pcres <- NULL
+      marker <- which(marker)[1]
+      mindex <- c(marker-1,marker)
+      tint <- as.numeric(avail)[mindex]
+      move <- (V-tint[1])/diff(tint)
+      zdiff <- z[[mindex[2]]]-z[[mindex[1]]]
+      zcdiff <- zc[[mindex[2]]]-zc[[mindex[1]]]
+      zres <- z[[mindex[1]]]+move*zdiff
+      zcres <- zc[[mindex[1]]]+move*zcdiff
+      if(!is.null(p)){
+        pdiff <- p[[mindex[2]]]-p[[mindex[1]]]
+        pcdiff <- pc[[mindex[2]]]-pc[[mindex[1]]]
+        pres <- p[[mindex[1]]]+move*pdiff
+        pcres <- pc[[mindex[1]]]+move*pcdiff
+      } else {
+        pres <- pcres <- NULL
+      }
     }
   }
   return(list(z=zres,zc=zcres,p=pres,pc=pres))
