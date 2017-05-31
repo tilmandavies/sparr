@@ -55,7 +55,6 @@ spattemp.density <- function(pp,h=NULL,tt=NULL,lambda=NULL,tlim=NULL,sedge=c("un
   sz <- density.ppp(pp,sigma=h,edge=(sedge=="uniform"),dimyx=sres,spill=1)
   sq <- im(matrix(1,sres,sres),xcol=grx,yrow=gry)
   if(sedge=="uniform"){
-    sq <- im(matrix(1,sres,sres),xcol=grx,yrow=gry)
     sq <- sz$edg
     sq[sq>1] <- 1
   }
