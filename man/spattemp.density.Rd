@@ -86,10 +86,10 @@ A pixel \code{\link[spatstat]{im}}age giving the overall spatial margin as a sin
 An object of class \code{\link[stats]{density}} giving the overall temporal margin as a single 1D density estimate (i.e. ignoring space).
 }
 \item{qs}{
-A pixel \code{\link[spatstat]{im}}age giving the edge-correction surface for the spatial margin.
+A pixel \code{\link[spatstat]{im}}age giving the edge-correction surface for the spatial margin. \code{NULL} if \code{sedge = "none"}.
 }
 \item{qt}{
-A numeric vector giving the edge-correction weights for the temporal margin.
+A numeric vector giving the edge-correction weights for the temporal margin. \code{NULL} if \code{tedge = "none"}.
 }
 \item{pp}{
 A copy of the object passed to the argument of the same name in the initial function call.

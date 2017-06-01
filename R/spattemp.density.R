@@ -86,6 +86,8 @@ spattemp.density <- function(pp,h=NULL,tt=NULL,lambda=NULL,tlim=NULL,sedge=c("un
   names(z) <- names(z.cond) <- grt
   if(verbose) cat("Done.\n")
   
+  if(sedge=="none") sq <- NULL
+  if(tedge=="none") tq <- NULL
   
   final <- list(z=z)
   final$z.cond <- z.cond
@@ -101,7 +103,6 @@ spattemp.density <- function(pp,h=NULL,tt=NULL,lambda=NULL,tlim=NULL,sedge=c("un
   final$qt <- tq
   final$pp <- pp
   final$tt <- grt
-  # final$kdee <- fhat
 
   class(final) <- "stden"
   return(final)
