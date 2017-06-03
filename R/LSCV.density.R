@@ -1,7 +1,7 @@
 #' Leave-one-out least-squares cross-validation (LSCV) bandwidth selector
 #' 
 #' Isotropic fixed or global (for adaptive) bandwidth selection for standalone 2D density/intensity
-#' based on unbiased cross-validation
+#' based on unbiased cross-validation.
 #' 
 #' 
 #' @param pp An object of class \code{\link[spatstat]{ppp}} giving the observed

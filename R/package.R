@@ -237,7 +237,7 @@
 NULL
 
 #' @importFrom utils setTxtProgressBar txtProgressBar packageVersion
-#' @importFrom stats IQR density dnorm fft optimise pnorm quantile rnorm sd var bw.SJ spline
+#' @importFrom stats IQR density dnorm fft optimise pnorm quantile rnorm sd var bw.SJ spline optim
 #' @importFrom graphics axis box contour pairs par plot points title
 #' @importFrom grDevices dev.hold dev.flush
 #' @importFrom spatstat.utils prange tapplysum inside.range

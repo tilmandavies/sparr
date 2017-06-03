@@ -68,7 +68,7 @@ checktsel <- function(tsel){
 }
   
 checktt <- function(tt){
-  if(is.null(tt)) stop("observation times must be supplied as 'tt' or as numeric marks to 'pp'")
+  if(is.null(tt)) stop("observation times must be supplied as 'tt' or as a numeric vector of marks to 'pp'")
   if(!is.vector(tt)) stop("'tt' must be a vector")
   if(!is.numeric(tt)) stop("'tt' must be numeric")
   return(tt)

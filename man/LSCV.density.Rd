@@ -63,7 +63,7 @@ A single numeric value of the estimated bandwidth (if
 }
 \description{
 Isotropic fixed or global (for adaptive) bandwidth selection for standalone 2D density/intensity
-based on unbiased cross-validation
+based on unbiased cross-validation.
 }
 \section{Warning}{
  Leave-one-out LSCV for bandwidth selection in kernel

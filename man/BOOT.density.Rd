@@ -2,7 +2,7 @@
 \alias{BOOT.density}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Bootstrap bandwidth selector
+Bootstrap bandwidth for a spatial kernel density estimate
 }
 \description{
 Isotropic fixed or global (for adaptive) bandwidth selection for a standalone 2D density based on bootstrap estimation of the MISE.
