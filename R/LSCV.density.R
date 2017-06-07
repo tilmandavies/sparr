@@ -1,8 +1,21 @@
-#' Leave-one-out least-squares cross-validation (LSCV) bandwidth selector
+#' Least squares or likelihood cross-validation bandwidth selector
 #' 
 #' Isotropic fixed or global (for adaptive) bandwidth selection for standalone 2D density/intensity
-#' based on unbiased cross-validation.
+#' based on either unbiased least squares cross-validation (LSCV) or likelihood (LIK) cross-validation.
 #' 
+#' This function implements the bivariate, edge-corrected versions of fixed-bandwidth least squares cross-validation and likelihood cross-validation
+#' as outlined in Sections 3.4.3 and 3.4.4 of Silverman (1986) in order to select an optimal fixed smoothing bandwidth. With \code{type = "adaptive"} it may also be used to select the global bandwidth
+#' for adaptive kernel density estimates, making use of multi-scale estimation (Davies and Baddeley, 2017) via \code{\link{multiscale.density}}.
+#' Note that for computational reasons, the leave-one-out procedure is not performed on the pilot density in the adaptive setting; it
+#' is only performed on the final stage estimate. See also `Warning' below.
+#' 
+#' Where \code{LSCV.density} is based on minimisation of an unbiased estimate of the mean integrated squared error (MISE) of the density, \code{LIK.density} is based on
+#' maximisation of the cross-validated leave-one-out average of the log-likelihood of the density estimate with respect to \eqn{h}.
+#' 
+#' 
+#' @aliases LIK.density
+#' 
+#' @rdname CV
 #' 
 #' @param pp An object of class \code{\link[spatstat]{ppp}} giving the observed
 #'   2D data to be smoothed.
@@ -36,8 +49,8 @@
 #' @param ... Additional arguments controlling pilot density estimation and multi-scale bandwidth-axis
 #'   resolution when \code{type = "adaptive"}. Relevant arguments are \code{hp}, \code{pilot.density},
 #'   \code{gamma.scale}, and \code{trim} from \code{\link{bivariate.density}}; and \code{dimz} from 
-#'   \code{\link{multiscale.density}}. If \code{hp} is missing and required, the function makes a recursive
-#'   call to itself to set this using fixed-bandwidth LSCV. The remaining defaults are \code{pilot.density = pp},
+#'   \code{\link{multiscale.density}}. If \code{hp} is missing and required, the function makes a (possibly recursive)
+#'   call to \code{LSCV.density} to set this using fixed-bandwidth LSCV. The remaining defaults are \code{pilot.density = pp},
 #'   \code{gamma.scale = "geometric"}, \code{trim = 5}, and \code{dimz = resolution}.
 #'   
 #' @return A single numeric value of the estimated bandwidth (if
@@ -45,9 +58,9 @@
 #'   giving the bandwidth sequence and corresponding CV
 #'   function value.
 #'
-#' @section Warning: Leave-one-out LSCV for bandwidth selection in kernel
+#' @section Warning: Leave-one-out CV for bandwidth selection in kernel
 #' density estimation is notoriously unstable in practice and has a tendency to
-#' produce rather small bandwidths in the fixed bandwidth case. Satisfactory bandwidths are not guaranteed
+#' produce rather small bandwidths, particularly for spatial data. Satisfactory bandwidths are not guaranteed
 #' for every application. This method can also be computationally expensive for
 #' large data sets and fine evaluation grid resolutions. The user may need to
 #' experiment with adjusting \code{hlim} to find a suitable minimum.
