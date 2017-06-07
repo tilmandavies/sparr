@@ -1,13 +1,17 @@
-\name{LSCV.spattemp}
+\name{LIK.spattemp}
 \alias{LSCV.spattemp}
+\alias{LIK.spattemp}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Least-squares cross-validation bandwidths for a spatiotemporal kernel density estimate
+Least-squares or likelihood cross-validation bandwidths for a spatiotemporal kernel density estimate
 }
 \description{
-Bandwidth selection for standalone spatiotemporal density/intensity based on leave-one-out least-squares cross-validation (LSCV), providing an isotropic scalar spatial bandwidth and a scalar temporal bandwidth.
+Bandwidth selection for standalone spatiotemporal density/intensity based on either unbiased least squares cross-validation (LSCV) or likelihood (LIK) cross-validation, providing an isotropic scalar spatial bandwidth and a scalar temporal bandwidth.
 }
 \usage{
+LIK.spattemp(pp, tt = NULL, tlim = NULL, sedge = c("uniform", "none"),
+  tedge = sedge, parallelise = NA, start = NULL, verbose = TRUE)
+
 LSCV.spattemp(pp, tt = NULL, tlim = NULL, sedge = c("uniform", "none"),
   tedge = sedge, sres = 64, tres = sres, parallelise = NA,
   start = NULL, verbose = TRUE)
@@ -59,7 +63,7 @@ T. M. Davies
 }
 
 \section{Warning}{
-Leave-one-out LSCV for bandwidth selection in kernel
+Leave-one-out CV for bandwidth selection in kernel
 density estimation is notoriously unstable in practice and has a tendency to
 produce rather small bandwidths in the fixed bandwidth case. Satisfactory bandwidths are not guaranteed
 for every application. This method can also be computationally expensive for
