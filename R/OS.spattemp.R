@@ -10,7 +10,7 @@ OS.spattemp <- function(pp, tt = NULL, nstar = "npoints", scaler = c("silverman"
   scaler <- processscaler.st(scaler,pp,tt)
   nstar <- processnstar.st(nstar,pp)
   
-  RK <- 1/(4*pi)
+  RK <- c(1/(4*pi),1/(2*sqrt(pi)))
   d <- 2:1
   V <- (16*gamma((d+8)/2)*d*(d+2))/((d+8)^((d+6)/2)*pi^(d/2))
   result <- scaler*(((RK*d)/(nstar*V))^(1/(d+4)))
