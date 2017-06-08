@@ -28,3 +28,27 @@ processnstar <- function(n,pp){
   return(n)
 }
 
+processnstar.st <- function(n,pp){
+  if(is.numeric(n)){
+    if(length(n)>1){
+      n <- n[1]
+      warning("'nstar' if numeric must be of length 1. Using first value only.")
+    }
+    if(n<=0) stop("'nstar' must be positive")
+  } else if(is.character(n)){
+    if(length(n)>1){
+      n <- n[1]
+    }
+    if(n=="npoints"){
+      n <- npoints(pp)
+    } else if(n=="geometric"){
+      n <- npoints(pp)
+      warning("'nstar' character string cannot be \"geometric\" for spatiotemporal estimates -- using \"npoints\"")
+    } else {
+      stop("'nstar' character string only permitted to be \"npoints\"")
+    }
+  } else {
+    stop("Invalid 'nstar' type")
+  }
+  return(n)
+}
