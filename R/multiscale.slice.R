@@ -82,24 +82,38 @@ multiscale.slice <- function(msob,h0,checkargs=TRUE){
   return(result)
 }
 
-ms.slice.single <- function(V,avail,zz,hh,qq){
+ms.slice.single <- function(V,avail,zz,hh,qq,warn=FALSE){
+  la <- length(avail)
   if(any(avail==as.character(V))){
     index <- which(avail==as.character(V))
     zres <- zz[[index]]
     hres <- hh[[index]]
     qres <- qq[[index]]
   } else {
-    marker <- which(as.numeric(avail)>V)[1]
-    mindex <- c(marker-1,marker)
-    hint <- as.numeric(avail)[mindex]
-    move <- (V-hint[1])/diff(hint)
-    zdiff <- zz[[mindex[2]]]-zz[[mindex[1]]]
-    hdiff <- hh[[mindex[2]]]-hh[[mindex[1]]]
-    qdiff <- qq[[mindex[2]]]-qq[[mindex[1]]]
-    zres <- zz[[mindex[1]]]+move*zdiff
-    hres <- hh[[mindex[1]]]+move*hdiff
-    if(!is.null(qq)) qres <- qq[[mindex[1]]]+move*qdiff
-    else qres <- NULL
+    marker <- as.numeric(avail)>V
+    if(sum(marker)==la){
+      zres <- zz[[1]]
+      hres <- hh[[1]]
+      qres <- qq[[1]]
+      if(warn) warning("lower index mismatch")
+    } else if(sum(marker)==0){
+      zres <- zz[[la]]
+      hres <- hh[[la]]
+      qres <- qq[[la]]
+      if(warn) warning("upper index mismatch")
+    } else {
+      marker <- which(marker)[1]
+      mindex <- c(marker-1,marker)
+      hint <- as.numeric(avail)[mindex]
+      move <- (V-hint[1])/diff(hint)
+      zdiff <- zz[[mindex[2]]]-zz[[mindex[1]]]
+      hdiff <- hh[[mindex[2]]]-hh[[mindex[1]]]
+      qdiff <- qq[[mindex[2]]]-qq[[mindex[1]]]
+      zres <- zz[[mindex[1]]]+move*zdiff
+      hres <- hh[[mindex[1]]]+move*hdiff
+      if(!is.null(qq)) qres <- qq[[mindex[1]]]+move*qdiff
+      else qres <- NULL
+    }
   }
   return(list(z=zres,h=hres,q=qres))
 }

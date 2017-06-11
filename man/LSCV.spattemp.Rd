@@ -3,7 +3,7 @@
 \alias{LIK.spattemp}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Least-squares or likelihood cross-validation bandwidths for a spatiotemporal kernel density estimate
+Cross-validation bandwidths for spatiotemporal kernel density estimates
 }
 \description{
 Bandwidth selection for standalone spatiotemporal density/intensity based on either unbiased least squares cross-validation (LSCV) or likelihood (LIK) cross-validation, providing an isotropic scalar spatial bandwidth and a scalar temporal bandwidth.

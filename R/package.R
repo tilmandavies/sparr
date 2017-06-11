@@ -236,7 +236,7 @@
 #' @keywords package
 NULL
 
-#' @importFrom utils setTxtProgressBar txtProgressBar packageVersion
+#' @importFrom utils setTxtProgressBar txtProgressBar packageDescription packageVersion
 #' @importFrom stats IQR density dnorm fft optimise pnorm quantile rnorm sd var bw.SJ spline optim
 #' @importFrom graphics axis box contour pairs par plot points title
 #' @importFrom grDevices dev.hold dev.flush

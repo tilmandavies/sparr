@@ -2,12 +2,12 @@
 % Please edit documentation in R/LSCV.risk.R
 \name{LSCV.risk}
 \alias{LSCV.risk}
-\title{Jointly optimal fixed bandwidth for the spatial relative risk function}
+\title{Jointly optimal bandwidth selection for the spatial relative risk function}
 \usage{
-LSCV.risk(f, g = NULL, hlim = NULL, hseq = NULL,
-  method = c("kelsall-diggle", "hazelton", "davies"), resolution = 64,
-  edge = TRUE, auto.optim = TRUE, seqres = 30, parallelise = NULL,
-  verbose = TRUE)
+LSCV.risk(f, g = NULL, hlim = NULL, hseq = NULL, type = c("fixed",
+  "adaptive"), method = c("kelsall-diggle", "hazelton", "davies"),
+  resolution = 64, edge = TRUE, pilot.args = NULL, auto.optim = TRUE,
+  seqres = 30, parallelise = NA, verbose = TRUE)
 }
 \arguments{
 \item{f}{Either a pre-calculated object of class \code{\link{bivden}}
@@ -30,6 +30,11 @@ function attempts to choose this automatically.}
 manually evaluate the optimisation criterion. Used only in the case
 \code{(!auto.optim && is.null(hlim))}.}
 
+\item{type}{A character string; \code{"fixed"} (default) performs classical leave-one-out
+cross-validation for a jointly optimal fixed bandwidth. Alternatively, \code{"adaptive"} utilises
+multiscale adaptive kernel estimation (Davies & Baddeley, 2017) to run the cross-validation
+in an effort to find a suitable jointly optimal, common global bandwidth for the adaptive relative risk function. See `Details' and the entry for \code{pilot.args}.}
+
 \item{method}{A character string controlling the selector to use. There are
 three types, based on either the mean integrated squared error (MISE)
 (Kelsall and Diggle, 1995; default -- \code{method = "kelsall-diggle"}); a
@@ -42,6 +47,9 @@ approximation to the asymptotic MISE (Davies, 2013 -- \code{method =
 
 \item{edge}{Logical value indicating whether to edge-correct the density
 estimates used.}
+
+\item{pilot.args}{An optional named list with four possible members: \code{hp},
+\code{pilot.density}, \code{dimz}, and \code{trim}.}
 
 \item{auto.optim}{Logical value indicating whether to automate the numerical
 optimisation using \code{\link{optimise}}. If \code{FALSE}, the optimisation
@@ -66,17 +74,23 @@ A single numeric value of the estimated bandwidth (if
   function value (as \code{CV}).
 }
 \description{
-Jointly optimal, common case-control isotropic fixed bandwidth for use in
-the kernel-smoothed relative risk function.
+Methods to find a jointly optimal, common case-control isotropic bandwidth for use in
+estimation of the fixed or adaptive kernel-smoothed relative risk function.
 }
 \details{
 Given the established preference of using a common bandwidth for both case
-and control density estimates when constructing a fixed bandwidth relative
+and control density estimates when constructing a relative
 risk surface, This function calculates a `jointly optimal', common isotropic
 LSCV bandwidth for the (Gaussian) kernel-smoothed relative risk function
 (case-control density-ratio). It can be shown that choosing a bandwidth that
 is equal for both case and control density estimates is preferable to
-computing `separately optimal' bandwidths (Kelsall and Diggle, 1995).
+computing `separately optimal' bandwidths (Kelsall and Diggle, 1995). The user
+can choose to either calculate a common smoothing parameter for a fixed-bandwidth
+relative risk surface (\code{type = "fixed"}; default), or a common global bandwidth for
+an adaptive risk surface (\code{type = "adaptive"}). See further comments below.
+
+
+
 \itemize{
   \item\code{method = "kelsall-diggle"}: the function computes the
     common bandwidth which minimises the approximate mean integrated squared
@@ -86,8 +100,24 @@ computing `separately optimal' bandwidths (Kelsall and Diggle, 1995).
     (Hazelton, 2008).
   \item\code{method = "davies"}: the optimal bandwidth is
     one that minimises a crude plug-in approximation to the \emph{asymptotic}
-    MISE (Davies, 2013).
+    MISE (Davies, 2013). Only possible for \code{type = "fixed"}.
 }
+
+For jointly optimal, common global bandwidth selection when \code{type = "adaptive"}, the
+optimisation routine utilises \code{\link{multiscale.density}}. Like \code{\link{LSCV.density}},
+the leave-one-out procedure does not affect the pilot density, for which additional
+control is offered via the \code{pilot.args} argument. This should be supplied as a named
+list, with optional components \code{hp}, \code{pilot.density}, \code{dimz}, and \code{trim}.
+See the documentation for these arguments in \code{\link{multiscale.density}}. By default, \code{trim = 5};
+\code{dimz = resolution}; \code{pilot.density = NULL}; and pilot bandwidths, if not supplied, are calculated
+internally via default use of \code{\link{LSCV.density}} separately with respect to the case and control datasets \code{f} and \code{g}.
+Otherwise, the \code{pilot.density} component can be a single
+pixel \code{\link[spatstat]{im}}age (defined on the same domain as the data in \code{f} and \code{g}, and also matching \code{resolution}), posing as the common pilot density (i.e. if the selected global bandwidth 
+is intended for a symmetric adaptive relative risk surface, see Davies et al. 2016). Aternatively, the \code{pilot.density} component can be provided as a list 
+of two pixel images -- one for the case density, the other for the control (in that order).
+The \code{hp} component is only used if \code{pilot.args$pilot.density} is unsupplied, in which case it should be a vector of length one or two giving either a common pilot bandwidth
+or the case and control pilot bandwidths respectively. Either way, unless \code{pilot.args$pilot.density} is a single pixel \code{\link[spatstat]{im}}age as noted above, 
+the pilot densities are computed separately using the case (\code{f}) and control (\code{g}) data supplied to the function for an asymmetric adaptive relative risk surface (Davies & Hazelton, 2010).
 }
 \section{Warning}{
  The jointly optimal bandwidth selector can be
@@ -105,6 +135,18 @@ find a suitable minimum.
 Davies, T. M. (2013), Jointly optimal bandwidth selection for
 the planar kernel-smoothed density-ratio, \emph{Spatial and Spatio-temporal
 Epidemiology}, \bold{5}, 51-65.
+
+Davies, T.M. and Baddeley A. (2017), Fast computation of
+spatially adaptive kernel estimates, \emph{Submitted}.
+
+Davies, T.M. and Hazelton, M.L. (2010), Adaptive kernel
+estimation of spatial relative risk, \emph{Statistics in Medicine},
+\bold{29}(23) 2423-2437.
+
+Davies, T.M., Jones, K. and Hazelton, M.L.
+(2016), Symmetric adaptive smoothing regimens for estimation of the spatial
+relative risk function, \emph{Computational Statistics & Data Analysis},
+\bold{101}, 12-28.
 
 Hazelton, M. L. (2008), Letter to the
 editor: Kernel estimation of risk surfaces without the need for edge

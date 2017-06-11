@@ -1,4 +1,4 @@
-#' Least squares or likelihood cross-validation bandwidth selector
+#' Cross-validation bandwidths for spatial kernel density estimates
 #' 
 #' Isotropic fixed or global (for adaptive) bandwidth selection for standalone 2D density/intensity
 #' based on either unbiased least squares cross-validation (LSCV) or likelihood (LIK) cross-validation.
