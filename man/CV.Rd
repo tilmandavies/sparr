@@ -4,7 +4,7 @@
 \alias{LIK.density}
 \alias{LSCV.density}
 \alias{LIK.density}
-\title{Least squares or likelihood cross-validation bandwidth selector}
+\title{Cross-validation bandwidths for spatial kernel density estimates}
 \usage{
 LIK.density(pp, hlim = NULL, hseq = NULL, resolution = 64, edge = TRUE,
   auto.optim = TRUE, type = c("fixed", "adaptive"), seqres = 30,
