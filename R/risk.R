@@ -61,7 +61,7 @@
 #' @param h0 A single positive numeric value or a vector of length 2 giving the
 #'   global bandwidth(s) to be used for case/control density estimates;
 #'   defaulting to a common oversmoothing bandwidth computed via \code{\link{OS}}
-#'   on the pooled data if unsupplied. Ignored if \code{f} and \code{g} are
+#'   on the pooled data using \code{nstar = "geometric"} if unsupplied. Ignored if \code{f} and \code{g} are
 #'   already \code{\link{bivden}} objects.
 #' @param hp A single numeric value or a vector of length 2 giving the pilot
 #'   bandwidth(s) to be used for fixed-bandwidth estimation of the pilot
@@ -177,7 +177,7 @@ risk <- function(f, g = NULL, log = TRUE, h0 = NULL, hp = h0, adapt = FALSE,
     if(!identical_windows(Window(f),Window(g))) stop("study windows for 'f' and 'g' must be identical")
     
     pooled <- suppressWarnings(superimpose(f,g))
-    if(is.null(h0)) h0 <- OS(pooled)
+    if(is.null(h0)) h0 <- OS(pooled,nstar=sqrt(f$n,g$n))
     
     if(length(h0)==1){
       h0f <- h0g <- checkit(h0[1],"'h0[1]'")
@@ -258,6 +258,7 @@ risk <- function(f, g = NULL, log = TRUE, h0 = NULL, hp = h0, adapt = FALSE,
     box(bty="l")
     plot(Window(fd$pp),add=TRUE)
     if(!is.null(ps)) contour(fd$z$xcol,fd$z$yrow,t(as.matrix(ps)),levels=0.05,add=TRUE)
+    return(invisible(NULL))
   }
   
   result <- list(rr=rr,f=fd,g=gd,P=ps)

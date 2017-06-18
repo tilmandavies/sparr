@@ -30,7 +30,7 @@ ratio.}
 \item{h0}{A single positive numeric value or a vector of length 2 giving the
 global bandwidth(s) to be used for case/control density estimates;
 defaulting to a common oversmoothing bandwidth computed via \code{\link{OS}}
-on the pooled data if unsupplied. Ignored if \code{f} and \code{g} are
+on the pooled data using \code{nstar = "geometric"} if unsupplied. Ignored if \code{f} and \code{g} are
 already \code{\link{bivden}} objects.}
 
 \item{hp}{A single numeric value or a vector of length 2 giving the pilot
