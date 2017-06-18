@@ -177,7 +177,7 @@ risk <- function(f, g = NULL, log = TRUE, h0 = NULL, hp = h0, adapt = FALSE,
     if(!identical_windows(Window(f),Window(g))) stop("study windows for 'f' and 'g' must be identical")
     
     pooled <- suppressWarnings(superimpose(f,g))
-    if(is.null(h0)) h0 <- OS(pooled,nstar=sqrt(c(f$n,g$n)))
+    if(is.null(h0)) h0 <- OS(pooled,nstar=sqrt(f$n*g$n))
     
     if(length(h0)==1){
       h0f <- h0g <- checkit(h0[1],"'h0[1]'")
