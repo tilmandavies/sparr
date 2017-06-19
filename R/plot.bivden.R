@@ -107,11 +107,12 @@ plot.bivden <- function(x, what = c("z", "edge", "bw"), add.pts = FALSE, auto.ax
   } else {
     stop("invalid 'what'")
   }
+  
+  plot(as.polygonal(Window(x$pp)),add=TRUE)
   if(auto.axes){
     axis(1)
     axis(2)
     box(bty="l")
-    plot(as.polygonal(Window(x$pp)),add=TRUE)
     title(xlab=ellip$xlab,ylab=ellip$ylab)
   }
 }

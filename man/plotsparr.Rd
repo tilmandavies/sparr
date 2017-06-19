@@ -19,11 +19,13 @@
 \method{plot}{msden}(x, what = c("z", "edge", "bw"), sleep = 0.2,
   override.par = TRUE, ...)
 
-\method{plot}{rrs}(x, auto.axes = TRUE, ...)
+\method{plot}{rrs}(x, auto.axes = TRUE, tol.show = TRUE,
+  tol.type = c("upper", "lower", "two.sided"), tol.args = list(levels =
+  0.05, lty = 1, drawlabels = TRUE), ...)
 
 \method{plot}{rrst}(x, tselect = NULL, type = c("joint", "conditional"),
   fix.range = FALSE, tol.show = TRUE, tol.type = c("upper", "lower",
-  "two.sided"), tol.args = list(levels = 0.05, lty = 1, drawlabels = FALSE),
+  "two.sided"), tol.args = list(levels = 0.05, lty = 1, drawlabels = TRUE),
   sleep = 0.2, override.par = TRUE, ...)
 
 \method{plot}{stden}(x, tselect = NULL, type = c("joint", "conditional"),
@@ -56,18 +58,18 @@ disable this.}
 \code{\link[spatstat]{plot.im}}, or in one instance, to
 \code{\link[spatstat]{plot.ppp}} (see `Details').}
 
+\item{tol.show}{Logical value indicating whether to show pre-computed tolerance contours on the plot(s). The object \code{x} must already have the relevant \emph{p}-value surface(s) stored in order for this argument to have any effect.}
+
+\item{tol.type}{A character string used to control the type of tolerance contour displayed; a test for elevated risk (\code{"upper"}), decreased risk (\code{"lower"}), or a two-tailed test (\code{two.sided}).}
+
+\item{tol.args}{A named list of valid arguments to be passed directly to \code{\link[graphics]{contour}} to control the appearance of plotted contours. Commonly used items are \code{levels}, \code{lty}, \code{lwd} and \code{drawlabels}.}
+
 \item{tselect}{Either a single numeric value giving the time at which to return the plot, or a vector of length 2 giving an interval of times over which to plot. This argument must respect the stored temporal bound in \code{x$tlim}, else an error will be thrown. By default, the full set of images (i.e. over the entire available time span) is plotted.}
 
 \item{type}{A character string to select plotting of joint/unconditional spatiotemporal
 estimate (default) or conditional spatial density given time.}
 
 \item{fix.range}{Logical value indicating whether use the same color scale limits for each plot in the sequence. Ignored if the user supplies a pre-defined \code{\link[spatstat]{colourmap}} to the \code{col} argument, which is matched to \code{...} above and passed to \code{\link[spatstat]{plot.im}}. See `Examples'.}
-
-\item{tol.show}{Logical value indicating whether to show pre-computed tolerance contours on the plot(s). The object \code{x} must already have the relevant \emph{p}-value surface(s) stored in order for this argument to have any effect.}
-
-\item{tol.type}{A character string used to control the type of tolerance contour displayed; a test for elevated risk (\code{"upper"}), decreased risk (\code{"lower"}), or a two-tailed test (\code{two.sided}).}
-
-\item{tol.args}{A named list of valid arguments to be passed directly to \code{\link[graphics]{contour}} to control the appearance of plotted contours. Commonly used items are \code{levels}, \code{lty}, \code{lwd} and \code{drawlabels}.}
 }
 \value{
 Plots to the relevant graphics device.

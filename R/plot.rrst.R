@@ -1,7 +1,7 @@
 #' @rdname plotsparr
 #' @method plot rrst
 #' @export
-plot.rrst <- function(x, tselect = NULL, type = c("joint", "conditional"), fix.range = FALSE, tol.show = TRUE, tol.type = c("upper", "lower", "two.sided"), tol.args = list(levels = 0.05, lty = 1, drawlabels = FALSE), sleep = 0.2, override.par = TRUE, ...){
+plot.rrst <- function(x, tselect = NULL, type = c("joint", "conditional"), fix.range = FALSE, tol.show = TRUE, tol.type = c("upper", "lower", "two.sided"), tol.args = list(levels = 0.05, lty = 1, drawlabels = TRUE), sleep = 0.2, override.par = TRUE, ...){
   ellip <- list(...)
   if(is.null(ellip)) ellip <- list()
   if(is.null(ellip$box)) ellip$box <- FALSE
