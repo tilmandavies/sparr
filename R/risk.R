@@ -176,6 +176,8 @@ risk <- function(f, g = NULL, log = TRUE, h0 = NULL, hp = h0, adapt = FALSE,
   if(inherits(f,"ppp")){
     if(!identical_windows(Window(f),Window(g))) stop("study windows for 'f' and 'g' must be identical")
     
+    marks(f) <- NULL
+    marks(g) <- NULL
     pooled <- suppressWarnings(superimpose(f,g))
     if(is.null(h0)) h0 <- OS(pooled,nstar=sqrt(f$n*g$n))
     
@@ -202,28 +204,43 @@ risk <- function(f, g = NULL, log = TRUE, h0 = NULL, hp = h0, adapt = FALSE,
         hgp <- checkit(hp[2],"'hp[2]'")
       }
       
-      pilot.symmetry <- pilot.symmetry[1]
-      pilotdata <- switch(pilot.symmetry,none=1,f=f,g=g,pooled=pooled,NA)
-      if(any(is.na(pilotdata))) stop("invalid 'pilot.symmetry' argument")
       
-      if(verbose) cat("Estimating pilot(s)...")
+      # ##  Problematic doing symmetry by pixel images---trimming calculations inconsistent. ## #
+      # pilotdata <- switch(pilot.symmetry,none=1,f=f,g=g,pooled=pooled,NA)
+      # if(any(is.na(pilotdata))) stop("invalid 'pilot.symmetry' argument")
+      # if(verbose) cat("Estimating pilot(s)...")
+      # if(pilot.symmetry=="none"){
+      #   fp <- bivariate.density(f,h0=hfp,adapt=FALSE,...)
+      #   gp <- bivariate.density(g,h0=hgp,adapt=FALSE,...)
+      #   fgeo <- log(posifybivden(safelookup(fp$z,f,warn=FALSE))^(-0.5))
+      #   ggeo <- log(posifybivden(safelookup(gp$z,g,warn=FALSE))^(-0.5))
+      #   gam <- exp(npoints(pooled)^(-1)*(sum(fgeo)+sum(ggeo)))
+      # } else {
+      #   fp <- gp <- bivariate.density(pilotdata,h0=hfp[1],adapt=FALSE,...)
+      #   gam <- exp(mean(log(posifybivden(safelookup(fp$z,pilotdata,warn=FALSE))^(-0.5))))
+      # }
+      # if(verbose) cat("Done.\n")
+      
+      # Deferring to raw data symmetry below
+      pilot.symmetry <- pilot.symmetry[1]
+      pdat <- list()
       if(pilot.symmetry=="none"){
-        fp <- bivariate.density(f,h0=hfp,adapt=FALSE,...)
-        gp <- bivariate.density(g,h0=hgp,adapt=FALSE,...)
+        pdat[[1]] <- f
+        pdat[[2]] <- g
+      } else if(pilot.symmetry=="f"){
+        pdat[[1]] <- pdat[[2]] <- f
+      } else if(pilot.symmetry=="g"){
+        pdat[[1]] <- pdat[[2]] <- g
+      } else if(pilot.symmetry=="pooled"){
+        pdat[[1]] <- pdat[[2]] <- pooled
       } else {
-        fp <- gp <- bivariate.density(pilotdata,h0=hfp[1],adapt=FALSE,...)
+        stop("invalid 'pilot.symmetry' argument")
       }
       
-      fgeo <- log(posifybivden(safelookup(fp$z,f,warn=FALSE))^(-0.5))
-      ggeo <- log(posifybivden(safelookup(gp$z,g,warn=FALSE))^(-0.5))
-      gam <- exp(npoints(pooled)^(-1)*(sum(fgeo)+sum(ggeo)))
-      
-      if(verbose) cat("Done.\n")
-      
       if(verbose) cat("Estimating case density...")
-      fd <- bivariate.density(f,h0=h0f,adapt=TRUE,pilot.density=fp$z,gamma.scale=gam,verbose=FALSE,...)
+      fd <- bivariate.density(f,h0=h0f,hp=hfp,adapt=TRUE,pilot.density=pdat[[1]],verbose=FALSE,...) #gamma.scale=gam,
       if(verbose) cat("Done.\nEstimating control density...")
-      gd <- bivariate.density(g,h0=h0g,adapt=TRUE,pilot.density=gp$z,gamma.scale=gam,verbose=FALSE,...)
+      gd <- bivariate.density(g,h0=h0g,hp=hgp,adapt=TRUE,pilot.density=pdat[[2]],verbose=FALSE,...) #gamma.scale=gam,
       if(verbose) cat("Done.\n")
     }
   } else {

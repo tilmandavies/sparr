@@ -31,19 +31,20 @@
 #' For jointly optimal, common global bandwidth selection when \code{type = "adaptive"}, the
 #' optimisation routine utilises \code{\link{multiscale.density}}. Like \code{\link{LSCV.density}},
 #' the leave-one-out procedure does not affect the pilot density, for which additional
-#' control is offered via the \code{pilot.args} argument. This should be supplied as a named
-#' list, with optional components \code{hp}, \code{pilot.density}, \code{dimz}, and \code{trim}.
-#' See the documentation for these arguments in \code{\link{multiscale.density}}. By default, \code{trim = 5};
-#' \code{dimz = resolution}; \code{pilot.density = NULL}; and pilot bandwidths, if not supplied, are calculated
-#' internally via default use of \code{\link{LSCV.density}} separately with respect to the case and control datasets \code{f} and \code{g}.
-#' Otherwise, the \code{pilot.density} component can be a single
-#' pixel \code{\link[spatstat]{im}}age (defined on the same domain as the data in \code{f} and \code{g}, and also matching \code{resolution}), posing as the common pilot density (i.e. if the selected global bandwidth 
-#' is intended for a symmetric adaptive relative risk surface, see Davies et al. 2016). Aternatively, the \code{pilot.density} component can be provided as a list 
-#' of two pixel images -- one for the case density, the other for the control (in that order).
-#' The \code{hp} component is only used if \code{pilot.args$pilot.density} is unsupplied, in which case it should be a vector of length one or two giving either a common pilot bandwidth
-#' or the case and control pilot bandwidths respectively. Either way, unless \code{pilot.args$pilot.density} is a single pixel \code{\link[spatstat]{im}}age as noted above, 
-#' the pilot densities are computed separately using the case (\code{f}) and control (\code{g}) data supplied to the function for an asymmetric adaptive relative risk surface (Davies & Hazelton, 2010).
-#' 
+#' control is offered via the \code{hp} and \code{pilot.symmetry} arguments. The user has the option of
+#' obtaining a so-called \emph{symmetric} estimate (Davies et al. 2016) via
+#' \code{pilot.symmetry}. This amounts to choosing the same pilot density for
+#' both case and control densities. By choosing \code{"none"} (default), the
+#' result uses the case and control data separately for the fixed-bandwidth
+#' pilots, providing the original asymmetric density-ratio of Davies and
+#' Hazelton (2010). By selecting either of \code{"f"}, \code{"g"}, or
+#' \code{"pooled"}, the pilot density is calculated based on the case, control,
+#' or pooled case/control data respectively (using \code{hp[1]} as the fixed
+#' bandwidth). Davies et al. (2016) noted some beneficial practical behaviour
+#' of the symmetric adaptive surface over the asymmetric. (The pilot bandwidth(s), if not supplied in \code{hp}, are calculated
+#' internally via default use of \code{\link{LSCV.density}}, using the requested symmetric-based data set, or separately with respect to the case and control datasets \code{f} and \code{g} if
+#' \code{pilot.symmetry = "none"}.)
+#'
 #' @param f Either a pre-calculated object of class \code{\link{bivden}}
 #'   representing the `case' (numerator) density estimate, or an object of class
 #'   \code{\link[spatstat]{ppp}} giving the observed case data. Alternatively, if
@@ -74,8 +75,12 @@
 #'   [\code{resolution} \eqn{\times}{x} \code{resolution}] density estimate.
 #' @param edge Logical value indicating whether to edge-correct the density
 #'   estimates used.
-#' @param pilot.args An optional named list with four possible members: \code{hp},
-#'   \code{pilot.density}, \code{dimz}, and \code{trim}.
+#' @param hp A single numeric value or a vector of length 2 giving the pilot
+#'   bandwidth(s) to be used for estimation of the pilot
+#'   densities for adaptive risk surfaces. Ignored if \code{type = "fixed"}.
+#' @param pilot.symmetry A character string used to control the type of
+#'   symmetry, if any, to use for the bandwidth factors when computing an
+#'   adaptive relative risk surface. See `Details'. Ignored if \code{type = "fixed"}.
 #' @param auto.optim Logical value indicating whether to automate the numerical
 #'   optimisation using \code{\link{optimise}}. If \code{FALSE}, the optimisation
 #'   criterion is evaluated over \code{hseq} (if supplied), or over a seqence of
@@ -88,7 +93,8 @@
 #'   number of cores available to you.
 #' @param verbose Logical value indicating whether to provide function progress
 #'   commentary.
-#'
+#' @param ... Additional arguments such as \code{dimz} and \code{trim} to be passed to
+#'   the internal calls to \code{\link{multiscale.density}}.
 #' @return A single numeric value of the estimated bandwidth (if
 #'   \code{auto.optim = TRUE}). Otherwise, a list of two numeric vectors of equal
 #'   length giving the bandwidth sequence (as \code{hs}) and corresponding CV
@@ -141,9 +147,9 @@
 #' @export
 LSCV.risk <- function(f, g = NULL, hlim = NULL, hseq = NULL, type = c("fixed", "adaptive"),
                       method = c("kelsall-diggle", "hazelton", "davies"),
-                      resolution = 64, edge = TRUE, pilot.args = NULL,
+                      resolution = 64, edge = TRUE, hp = NULL, pilot.symmetry = c("none","f","g","pooled"),
                       auto.optim = TRUE, seqres = 30,
-                      parallelise = NA, verbose = TRUE){
+                      parallelise = NA, verbose = TRUE, ...){
   if(!inherits(f,"ppp")) stop("'f' must be an object of class \"ppp\"")
   if(is.null(g)){
     fm <- marks(f)
@@ -266,55 +272,49 @@ LSCV.risk <- function(f, g = NULL, hlim = NULL, hseq = NULL, type = c("fixed", "
       
   } else if(typ=="adaptive"){
     
-    if(!is.null(pilot.args)&&!is.list(pilot.args)) stop("'pilot.args' must be a list")
+    pilot.symmetry <- pilot.symmetry[1]
+    pdat <- list()
+    if(pilot.symmetry=="none"){
+      pdat[[1]] <- f
+      pdat[[2]] <- g
+    } else if(pilot.symmetry=="f"){
+      pdat[[1]] <- pdat[[2]] <- f
+    } else if(pilot.symmetry=="g"){
+      pdat[[1]] <- pdat[[2]] <- g
+    } else if(pilot.symmetry=="pooled"){
+      marks(f) <- NULL
+      marks(g) <- NULL
+      pooled <- suppressWarnings(superimpose(f,g))
+      pdat[[1]] <- pdat[[2]] <- pooled
+    } else {
+      stop("invalid 'pilot.symmetry' argument")
+    }
     
-    if(!is.null(pilot.args$pilot.density)){
-      fp <- gp <- NULL
-      if(is.list(pilot.args$pilot.density)&&!is.im(pilot.args$pilot.density)){
-        if(length(pilot.args$pilot.density)>1){
-          fpilot <- pilot.args$pilot.density[[1]]
-          gpilot <- pilot.args$pilot.density[[2]]
-          if(!is.im(fpilot)||!is.im(gpilot)) stop("pilot.args$pilot.density must be a pixel image ('spatstat' class 'im') or a list of two pixel images")
-        }
+    if(!is.null(hp)){
+      if(length(hp)>1){
+        fp <- hp[1]
+        gp <- hp[2]
       } else {
-        if(!is.im(pilot.args$pilot.density)) stop("pilot.args$pilot.density must be a pixel image ('spatstat' class 'im') or a list of two pixel images")
-        fpilot <- gpilot <- pilot.args$pilot.density
+        fp <- gp <- hp[1]
       }
     } else {
-      fpilot <- gpilot <- NULL
-      if(!is.null(pilot.args$hp)){
-        if(length(pilot.args$hp)>1){
-          fp <- pilot.args$hp[1]
-          gp <- pilot.args$hp[2]
-        } else {
-          fp <- gp <- pilot.args$hp[1]
-        }
-      } else {
-        if(verbose) cat("Selecting pilot bandwidths...\n --f--\n")
+      if(verbose) cat("Selecting pilot bandwidth(s)...")
+      if(pilot.symmetry=="none"){
+        if(verbose) cat("\n --f--\n")
         fp <- LSCV.density(f,verbose=FALSE)
         if(verbose) cat(" --g--\n")
         gp <- LSCV.density(g,verbose=FALSE)
-        if(verbose) cat(paste("Done.\n   [ Found hp(f) =",fp,"\b; hp(g) =",gp,"]\n"))
+      } else {
+        fp <- gp <- LSCV.density(pdat[[1]],verbose=FALSE)
       }
-    }
-    
-    if(!is.null(pilot.args$dimz)){
-      dimz <- pilot.args$dimz[1]
-    } else {
-      dimz <- resolution
-    }
-
-    if(!is.null(pilot.args$trim)){
-      trim <- pilot.args$trim
-    } else {
-      trim <- 5
+      if(verbose) cat(paste("Done.\n   [ Using hp(f) =",fp,"\b; hp(g) =",gp,"]\n"))
     }
     
     hhash <- mean(hlim)
     if(verbose) cat("Computing multi-scale estimates...\n --f--\n")
-    fms <- multiscale.density(f,h0=hhash,hp=fp,h0fac=hlim/hhash,edge=ifelse(edge,"uniform","none"),resolution=resolution,dimz=dimz,trim=trim,intensity=FALSE,pilot.density=fpilot,verbose=FALSE)
+    fms <- multiscale.density(f,h0=hhash,hp=fp,h0fac=hlim/hhash,edge=ifelse(edge,"uniform","none"),resolution=resolution,intensity=FALSE,pilot.density=pdat[[1]],verbose=FALSE,...)
     if(verbose) cat(" --g--\n")
-    gms <- multiscale.density(g,h0=hhash,hp=gp,h0fac=hlim/hhash,edge=ifelse(edge,"uniform","none"),resolution=resolution,dimz=dimz,trim=trim,intensity=FALSE,pilot.density=gpilot,verbose=FALSE)
+    gms <- multiscale.density(g,h0=hhash,hp=gp,h0fac=hlim/hhash,edge=ifelse(edge,"uniform","none"),resolution=resolution,intensity=FALSE,pilot.density=pdat[[2]],verbose=FALSE,...)
     if(verbose) cat("Done.\n")
     
     h0range <- fms$h0range
@@ -388,3 +388,63 @@ LSCV.risk <- function(f, g = NULL, hlim = NULL, hseq = NULL, type = c("fixed", "
   }
 
 }
+
+
+# if(!is.null(pilot.args)&&!is.list(pilot.args)) stop("'pilot.args' must be a list")
+# 
+# if(!is.null(pilot.args$pilot.density)){
+#   fp <- gp <- NULL
+#   if(is.list(pilot.args$pilot.density)&&!is.im(pilot.args$pilot.density)){
+#     if(length(pilot.args$pilot.density)>1){
+#       fpilot <- pilot.args$pilot.density[[1]]
+#       gpilot <- pilot.args$pilot.density[[2]]
+#       if(!is.im(fpilot)||!is.im(gpilot)) stop("pilot.args$pilot.density must be a pixel image ('spatstat' class 'im') or a list of two pixel images")
+#     }
+#   } else {
+#     if(!is.im(pilot.args$pilot.density)||!is.ppp(pilot.args$pilot.density)) stop("pilot.args$pilot.density must be of class 'im' or 'ppp' (or a list of two)")
+#     fpilot <- gpilot <- pilot.args$pilot.density
+#   }
+# } else {
+#   fpilot <- gpilot <- NULL
+#   
+# if(!is.null(pilot.args$hp)){
+#   if(length(pilot.args$hp)>1){
+#     fp <- pilot.args$hp[1]
+#     gp <- pilot.args$hp[2]
+#   } else {
+#     fp <- gp <- pilot.args$hp[1]
+#   }
+# } else {
+#   if(verbose) cat("Selecting pilot bandwidths...\n --f--\n")
+#   fp <- LSCV.density(f,verbose=FALSE)
+#   if(verbose) cat(" --g--\n")
+#   gp <- LSCV.density(g,verbose=FALSE)
+#   if(verbose) cat(paste("Done.\n   [ Found hp(f) =",fp,"\b; hp(g) =",gp,"]\n"))
+# }
+# }
+
+# if(!is.null(pilot.args$dimz)){
+#   dimz <- pilot.args$dimz[1]
+# } else {
+#   dimz <- resolution
+# }
+# 
+# if(!is.null(pilot.args$trim)){
+#   trim <- pilot.args$trim
+# } else {
+#   trim <- 5
+# }
+
+#  
+# the \code{pilot.args} argument. This should be supplied as a named
+# list, with optional components \code{hp}, \code{pilot.density}, \code{dimz}, and \code{trim}.
+# See the documentation for these arguments in \code{\link{multiscale.density}}. By default, \code{trim = 5};
+# \code{dimz = resolution}; \code{pilot.density = NULL}; and 
+# Otherwise, the \code{pilot.density} component can be a single
+# pixel \code{\link[spatstat]{im}}age (defined on the same domain as the data in \code{f} and \code{g}, and also matching \code{resolution}), posing as the common pilot density (i.e. if the selected global bandwidth 
+# is intended for a symmetric adaptive relative risk surface, see Davies et al. 2016). Aternatively, the \code{pilot.density} component can be provided as a list 
+# of two pixel images -- one for the case density, the other for the control (in that order).
+# The \code{hp} component is only used if \code{pilot.args$pilot.density} is unsupplied, in which case it should be a vector of length one or two giving either a common pilot bandwidth
+# or the case and control pilot bandwidths respectively. Either way, unless \code{pilot.args$pilot.density} is a single pixel \code{\link[spatstat]{im}}age as noted above, 
+# the pilot densities are computed separately using the case (\code{f}) and control (\code{g}) data supplied to the function for an asymmetric adaptive relative risk surface (Davies & Hazelton, 2010).
+ 

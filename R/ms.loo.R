@@ -56,14 +56,15 @@ ms.loo.risk <- function(h0,fob,gob,hazey=FALSE){
   grq <- g.requested$q
   
   limz <- min(c(min(frz[frz>0]),min(grz[grz>0])))
+  # if(any(frz<=0)||any(grz<=0)) return(Inf) # pretty strict protection; generates optimise warnings by default
+  
+  frz[frz<=0] <- limz
+  grz[grz<=0] <- limz
+
   f.fpoints <- safelookup(frz,fX,warn=FALSE)
-  f.fpoints[f.fpoints<=0] <- limz
   g.gpoints <- safelookup(grz,gX,warn=FALSE)
-  g.gpoints[g.gpoints<=0] <- limz
   f.gpoints <- safelookup(frz,gX,warn=FALSE)
-  f.gpoints[f.gpoints<=0] <- limz
   g.fpoints <- safelookup(grz,fX,warn=FALSE)
-  g.fpoints[g.fpoints<=0] <- limz
 
   if(is.null(frq)){
     fqpoints <- rep(1,n1)
@@ -74,9 +75,9 @@ ms.loo.risk <- function(h0,fob,gob,hazey=FALSE){
   }
   
   fminus <- f.fpoints - dnorm(0,sd=frh)^2/n1/fqpoints
-  fminus[fminus<=0] <- limz # small bw protector
+  fminus[fminus<=0] <- limz
   gminus <- g.gpoints - dnorm(0,sd=grh)^2/n2/gqpoints
-  gminus[gminus<=0] <- limz # small bw protector
+  gminus[gminus<=0] <- limz
   
   if(!hazey) return(2*mean((log(f.gpoints) - log(gminus))/gminus) - 2*mean((log(fminus) - log(g.fpoints))/fminus) - integral((log(frz)-log(grz))^2))
   else return(mean((f.gpoints/gminus)^2) - 2*mean(fminus/g.fpoints))

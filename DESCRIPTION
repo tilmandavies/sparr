@@ -1,8 +1,8 @@
 Package: sparr
 Type: Package
 Title: SPAtial Relative Risk
-Version: 2.1-07
-Date: 2017-06-11
+Version: 2.1-08
+Date: 2017-06-20
 Author: T.M. Davies and J.C. Marshall
 Maintainer: Tilman M. Davies <tdavies@maths.otago.ac.nz>
 Description: Provides functions to estimate kernel-smoothed spatial and spatio-temporal relative risk functions and perform subsequent inference.
