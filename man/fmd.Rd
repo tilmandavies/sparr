@@ -4,7 +4,7 @@
 \name{fmd}
 \alias{fmd}
 \title{Veterinary foot-and-mouth disease outbreak data}
-\format{\code{fmd} is a named list with four members:
+\format{\code{fmd} is a named list with two members:
 \describe{
 \item{\code{$cases}}{
 An object of class \code{\link[spatstat]{ppp}} giving the spatial locations of the 410 infected
@@ -14,28 +14,17 @@ component of this object contain the integer day of infection (from beginning of
 
 \item{\code{$controls}}{
 An object of class \code{\link[spatstat]{ppp}} defined over the same spatial study region with the locations
-of the 1176 uninfected farms.
-}
-
-\item{\code{$cases.size}}{
-A numeric vector of length 410 giving the size of each infected farm in \code{$cases} as the total animal population.
-}
-
-\item{\code{$controls.size}}{
-As above, for the uninfected farms.
+of the 1866 uninfected farms.
 }
 }}
-\source{
-\bold{UNSURE IF THESE DATA CAN BE RELEASED WITH sparr}
-}
 \description{
 Data of the spatial locations and time of farms infected by veterinary foot-and-mouth disease
 in the county of Cumbria, UK, over a course of nearly 250 days between February and August in 2001.
-There are 410 infected farms (the cases), and 1176 uninfected farms (the controls). The data
+There are 410 infected farms (the cases), and 1866 uninfected farms (the controls). The data
 have been jittered and randomly thinned by an unspecified amount to preserve anonymity.
 }
 \section{Acknowledgements}{
- \bold{UNSURE IF THESE DATA CAN BE RELEASED WITH sparr}
+ The Animal and Plant Health Agency (APHA), UK, provided permission to use this dataset.
 }
 
 \examples{
@@ -43,11 +32,9 @@ have been jittered and randomly thinned by an unspecified amount to preserve ano
 data(fmd)
 summary(fmd)
 
-par(mfrow=c(2,2))
+par(mfrow=c(1,2))
 plot(fmd$cases)
-hist(fmd$cases.size)
 plot(fmd$controls)
-hist(fmd$controls.size)
 
 }
 \references{

@@ -2,11 +2,11 @@
 #' 
 #' Data of the spatial locations and time of farms infected by veterinary foot-and-mouth disease
 #' in the county of Cumbria, UK, over a course of nearly 250 days between February and August in 2001.
-#' There are 410 infected farms (the cases), and 1176 uninfected farms (the controls). The data
+#' There are 410 infected farms (the cases), and 1866 uninfected farms (the controls). The data
 #' have been jittered and randomly thinned by an unspecified amount to preserve anonymity. 
 #'  
 #' @name fmd
-#' @format \code{fmd} is a named list with four members:
+#' @format \code{fmd} is a named list with two members:
 #' \describe{
 #' \item{\code{$cases}}{
 #' An object of class \code{\link[spatstat]{ppp}} giving the spatial locations of the 410 infected
@@ -16,15 +16,7 @@
 #' 
 #' \item{\code{$controls}}{
 #' An object of class \code{\link[spatstat]{ppp}} defined over the same spatial study region with the locations
-#' of the 1176 uninfected farms.
-#' }
-#' 
-#' \item{\code{$cases.size}}{
-#' A numeric vector of length 410 giving the size of each infected farm in \code{$cases} as the total animal population.
-#' }
-#' 
-#' \item{\code{$controls.size}}{
-#' As above, for the uninfected farms.
+#' of the 1866 uninfected farms.
 #' }
 #' }
 #' 
@@ -32,7 +24,7 @@
 #' 
 #' @keywords data
 #' 
-#' @section Acknowledgements: \bold{UNSURE IF THESE DATA CAN BE RELEASED WITH sparr}
+#' @section Acknowledgements: The Animal and Plant Health Agency (APHA), UK, provided permission to use this dataset.
 #' 
 #' @references 
 #' Fernando, W.T.P.S. and Hazelton, M.L. (2014), Generalizing the spatial relative risk function,
@@ -46,21 +38,25 @@
 #' reference to the UK foot and mouth disease (FMD) epidemic of 2001,
 #' \emph{Preventative Veterinary Medicine}, \bold{71}, 141-156.
 #' 
-#' @source \bold{UNSURE IF THESE DATA CAN BE RELEASED WITH sparr}
 #' 
 #' @examples
 #' 
 #' data(fmd)
 #' summary(fmd)
 #' 
-#' par(mfrow=c(2,2))
+#' par(mfrow=c(1,2))
 #' plot(fmd$cases)
-#' hist(fmd$cases.size)
 #' plot(fmd$controls)
-#' hist(fmd$controls.size)
 #' 
 NULL
 
 #418 farms out of a total of 2813 in the region became infected over the course of the study period,
 #with time of infection recorded to the nearest day since the start of the study.
 # that remained uninfected over the course of the study period.
+# @source \bold{UNSURE IF THESE DATA CAN BE RELEASED WITH sparr}
+#\item{\code{$cases.size}}{
+#A numeric vector of length 410 giving the size of each infected farm in \code{$cases} as the total animal population.
+#}
+#\item{\code{$controls.size}}{
+#As above, for the uninfected farms.
+#}
