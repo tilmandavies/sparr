@@ -7,18 +7,18 @@
 \format{\code{fmd} is a named list with four members:
 \describe{
 \item{\code{$cases}}{
-An object of class \code{\link[spatstat]{ppp}} giving the spatial locations of the 418 infected
+An object of class \code{\link[spatstat]{ppp}} giving the spatial locations of the 410 infected
 farms within a polygonal study region representing the county of Cumbria. The \code{\link[spatstat]{marks}}
 component of this object contain the integer day of infection (from beginning of study period).
 }
 
 \item{\code{$controls}}{
 An object of class \code{\link[spatstat]{ppp}} defined over the same spatial study region with the locations
-of the 2395 farms that remained uninfected over the course of the study period.
+of the 1176 uninfected farms.
 }
 
 \item{\code{$cases.size}}{
-A numeric vector of length 418 giving the size of each infected farm in \code{$cases} as the total animal population.
+A numeric vector of length 410 giving the size of each infected farm in \code{$cases} as the total animal population.
 }
 
 \item{\code{$controls.size}}{
@@ -31,8 +31,8 @@ As above, for the uninfected farms.
 \description{
 Data of the spatial locations and time of farms infected by veterinary foot-and-mouth disease
 in the county of Cumbria, UK, over a course of nearly 250 days between February and August in 2001.
-418 farms out of a total of 2813 in the region became infected over the course of the study period,
-with time of infection recorded to the nearest day since the start of the study.
+There are 410 infected farms (the cases), and 1176 uninfected farms (the controls). The data
+have been jittered and randomly thinned by an unspecified amount to preserve anonymity.
 }
 \section{Acknowledgements}{
  \bold{UNSURE IF THESE DATA CAN BE RELEASED WITH sparr}

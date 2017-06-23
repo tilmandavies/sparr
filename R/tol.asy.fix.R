@@ -35,6 +35,7 @@ tol.asy.fix <- function(f,g,pooled,verbose=FALSE){
   if(is.null(qq)||is.vector(qq)){
     qq <- qb(pooled,1)
   }
+  qq <- as.matrix(qq)
   qq2 <- (1/(4*pi))*qb(pooled,sqrt(0.5))
   if(verbose) cat("Done.\n")
   
