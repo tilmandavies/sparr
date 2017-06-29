@@ -18,15 +18,16 @@
 #' @author J.C. Marshall
 #' 
 #' @examples
-#' 
-#' # To be filled (e.g. as below) if we decide to export this handy little utility...?
+#' \dontrun{
 #' 
 #' # System check
-#' # sparr:::fftw_available()
+#' sparr:::fftw_available()
 #' 
-#' # system.time(fft(matrix(1:4,2,2)))
-#' # system.time(fft2d(matrix(1:4,2,2)))
+#' system.time(fft(matrix(1:2000^2,2000)))
+#' system.time(fft2d(matrix(1:2000^2,2000)))
+#' }
 #' 
+#' @export
 fft2d <- function(x, inverse=FALSE, fftw = sparr:::fftw_available()) {
   if (fftw) {
     fftwtools::fftw2d(data=x, inverse=inverse)

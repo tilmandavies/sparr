@@ -62,6 +62,34 @@
 #' @references
 #' Fernando, W.T.P.S. and Hazelton, M.L. (2014), Generalizing the spatial relative risk function, \emph{Spatial and Spatio-temporal Epidemiology}, \bold{8}, 1-10.
 #'
+#' @examples
+#' data(fmd)
+#' fmdcas <- fmd$cases
+#' fmdcon <- fmd$controls
+#' 
+#' f <- spattemp.density(fmdcas,h=6,lambda=8)
+#' g <- bivariate.density(fmdcon,h0=6)
+#' rho <- spattemp.risk(f,g,tolerate=TRUE) 
+#' 
+#' f$tlim # requested slices must be in this range
+#' 
+#' # slicing 'stden' object
+#' f.slice1 <- spattemp.slice(f,tt=50) # evaluation timestamp
+#' f.slice2 <- spattemp.slice(f,tt=150.5) # interpolated timestamp
+#' par(mfrow=c(2,2))
+#' plot(f.slice1$z$'50')
+#' plot(f.slice1$z.cond$'50')
+#' plot(f.slice2$z$'150.5')
+#' plot(f.slice2$z.cond$'150.5')
+#' 
+#' # slicing 'rrst' object
+#' rho.slices <- spattemp.slice(rho,tt=c(50,150.5))
+#' par(mfrow=c(2,2))
+#' plot(rho.slices$rr$'50');tol.contour(rho.slices$P$'50',levels=0.05,add=TRUE)
+#' plot(rho.slices$rr$'150.5');tol.contour(rho.slices$P$'150.5',levels=0.05,add=TRUE)
+#' plot(rho.slices$rr.cond$'50');tol.contour(rho.slices$P.cond$'50',levels=0.05,add=TRUE)
+#' plot(rho.slices$rr.cond$'150.5');tol.contour(rho.slices$P.cond$'150.5',levels=0.05,add=TRUE)
+#'
 #' @export
 spattemp.slice <- function(stob,tt,checkargs=TRUE){
   if(checkargs){
@@ -80,13 +108,13 @@ spattemp.slice <- function(stob,tt,checkargs=TRUE){
     z <- stob$z
     zc <- stob$z.cond
     p <- pc <- NULL
-    result <- list(z=list(),z.cond=list(),P=list(),Pc=list())
+    result <- list(z=list(),z.cond=list(),P=list(),P.cond=list())
   } else {
     avail <- names(stob$rr)
     z <- stob$rr
     zc <- stob$rr.cond
     p <- stob$P
-    pc <- stob$P.ccond
+    pc <- stob$P.cond
     result <- list(rr=list(),rr.cond=list(),P=list(),P.cond=list())
   }
   
@@ -148,5 +176,5 @@ st.slice.single <- function(V,avail,z,zc,p,pc,warn=FALSE){
       }
     }
   }
-  return(list(z=zres,zc=zcres,p=pres,pc=pres))
+  return(list(z=zres,zc=zcres,p=pres,pc=pcres))
 }

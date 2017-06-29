@@ -129,9 +129,19 @@
 #' Chapman & Hall, New York.
 #' 
 #' @examples
+#' \dontrun{
+#' data(chorley) # Chorley-Ribble data (package 'spatstat')
+#' ch.multi <- multiscale.density(chorley,h0=1)
+#' plot(ch.multi)
 #' 
-#' # to be filled
+#' ch.pilot <- bivariate.density(chorley,h0=0.75) # with pre-defined pilot density
+#' ch.multi2 <- multiscale.density(chorley,h0=1,pilot.density=ch.pilot$z)
+#' plot(ch.multi2)
 #' 
+#' data(pbc)
+#' pbc.multi <- multiscale.density(pbc,h0=2,hp=1,h0fac=c(0.25,2.5),dimz=128) # widen h0 scale, increase z-axis resolution
+#' plot(pbc.multi)
+#' }
 #' @export
 multiscale.density <- function(pp,h0,hp=NULL,h0fac=c(0.25,1.5),edge=c("uniform","none"),resolution=128,dimz=64,gamma.scale="geometric",trim=5,intensity=FALSE,pilot.density=NULL,xy=NULL,taper=TRUE,verbose=TRUE){
   if(!inherits(pp,"ppp")) stop("data argument 'pp' must be of spatstat class \"ppp\"; see ?ppp")

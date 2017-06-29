@@ -28,14 +28,14 @@ this function will automatically detect and use the faster option, otherwise wil
 defer to the built-in \code{\link[stats]{fft}}.
 }
 \examples{
-
-# To be filled (e.g. as below) if we decide to export this handy little utility...?
+\dontrun{
 
 # System check
-# sparr:::fftw_available()
+sparr:::fftw_available()
 
-# system.time(fft(matrix(1:4,2,2)))
-# system.time(fft2d(matrix(1:4,2,2)))
+system.time(fft(matrix(1:2000^2,2000)))
+system.time(fft2d(matrix(1:2000^2,2000)))
+}
 
 }
 \author{

@@ -30,7 +30,7 @@
 #'
 #' @examples
 #' 
-#' # To be filled.
+#' # See ?multiscale.slice
 #' 
 #' @export
 available.h0 <- function(...){

@@ -20,7 +20,7 @@ plot.rrs <- function(x, auto.axes = TRUE, tol.show = TRUE, tol.type = c("upper",
     tol.type <- tol.type[1]
     if(tol.type=="lower"){
       ps <- 1-ps
-    } else if(tol.type=="two-sided"){
+    } else if(tol.type=="two.sided"){
       ps <- 2*pmin(ps,1-ps)
     } else if(tol.type!="upper"){
       stop("invalid 'tol.type'")

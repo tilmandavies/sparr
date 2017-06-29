@@ -92,7 +92,15 @@
 #'
 #' @examples
 #' 
-#' ## To be filled
+#' data(pbc)
+#' 
+#' NS(pbc)
+#' NS(pbc,nstar="geometric") # uses case-control marks to replace sample size
+#' NS(pbc,scaler="var") # set different scalar measure of spread
+#' 
+#' data(burk)
+#' NS.spattemp(burk$cases)
+#' NS.spattemp(burk$cases,scaler="sd") 
 #' 
 #' @export
 NS <- function(pp, nstar = c("npoints", "geometric"), scaler = c("silverman", "IQR", "sd", "var")){

@@ -80,7 +80,15 @@
 #'
 #' @examples
 #' 
-#' ## To be filled
+#' data(pbc)
+#' 
+#' OS(pbc)
+#' OS(pbc,nstar="geometric") # uses case-control marks to replace sample size
+#' OS(pbc,scaler="var") # set different scalar measure of spread
+#' 
+#' data(burk)
+#' OS.spattemp(burk$cases)
+#' OS.spattemp(burk$cases,scaler="sd") 
 #' 
 #' @export
 OS <- function(pp, nstar = c("npoints", "geometric"),

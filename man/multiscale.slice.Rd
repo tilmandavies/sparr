@@ -49,6 +49,19 @@ accuracy of the slices is improved with an increase to the \code{dimz}
 argument of the preceding call to \code{multiscale.density} at the cost of
 additional computing time.)
 }
+\examples{
+\dontrun{
+data(chorley) # Chorley-Ribble data (package 'spatstat')
+ch.multi <- multiscale.density(chorley,h0=1,h0fac=c(0.5,2))
+
+available.h0(ch.multi)
+ch.slices <- multiscale.slice(ch.multi,h0=c(0.7,1.1,1.6))
+
+par(mfcol=c(2,3)) # plot each density and edge-correction surface
+for(i in 1:3) { plot(ch.slices[[i]]$z); plot(ch.slices[[i]]$q) }
+}
+
+}
 \references{
 Davies, T.M. and Baddeley A. (2017), Fast computation of
 spatially adaptive kernel estimates, \emph{Submitted}.

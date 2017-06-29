@@ -85,7 +85,35 @@
 #'
 #' @examples
 #' 
-#' ## To be filled
+#' data(pbc)
+#' pbccas <- split(pbc)$case
+#' 
+#' LIK.density(pbccas)
+#' LSCV.density(pbccas)
+#'
+#' \dontrun{
+#' #* FIXED 
+#' 
+#' # custom limits
+#' LIK.density(pbccas,hlim=c(0.01,4))
+#' LSCV.density(pbccas,hlim=c(0.01,4))
+#' 
+#' # disable edge correction
+#' LIK.density(pbccas,hlim=c(0.01,4),edge=FALSE)
+#' LSCV.density(pbccas,hlim=c(0.01,4),edge=FALSE)
+#' 
+#' # obtain objective function
+#' hcv <- LIK.density(pbccas,hlim=c(0.01,4),auto.optim=FALSE)
+#' plot(hcv);abline(v=hcv[which.max(hcv[,2]),1],lty=2,col=2)
+#' 
+#' #* ADAPTIVE
+#' LIK.density(pbccas,type="adaptive")
+#' LSCV.density(pbccas,type="adaptive")
+#'  
+#' # change pilot bandwidth used
+#' LIK.density(pbccas,type="adaptive",hp=2)
+#' LSCV.density(pbccas,type="adaptive",hp=2)
+#' } 
 #' 
 #' @export
 LSCV.density <- function(pp,hlim=NULL,hseq=NULL,resolution=64,edge=TRUE,auto.optim=TRUE,
@@ -198,32 +226,3 @@ LSCV.density <- function(pp,hlim=NULL,hseq=NULL,resolution=64,edge=TRUE,auto.opt
   
   return(result)
 }
-
-
-
-# } else if(type=="spattemp"){
-#   stop("'type' must be provided as \"spatial\"; all else currently unimplemented")
-#   if(auto.optim){
-#     strt <- c(NS(pp),bw.nrd0(marks(pp)))
-#     return(optim(par=strt,LSCV.density.spattemp.single,pp=pp,res=res,tlim=tlim,edge=edge,...)$par)
-#   } else {
-#     if(is.null(hseq)) hseq <- seq(hlim[1],hlim[2],length=seqres)
-#     hn <- length(hseq)
-#     if(is.null(lambdaseq)) lambdaseq <- seq(lambdalim[1],lambdalim[2],length=seqres)
-#     ln <- length(lambdaseq)
-#     hl <- expand.grid(hseq,lambdaseq)
-#     if(is.na(parallelise)){
-#       lscv.vec <- rep(NA,hn*ln)
-#       for(i in 1:(hn*ln)) lscv.vec[i] <- LSCV.density.spattemp.single(as.numeric(hl[i,]),pp,res,tlim,edge)
-#     } else {
-#       if(parallelise>detectCores()) stop("cores requested exceeds available count")
-#       registerDoParallel(cores=parallelise)
-#       lscv.vec <- foreach(i=1:(hn*ln),.packages="spatstat",.combine=c) %dopar% {
-#         return(LSCV.density.spattemp.single(as.numeric(hl[i,]),pp,res,tlim,edge))
-#       }
-#     }
-#     return(list(hs=hl[,1],ls=hl[,2],CV=lscv.vec))
-#   }
-# } else {
-#   stop("'type' must be provided as either \"spatial\" (spatial only) or \"spattemp\" (spatiotemporal)")
-# }

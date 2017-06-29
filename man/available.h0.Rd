@@ -36,7 +36,7 @@ incompatible (i.e. all \code{h0range} components must overlap).
 }
 \examples{
 
-# To be filled.
+# See ?multiscale.slice
 
 }
 \seealso{

@@ -138,9 +138,19 @@ global bandwidth value within \code{h0range} by using the
 \code{\link{bivden}}.
 }
 \examples{
+\dontrun{
+data(chorley) # Chorley-Ribble data (package 'spatstat')
+ch.multi <- multiscale.density(chorley,h0=1)
+plot(ch.multi)
 
-# to be filled
+ch.pilot <- bivariate.density(chorley,h0=0.75) # with pre-defined pilot density
+ch.multi2 <- multiscale.density(chorley,h0=1,pilot.density=ch.pilot$z)
+plot(ch.multi2)
 
+data(pbc)
+pbc.multi <- multiscale.density(pbc,h0=2,hp=1,h0fac=c(0.25,2.5),dimz=128) # widen h0 scale, increase z-axis resolution
+plot(pbc.multi)
+}
 }
 \references{
 Abramson, I. (1982). On bandwidth variation in kernel estimates

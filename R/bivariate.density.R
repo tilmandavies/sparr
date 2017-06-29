@@ -202,9 +202,24 @@
 #' Wand, M.P. and Jones, C.M., 1995. \emph{Kernel Smoothing}, Chapman & Hall, London.
 #' 
 #' @examples
-#'
-#' # to be filled
 #' 
+#' data(chorley) # Chorley-Ribble data from package 'spatstat'
+#' 
+#' # Fixed bandwidth kernel density; uniform edge correction
+#' chden1 <- bivariate.density(chorley,h0=1.5) 
+#' 
+#' # Fixed bandwidth kernel density; diggle edge correction; coarser resolution
+#' chden2 <- bivariate.density(chorley,h0=1.5,edge="diggle",resolution=64) 
+#' 
+#' # Adaptive smoothing; uniform edge correction
+#' chden3 <- bivariate.density(chorley,h0=1.5,hp=1,adapt=TRUE)
+#' 
+#' # Adaptive smoothing; uniform edge correction; partitioning approximation
+#' chden4 <- bivariate.density(chorley,h0=1.5,hp=1,adapt=TRUE,davies.baddeley=0.025)
+#'  
+#' par(mfrow=c(2,2))
+#' plot(chden1);plot(chden2);plot(chden3);plot(chden4)  
+#'
 #' @export
 bivariate.density <- function(pp,h0,hp=NULL,adapt=FALSE,resolution=128,gamma.scale="geometric",edge=c("uniform","diggle","none"),intensity=FALSE,trim=5,xy=NULL,pilot.density=NULL,leaveoneout=FALSE,parallelise=NULL,davies.baddeley=NULL,verbose=TRUE){
 	if(!inherits(pp,"ppp")) stop("data argument 'pp' must be of spatstat class \"ppp\"; see ?ppp")

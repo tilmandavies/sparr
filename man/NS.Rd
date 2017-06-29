@@ -91,7 +91,15 @@ estimator is not possible (Davies et al., 2017).
 
 \examples{
 
-## To be filled
+data(pbc)
+
+NS(pbc)
+NS(pbc,nstar="geometric") # uses case-control marks to replace sample size
+NS(pbc,scaler="var") # set different scalar measure of spread
+
+data(burk)
+NS.spattemp(burk$cases)
+NS.spattemp(burk$cases,scaler="sd") 
 
 }
 \references{

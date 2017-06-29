@@ -14,7 +14,7 @@
 \title{Plotting sparr objects}
 \usage{
 \method{plot}{bivden}(x, what = c("z", "edge", "bw"), add.pts = FALSE,
-  auto.axes = TRUE, sleep = 0.2, override.par = TRUE, ...)
+  auto.axes = TRUE, override.par = TRUE, ...)
 
 \method{plot}{msden}(x, what = c("z", "edge", "bw"), sleep = 0.2,
   override.par = TRUE, ...)
@@ -45,10 +45,6 @@ the image plot using default \code{\link{points}}.}
 \item{auto.axes}{Logical value indicating whether to display the plot with
 automatically added x-y axes and an `L' box in default styles.}
 
-\item{sleep}{Single positive numeric value giving the amount of time (in
-seconds) to \code{\link[base]{Sys.sleep}} before drawing the next image in
-the animation.}
-
 \item{override.par}{Logical value indicating whether to override the
 existing graphics device parameters prior to plotting, resetting
 \code{mfrow} and \code{mar}. See `Details' for when you might want to
@@ -57,6 +53,10 @@ disable this.}
 \item{...}{Additional graphical parameters to be passed to
 \code{\link[spatstat]{plot.im}}, or in one instance, to
 \code{\link[spatstat]{plot.ppp}} (see `Details').}
+
+\item{sleep}{Single positive numeric value giving the amount of time (in
+seconds) to \code{\link[base]{Sys.sleep}} before drawing the next image in
+the animation.}
 
 \item{tol.show}{Logical value indicating whether to show pre-computed tolerance contours on the plot(s). The object \code{x} must already have the relevant \emph{p}-value surface(s) stored in order for this argument to have any effect.}
 
@@ -101,8 +101,39 @@ instance, one might also want to set \code{sleep = 0}.
 }
 \examples{
 
-# to be filled 
+\dontrun{
+data(pbc)
+data(fmd)
+data(burk)
 
+# 'bivden' object
+pbcden <- bivariate.density(split(pbc)$case,h0=3,hp=2,adapt=TRUE,davies.baddeley=0.05,verbose=FALSE)
+plot(pbcden)
+plot(pbcden,what="bw",main="PBC cases\\n variable bandwidth surface",xlab="Easting",ylab="Northing")
+
+# 'stden' object
+burkden <- spattemp.density(burk$cases,tres=128) # observation times are stored in marks(burk$cases)
+plot(burkden,fix.range=TRUE,sleep=0.1) # animation
+plot(burkden,tselect=c(1000,3000),type="conditional") # spatial densities conditional on each time
+
+# 'rrs' object
+pbcrr <- risk(pbc,h0=4,hp=3,adapt=TRUE,tolerate=TRUE,davies.baddeley=0.025,edge="diggle")
+plot(pbcrr) # default
+plot(pbcrr,tol.args=list(levels=c(0.05,0.01),lty=2:1,col="seagreen4"),auto.axes=FALSE)
+
+# 'rrst' object
+f <- spattemp.density(fmd$cases,h=6,lambda=8)
+g <- bivariate.density(fmd$controls,h0=6)
+fmdrr <- spattemp.risk(f,g,tolerate=TRUE)
+plot(fmdrr,sleep=0.1,fix.range=TRUE)
+plot(fmdrr,type="conditional",sleep=0.1,tol.type="two.sided",tol.args=list(levels=0.05,drawlabels=FALSE))
+
+# 'msden' object
+pbcmult <- multiscale.density(split(pbc)$case,h0=4,h0fac=c(0.25,2.5))
+plot(pbcmult) # densities
+plot(pbcmult,what="edge") # edge correction surfaces
+plot(pbcmult,what="bw") # bandwidth surfaces
+}
 }
 \author{
 T.M. Davies

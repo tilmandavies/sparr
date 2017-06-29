@@ -74,7 +74,7 @@ T. M. Davies
 
 
 \section{Warning}{
-Bootstrapping for spatiotemporal bandwidth selection for spatiotemporal data can be computationally demanding, particulalry for fine evaluation grid resolutions (controlled by \code{sres} and \code{tres}). Keeping \code{verbose = TRUE} offers an indication of the computational burden by printing each pair of bandwidths at each iteration of the \code{\link{optim}}isation routine. The `Examples' section also offers some rough indications of evaluation times on this author's local machine.
+Bootstrapping for spatiotemporal bandwidth selection for spatiotemporal data is very computationally demanding. Keeping \code{verbose = TRUE} offers an indication of the computational burden by printing each pair of bandwidths at each iteration of the \code{\link{optim}}isation routine. The `Examples' section also offers some rough indications of evaluation times on this author's local machine.
 }
 
 \seealso{
@@ -82,5 +82,15 @@ Bootstrapping for spatiotemporal bandwidth selection for spatiotemporal data can
 }
 
 \examples{
-# to be filled
+\dontrun{
+
+data(burk) # Burkitt's Uganda lymphoma data
+burkcas <- burk$cases
+
+hlam1 <- BOOT.spattemp(burkcas) #~85 secs
+hlam2 <- BOOT.spattemp(burkcas,tlim=c(400,5800),eta=8,nu=450) #~75 secs. Widen time limits, reduce ref. bw.
+hlam3 <- BOOT.spattemp(burkcas,eta=20,nu=800,start=c(7,400))) #~150 secs. Increase ref. bw., custom starting vals
+rbind(hlam1,hlam2,hlam3)
+
+}
 }

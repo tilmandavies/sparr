@@ -56,7 +56,7 @@ plot.rrst <- function(x, tselect = NULL, type = c("joint", "conditional"), fix.r
     tol.type <- tol.type[1]
     if(tol.type=="lower"){
       plst <- lapply(plst,function(x) 1-x)
-    } else if(tol.type=="two-sided"){
+    } else if(tol.type=="two.sided"){
       plst <- lapply(plst,function(x) 2*pmin(x,1-x))
     } else if(tol.type!="upper"){
       stop("invalid 'tol.type'")

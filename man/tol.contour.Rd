@@ -41,7 +41,7 @@ significance \code{levels}.
 }
 \examples{
 
-# to be filled
+# See ?tolerance
 
 }
 \author{

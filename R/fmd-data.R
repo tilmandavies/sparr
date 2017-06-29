@@ -42,8 +42,9 @@
 #' @examples
 #' 
 #' data(fmd)
-#' summary(fmd)
-#' 
+#' summary(fmd$cases)
+#' summary(fmd$controls)
+#'  
 #' par(mfrow=c(1,2))
 #' plot(fmd$cases)
 #' plot(fmd$controls)
