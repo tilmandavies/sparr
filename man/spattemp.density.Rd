@@ -58,7 +58,7 @@ The above equation provides the \emph{joint} or \emph{unconditional} density at 
 \deqn{\hat{f}(x|t)=\hat{f}(x,t)/\hat{f}(t),}
 where \eqn{\hat{f}(t)=n^{-1}\sum_{i=1}^{n}\lambda^{-1}L((t-t_i)/\lambda)/q(t)} is the univariate kernel estimate of the temporal margin. Normalisation of the two versions \eqn{\hat{f}(x,t)} and \eqn{\hat{f}(x|t)} is the only way they differ. Where in the unconditional setting we have \eqn{\int_W\int_T\hat{f}(x,t)dt dx=1}, in the conditional setting we have \eqn{\int_W\hat{f}(x|t) dx=1} for all \eqn{t}. See Fernando & Hazelton (2014) for further details and practical reasons as to why we might prefer one over the other in certain situations.
 
-Evaluation of the spatiotemporal density itself is direct, limiting effective support of the Gaussian kernel to plus or minus 4 bandwidths, based on the implementation of 3D density estimation in the \code{\link[ks]{ks}} package (Duong, 2007). The objects returned by this function (see `Value' below) are necessary for kernel estimation of spatiotemporal relative risk surfaces, which is performed by \code{\link{spattemp.risk}}.
+The objects returned by this function (see `Value' below) are necessary for kernel estimation of spatiotemporal relative risk surfaces, which is performed by \code{\link{spattemp.risk}}.
 }
 
 
@@ -92,9 +92,9 @@ A pixel \code{\link[spatstat]{im}}age giving the edge-correction surface for the
 A numeric vector giving the edge-correction weights for the temporal margin. \code{NULL} if \code{tedge = "none"}.
 }
 \item{pp}{
-A copy of the object passed to the argument of the same name in the initial function call.
+A \code{\link[spatstat]{ppp.object}} of the spatial data passed to the argument of the same name in the initial function call, with \code{\link[spatstat]{marks}} of the observation times.
 }
-\item{tt}{
+\item{tgrid}{
 A numeric vector giving the discretised time grid at which the spatiotemporal density was evaluated (matches the names of \code{z} and \code{z.cond}).
 }
 }
@@ -132,3 +132,5 @@ for(i in tims){
 }
 
 }
+
+%Evaluation of the spatiotemporal density itself is direct, limiting effective support of the Gaussian kernel to plus or minus 4 bandwidths, based on the implementation of 3D density estimation in the \code{\link[ks]{ks}} package (Duong, 2007). 

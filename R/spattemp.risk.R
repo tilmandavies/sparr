@@ -41,10 +41,12 @@ spattemp.risk <- function(f,g,log=TRUE,tolerate=FALSE,finiteness=TRUE,verbose=TR
     if(verbose) cat("Done.\n")
     if(tolerate){
       if(verbose) cat("Calculating pooled estimate for tolerance...")
-      marks(f$pp) <- NULL
-      marks(g$pp) <- NULL
-      pdat <- suppressWarnings(superimpose(f$pp,g$pp))
-      marks(pdat) <- c(f$tt,g$tt)
+      fs <- f
+      gs <- g
+      marks(fs$pp) <- NULL
+      marks(gs$pp) <- NULL
+      pdat <- suppressWarnings(superimpose(fs$pp,gs$pp))
+      marks(pdat) <- c(marks(f$pp),marks(g$pp))
       hpool <- sqrt(prod(c(f$h,g$h)))
       lpool <- sqrt(prod(c(f$lambda,g$lambda)))
       pooled <- spattemp.density(pdat,h=hpool,lambda=lpool,tlim=f$tlim,sedge=ifelse(fse,"none","uniform"),tedge=ifelse(fte,"none","uniform"),sres=nrow(f$spatial.z),tres=flen,verbose=FALSE)

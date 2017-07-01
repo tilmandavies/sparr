@@ -93,7 +93,7 @@ spattemp.density <- function(pp,h=NULL,tt=NULL,lambda=NULL,tlim=NULL,sedge=c("un
   final$z.cond <- z.cond
   final$h <- h
   final$lambda <- lam
-  final$tlim <- range(grt)
+  final$tlim <- tlim #range(grt)
   final$spatial.z <- spatial.z
   final$temporal.z <- temporal.z
   # final$tstep <- tcw
@@ -101,8 +101,9 @@ spattemp.density <- function(pp,h=NULL,tt=NULL,lambda=NULL,tlim=NULL,sedge=c("un
   # final$tbin <- findInterval(tt,final$tbreaks,all.inside=TRUE)
   final$qs <- sq
   final$qt <- tq
+  marks(pp) <- tt
   final$pp <- pp
-  final$tt <- grt
+  final$tgrid <- grt
 
   class(final) <- "stden"
   return(final)

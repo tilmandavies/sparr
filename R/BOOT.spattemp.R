@@ -128,7 +128,7 @@ BOOT.spattemp <- function(pp,tt=NULL,tlim=NULL,eta=NULL,nu=NULL,
 
   xs <- ref.density$z[[1]]$xstep
   ys <- ref.density$z[[1]]$ystep
-  ts <- ref.density$tt[2]-ref.density$tt[1]
+  ts <- ref.density$tgrid[2]-ref.density$tgrid[1]
   sqz <- lapply(ref.density$z,function(x) x^2)
   boot3 <- sum(Reduce("+",sqz)*xs*ys*ts,na.rm=TRUE)
   
