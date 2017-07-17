@@ -140,6 +140,8 @@ display.
 }
 \examples{
 
+\dontrun{
+
 data(pbc)
 h0 <- LSCV.risk(pbc,method="hazelton");h0
 pbccas <- split(pbc)[[1]]
@@ -158,7 +160,7 @@ tol.contour(fixtol1,levels=c(0.1,0.05,0.01),lty=3:1,add=TRUE)
 plot(riskada)
 tol.contour(adatol1,levels=c(0.1,0.05,0.01),lty=3:1,add=TRUE)
 
-\dontrun{
+
 # MC
 fixtol2 <- tolerance(riskfix,method="MC",ITER=200) 
 adatol2 <- tolerance(riskada,method="MC",ITER=200,parallelise=4) # ~1 minute with parallelisation
