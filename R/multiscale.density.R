@@ -139,7 +139,8 @@
 #' plot(ch.multi2)
 #' 
 #' data(pbc)
-#' pbc.multi <- multiscale.density(pbc,h0=2,hp=1,h0fac=c(0.25,2.5),dimz=128) # widen h0 scale, increase z-axis resolution
+#' # widen h0 scale, increase z-axis resolution
+#' pbc.multi <- multiscale.density(pbc,h0=2,hp=1,h0fac=c(0.25,2.5),dimz=128) 
 #' plot(pbc.multi)
 #' }
 #' @export

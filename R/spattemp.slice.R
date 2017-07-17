@@ -63,6 +63,8 @@
 #' Fernando, W.T.P.S. and Hazelton, M.L. (2014), Generalizing the spatial relative risk function, \emph{Spatial and Spatio-temporal Epidemiology}, \bold{8}, 1-10.
 #'
 #' @examples
+#' 
+#' \dontrun{
 #' data(fmd)
 #' fmdcas <- fmd$cases
 #' fmdcon <- fmd$controls
@@ -89,7 +91,8 @@
 #' plot(rho.slices$rr$'150.5');tol.contour(rho.slices$P$'150.5',levels=0.05,add=TRUE)
 #' plot(rho.slices$rr.cond$'50');tol.contour(rho.slices$P.cond$'50',levels=0.05,add=TRUE)
 #' plot(rho.slices$rr.cond$'150.5');tol.contour(rho.slices$P.cond$'150.5',levels=0.05,add=TRUE)
-#'
+#' }
+#' 
 #' @export
 spattemp.slice <- function(stob,tt,checkargs=TRUE){
   if(checkargs){

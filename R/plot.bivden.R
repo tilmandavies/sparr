@@ -87,7 +87,8 @@
 #' g <- bivariate.density(fmd$controls,h0=6)
 #' fmdrr <- spattemp.risk(f,g,tolerate=TRUE)
 #' plot(fmdrr,sleep=0.1,fix.range=TRUE)
-#' plot(fmdrr,type="conditional",sleep=0.1,tol.type="two.sided",tol.args=list(levels=0.05,drawlabels=FALSE))
+#' plot(fmdrr,type="conditional",sleep=0.1,tol.type="two.sided",
+#'      tol.args=list(levels=0.05,drawlabels=FALSE))
 #' 
 #' # 'msden' object
 #' pbcmult <- multiscale.density(split(pbc)$case,h0=4,h0fac=c(0.25,2.5))

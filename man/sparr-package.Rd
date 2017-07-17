@@ -12,7 +12,7 @@ risk surfaces via the density-ratio method and perform subsequent inference. Fix
 \details{
 \tabular{ll}{
 Package: \tab sparr\cr
-Date:\tab 2017-06-29\cr
+Date:\tab 2017-07-17\cr
 Version:\tab 2.1-09\cr
 License: \tab GPL (>= 2)\cr
 }
@@ -188,8 +188,8 @@ currently imports \code{\link[doParallel]{doParallel}},
 
 To cite use of current versions of \code{sparr} in publications or research projects please use:\cr
 
-Davies, T.M., Marshall, J.C. and Hazelton, M.L. (2017) Kernel estimation of continuous spatial
-and spatiotemporal relative risk: Methods and inference with accompanying instruction in R, \emph{Submitted}.
+Davies, T.M., Marshall, J.C. and Hazelton, M.L. (2017) Tutorial on kernel estimation of continuous spatial
+and spatiotemporal relative risk with accompanying instruction in R, \emph{Submitted}.
 
 Old versions of \code{sparr} (<= 2.1-09) can be referenced by Davies et al. (2011) (see reference list).
 }

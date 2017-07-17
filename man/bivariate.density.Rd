@@ -204,6 +204,7 @@ chden1 <- bivariate.density(chorley,h0=1.5)
 # Fixed bandwidth kernel density; diggle edge correction; coarser resolution
 chden2 <- bivariate.density(chorley,h0=1.5,edge="diggle",resolution=64) 
 
+\dontrun{
 # Adaptive smoothing; uniform edge correction
 chden3 <- bivariate.density(chorley,h0=1.5,hp=1,adapt=TRUE)
 
@@ -212,6 +213,7 @@ chden4 <- bivariate.density(chorley,h0=1.5,hp=1,adapt=TRUE,davies.baddeley=0.025
  
 par(mfrow=c(2,2))
 plot(chden1);plot(chden2);plot(chden3);plot(chden4)  
+}
 
 }
 \references{

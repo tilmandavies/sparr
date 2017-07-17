@@ -142,6 +142,8 @@
 #'
 #' @examples
 #' 
+#' \dontrun{
+#' 
 #' data(pbc)
 #' pbccas <- split(pbc)$case
 #' pbccon <- split(pbc)$control
@@ -153,7 +155,7 @@
 #' hcv <- LSCV.risk(pbccas,pbccon,method="davies",auto.optim=FALSE)
 #' plot(hcv[,1],log(hcv[,2]));abline(v=hcv[which.min(hcv[,2]),1],col=2,lty=2)
 #' 
-#' \dontrun{
+#' 
 #' # ADAPTIVE (for common h0)
 #'
 #' LSCV.risk(pbccas,pbccon,type="adaptive")

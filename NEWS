@@ -1,0 +1,12 @@
+sparr v2.1-09 (Release date: 2017-07-17)
+==============
+
+--- MAJOR CHANGES since versions <= 0.3-8; NO BACKWARDS COMPATIBILITY ---
+--- Accompanying tutorial currently submitted for publication; contact maintainer for preprint --
+--- User is directed to the examples as part of help("sparr") for further assistance ---
+
+* Usage of all existing functions bivariate.density, OS, NS, LSCV.density, LSCV.risk, risk, tolerance, as well as associated S3 methods have changed for overall consistency, speed, and improved compatibility with spatstat objects.
+* New functions for spatial bandwidth selection (LIK.density, BOOT.density), and extension of existing functions to cope with selection of a global bandwidth for adaptive smoothing.
+* New functions for multiscale adaptive kernel density estimation (multiscale.density, multiscale.slice).
+* New functions for spatiotemporal density and relative risk estimation, and bandwidth selection (OS.spattemp, NS.spattemp, LSCV.spattemp, LIK.spattemp, BOOT.spattemp, spattemp.density, spattemp.risk, spattemp.slice).
+* New datasets (burk, fmd)

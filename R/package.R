@@ -188,8 +188,8 @@
 #' @section Citation:
 #' To cite use of current versions of \code{sparr} in publications or research projects please use:\cr
 #' 
-#' Davies, T.M., Marshall, J.C. and Hazelton, M.L. (2017) Kernel estimation of continuous spatial
-#' and spatiotemporal relative risk: Methods and inference with accompanying instruction in R, \emph{Submitted}.
+#' Davies, T.M., Marshall, J.C. and Hazelton, M.L. (2017) Tutorial on kernel estimation of continuous spatial
+#' and spatiotemporal relative risk with accompanying instruction in R, \emph{Submitted}.
 #' 
 #' Old versions of \code{sparr} (<= 2.1-09) can be referenced by Davies et al. (2011) (see reference list).
 #' 

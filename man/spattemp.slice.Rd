@@ -67,6 +67,8 @@ times as given by the \code{tlim}
 component of \code{stob}.
 }
 \examples{
+
+\dontrun{
 data(fmd)
 fmdcas <- fmd$cases
 fmdcon <- fmd$controls
@@ -93,6 +95,7 @@ plot(rho.slices$rr$'50');tol.contour(rho.slices$P$'50',levels=0.05,add=TRUE)
 plot(rho.slices$rr$'150.5');tol.contour(rho.slices$P$'150.5',levels=0.05,add=TRUE)
 plot(rho.slices$rr.cond$'50');tol.contour(rho.slices$P.cond$'50',levels=0.05,add=TRUE)
 plot(rho.slices$rr.cond$'150.5');tol.contour(rho.slices$P.cond$'150.5',levels=0.05,add=TRUE)
+}
 
 }
 \references{
