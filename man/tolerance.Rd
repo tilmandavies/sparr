@@ -175,7 +175,7 @@ tol.contour(adatol2,levels=c(0.1,0.05,0.01),lty=3:1,add=TRUE)
 }
 \references{
 Davies, T.M. and Baddeley A. (2017), Fast computation of
-spatially adaptive kernel estimates, \emph{Submitted}.
+spatially adaptive kernel estimates, \emph{Statistics and Computing}, [to appear].
 
 Davies, T.M. and Hazelton, M.L. (2010), Adaptive kernel estimation of spatial relative
 risk, \emph{Statistics in Medicine}, \bold{29}(23) 2423-2437.

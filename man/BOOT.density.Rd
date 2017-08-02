@@ -86,7 +86,7 @@ The optimal fixed or global (for adaptive) scalar bandwidth. If \code{simargs$ob
 }
 
 \references{
-Davies, T.M. and Baddeley A. (2017), Fast computation of spatially adaptive kernel estimates, \emph{Submitted}.\cr\cr
+Davies, T.M. and Baddeley A. (2017), Fast computation of spatially adaptive kernel estimates, \emph{Statistics and Computing}, [to appear].\cr\cr
 Hall, P., Marron, J.S. and Park, B.U. (1992) Smoothed cross-validation, \emph{Probability Theory and Related Fields}, \bold{92}, 1-20.\cr\cr
 Sain, S.R., Baggerly, K.A. and Scott, D.W. (1994) Cross-validation of multivariate densities, \emph{Journal of the American Statistical Association}, \bold{89}, 807-817.\cr\cr
 Taylor, C.C. (1989) Bootstrap choice of the smoothing parameter in kernel density estimation, \emph{Biometrika}, \bold{76}, 705-712.

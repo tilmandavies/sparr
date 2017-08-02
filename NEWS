@@ -1,12 +1,47 @@
-sparr v2.1-10 (Release date: 2017-07-17)
-==============
+        CHANGES IN sparr VERSION 2.1-11
 
---- MAJOR CHANGES since versions <= 0.3-8; NO BACKWARDS COMPATIBILITY ---
---- Accompanying tutorial currently submitted for publication; contact maintainer for preprint --
---- User is directed to the examples as part of help("sparr") for further assistance ---
+OVERVIEW
 
-* Usage of all existing functions bivariate.density, OS, NS, LSCV.density, LSCV.risk, risk, tolerance, as well as associated S3 methods have changed for overall consistency, speed, and improved compatibility with spatstat objects.
-* New functions for spatial bandwidth selection (LIK.density, BOOT.density), and extension of existing functions to cope with selection of a global bandwidth for adaptive smoothing.
-* New functions for multiscale adaptive kernel density estimation (multiscale.density, multiscale.slice).
-* New functions for spatiotemporal density and relative risk estimation, and bandwidth selection (OS.spattemp, NS.spattemp, LSCV.spattemp, LIK.spattemp, BOOT.spattemp, spattemp.density, spattemp.risk, spattemp.slice).
-* New datasets (burk, fmd)
+    o Citation information and NEWS file changes.
+
+        
+        
+        CHANGES IN sparr VERSION 2.1-10
+
+OVERVIEW
+
+    o MAJOR CHANGES since versions <= 0.3-8; NO BACKWARDS COMPATIBILITY
+
+    o Accompanying tutorial currently submitted for publication; contact maintainer
+      for preprint or see https://arxiv.org/abs/1707.06888
+
+    o User is directed to the examples as part of help("sparr") for
+      further assistance
+      
+      
+NEW FUNCTIONS
+
+    o LIK.density, BOOT.density
+    New functions for bivariate density bandwidth selection.
+
+    o multiscale.density, multiscale.slice
+    Multi-scale adaptive kernel density estimation.
+
+    o OS.spattemp, NS.spattemp, LSCV.spattemp, LIK.spattemp, BOOT.spattemp
+    Bandwidth selection for spatiotemporal bandwidth selection.
+
+    o spattemp.density, spattemp.risk, spattemp.slice
+    Spatiotemporal density and relative risk estimation.
+    
+    o plot.stden, plot.msden, plot.rrst, tol.contour
+    New plotting functions.
+    
+    o burk, fmd
+    New datasets.
+    
+    
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o bivariate.density, risk, tolerance, LSCV.density, LSCV.risk, OS, NS, plot
+    Usage changed. Speed improvements.
+    

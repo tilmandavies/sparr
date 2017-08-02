@@ -116,7 +116,7 @@
 #' Epidemiology}, \bold{5}, 51-65.
 #'
 #' Davies, T.M. and Baddeley A. (2017), Fast computation of
-#' spatially adaptive kernel estimates, \emph{Submitted}.
+#' spatially adaptive kernel estimates, \emph{Statistics and Computing}, [to appear].
 #' 
 #' Davies, T.M. and Hazelton, M.L. (2010), Adaptive kernel
 #' estimation of spatial relative risk, \emph{Statistics in Medicine},

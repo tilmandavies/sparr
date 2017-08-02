@@ -125,7 +125,7 @@ LSCV.density(pbccas,type="adaptive",hp=2)
 }
 \references{
 Davies, T.M. and Baddeley A. (2017), Fast computation of
-spatially adaptive kernel estimates, \emph{Submitted}.
+spatially adaptive kernel estimates, \emph{Statistics and Computing}, [to appear].
 
 Silverman, B.W. (1986), \emph{Density Estimation for Statistics
 and Data Analysis}, Chapman & Hall, New York.

@@ -159,7 +159,7 @@ Abramson, I. (1982). On bandwidth variation in kernel estimates
 1217-1223.
 
 Davies, T.M. and Baddeley A. (2017), Fast computation of
-spatially adaptive kernel estimates, \emph{Submitted}.
+spatially adaptive kernel estimates, \emph{Statistics and Computing}, [to appear].
 
 Silverman, B.W. (1986), \emph{Density Estimation for Statistics and Data Analysis},
 Chapman & Hall, New York.

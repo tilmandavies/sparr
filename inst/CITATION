@@ -6,12 +6,13 @@ citEntry(entry = "Unpublished",
                    as.person("J. C. Marshall"),
                    as.person("M. L. Hazelton")),
   note      = "Submitted for publication",
+  url       = "https://arxiv.org/abs/1707.06888",
   year         = "2017",
   pages        = "1--30",
 
   textVersion  =
   paste("T. M. Davies, J. C. Marshall, M. L. Hazelton (2017).",
         "Tutorial on kernel estimation of continuous spatial and spatiotemporal relative risk with accompanying instruction in {R};",
-        "Submitted for publication.")
+        "Submitted for publication. URL: https://arxiv.org/abs/1707.06888")
 )
 
