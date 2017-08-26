@@ -7,9 +7,9 @@
 \usage{
 bivariate.density(pp, h0, hp = NULL, adapt = FALSE, resolution = 128,
   gamma.scale = "geometric", edge = c("uniform", "diggle", "none"),
-  intensity = FALSE, trim = 5, xy = NULL, pilot.density = NULL,
-  leaveoneout = FALSE, parallelise = NULL, davies.baddeley = NULL,
-  verbose = TRUE)
+  weights = NULL, intensity = FALSE, trim = 5, xy = NULL,
+  pilot.density = NULL, leaveoneout = FALSE, parallelise = NULL,
+  davies.baddeley = NULL, verbose = TRUE)
 }
 \arguments{
 \item{pp}{An object of class \code{\link[spatstat]{ppp}} giving the observed
@@ -40,6 +40,9 @@ given the pilot density (as per Silverman, 1986). See `Details'.}
 \code{"diggle"} reweights each observation-specific kernel. Setting
 \code{edge = "none"} requests no edge correction. Further details can be
 found in the documentation for \code{\link[spatstat]{density.ppp}}.}
+
+\item{weights}{Optional numeric vector of nonnegative weights corresponding to
+each observation in \code{pp}. Must have length equal to \code{npoints(pp)}.}
 
 \item{intensity}{Logical value indicating whether to return an intensity
 estimate (integrates to the sample size over the study region), or a density

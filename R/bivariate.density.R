@@ -96,6 +96,8 @@
 #'   \code{"diggle"} reweights each observation-specific kernel. Setting
 #'   \code{edge = "none"} requests no edge correction. Further details can be
 #'   found in the documentation for \code{\link[spatstat]{density.ppp}}.
+#' @param weights Optional numeric vector of nonnegative weights corresponding to
+#'   each observation in \code{pp}. Must have length equal to \code{npoints(pp)}.
 #' @param intensity Logical value indicating whether to return an intensity
 #'   estimate (integrates to the sample size over the study region), or a density
 #'   estimate (default, integrates to 1).
@@ -223,7 +225,7 @@
 #' }
 #' 
 #' @export
-bivariate.density <- function(pp,h0,hp=NULL,adapt=FALSE,resolution=128,gamma.scale="geometric",edge=c("uniform","diggle","none"),intensity=FALSE,trim=5,xy=NULL,pilot.density=NULL,leaveoneout=FALSE,parallelise=NULL,davies.baddeley=NULL,verbose=TRUE){
+bivariate.density <- function(pp,h0,hp=NULL,adapt=FALSE,resolution=128,gamma.scale="geometric",edge=c("uniform","diggle","none"),weights=NULL,intensity=FALSE,trim=5,xy=NULL,pilot.density=NULL,leaveoneout=FALSE,parallelise=NULL,davies.baddeley=NULL,verbose=TRUE){
 	if(!inherits(pp,"ppp")) stop("data argument 'pp' must be of spatstat class \"ppp\"; see ?ppp")
 
 	W <- Window(pp)
@@ -241,12 +243,13 @@ bivariate.density <- function(pp,h0,hp=NULL,adapt=FALSE,resolution=128,gamma.sca
 	if(!is.null(trim)&&!is.na(trim)) trim <- checkit(trim,"'trim'")
 	
 	n <- npoints(pp)
-
+  if(!is.null(weights)) weights <- checkwei(weights,n)
+	
 	if(adapt){
 		if(is.null(hp)) hp <- h0
 		else hp <- checkit(hp,"'hp'")
 		
-		if(leaveoneout) return(bivden.LOO(pp,h0,hp,gamma.scale,trim,resolution,parallelise))
+		if(leaveoneout) return(bivden.LOO(pp,h0,hp,gamma.scale,trim,resolution,parallelise,weights))
     
 		pd <- pilot.density
 		pilot.data <- pp
@@ -267,7 +270,7 @@ bivariate.density <- function(pp,h0,hp=NULL,adapt=FALSE,resolution=128,gamma.sca
 				stop("'pilot.density' must be an object of class \"im\" or \"ppp\"")
 			}
 		} else {
-			pilot.density <- density(pp,sigma=hp,edge=(edge=="uniform"||edge=="diggle"),diggle=(edge=="diggle"),dimyx=dimyx,xy=xy,positive=TRUE)
+			pilot.density <- density(pp,sigma=hp,edge=(edge=="uniform"||edge=="diggle"),diggle=(edge=="diggle"),dimyx=dimyx,xy=xy,positive=TRUE,weights=weights)
 		}
 		
 		pilot.density.spec <- safelookup(pilot.density,pp,warn=FALSE)
@@ -300,7 +303,7 @@ bivariate.density <- function(pp,h0,hp=NULL,adapt=FALSE,resolution=128,gamma.sca
 
 		if(!is.null(davies.baddeley)){
 			db <- checkdb(davies.baddeley)
-			db.result <- adens(x=pp,bwim=h.hypo,bwpts=h.spec,resolution=resolution,intensity=intensity,edge=(edge=="uniform"||edge=="diggle"),diggle=(edge=="diggle"),weights=NULL,hstep=db[1],qstep=db[2],qres=ifelse(is.na(db[3]),resolution,db[3]),verbose)
+			db.result <- adens(x=pp,bwim=h.hypo,bwpts=h.spec,resolution=resolution,intensity=intensity,edge=(edge=="uniform"||edge=="diggle"),diggle=(edge=="diggle"),weights=weights,hstep=db[1],qstep=db[2],qres=ifelse(is.na(db[3]),resolution,db[3]),verbose)
 			result <- list(z=db.result$result,h0=h0,hp=hp,h=h.spec,him=h.hypo,q=db.result$edg,gamma=gamma,geometric=gs,pp=pp)
 			class(result) <- "bivden"		
 			return(result)
@@ -315,7 +318,8 @@ bivariate.density <- function(pp,h0,hp=NULL,adapt=FALSE,resolution=128,gamma.sca
 		evalxy.in <- evalxy[!notin,]
 		h.hypo.in <- h.hypo.vec[!notin]
 		surf.in   <- numeric(nrow(evalxy.in))
-
+    
+		if(is.null(weights)) weights <- rep(1,n)
 		if(edge=="uniform"){
 			qhz.in <- numeric(nrow(evalxy.in))
 			if(verbose) pb <- txtProgressBar(0,nrow(evalxy.in))
@@ -324,8 +328,9 @@ bivariate.density <- function(pp,h0,hp=NULL,adapt=FALSE,resolution=128,gamma.sca
 				qhz.in[i] <- dintegral(gxy, pilot.density$xstep, pilot.density$ystep)
 		    ivals <- kernel2d(pp$x-evalxy.in[i,1], pp$y-evalxy.in[i,2], h.spec)
 
-        if(!intensity) surf.in[i] <- mean(ivals)/qhz.in[i]
-        else surf.in[i] <- sum(ivals)/qhz.in[i]
+        # if(!intensity) surf.in[i] <- mean(ivals)/qhz.in[i]
+        # else 
+        surf.in[i] <- sum(weights*ivals)/qhz.in[i]
         if(verbose) setTxtProgressBar(pb,i)
 			}
 			if(verbose) close(pb)
@@ -345,8 +350,9 @@ bivariate.density <- function(pp,h0,hp=NULL,adapt=FALSE,resolution=128,gamma.sca
 		  
 		  for(i in 1:nrow(evalxy.in)){
 		    ivals <- kernel2d(pp$x-evalxy.in[i,1], pp$y-evalxy.in[i,2], h.spec)
-		    if(!intensity) surf.in[i] <- mean(ivals/qx)
-		    else surf.in[i] <- sum(ivals/qx)
+		    # if(!intensity) surf.in[i] <- mean(ivals/qx)
+		    # else 
+		    surf.in[i] <- sum(weights*ivals/qx)
 		    if(verbose) setTxtProgressBar(pb,n+i)
 		  }
 		  if(verbose) close(pb)
@@ -357,8 +363,9 @@ bivariate.density <- function(pp,h0,hp=NULL,adapt=FALSE,resolution=128,gamma.sca
 		  if(verbose) pb <- txtProgressBar(0,nrow(evalxy.in))
 		  for(i in 1:nrow(evalxy.in)){
 		    ivals <- kernel2d(pp$x-evalxy.in[i,1], pp$y-evalxy.in[i,2], h.spec)
-		    if(!intensity) surf.in[i] <- mean(ivals)
-		    else surf.in[i] <- sum(ivals)
+		    # if(!intensity) surf.in[i] <- mean(ivals)
+		    # else 
+		    surf.in[i] <- sum(weights*ivals)
 		    if(verbose) setTxtProgressBar(pb,i)
 		  }
 		  if(verbose) close(pb)
@@ -366,13 +373,13 @@ bivariate.density <- function(pp,h0,hp=NULL,adapt=FALSE,resolution=128,gamma.sca
 		
 		surf[!notin] <- surf.in
 		surf <- im(matrix(surf,resolution,resolution,byrow=TRUE),xcol=pilot.density$xcol,yrow=pilot.density$yrow)
-		
+
 	} else {
     h.spec <- rep(h0,n)
 	  h.hypo <- NULL
 	  gs <- gamma <- NA
     
-	  dens <- density.ppp(pp,sigma=h0,dimyx=dimyx,xy=xy,edge=(edge=="diggle"||edge=="uniform"),diggle=(edge=="diggle"),spill=1)
+	  dens <- density.ppp(pp,sigma=h0,dimyx=dimyx,xy=xy,edge=(edge=="diggle"||edge=="uniform"),diggle=(edge=="diggle"),weights=weights,spill=1)
 		surf <- dens$raw[W,drop=FALSE]
 		ef <- dens$edg[W,drop=FALSE]
 		ef[ef>1] <- 1
@@ -385,10 +392,9 @@ bivariate.density <- function(pp,h0,hp=NULL,adapt=FALSE,resolution=128,gamma.sca
 		} else {
 		  ef <- NULL
 		}
-		
-		if(!intensity) surf <- surf/integral(surf)
 	}
 	
+	if(!intensity) surf <- surf/integral(surf)
 	result <- list(z=surf,h0=h0,hp=hp,h=h.spec,him=h.hypo,q=ef,gamma=gamma,geometric=gs,pp=pp)
 	class(result) <- "bivden"		
 	

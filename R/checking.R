@@ -81,3 +81,11 @@ checkxy <- function(xy){
   if((!is.numeric(xy$x))||(!is.numeric(xy$y))) stop("'xy' must have numeric vector members 'x' and 'y'")
   return(xy)
 }
+
+checkwei <- function(wei,n){
+  if(!is.vector(wei)) stop("'weights' must be a vector")
+  if(length(wei)!=n) stop("length of 'weights' must match number of observations")
+  if(!is.numeric(wei)) stop("'weights' must be numeric")
+  if(any(wei<0)) stop("all 'weights' must be nonnegative")
+  return(wei)
+}

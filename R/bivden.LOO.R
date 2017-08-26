@@ -1,14 +1,16 @@
-bivden.LOO <- function(pp,h0,hp,gamma.scale,trim,resolution,parallel){
+bivden.LOO <- function(pp,h0,hp,gamma.scale,trim,resolution,parallel,weights){
   n <- npoints(pp)
   loo <- rep(NA,n)
-  pilot.density.spec.loo <- density(pp,sigma=hp,dimyx=rep(resolution,2),at="points",positive=TRUE,leaveoneout=TRUE,weights=rep(1/(n-1),n))
+  if(is.null(weights)) weights <- rep(1,n)
+  pilot.density.spec.loo <- density(pp,sigma=hp,dimyx=rep(resolution,2),at="points",positive=TRUE,leaveoneout=TRUE,weights=weights/(n-1))
   Wm <- as.mask(pp$window,dimyx=rep(resolution,2))
   
   if(is.null(parallel)){
     for(i in 1:n){
       ppmi <- pp[-i]
+      wi <- weights[-i]
       
-      pilot.density <- density(ppmi,sigma=hp,dimyx=rep(resolution,2),positive=TRUE)
+      pilot.density <- density(ppmi,sigma=hp,dimyx=rep(resolution,2),positive=TRUE,weights=wi)
       pilot.density.spec <- safelookup(pilot.density,ppmi,warn=FALSE)#density(ppmi,sigma=hp,dimyx=rep(resolution,2),at="points",positive=TRUE,leaveoneout=FALSE)
       pi.int <- integral(pilot.density)
       pilot.density <- pilot.density/pi.int
@@ -33,7 +35,7 @@ bivden.LOO <- function(pp,h0,hp,gamma.scale,trim,resolution,parallel){
       indexer <- seq(1,1000*2,2)
       qhz <- mean(inside.owin(pr[indexer],pr[indexer+1],w=pp$window))
       
-      loo[i] <- mean(h.spec.mi^(-2)*(exp(-0.5*rowSums(uxy^2))/(2*pi)))/qhz
+      loo[i] <- mean(wi*h.spec.mi^(-2)*(exp(-0.5*rowSums(uxy^2))/(2*pi)))/qhz
     }
   } else {
     if(parallel>detectCores()) stop("Parallel cores requested exceeds available count")
@@ -41,8 +43,9 @@ bivden.LOO <- function(pp,h0,hp,gamma.scale,trim,resolution,parallel){
     registerDoParallel(cores=parallel)
     loo <- foreach(i=1:n,.packages="spatstat",.combine=c) %dopar% {
       ppmi <- pp[-i]
+      wi <- weights[-i]
       
-      pilot.density <- density(ppmi,sigma=hp,dimyx=rep(resolution,2),positive=TRUE)
+      pilot.density <- density(ppmi,sigma=hp,dimyx=rep(resolution,2),positive=TRUE,weights=wi)
       pilot.density.spec <- safelookup(pilot.density,ppmi,warn=FALSE)#density(ppmi,sigma=hp,dimyx=rep(resolution,2),at="points",positive=TRUE,leaveoneout=FALSE)
       pi.int <- integral(pilot.density)
       pilot.density$v <- pilot.density$v/pi.int
@@ -59,7 +62,7 @@ bivden.LOO <- function(pp,h0,hp,gamma.scale,trim,resolution,parallel){
       indexer <- seq(1,1000*2,2)
       qhz <- mean(inside.owin(pr[indexer],pr[indexer+1],w=pp$window))
       
-      return(mean(h.spec.mi^(-2)*(exp(-0.5*rowSums(uxy^2))/(2*pi)))/qhz)
+      return(mean(wi*h.spec.mi^(-2)*(exp(-0.5*rowSums(uxy^2))/(2*pi)))/qhz)
     }	
   }
   return(loo)
