@@ -58,8 +58,8 @@ England.
 \code{\link{burk}} a spatiotemporal point pattern of Burkitt's lymphoma in Uganda; artificially simulated control data are also provided for experimentation.
 
 Also available are a number of relevant additional spatial datasets built-in to the
-\code{\link[spatstat]{spatstat}} package (Baddeley and Turner, 2005; Baddeley et al., 2015), such as
-\code{\link[spatstat]{chorley}}, which concerns the distribution of
+\code{\link[spatstat]{spatstat}} package (Baddeley and Turner, 2005; Baddeley et al., 2015) through \code{spatstat.data}, such as
+\code{\link[spatstat.data]{chorley}}, which concerns the distribution of
 laryngeal cancer in an area of Lancashire, UK.\cr
 
 
