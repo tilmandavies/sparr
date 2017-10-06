@@ -3,8 +3,9 @@ Type: Package
 Title: Spatial and Spatiotemporal Relative Risk
 Version: 2.1-13
 Date: 2017-09-28
-Author: T.M. Davies and J.C. Marshall
-Maintainer: Tilman M. Davies <tdavies@maths.otago.ac.nz>
+Authors@R: c(
+  person(c("Tilman", "M."), "Davies", role = c("aut", "cre"), email = "tdavies@maths.otago.ac.nz"),
+  person(c("Jonathan", "C."), "Marshall", role = c("aut"), email = "j.c.marshall@massey.ac.nz"))
 Description: Provides functions to estimate kernel-smoothed spatial and spatio-temporal densities and relative risk functions, and perform subsequent inference.
 Depends: R (>= 2.10.1), spatstat
 Imports: spatstat.utils, doParallel, parallel, foreach, misc3d
