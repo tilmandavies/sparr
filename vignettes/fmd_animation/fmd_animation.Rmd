@@ -1,0 +1,40 @@
+---
+title: "Foot and Mouth disease animation"
+output: html_document
+---
+
+Below is example output of spatio-temporal smoothing the foot and mouth disease outbreak
+in Cumbria, UK from days 10 through 231.
+
+<video controls loop autoplay><source src="fmd.mp4" /></video>
+
+## Code
+
+The following code generates the above animation.
+
+```{r, echo=TRUE, eval=FALSE}
+library(sparr)
+library(animation)
+
+data(fmd)
+fmd_case <- fmd$cases
+fmd_cont <- fmd$controls
+
+hlam <- LIK.spattemp(fmd_case)
+
+f.breve <- spattemp.density(fmd_case, h=hlam[1], lambda=hlam[2], tlim=c(10,230))
+g.tilde <- bivariate.density(fmd_cont, h0=hlam[1])
+rho.breve <- spattemp.risk(f=f.breve,g=g.tilde, tolerate=TRUE)
+
+colpal <- spatstat.options("image.colfun")
+fmdcolours <- colourmap(colpal(128),breaks=c(-80,seq(-7,4,length=128)))
+mytimes <- 10:230
+animation::saveVideo(
+  for(i in 1:length(mytimes)){
+    plot(rho.breve,tselect=mytimes[i],type="conditional",col=fmdcolours,
+         tol.args=list(levels=c(0.05,0.0001),lty=2:1,drawlabels=FALSE),
+         sleep=0,override.par=FALSE)
+    title(xlab="Easting",ylab="Northing")
+  },
+  video.name="fmd.mp4", other.opts = '-b:v 1M -pix_fmt yuv420p', ani.width=640, ani.height=640, interval=1/12)
+```
