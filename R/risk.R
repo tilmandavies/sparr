@@ -216,10 +216,10 @@ risk <- function(f, g = NULL, log = TRUE, h0 = NULL, hp = h0, adapt = FALSE,
     }
     
     if(!adapt){
-      if(verbose) cat("Estimating case and control densities...")
+      if(verbose) message("Estimating case and control densities...", appendLF=FALSE)
       fd <- bivariate.density(f,h0=h0f,adapt=FALSE,...)
       gd <- bivariate.density(g,h0=h0g,adapt=FALSE,...)
-      if(verbose) cat("Done.\n")
+      if(verbose) message("Done.")
     } else {
       
       if(is.null(hp)) hp <- c(h0f,h0g)
@@ -235,7 +235,7 @@ risk <- function(f, g = NULL, log = TRUE, h0 = NULL, hp = h0, adapt = FALSE,
       # ##  Problematic doing symmetry by pixel images---trimming calculations inconsistent. ## #
       # pilotdata <- switch(pilot.symmetry,none=1,f=f,g=g,pooled=pooled,NA)
       # if(any(is.na(pilotdata))) stop("invalid 'pilot.symmetry' argument")
-      # if(verbose) cat("Estimating pilot(s)...")
+      # if(verbose) message("Estimating pilot(s)...", appendLF=FALSE)
       # if(pilot.symmetry=="none"){
       #   fp <- bivariate.density(f,h0=hfp,adapt=FALSE,...)
       #   gp <- bivariate.density(g,h0=hgp,adapt=FALSE,...)
@@ -246,7 +246,7 @@ risk <- function(f, g = NULL, log = TRUE, h0 = NULL, hp = h0, adapt = FALSE,
       #   fp <- gp <- bivariate.density(pilotdata,h0=hfp[1],adapt=FALSE,...)
       #   gam <- exp(mean(log(posifybivden(safelookup(fp$z,pilotdata,warn=FALSE))^(-0.5))))
       # }
-      # if(verbose) cat("Done.\n")
+      # if(verbose) message("Done.")
       
       # Deferring to raw data symmetry below
       pilot.symmetry <- pilot.symmetry[1]
@@ -264,11 +264,11 @@ risk <- function(f, g = NULL, log = TRUE, h0 = NULL, hp = h0, adapt = FALSE,
         stop("invalid 'pilot.symmetry' argument")
       }
       
-      if(verbose) cat("Estimating case density...")
+      if(verbose) message("Estimating case density...", appendLF=FALSE)
       fd <- bivariate.density(f,h0=h0f,hp=hfp,adapt=TRUE,pilot.density=pdat[[1]],verbose=FALSE,...) #gamma.scale=gam,
-      if(verbose) cat("Done.\nEstimating control density...")
+      if(verbose) message("Done.\nEstimating control density...", appendLF=FALSE)
       gd <- bivariate.density(g,h0=h0g,hp=hgp,adapt=TRUE,pilot.density=pdat[[2]],verbose=FALSE,...) #gamma.scale=gam,
-      if(verbose) cat("Done.\n")
+      if(verbose) message("Done.")
     }
   } else {
     if(!compatible(f$z,g$z)) stop("incompatible images in 'f' and 'g'... kernel estimates must be evaluated on identical domains")
@@ -289,10 +289,10 @@ risk <- function(f, g = NULL, log = TRUE, h0 = NULL, hp = h0, adapt = FALSE,
   
   ps <- NULL
   if(tolerate){
-    if(verbose) cat("Calculating tolerance contours...")
+    if(verbose) message("Calculating tolerance contours...", appendLF=FALSE)
     if(adapt) ps <- tol.asy.ada(fd,gd,0.025,verbose=FALSE)$p
     else ps <- tol.asy.fix(fd,gd,gd,verbose=FALSE)$p
-    if(verbose) cat("Done.\n")
+    if(verbose) message("Done.")
   }
   
   if(doplot){
