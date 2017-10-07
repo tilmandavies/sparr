@@ -1,0 +1,71 @@
+---
+title: "Primary biliary cirrhosis interactive"
+output: html_document
+---
+
+Below is an interactive 3D surface plot of the PBC data with 1% tolerance contour shown in green.
+
+```{r interactive, echo=FALSE, warning=FALSE, message=FALSE}
+library(sparr)
+library(rgl)
+library(misc3d)
+
+# load data
+data(pbc)
+
+# split into cases and controls
+pbc_case <- split(pbc)$case
+pbc_cont <- split(pbc)$control
+
+# estimate risk function
+rho_hat <- risk(f = pbc_case, g = pbc_cont, h0 = 3.5, hp = 2, adapt = TRUE,
+                pilot.symmetry = "pooled", tolerate = TRUE, resolution = 128, davies.baddeley = 0.025)
+
+# extract grid and surface
+xgrid <- rho_hat$rr$xcol
+ygrid <- rho_hat$rr$yrow
+z <- t(as.matrix(rho_hat$rr))
+
+# setup colours
+zr <- range(rho_hat$rr)
+colpal <- spatstat.options("image.colfun")
+cols <- colpal(200)
+zbreaks <- seq(zr[1], zr[2], length = 201)
+zcols <- cut(z, breaks = zbreaks, include.lowest = TRUE)
+
+# setup window with correct aspect ratio
+asp <- c(1, diff(Window(pbc)$yrange) / diff(Window(pbc)$xrange), 0.7)
+persp3d(x = xgrid, y = ygrid, z = z, col = cols[zcols],
+        aspect = asp, xlab = "", ylab = "", zlab = "")
+
+# superimpose window boundary, approximately level with the surface
+W <- Window(pbc)$bdry[[1]]
+Wb <- bounding.box.xy(W$x, W$y)
+Wz <- safelookup(rho_hat$rr, ppp(x = W$x, y = W$y, window = Wb))
+Wx <- c(W$x, W$x[1])
+Wy <- c(W$y, W$y[1])
+Wz <- c(Wz, Wz[1])
+lines3d(Wx, Wy, Wz, lwd = 3)
+
+# superimpose 1% tolerance contour at correct surface height
+P <- contourLines(xgrid, ygrid, z = t(as.matrix(rho_hat$P)), levels = 0.01)[[1]]
+Pz <- safelookup(rho_hat$rr, ppp(x = P$x, y = P$y, window = Wb, checkdup = FALSE))
+Px <- c(P$x, P$x[1])
+Py <- c(P$y, P$y[1])
+Pz <- c(Pz, Pz[1])
+lines3d(Px, Py, Pz, lwd = 3, col = "green")
+
+# draw grey plane at zero
+persp3d(x = xgrid, y = ygrid, z = matrix(0, nrow(rho_hat$rr), ncol(rho_hat$rr)),
+        add = TRUE, alpha = 0.3)
+
+# render widget to webGL
+rglwidget(width = 640, height = 480)
+```
+
+## Code
+
+The code to reproduce the above interactive is:
+
+```{r ref.label="interactive",eval=FALSE}
+```
