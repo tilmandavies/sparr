@@ -43,9 +43,9 @@ library(sparr)
 #>   / ___// _ \/ _  \/ __ \/ __ \        
 #>   \__ \/ ___/ __  /  ___/  ___/        
 #>  ___/ / /  / / / / /\ \/ /\ \          
-#> /____/_/  /_/ /_/_/  \__/  \_\   v2.1-12
+#> /____/_/  /_/ /_/_/  \__/  \_\   v2.1-13
 #> 
-#> ***NB: MAJOR CHANGES FROM PREVIOUS VERSIONS***
+#> ***NB: MAJOR CHANGES FROM PREVIOUS VERSIONS < 2.1-10***
 #> - type news(package="sparr") for an overview
 #> - type help("sparr") for documentation
 #> - type citation("sparr") for how to cite
@@ -64,7 +64,8 @@ h0 <- OS(pbc, nstar="geometric")
 # with tolerance contours
 pbc_rr <- risk(pbc_case, pbc_cont, h0=h0, adapt=TRUE, tolerate=TRUE,
                hp=OS(pbc)/2, pilot.symmetry="pooled", davies.baddeley=0.05)
-#> Estimating case density...Done.
+#> Estimating case density...
+#> Done.
 #> Estimating control density...Done.
 #> Calculating tolerance contours...Done.
 
