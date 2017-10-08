@@ -18,7 +18,7 @@ If you wish to live on the bleeding edge, you may install from github using `dev
 
 ``` r
 # install.packages("devtools")
-devtools::install_github('tdavies/sparr')
+devtools::install_github('tilmandavies/sparr')
 ```
 
 Example
@@ -50,7 +50,7 @@ library(sparr)
 #> - type help("sparr") for documentation
 #> - type citation("sparr") for how to cite
 
-# Load data on casees of primary biliary cirrhosis from north east England
+# Load data on cases of primary biliary cirrhosis from north east England
 data(pbc)
 
 # Split into cases and controls
