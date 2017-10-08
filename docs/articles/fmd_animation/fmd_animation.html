@@ -87,8 +87,8 @@
 <span class="kw">library</span>(animation)
 
 <span class="kw">data</span>(fmd)
-fmd_case &lt;-<span class="st"> </span>fmd$cases
-fmd_cont &lt;-<span class="st"> </span>fmd$controls
+fmd_case &lt;-<span class="st"> </span>fmd<span class="op">$</span>cases
+fmd_cont &lt;-<span class="st"> </span>fmd<span class="op">$</span>controls
 
 hlam &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/LSCV.spattemp.html">LIK.spattemp</a></span>(fmd_case)
 
@@ -97,16 +97,16 @@ g.tilde &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/
 rho.breve &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/spattemp.risk.html">spattemp.risk</a></span>(<span class="dt">f=</span>f.breve,<span class="dt">g=</span>g.tilde, <span class="dt">tolerate=</span><span class="ot">TRUE</span>)
 
 colpal &lt;-<span class="st"> </span><span class="kw">spatstat.options</span>(<span class="st">"image.colfun"</span>)
-fmdcolours &lt;-<span class="st"> </span><span class="kw">colourmap</span>(<span class="kw">colpal</span>(<span class="dv">128</span>),<span class="dt">breaks=</span><span class="kw">c</span>(-<span class="dv">80</span>,<span class="kw">seq</span>(-<span class="dv">7</span>,<span class="dv">4</span>,<span class="dt">length=</span><span class="dv">128</span>)))
-mytimes &lt;-<span class="st"> </span><span class="dv">10</span>:<span class="dv">230</span>
-animation::<span class="kw"><a href="http://www.rdocumentation.org/packages/animation/topics/saveVideo">saveVideo</a></span>(
-  for(i in <span class="dv">1</span>:<span class="kw">length</span>(mytimes)){
+fmdcolours &lt;-<span class="st"> </span><span class="kw">colourmap</span>(<span class="kw">colpal</span>(<span class="dv">128</span>),<span class="dt">breaks=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">80</span>,<span class="kw">seq</span>(<span class="op">-</span><span class="dv">7</span>,<span class="dv">4</span>,<span class="dt">length=</span><span class="dv">128</span>)))
+mytimes &lt;-<span class="st"> </span><span class="dv">10</span><span class="op">:</span><span class="dv">230</span>
+animation<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/animation/topics/saveVideo">saveVideo</a></span>(
+  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(mytimes)){
     <span class="kw">plot</span>(rho.breve,<span class="dt">tselect=</span>mytimes[i],<span class="dt">type=</span><span class="st">"conditional"</span>,<span class="dt">col=</span>fmdcolours,
-         <span class="dt">tol.args=</span><span class="kw">list</span>(<span class="dt">levels=</span><span class="kw">c</span>(<span class="fl">0.05</span>,<span class="fl">0.0001</span>),<span class="dt">lty=</span><span class="dv">2</span>:<span class="dv">1</span>,<span class="dt">drawlabels=</span><span class="ot">FALSE</span>),
+         <span class="dt">tol.args=</span><span class="kw">list</span>(<span class="dt">levels=</span><span class="kw">c</span>(<span class="fl">0.05</span>,<span class="fl">0.0001</span>),<span class="dt">lty=</span><span class="dv">2</span><span class="op">:</span><span class="dv">1</span>,<span class="dt">drawlabels=</span><span class="ot">FALSE</span>),
          <span class="dt">sleep=</span><span class="dv">0</span>,<span class="dt">override.par=</span><span class="ot">FALSE</span>)
     <span class="kw">title</span>(<span class="dt">xlab=</span><span class="st">"Easting"</span>,<span class="dt">ylab=</span><span class="st">"Northing"</span>)
   },
-  <span class="dt">video.name=</span><span class="st">"fmd.mp4"</span>, <span class="dt">other.opts =</span> <span class="st">'-b:v 1M -pix_fmt yuv420p'</span>, <span class="dt">ani.width=</span><span class="dv">640</span>, <span class="dt">ani.height=</span><span class="dv">640</span>, <span class="dt">interval=</span><span class="dv">1</span>/<span class="dv">12</span>)</code></pre></div>
+  <span class="dt">video.name=</span><span class="st">"fmd.mp4"</span>, <span class="dt">other.opts =</span> <span class="st">'-b:v 1M -pix_fmt yuv420p'</span>, <span class="dt">ani.width=</span><span class="dv">640</span>, <span class="dt">ani.height=</span><span class="dv">640</span>, <span class="dt">interval=</span><span class="dv">1</span><span class="op">/</span><span class="dv">12</span>)</code></pre></div>
 </div>
 </div>
   </div>

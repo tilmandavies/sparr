@@ -30,11 +30,11 @@ This is a basic example of relative risk estimation for primary biliary cirrhosi
 # Load library
 library(sparr)
 #> Loading required package: spatstat
-#> Warning: package 'spatstat' was built under R version 3.4.1
+#> Loading required package: spatstat.data
 #> Loading required package: nlme
 #> Loading required package: rpart
 #> 
-#> spatstat 1.52-1       (nickname: 'Apophenia') 
+#> spatstat 1.53-0       (nickname: 'Tinfoil Hat') 
 #> For an introduction to spatstat, type 'beginner'
 #> 
 #> 
@@ -43,9 +43,9 @@ library(sparr)
 #>   / ___// _ \/ _  \/ __ \/ __ \        
 #>   \__ \/ ___/ __  /  ___/  ___/        
 #>  ___/ / /  / / / / /\ \/ /\ \          
-#> /____/_/  /_/ /_/_/  \__/  \_\   v2.1-13
+#> /____/_/  /_/ /_/_/  \__/  \_\   v2.1-12
 #> 
-#> ***NB: MAJOR CHANGES FROM PREVIOUS VERSIONS < 2.1-10***
+#> ***NB: MAJOR CHANGES FROM PREVIOUS VERSIONS***
 #> - type news(package="sparr") for an overview
 #> - type help("sparr") for documentation
 #> - type citation("sparr") for how to cite
@@ -64,8 +64,7 @@ h0 <- OS(pbc, nstar="geometric")
 # with tolerance contours
 pbc_rr <- risk(pbc_case, pbc_cont, h0=h0, adapt=TRUE, tolerate=TRUE,
                hp=OS(pbc)/2, pilot.symmetry="pooled", davies.baddeley=0.05)
-#> Estimating case density...
-#> Done.
+#> Estimating case density...Done.
 #> Estimating control density...Done.
 #> Calculating tolerance contours...Done.
 
