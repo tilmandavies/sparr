@@ -1,0 +1,76 @@
+---
+title: "Foot and mouth disease interactive"
+output: html_document
+---
+
+Below are interactive 3D plots of the foot and mouth disease data.
+
+```{r interactive, echo=FALSE, warning=FALSE, message=FALSE}
+library(sparr)
+library(rgl)
+library(misc3d)
+
+# Load data and extract cases and controls
+data(fmd)
+fmd_case <- fmd$cases
+fmd_cont <- fmd$controls
+
+# fit case and control densities, and estimate risk
+f_breve <- spattemp.density(fmd_case, h = 3 , lambda = 9 , tlim = c(10, 230), sres = 32, tres = 32)
+g_tilde <- bivariate.density(fmd_cont, h0 = 3, res = 32)
+rho_breve <- spattemp.risk(f = f_breve, g = g_tilde, tolerate = TRUE)
+
+# extract evaluation grid
+tres <- length(rho_breve$rr)
+x <- rho_breve$rr[[1]]$xcol
+y <- rho_breve$rr[[1]]$yrow
+z <- as.numeric(names(rho_breve$rr))
+w <- vertices(Window(fmd_case))
+
+# get log-risk surface as 3D array, and replace NAs
+rr <- array(NA, dim = c(ncol(rho_breve$rr[[1]]), nrow(rho_breve$rr[[1]]), tres))
+for(i in 1:tres)
+  rr[,,i] <- t(as.matrix(rho_breve$rr[[i]]))
+rr[is.na(rr)] <- min(rr, na.rm = TRUE) - 1
+
+# get P-value surface as 3D array, replacing NAs
+pp <- array(NA, dim = c(ncol(rho_breve$P[[1]]), nrow(rho_breve$P[[1]]), tres))
+for(i in 1:tres)
+  pp[,,i] <- t(as.matrix(rho_breve$P[[i]]))
+pp[is.na(pp)] <- max(pp, na.rm = TRUE) + 1
+
+# setup a 2x1 graphic
+mfrow3d(nr = 1, nc = 2, sharedMouse = FALSE)
+
+# colours to use
+cols <- spatstat.options("image.colfun")(3) 
+
+# plot left panel
+plot3d(fmd_case$x, fmd_case$y, marks(fmd_case), type = "n",
+       xlim = range(x), ylim = range(y), zlim = range(z), box = FALSE,
+       axes = FALSE, xlab = "Easting", ylab = "Northing", zlab = "")
+lines3d(c(w$x, w$x[1]), c(w$y, w$y[1]), rep(z[1], length(w$x) + 1))
+lines3d(c(w$x, w$x[1]), c(w$y, w$y[1]), rep(max(z), length(w$x) + 1))
+contour3d(x = x, y = y, z = z, f = rr, level = c(0, 1, 2),
+          add = TRUE, alpha = c(0.1, 0.4, 0.7), color = cols)
+
+# plot right panel
+plot3d(fmd_case$x, fmd_case$y, marks(fmd_case), type = "n",
+       xlim = range(x), ylim = range(y), zlim = range(z), box = FALSE,
+       axes = FALSE, xlab = "Easting", ylab = "Northing", zlab = "")
+lines3d(c(w$x, w$x[1]), c(w$y, w$y[1]), rep(z[1], length(w$x) + 1))
+lines3d(c(w$x, w$x[1]), c(w$y, w$y[1]), rep(max(z), length(w$x) + 1))
+contour3d(x = x, y = y, z = z, f = pp, level = c(0.05, 0.0001),
+          add = TRUE, alpha = c(0.2, 0.5), color=c("yellow", "red"))
+points3d(fmd_case$x, fmd_case$y, marks(fmd_case))
+
+# save widget
+rglwidget(width = 960, height = 540)
+```
+
+## Code
+
+The code to produce the above interactive is:
+
+```{r ref.label="interactive",eval=FALSE}
+```

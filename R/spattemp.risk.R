@@ -9,7 +9,7 @@ spattemp.risk <- function(f,g,log=TRUE,tolerate=FALSE,finiteness=TRUE,verbose=TR
   fse <- all(f$qs==1)
   fte <- all(f$qt==1)
   
-  if(verbose) cat("Calculating ratio...")
+  if(verbose) message("Calculating ratio...", appendLF=FALSE)
   fres <- f$z
   flen <- length(fres)
   rr <- rrc <- list()
@@ -38,9 +38,9 @@ spattemp.risk <- function(f,g,log=TRUE,tolerate=FALSE,finiteness=TRUE,verbose=TR
     }
     
 
-    if(verbose) cat("Done.\n")
+    if(verbose) message("Done.")
     if(tolerate){
-      if(verbose) cat("Calculating pooled estimate for tolerance...")
+      if(verbose) message("Calculating pooled estimate for tolerance...", appendLF=FALSE)
       fs <- f
       gs <- g
       marks(fs$pp) <- NULL
@@ -50,7 +50,7 @@ spattemp.risk <- function(f,g,log=TRUE,tolerate=FALSE,finiteness=TRUE,verbose=TR
       hpool <- sqrt(prod(c(f$h,g$h)))
       lpool <- sqrt(prod(c(f$lambda,g$lambda)))
       pooled <- spattemp.density(pdat,h=hpool,lambda=lpool,tlim=f$tlim,sedge=ifelse(fse,"none","uniform"),tedge=ifelse(fte,"none","uniform"),sres=nrow(f$spatial.z),tres=flen,verbose=FALSE)
-      if(verbose) cat("Done.\n")
+      if(verbose) message("Done.")
     }
 
   } else {
@@ -72,22 +72,22 @@ spattemp.risk <- function(f,g,log=TRUE,tolerate=FALSE,finiteness=TRUE,verbose=TR
       rrc[[i]] <- suppressWarnings(log(f$z.cond[[i]])-log(g$z))
     }
     
-    if(verbose) cat("Done.\n")
+    if(verbose) message("Done.")
     pooled <- NULL
   }
   
   if(finiteness&&log){
-    if(verbose) cat("Ensuring finiteness...\n   --joint--\n")
+    if(verbose) message("Ensuring finiteness...\n   --joint--")
     rr <- lapply(rr,fbound)
-    if(verbose) cat("   --conditional--\n")
+    if(verbose) message("   --conditional--")
     rrc <- lapply(rrc,fbound)
-    if(verbose) cat("Done.\n")
+    if(verbose) message("Done.")
   }
   
   
   ps <- psc <- NULL
   if(tolerate){
-    if(verbose) cat("Calculating tolerance contours...\n")
+    if(verbose) message("Calculating tolerance contours...")
     vars <- tol.asy.st(f,g,pooled,verbose)
     ps <- psc <- list()
     for(i in 1:flen){
@@ -96,7 +96,7 @@ spattemp.risk <- function(f,g,log=TRUE,tolerate=FALSE,finiteness=TRUE,verbose=TR
       Zc <- as.matrix(rrc[[i]])/sqrt(vars$vc[[i]])
       psc[[i]] <- im(pnorm(Zc,lower.tail=FALSE),xcol=f$spatial.z$xcol,yrow=f$spatial.z$yrow)
     }
-    if(verbose) cat("\nDone.\n")
+    if(verbose) message("Done.")
   }
   
   if(!log){

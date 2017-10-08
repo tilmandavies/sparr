@@ -47,11 +47,11 @@ spattemp.density <- function(pp,h=NULL,tt=NULL,lambda=NULL,tlim=NULL,sedge=c("un
   #             supp=4,
   #             verbose=verbose)
   
-  if(verbose) cat("Calculating trivariate smooth...")
+  if(verbose) message("Calculating trivariate smooth...", appendLF=FALSE)
   fhat <- kde3d(x=pp$x,y=pp$y,z=tt,h=c(h,h,lam),n=c(sres,sres,tres),lims=c(range(grx),range(gry),kt))
-  if(verbose) cat("Done.\n")
+  if(verbose) message("Done.")
 
-  if(verbose&&(sedge=="uniform"||tedge=="uniform")) cat("Edge-correcting...")
+  if(verbose&&(sedge=="uniform"||tedge=="uniform")) message("Edge-correcting...", appendLF=FALSE)
   sz <- density.ppp(pp,sigma=h,edge=(sedge=="uniform"),dimyx=sres,spill=1)
   sq <- im(matrix(1,sres,sres),xcol=grx,yrow=gry)
   if(sedge=="uniform"){
@@ -72,9 +72,9 @@ spattemp.density <- function(pp,h=NULL,tt=NULL,lambda=NULL,tlim=NULL,sedge=c("un
   spatial.z <- spatial.z/integral(spatial.z)
   temporal.z <- density(tt,bw=lam,from=min(grt),to=max(grt),n=tres)
   temporal.z$y <- temporal.z$y/tq
-  if(verbose&&(sedge=="uniform"||tedge=="uniform")) cat("Done.\n")
+  if(verbose&&(sedge=="uniform"||tedge=="uniform")) message("Done.")
   
-  if(verbose) cat("Conditioning on time...")
+  if(verbose) message("Conditioning on time...", appendLF=FALSE)
   z <- z.cond <- list()
   for(i in 1:tres){
     z[[i]] <- im(t(fhat$d[,,i]),xcol=grx,yrow=gry)
@@ -84,7 +84,7 @@ spattemp.density <- function(pp,h=NULL,tt=NULL,lambda=NULL,tlim=NULL,sedge=c("un
     # z.cond[[i]] <- z.cond[[i]]/integral(z.cond[[i]])
   }
   names(z) <- names(z.cond) <- grt
-  if(verbose) cat("Done.\n")
+  if(verbose) message("Done.")
   
   if(sedge=="none") sq <- NULL
   if(tedge=="none") tq <- NULL

@@ -7,7 +7,7 @@ tol.asy.st <- function(f,g,pooled,verbose){
   nf <- npoints(f$pp)
   ng <- npoints(g$pp)
 
-  if(verbose) cat("   --convolution 1--")
+  if(verbose) message("   --convolution 1--")
   M <- Window(f$z[[1]])
   inside <- M$m
   pres <- nrow(inside)
@@ -33,7 +33,7 @@ tol.asy.st <- function(f,g,pooled,verbose){
     return(as.matrix(qhz))
   }
   
-  if(verbose) cat("\n   --convolution 2--")
+  if(verbose) message("   --convolution 2--")
   if(!is.null(pooled)){
     h <- pooled$h
     lam <- pooled$lambda
