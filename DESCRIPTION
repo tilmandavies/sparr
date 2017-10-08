@@ -14,3 +14,5 @@ License: GPL (>= 2)
 LazyLoad: yes
 NeedsCompilation: no
 RoxygenNote: 6.0.1
+URL: http://tilmandavies.github.io/sparr, https://github.com/tilmandavies/sparr
+BugReports: https://github.com/tilmandavies/sparr/issues
