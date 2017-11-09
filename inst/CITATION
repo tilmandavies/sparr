@@ -1,18 +1,18 @@
 citHeader("To cite sparr in publications use:")
 
-citEntry(entry = "Unpublished",
-  title        = "Tutorial on kernel estimation of continuous spatial and spatiotemporal relative risk with accompanying instruction in {R}",
+citEntry(entry = "article",
+  title        = "Tutorial on kernel estimation of continuous spatial and spatiotemporal relative risk",
   author       = personList(as.person("T. M. Davies"),
                    as.person("J. C. Marshall"),
                    as.person("M. L. Hazelton")),
-  note      = "Submitted for publication",
-  url       = "https://arxiv.org/abs/1707.06888",
+  journal      = "Statistics in Medicine",
   year         = "2017",
-  pages        = "1--30",
+  volume = "",
+  pages        = "[in press]",
 
   textVersion  =
   paste("T. M. Davies, J. C. Marshall, M. L. Hazelton (2017).",
-        "Tutorial on kernel estimation of continuous spatial and spatiotemporal relative risk with accompanying instruction in {R};",
-        "Submitted for publication. URL: https://arxiv.org/abs/1707.06888")
+        "Tutorial on kernel estimation of continuous spatial and spatiotemporal relative risk;",
+        "Statistics in Medicine, [in press].")
 )
 

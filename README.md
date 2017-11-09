@@ -3,18 +3,23 @@
 sparr: Spatial and Spatiotemporal Relative Risk
 ===============================================
 
-The `sparr` package for R provides functions to estimate fixed and adaptive kernel-smoothed spatial relative risk surfaces via the density-ratio method and perform subsequent inference. Fixed-bandwidth spatiotemporal density and relative risk estimation is also supported.
+The `sparr` package for R provides functions to estimate fixed and
+adaptive kernel-smoothed spatial relative risk surfaces via the
+density-ratio method and perform subsequent inference. Fixed-bandwidth
+spatiotemporal density and relative risk estimation is also supported.
 
 Installation
 ------------
 
-This package is available on CRAN, and we recommend installing it from there using the standard
+This package is available on CRAN, and we recommend installing it from
+there using the standard
 
 ``` r
 install.packages('sparr')
 ```
 
-If you wish to live on the bleeding edge, you may install from github using `devtools`:
+If you wish to live on the bleeding edge, you may install from github
+using `devtools`:
 
 ``` r
 # install.packages("devtools")
@@ -24,7 +29,8 @@ devtools::install_github('tilmandavies/sparr')
 Example
 -------
 
-This is a basic example of relative risk estimation for primary biliary cirrhosis cases from north east England.
+This is a basic example of relative risk estimation for primary biliary
+cirrhosis cases from north east England.
 
 ``` r
 # Load library
@@ -34,7 +40,7 @@ library(sparr)
 #> Loading required package: nlme
 #> Loading required package: rpart
 #> 
-#> spatstat 1.53-0       (nickname: 'Tinfoil Hat') 
+#> spatstat 1.53-2.016       (nickname: 'The Package That Must Not Be Named') 
 #> For an introduction to spatstat, type 'beginner'
 #> 
 #> 
@@ -43,7 +49,7 @@ library(sparr)
 #>   / ___// _ \/ _  \/ __ \/ __ \        
 #>   \__ \/ ___/ __  /  ___/  ___/        
 #>  ___/ / /  / / / / /\ \/ /\ \          
-#> /____/_/  /_/ /_/_/  \__/  \_\   v2.1-13
+#> /____/_/  /_/ /_/_/  \__/  \_\   v2.1-14
 #> 
 #> ***NB: MAJOR CHANGES FROM PREVIOUS VERSIONS < 2.1-10***
 #> - type news(package="sparr") for an overview
