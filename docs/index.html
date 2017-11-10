@@ -29,7 +29,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="/index.html">
+  <a href="index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -94,7 +94,7 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">'sparr'</span>)</code></pre></div>
 <p>If you wish to live on the bleeding edge, you may install from github using <code>devtools</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("devtools")</span>
-devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">'tilmandavies/sparr'</span>)</code></pre></div>
+devtools::<span class="kw">install_github</span>(<span class="st">'tilmandavies/sparr'</span>)</code></pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
@@ -107,7 +107,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <span class="co">#&gt; Loading required package: nlme</span>
 <span class="co">#&gt; Loading required package: rpart</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; spatstat 1.53-0       (nickname: 'Tinfoil Hat') </span>
+<span class="co">#&gt; spatstat 1.53-2       (nickname: 'Quantum Entanglement') </span>
 <span class="co">#&gt; For an introduction to spatstat, type 'beginner'</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
@@ -116,7 +116,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <span class="co">#&gt;   / ___// _ \/ _  \/ __ \/ __ \        </span>
 <span class="co">#&gt;   \__ \/ ___/ __  /  ___/  ___/        </span>
 <span class="co">#&gt;  ___/ / /  / / / / /\ \/ /\ \          </span>
-<span class="co">#&gt; /____/_/  /_/ /_/_/  \__/  \_\   v2.1-13</span>
+<span class="co">#&gt; /____/_/  /_/ /_/_/  \__/  \_\   v2.1-14</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; ***NB: MAJOR CHANGES FROM PREVIOUS VERSIONS &lt; 2.1-10***</span>
 <span class="co">#&gt; - type news(package="sparr") for an overview</span>
@@ -127,8 +127,8 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <span class="kw">data</span>(pbc)
 
 <span class="co"># Split into cases and controls</span>
-pbc_case &lt;-<span class="st"> </span><span class="kw">split</span>(pbc)<span class="op">$</span>case
-pbc_cont &lt;-<span class="st"> </span><span class="kw">split</span>(pbc)<span class="op">$</span>control
+pbc_case &lt;-<span class="st"> </span><span class="kw">split</span>(pbc)$case
+pbc_cont &lt;-<span class="st"> </span><span class="kw">split</span>(pbc)$control
 
 <span class="co"># Estimate global bandwidth for smoothing</span>
 h0 &lt;-<span class="st"> </span><span class="kw"><a href="reference/OS.html">OS</a></span>(pbc, <span class="dt">nstar=</span><span class="st">"geometric"</span>)
@@ -136,7 +136,7 @@ h0 &lt;-<span class="st"> </span><span class="kw"><a href="reference/OS.html">OS
 <span class="co"># Compute a symmetric (pooled) adaptive relative risk estimate</span>
 <span class="co"># with tolerance contours</span>
 pbc_rr &lt;-<span class="st"> </span><span class="kw"><a href="reference/risk.html">risk</a></span>(pbc_case, pbc_cont, <span class="dt">h0=</span>h0, <span class="dt">adapt=</span><span class="ot">TRUE</span>, <span class="dt">tolerate=</span><span class="ot">TRUE</span>,
-               <span class="dt">hp=</span><span class="kw"><a href="reference/OS.html">OS</a></span>(pbc)<span class="op">/</span><span class="dv">2</span>, <span class="dt">pilot.symmetry=</span><span class="st">"pooled"</span>, <span class="dt">davies.baddeley=</span><span class="fl">0.05</span>)
+               <span class="dt">hp=</span><span class="kw"><a href="reference/OS.html">OS</a></span>(pbc)/<span class="dv">2</span>, <span class="dt">pilot.symmetry=</span><span class="st">"pooled"</span>, <span class="dt">davies.baddeley=</span><span class="fl">0.05</span>)
 <span class="co">#&gt; Estimating case density...</span>
 <span class="co">#&gt; Done.</span>
 <span class="co">#&gt; Estimating control density...Done.</span>
