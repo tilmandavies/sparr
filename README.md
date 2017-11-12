@@ -73,4 +73,4 @@ pbc_rr <- risk(pbc_case, pbc_cont, h0=h0, adapt=TRUE, tolerate=TRUE,
 plot(pbc_rr)
 ```
 
-![](README-pbc-example-1.png)
+![](man/figures/README-pbc-example-1.png)
