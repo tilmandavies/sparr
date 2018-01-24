@@ -1,12 +1,19 @@
 bivden.LOO <- function(pp,h0,hp,gamma.scale,trim,resolution,parallel,weights){
   n <- npoints(pp)
-  loo <- rep(NA,n)
   if(is.null(weights)) weights <- rep(1,n)
   pilot.density.spec.loo <- density(pp,sigma=hp,dimyx=rep(resolution,2),at="points",positive=TRUE,leaveoneout=TRUE,weights=weights/(n-1))
-  Wm <- as.mask(pp$window,dimyx=rep(resolution,2))
   
+  W <- Window(pp)
+  Wm <- as.mask(W,dimyx=rep(resolution,2))
+  evalxy <- as.matrix(expand.grid(Wm$xcol,Wm$yrow))
+  notin <- !inside.owin(x=evalxy[,1],y=evalxy[,2],w=W)
+  evalxy.in <- evalxy[!notin,]
+  
+  hsi <- 1:n
+  loo <- qv <- rep(NA,n)
+  h.spec <- matrix(NA,n,n)
   if(is.null(parallel)){
-    for(i in 1:n){
+    for(i in hsi){
       ppmi <- pp[-i]
       wi <- weights[-i]
       
@@ -18,24 +25,13 @@ bivden.LOO <- function(pp,h0,hp,gamma.scale,trim,resolution,parallel,weights){
       pspec <- pilot.density.spec^(-0.5)
       gamma <- processgamma(gamma.scale,pilot.density.spec)
       
-      # PREVIOUS TRIMMING REGIMEN #
-      # 			h.spec.mi <- h0*pilot.density.spec^(-0.5)/gamma
-      #       beta.h <- trim*median(h.spec.mi,na.rm=TRUE)
-      #       h.spec.mi[h.spec.mi>beta.h] <- beta.h
-      #       h.hypo.i <- h0*pilot.density.spec.loo[i]^(-0.5)/gamma
-      #       h.hypo.i[h.hypo.i>beta.h] <- beta.h
+      h.spec.mi <- h.spec[hsi[-i],i] <- h0*pmin(pspec/gamma,trim)
+      h.hypo.i <- h.spec[i,i] <- h0*min(pilot.density.spec.loo[i]^(-0.5)/gamma,trim)
       
-      # NEW TRIMMING REGIMEN #
-      h.spec.mi <- h0*pmin(pspec/gamma,trim)
-      #h.hypo.i <- h0*im(matrix(pmin(as.vector(as.matrix(pilot.density^(-0.5)))/gamma,trim),resolution,resolution),xcol=pilot.density$xcol,yrow=pilot.density$yrow)
-      h.hypo.i <- h0*min(pilot.density.spec.loo[i]^(-0.5)/gamma,trim)
-      
-      uxy <- cbind(pp$x[i]-ppmi$x,pp$y[i]-ppmi$y)/h.spec.mi
-      pr <- rnorm(1000*2,c(pp$x[i],pp$y[i]),h.hypo.i)
-      indexer <- seq(1,1000*2,2)
-      qhz <- mean(inside.owin(pr[indexer],pr[indexer+1],w=pp$window))
-      
-      loo[i] <- mean(wi*h.spec.mi^(-2)*(exp(-0.5*rowSums(uxy^2))/(2*pi)))/qhz
+      gxy <- kernel2d(evalxy.in[,1]-pp$x[i],evalxy.in[,2]-pp$y[i],h.hypo.i)
+      qv[i] <- dintegral(gxy,Wm$xstep,Wm$ystep)
+      ivals <- kernel2d(pp$x[i]-ppmi$x, pp$y[i]-ppmi$y,h.spec.mi)
+      loo[i] <- mean(wi*ivals)/qv[i]  #min(,infvec[i])
     }
   } else {
     if(parallel>detectCores()) stop("Parallel cores requested exceeds available count")
@@ -53,17 +49,15 @@ bivden.LOO <- function(pp,h0,hp,gamma.scale,trim,resolution,parallel,weights){
       pspec <- pilot.density.spec^(-0.5)
       gamma <- processgamma(gamma.scale,pilot.density.spec)
       
-      h.spec.mi <- h0*pmin(pspec/gamma,trim)
-      #h.hypo.i <- h0*im(matrix(pmin(as.vector(as.matrix(pilot.density^(-0.5)))/gamma,trim),resolution,resolution),xcol=pilot.density$xcol,yrow=pilot.density$yrow)
-      h.hypo.i <- h0*min(pilot.density.spec.loo[i]^(-0.5)/gamma,trim)
+      h.spec.mi <- h0*pmin(pspec/gamma,trim) # h.spec[hsi[-i],i] <- 
+      h.hypo.i <- h0*min(pilot.density.spec.loo[i]^(-0.5)/gamma,trim) # h.spec[i,i] <- 
       
-      uxy <- cbind(pp$x[i]-ppmi$x,pp$y[i]-ppmi$y)/h.spec.mi
-      pr <- rnorm(1000*2,c(pp$x[i],pp$y[i]),h.hypo.i)
-      indexer <- seq(1,1000*2,2)
-      qhz <- mean(inside.owin(pr[indexer],pr[indexer+1],w=pp$window))
+      gxy <- kernel2d(evalxy.in[,1]-pp$x[i],evalxy.in[,2]-pp$y[i],h.hypo.i)
+      qi <- dintegral(gxy,Wm$xstep,Wm$ystep)
+      ivals <- kernel2d(pp$x[i]-ppmi$x,pp$y[i]-ppmi$y,h.spec.mi)
       
-      return(mean(wi*h.spec.mi^(-2)*(exp(-0.5*rowSums(uxy^2))/(2*pi)))/qhz)
+      return(mean(wi*ivals)/qi)
     }	
   }
-  return(loo)
+  return(list(loo,qv,h.spec))
 }

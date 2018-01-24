@@ -4,6 +4,7 @@ OVERVIEW
 
     o Additional control over small bandwidth action in leave-one-out bandwidth selectors
     o Newly visible function 'rimpoly' for random point generation
+    o Improved edge-correction calculations for brute force adaptive leave-one-out
     o Updated citation information
     
     

@@ -249,7 +249,7 @@ bivariate.density <- function(pp,h0,hp=NULL,adapt=FALSE,resolution=128,gamma.sca
 		if(is.null(hp)) hp <- h0
 		else hp <- checkit(hp,"'hp'")
 		
-		if(leaveoneout) return(bivden.LOO(pp,h0,hp,gamma.scale,trim,resolution,parallelise,weights))
+		if(leaveoneout) return(bivden.LOO(pp,h0,hp,gamma.scale,trim,resolution,parallelise,weights)[[1]])
     
 		pd <- pilot.density
 		pilot.data <- pp

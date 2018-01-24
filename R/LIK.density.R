@@ -22,7 +22,7 @@ LIK.density <- function(pp,hlim=NULL,hseq=NULL,resolution=64,edge=TRUE,auto.opti
   if(typ=="fixed"){
     if(auto.optim){
       if(verbose) cat("Searching for optimal h in ",prange(hlim),"...",sep="")
-      result <- optimise(LIK.density.spatial.single,interval=hlim,pp=pp,res=resolution,edge=edge,za=zero.action,maximum=TRUE)$maximum
+      result <- suppressWarnings(optimise(LIK.density.spatial.single,interval=hlim,pp=pp,res=resolution,edge=edge,za=zero.action,maximum=TRUE)$maximum)
       if(verbose) cat("Done.\n")
     } else {
       if(is.null(hseq)) hseq <- seq(hlim[1],hlim[2],length=seqres)
@@ -92,7 +92,7 @@ LIK.density <- function(pp,hlim=NULL,hseq=NULL,resolution=64,edge=TRUE,auto.opti
     h0range <- range(as.numeric(names(msobject$z)))
     if(auto.optim){
       if(verbose) cat("Searching for optimal h0 in ",prange(h0range),"...",sep="")
-      h0opt <- optimise(ms.loo.lik,interval=h0range,object=msobject,za=zero.action,maximum=TRUE)$maximum
+      h0opt <- suppressWarnings(optimise(ms.loo.lik,interval=h0range,object=msobject,za=zero.action,maximum=TRUE)$maximum)
       if(verbose) cat("Done.\n")
       return(h0opt)
     } else {
