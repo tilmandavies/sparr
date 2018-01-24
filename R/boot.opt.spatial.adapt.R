@@ -44,18 +44,3 @@ boot.opt.spatial.adapt <- function(pp,h0ref,h0fac,hp,edg,refden,N,B,res,dimz,ver
   rs <- spline(resultmat)
   return(list(h=rs$x[which.min(rs$y)],mat=resultmat))
 }
-
-
-rimpoly <- function(n,z,w,correction=1.1){
-  genblock <- ceiling(correction*n)
-  pass <- 1
-  result <- matrix(NA,1,2)
-  while((nrow(result)-1)<n){
-    tempr <- rpoint(ceiling(genblock/pass),z)
-    tempp <- suppressWarnings(ppp(tempr$x,tempr$y,window=w))
-    result <- rbind(result,cbind(tempp$x,tempp$y))
-    pass <- pass+1
-  }
-  result <- result[2:(n+1),]
-  return(ppp(x=result[,1],y=result[,2],window=w))
-}

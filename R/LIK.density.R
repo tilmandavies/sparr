@@ -1,7 +1,8 @@
 #' @rdname CV
 #' @export
 LIK.density <- function(pp,hlim=NULL,hseq=NULL,resolution=64,edge=TRUE,auto.optim=TRUE,
-                         type=c("fixed","adaptive"),seqres=30,parallelise=NULL,verbose=TRUE,...){
+                         type=c("fixed","adaptive"),seqres=30,parallelise=NULL,
+                         zero.action=0,verbose=TRUE,...){
   
   if(class(pp)!="ppp") stop("data object 'pp' must be of class \"ppp\"")
   W <- Window(pp)
@@ -15,11 +16,13 @@ LIK.density <- function(pp,hlim=NULL,hseq=NULL,resolution=64,edge=TRUE,auto.opti
     hlim <- checkran(hlim,"'hlim'")
   }
   
+  if(!zero.action%in%((-1):2)) stop("invalid 'zero.action'")
+  
   typ <- type[1]
   if(typ=="fixed"){
     if(auto.optim){
       if(verbose) cat("Searching for optimal h in ",prange(hlim),"...",sep="")
-      result <- optimise(LIK.density.spatial.single,interval=hlim,pp=pp,res=resolution,edge=edge,maximum=TRUE)$maximum
+      result <- optimise(LIK.density.spatial.single,interval=hlim,pp=pp,res=resolution,edge=edge,za=zero.action,maximum=TRUE)$maximum
       if(verbose) cat("Done.\n")
     } else {
       if(is.null(hseq)) hseq <- seq(hlim[1],hlim[2],length=seqres)
@@ -28,7 +31,7 @@ LIK.density <- function(pp,hlim=NULL,hseq=NULL,resolution=64,edge=TRUE,auto.opti
         lik.vec <- rep(NA,hn)
         if(verbose) pb <- txtProgressBar(1,hn)
         for(i in 1:hn){
-          lik.vec[i] <- LIK.density.spatial.single(hseq[i],pp,resolution,edge)
+          lik.vec[i] <- LIK.density.spatial.single(hseq[i],pp,resolution,edge,za=zero.action)
           if(verbose) setTxtProgressBar(pb,i)
         }
         if(verbose) close(pb)
@@ -38,7 +41,7 @@ LIK.density <- function(pp,hlim=NULL,hseq=NULL,resolution=64,edge=TRUE,auto.opti
         if(parallelise>ncores) stop("cores requested exceeds available count")
         registerDoParallel(cores=parallelise)
         lik.vec <- foreach(i=1:hn,.packages="spatstat",.combine=c) %dopar% {
-          return(LIK.density.spatial.single(hseq[i],pp,resolution,edge))
+          return(LIK.density.spatial.single(hseq[i],pp,resolution,edge,zero.action))
         }
         if(verbose) cat("Done.\n")
       }
@@ -51,7 +54,7 @@ LIK.density <- function(pp,hlim=NULL,hseq=NULL,resolution=64,edge=TRUE,auto.opti
     
     if(is.null(ellip$hp)){
       if(verbose) cat("Selecting pilot bandwidth...")
-      hp <- LSCV.density(pp,verbose=FALSE)
+      hp <- LSCV.density(pp,verbose=FALSE,zero.action=zero.action)
       if(verbose) cat(paste("Done.\n   [ Found hp =",hp,"]\n"))
     } else {
       hp <- ellip$hp
@@ -89,7 +92,7 @@ LIK.density <- function(pp,hlim=NULL,hseq=NULL,resolution=64,edge=TRUE,auto.opti
     h0range <- range(as.numeric(names(msobject$z)))
     if(auto.optim){
       if(verbose) cat("Searching for optimal h0 in ",prange(h0range),"...",sep="")
-      h0opt <- optimise(ms.loo.lik,interval=h0range,object=msobject,maximum=TRUE)$maximum
+      h0opt <- optimise(ms.loo.lik,interval=h0range,object=msobject,za=zero.action,maximum=TRUE)$maximum
       if(verbose) cat("Done.\n")
       return(h0opt)
     } else {
@@ -98,7 +101,7 @@ LIK.density <- function(pp,hlim=NULL,hseq=NULL,resolution=64,edge=TRUE,auto.opti
       lik.vec <- rep(NA,hn)
       if(verbose) pb <- txtProgressBar(1,hn)
       for(i in 1:hn){
-        lik.vec[i] <- ms.loo.lik(hseq[i],msobject)
+        lik.vec[i] <- ms.loo.lik(hseq[i],msobject,zero.action)
         if(verbose) setTxtProgressBar(pb,i)
       }
       if(verbose) close(pb)

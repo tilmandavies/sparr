@@ -1,4 +1,4 @@
-ms.loo <- function(h0,object){
+ms.loo <- function(h0,object,za){
   X <- object$pp
   n <- npoints(X)
   
@@ -6,6 +6,11 @@ ms.loo <- function(h0,object){
   rh <- requested$h
   rz <- requested$z
   rq <- requested$q
+  
+  if(za==-1){
+    if(any(rz<=0)) return(Inf)
+  }
+  
   rint <- integral(requested$z)
   zpoints <- safelookup(rz,X,warn=FALSE)
   
@@ -16,11 +21,19 @@ ms.loo <- function(h0,object){
   loo.atpoints <- (zpoints-dnorm(0,sd=rh)^2/qpoints)/(n-1)
 
   rznint <- integral(rzn)
-  if(any(loo.atpoints<=0)) return(rznint)
+  if(any(loo.atpoints<=0)){
+    if(za==2){
+      loo.atpoints[loo.atpoints<=0] <- min(loo.atpoints[loo.atpoints>0])
+    } else if(za==1){
+      loo.atpoints <- posifybivden(loo.atpoints)
+    } else {
+      return(Inf)
+    }
+  } #was: return(rznint)
   return(rznint-2*mean(loo.atpoints))
 }
 
-ms.loo.lik <- function(h0,object){
+ms.loo.lik <- function(h0,object,za){
   X <- object$pp
   n <- npoints(X)
 
@@ -28,6 +41,11 @@ ms.loo.lik <- function(h0,object){
   rh <- requested$h
   rz <- requested$z
   rq <- requested$q
+  
+  if(za==-1){
+    if(any(rz<=0)) return(-Inf)
+  }
+  
   zpoints <- safelookup(rz,X,warn=FALSE)
     
   if(is.null(rq)) qpoints <- rep(1,n)
@@ -35,7 +53,17 @@ ms.loo.lik <- function(h0,object){
     
   loo.atpoints <- zpoints-(1/n)*(dnorm(0,sd=rh)^2/qpoints)
     
-  if(any(loo.atpoints<=0)) return(log(min(loo.atpoints[loo.atpoints>0])))
+  if(any(loo.atpoints<=0)){
+    if(za==2){
+      loo.atpoints[loo.atpoints<=0] <- min(loo.atpoints[loo.atpoints>0])
+    } else if(za==1){
+      loo.atpoints <- posifybivden(loo.atpoints)
+    } else {
+      return(-Inf)
+    }
+  } #was: return(log(min(loo.atpoints[loo.atpoints>0])))
+  
+    
   return(mean(log(loo.atpoints)))
 } 
 

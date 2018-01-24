@@ -34,7 +34,7 @@ library(sparr)
 #> Loading required package: nlme
 #> Loading required package: rpart
 #> 
-#> spatstat 1.53-2       (nickname: 'Quantum Entanglement') 
+#> spatstat 1.54-0       (nickname: 'Vacuous Mission Statement') 
 #> For an introduction to spatstat, type 'beginner'
 #> 
 #> 
@@ -43,7 +43,7 @@ library(sparr)
 #>   / ___// _ \/ _  \/ __ \/ __ \        
 #>   \__ \/ ___/ __  /  ___/  ___/        
 #>  ___/ / /  / / / / /\ \/ /\ \          
-#> /____/_/  /_/ /_/_/  \__/  \_\   v2.1-14
+#> /____/_/  /_/ /_/_/  \__/  \_\   v2.2-01
 #> 
 #> ***NB: MAJOR CHANGES FROM PREVIOUS VERSIONS < 2.1-10***
 #> - type news(package="sparr") for an overview

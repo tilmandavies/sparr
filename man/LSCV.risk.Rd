@@ -33,7 +33,7 @@ manually evaluate the optimisation criterion. Used only in the case
 
 \item{type}{A character string; \code{"fixed"} (default) performs classical leave-one-out
 cross-validation for a jointly optimal fixed bandwidth. Alternatively, \code{"adaptive"} utilises
-multiscale adaptive kernel estimation (Davies & Baddeley, 2017) to run the cross-validation
+multiscale adaptive kernel estimation (Davies & Baddeley, 2018) to run the cross-validation
 in an effort to find a suitable jointly optimal, common global bandwidth for the adaptive relative risk function. See `Details' and the entry for \code{pilot.args}.}
 
 \item{method}{A character string controlling the selector to use. There are
@@ -174,7 +174,7 @@ Davies, T. M. (2013), Jointly optimal bandwidth selection for
 the planar kernel-smoothed density-ratio, \emph{Spatial and Spatio-temporal
 Epidemiology}, \bold{5}, 51-65.
 
-Davies, T.M. and Baddeley A. (2017), Fast computation of
+Davies, T.M. and Baddeley A. (2018), Fast computation of
 spatially adaptive kernel estimates, \emph{Statistics and Computing}, [to appear].
 
 Davies, T.M. and Hazelton, M.L. (2010), Adaptive kernel

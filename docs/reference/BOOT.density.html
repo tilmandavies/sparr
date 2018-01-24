@@ -52,7 +52,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
+  <a href="..//index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -183,7 +183,7 @@ where \(\hat{f}(x)\) is a density estimate of \(X\) constructed with `reference'
 </ul></p></dd>
 <dt><b>Adaptive</b></dt><dd><p>When <code>type = "adaptive"</code>, the function assumes you want to select a global bandwidth (argument <code>h0</code> in <code><a href='bivariate.density.html'>bivariate.density</a></code>) for use in 2D adaptive kernel density estimation.
 <ul>
-<li><p>An expression similar to Taylor (1989) is not possible for the adaptive estimator. Thus, in the adaptive setting, the optimal bootstrap bandwidth is calculated by brute force as was performed in Davies and Baddeley (2017) by taking advantage of the multiscale estimation theory implemented in <code><a href='multiscale.density.html'>multiscale.density</a></code>. The value that minimises an interpolating cubic spline of the estimated MISE on bandwidth is identified as the optimal global bandwidth.</p></li>
+<li><p>An expression similar to Taylor (1989) is not possible for the adaptive estimator. Thus, in the adaptive setting, the optimal bootstrap bandwidth is calculated by brute force as was performed in Davies and Baddeley (2018) by taking advantage of the multiscale estimation theory implemented in <code><a href='multiscale.density.html'>multiscale.density</a></code>. The value that minimises an interpolating cubic spline of the estimated MISE on bandwidth is identified as the optimal global bandwidth.</p></li>
 <li><p>The user can pass either a fixed or adaptive <code>bivden</code> object to <code>ref.density</code>. If this is the case, <code>hp</code> is ignored and the pilot bandwidth for each iteration of the bootstrap in estimation of the \(\hat{f}^*(x)\) uses <code>ref.density$hp</code> (if <code>ref.density</code> is adaptive) or <code>ref.density$h0</code> (if <code>ref.density</code> is fixed). When <code>ref.density</code> is unsupplied, the function uses a fixed-bandwidth kernel estimate with bandwidth <code>eta</code> as the reference density, and if additionally <code>hp</code> is unsupplied, the same value <code>eta</code> is used for the constant pilot bandwidth.</p></li>
 <li><p>Control over the bootstrap is achieved with four optional named arguments passed as a list to <code>sim.adapt</code>. <code>N</code> controls the number of bootstrap iterates per bandwidth; <code>B</code> controls the resolution of the sequence of bandwidths trialled (i.e. between <code>hlim[1]</code> and <code>hlim[2]</code>); <code>dimz</code> specifies the resolution of the bandwidth axis in the trivariate convolution evaluated by <code><a href='multiscale.density.html'>multiscale.density</a></code>; and <code>objective</code> specifies whether to return the set of estimated MISEs for all bandwidths (nice to plot), or merely the optimal bandwidth (see `Value').</p></li>
 <li><p>The <code>&#8230;</code> are intended for any relevant optional arguments to be passed to the internal call to <code><a href='multiscale.density.html'>multiscale.density</a></code>, such as <code>gamma.scale</code> or <code>trim</code>.</p></li>
@@ -196,7 +196,7 @@ where \(\hat{f}(x)\) is a density estimate of \(X\) constructed with `reference'
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Davies, T.M. and Baddeley A. (2017), Fast computation of spatially adaptive kernel estimates, <em>Statistics and Computing</em>, [to appear].
+    <p>Davies, T.M. and Baddeley A. (2018), Fast computation of spatially adaptive kernel estimates, <em>Statistics and Computing</em>, [to appear].
 Hall, P., Marron, J.S. and Park, B.U. (1992) Smoothed cross-validation, <em>Probability Theory and Related Fields</em>, <b>92</b>, 1-20.
 Sain, S.R., Baggerly, K.A. and Scott, D.W. (1994) Cross-validation of multivariate densities, <em>Journal of the American Statistical Association</em>, <b>89</b>, 807-817.
 Taylor, C.C. (1989) Bootstrap choice of the smoothing parameter in kernel density estimation, <em>Biometrika</em>, <b>76</b>, 705-712.</p>

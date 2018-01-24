@@ -52,7 +52,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
+  <a href="..//index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -111,11 +111,11 @@ based on either unbiased least squares cross-validation (LSCV) or likelihood (LI
 
     <pre class="usage"><span class='fu'>LIK.density</span>(<span class='no'>pp</span>, <span class='kw'>hlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hseq</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>resolution</span> <span class='kw'>=</span> <span class='fl'>64</span>, <span class='kw'>edge</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>auto.optim</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"fixed"</span>, <span class='st'>"adaptive"</span>), <span class='kw'>seqres</span> <span class='kw'>=</span> <span class='fl'>30</span>,
-  <span class='kw'>parallelise</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+  <span class='kw'>parallelise</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>zero.action</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='fu'>LSCV.density</span>(<span class='no'>pp</span>, <span class='kw'>hlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hseq</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>resolution</span> <span class='kw'>=</span> <span class='fl'>64</span>, <span class='kw'>edge</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>auto.optim</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"fixed"</span>, <span class='st'>"adaptive"</span>), <span class='kw'>seqres</span> <span class='kw'>=</span> <span class='fl'>30</span>,
-  <span class='kw'>parallelise</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>parallelise</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>zero.action</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -158,9 +158,9 @@ values controlled by <code>hlim</code> and <code>seqres</code>.</p></td>
       <th>type</th>
       <td><p>A character string; <code>"fixed"</code> (default) performs classical leave-one-out
 cross-validation for the fixed-bandwidth estimator. Alternatively, <code>"adaptive"</code> utilises
-multiscale adaptive kernel estimation (Davies &amp; Baddeley, 2017) to run the cross-validation
+multiscale adaptive kernel estimation (Davies &amp; Baddeley, 2018) to run the cross-validation
 in an effort to find a suitable global bandwidth for the adaptive estimator. Note that data points are not `left out' of
-the pilot density estimate when using this option. See also the entry for <code>...</code>.</p></td>
+the pilot density estimate when using this option (this capability is currently in development). See also the entry for <code>...</code>.</p></td>
     </tr>
     <tr>
       <th>seqres</th>
@@ -173,6 +173,10 @@ values. Only used if <code>(!auto.optim &amp;&amp; is.null(hseq))</code>.</p></t
 the number of CPU cores to use when <code>!auto.optim</code> <b>and</b> <code>type = "fixed"</code>. Experimental. Test
 your system first using <code><a href='http://www.rdocumentation.org/packages/parallel/topics/detectCores'>parallel::detectCores()</a></code> to identify the
 number of cores available to you.</p></td>
+    </tr>
+    <tr>
+      <th>zero.action</th>
+      <td><p>A numeric integer, either <code>-1</code>, <code>0</code> (default), <code>1</code> or <code>2</code> controlling how the function should behave in response to numerical errors at very small bandwidths, when such a bandwidth results in one or more zero or negative density values during the leave-one-out computations. See `Details'.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -201,24 +205,28 @@ call to <code>LSCV.density</code> to set this using fixed-bandwidth LSCV. The re
 
     <p>This function implements the bivariate, edge-corrected versions of fixed-bandwidth least squares cross-validation and likelihood cross-validation
 as outlined in Sections 3.4.3 and 3.4.4 of Silverman (1986) in order to select an optimal fixed smoothing bandwidth. With <code>type = "adaptive"</code> it may also be used to select the global bandwidth
-for adaptive kernel density estimates, making use of multi-scale estimation (Davies and Baddeley, 2017) via <code><a href='multiscale.density.html'>multiscale.density</a></code>.
+for adaptive kernel density estimates, making use of multi-scale estimation (Davies and Baddeley, 2018) via <code><a href='multiscale.density.html'>multiscale.density</a></code>.
 Note that for computational reasons, the leave-one-out procedure is not performed on the pilot density in the adaptive setting; it
-is only performed on the final stage estimate. See also `Warning' below.</p>
+is only performed on the final stage estimate. Current development efforts include extending this functionality. See also `Warning' below.</p>
 <p>Where <code>LSCV.density</code> is based on minimisation of an unbiased estimate of the mean integrated squared error (MISE) of the density, <code>LIK.density</code> is based on
 maximisation of the cross-validated leave-one-out average of the log-likelihood of the density estimate with respect to \(h\).</p>
+<p>In both functions, the argument <code>zero.action</code> can be used to control the level of severity in response to small bandwidths that result (due to numerical error) in at least one density value being zero or less.
+When <code>zero.action = -1</code>, the function strictly forbids bandwidths that would result in one or more <em>pixel</em> values of a kernel estimate of the original data (i.e.\ anything over the whole region) that are zero or less---this is the most restrictive truncation. With <code>zero.action = 0</code> (default), the function
+automatically forbids bandwidths that yield erroneous values at the leave-one-out data point locations only. With <code>zero.action = 1</code>, the minimum machine value (see <code>.Machine$double.xmin</code> at the prompt) is
+used to replace these individual leave-one-out values. When <code>zero.action = 2</code>, the minimum value of the valid (greater than zero) leave-one-out values is used to replace any erroneous leave-one-out values.</p>
     
     <h2 class="hasAnchor" id="warning"><a class="anchor" href="#warning"></a>Warning</h2>
 
     <p>Leave-one-out CV for bandwidth selection in kernel
 density estimation is notoriously unstable in practice and has a tendency to
 produce rather small bandwidths, particularly for spatial data. Satisfactory bandwidths are not guaranteed
-for every application. This method can also be computationally expensive for
-large data sets and fine evaluation grid resolutions. The user may need to
+for every application; <code>zero.action</code> can curb adverse numeric effects for very small bandwidths during the optimisation procedures. This method can also be computationally expensive for
+large data sets and fine evaluation grid resolutions. The user may also need to
 experiment with adjusting <code>hlim</code> to find a suitable minimum.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Davies, T.M. and Baddeley A. (2017), Fast computation of
+    <p>Davies, T.M. and Baddeley A. (2018), Fast computation of
 spatially adaptive kernel estimates, <em>Statistics and Computing</em>, [to appear].</p>
 <p>Silverman, B.W. (1986), <em>Density Estimation for Statistics
 and Data Analysis</em>, Chapman &amp; Hall, New York.</p>
@@ -238,7 +246,7 @@ C.M., 1995. <em>Kernel Smoothing</em>, Chapman &amp; Hall, London.</p>
 <span class='fu'>data</span>(<span class='no'>pbc</span>)
 <span class='no'>pbccas</span> <span class='kw'>&lt;-</span> <span class='fu'>split</span>(<span class='no'>pbc</span>)$<span class='no'>case</span>
 
-<span class='fu'>LIK.density</span>(<span class='no'>pbccas</span>)</div><div class='output co'>#&gt; Searching for optimal h in [0.0999999999999091, 15.2778333333333]...Done.</div><div class='output co'>#&gt; [1] 2.468882</div><div class='input'><span class='fu'>LSCV.density</span>(<span class='no'>pbccas</span>)</div><div class='output co'>#&gt; Searching for optimal h in [0.0999999999999091, 15.2778333333333]...Done.</div><div class='output co'>#&gt; [1] 0.4277125</div><div class='input'>
+<span class='fu'>LIK.density</span>(<span class='no'>pbccas</span>)</div><div class='output co'>#&gt; Searching for optimal h in [0.0999999999999091, 15.2778333333333]...Done.</div><div class='output co'>#&gt; [1] 2.468882</div><div class='input'><span class='fu'>LSCV.density</span>(<span class='no'>pbccas</span>)</div><div class='output co'>#&gt; Searching for optimal h in [0.0999999999999091, 15.2778333333333]...</div><div class='output co'>#&gt; <span class='warning'>Warning: NA/Inf replaced by maximum positive value</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NA/Inf replaced by maximum positive value</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NA/Inf replaced by maximum positive value</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NA/Inf replaced by maximum positive value</span></div><div class='output co'>#&gt; Done.</div><div class='output co'>#&gt; [1] 0.4277125</div><div class='input'>
 </div><span class='co'># NOT RUN {</span>
 <span class='co'>#* FIXED </span>
 

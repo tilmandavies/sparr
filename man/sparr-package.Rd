@@ -12,8 +12,8 @@ risk surfaces via the density-ratio method and perform subsequent inference. Fix
 \details{
 \tabular{ll}{
 Package: \tab sparr\cr
-Date:\tab 2017-11-09\cr
-Version:\tab 2.1-14\cr
+Date:\tab 2018-01-24\cr
+Version:\tab 2.2-01\cr
 License: \tab GPL (>= 2)\cr
 }
 
@@ -99,7 +99,7 @@ estimate of bivariate data; fixed or adaptive smoothing.
 
 \code{\link{multiscale.density}} multi-scale adaptive kernel density
 estimates for multiple global bandwidths as per Davies and Baddeley
-(2017).
+(2018).
 
 \code{\link{multiscale.slice}} a single adaptive kernel estimate
 based on taking a slice from a multi-scale estimate.
@@ -188,7 +188,7 @@ currently imports \code{\link[doParallel]{doParallel}},
 
 To cite use of current versions of \code{sparr} in publications or research projects please use:\cr
 
-Davies, T.M., Marshall, J.C. and Hazelton, M.L. (2017) Tutorial on kernel estimation of continuous spatial
+Davies, T.M., Marshall, J.C. and Hazelton, M.L. (2018) Tutorial on kernel estimation of continuous spatial
 and spatiotemporal relative risk, \emph{Statistics in Medicine}, [in press].
 
 Old versions of \code{sparr} (<= 2.1-09) can be referenced by Davies et al. (2011) (see reference list).
@@ -226,7 +226,7 @@ Davies, T.M. (2013), Jointly optimal bandwidth selection
 for the planar kernel-smoothed density-ratio, \emph{Spatial and
 Spatio-temporal Epidemiology}, \bold{5}, 51-65.
 
-Davies, T.M. and Baddeley A. (2017), Fast computation of spatially adaptive kernel estimates,
+Davies, T.M. and Baddeley A. (2018), Fast computation of spatially adaptive kernel estimates,
 \emph{Statistics and Computing}, [to appear].
 
 Davies, T.M., Cornwall, J. and Sheard, P.W. (2013) Modelling dichotomously marked muscle fibre configurations, \emph{Statistics in Medicine}, \bold{32}, 4240-4258.

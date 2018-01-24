@@ -27,7 +27,7 @@ kernel estimates or if \code{method = "MC"}.}
 fineness of the adaptive bandwidth partitioning to use for calculation of
 the required quantities for asymptotic adaptive \emph{p}-value surfaces.
 Smaller values provide more accurate bandwidth bins at the cost of
-additional computing time, see Davies and Baddeley (2017); the default is
+additional computing time, see Davies and Baddeley (2018); the default is
 sensible in most cases. Ignored if \code{rs} is based on fixed-bandwidth
 kernel estimates.}
 
@@ -174,7 +174,7 @@ tol.contour(adatol2,levels=c(0.1,0.05,0.01),lty=3:1,add=TRUE)
 
 }
 \references{
-Davies, T.M. and Baddeley A. (2017), Fast computation of
+Davies, T.M. and Baddeley A. (2018), Fast computation of
 spatially adaptive kernel estimates, \emph{Statistics and Computing}, [to appear].
 
 Davies, T.M. and Hazelton, M.L. (2010), Adaptive kernel estimation of spatial relative

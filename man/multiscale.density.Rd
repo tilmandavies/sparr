@@ -64,7 +64,7 @@ supplied, \code{resolution} is ignored.}
 
 \item{taper}{Logical value indicating whether to taper off the trivariate
 kernel outside the range of \code{h0*h0fac} in the scale space; see Davies &
-Baddeley (2017). Keep at the default \code{TRUE} if you don't know what this
+Baddeley (2018). Keep at the default \code{TRUE} if you don't know what this
 means.}
 
 \item{verbose}{Logical value indicating whether to print function progress.}
@@ -105,7 +105,7 @@ Computes adaptive kernel estimates of spatial density/intensity using a 3D
 FFT for multiple global bandwidth scales.
 }
 \details{
-Davies & Baddeley (2017) investigated computational aspects of Abramson's
+Davies & Baddeley (2018) investigated computational aspects of Abramson's
 (1982) adaptive kernel smoother for spatial (2D) data. This function is the
 implementation of the 3D convolution via a fast-Fourier transform (FFT)
 which allows simultaneous calculation of an adaptive kernel estimate at
@@ -158,7 +158,7 @@ Abramson, I. (1982). On bandwidth variation in kernel estimates
 --- a square root law, \emph{Annals of Statistics}, \bold{10}(4),
 1217-1223.
 
-Davies, T.M. and Baddeley A. (2017), Fast computation of
+Davies, T.M. and Baddeley A. (2018), Fast computation of
 spatially adaptive kernel estimates, \emph{Statistics and Computing}, [to appear].
 
 Silverman, B.W. (1986), \emph{Density Estimation for Statistics and Data Analysis},

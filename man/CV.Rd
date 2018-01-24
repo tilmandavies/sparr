@@ -8,11 +8,11 @@
 \usage{
 LIK.density(pp, hlim = NULL, hseq = NULL, resolution = 64, edge = TRUE,
   auto.optim = TRUE, type = c("fixed", "adaptive"), seqres = 30,
-  parallelise = NULL, verbose = TRUE, ...)
+  parallelise = NULL, zero.action = 0, verbose = TRUE, ...)
 
 LSCV.density(pp, hlim = NULL, hseq = NULL, resolution = 64, edge = TRUE,
   auto.optim = TRUE, type = c("fixed", "adaptive"), seqres = 30,
-  parallelise = NULL, verbose = TRUE, ...)
+  parallelise = NULL, zero.action = 0, verbose = TRUE, ...)
 }
 \arguments{
 \item{pp}{An object of class \code{\link[spatstat]{ppp}} giving the observed
@@ -39,9 +39,9 @@ values controlled by \code{hlim} and \code{seqres}.}
 
 \item{type}{A character string; \code{"fixed"} (default) performs classical leave-one-out
 cross-validation for the fixed-bandwidth estimator. Alternatively, \code{"adaptive"} utilises
-multiscale adaptive kernel estimation (Davies & Baddeley, 2017) to run the cross-validation
+multiscale adaptive kernel estimation (Davies & Baddeley, 2018) to run the cross-validation
 in an effort to find a suitable global bandwidth for the adaptive estimator. Note that data points are not `left out' of
-the pilot density estimate when using this option. See also the entry for \code{...}.}
+the pilot density estimate when using this option (this capability is currently in development). See also the entry for \code{...}.}
 
 \item{seqres}{Optional resolution of an increasing sequence of bandwidth
 values. Only used if \code{(!auto.optim && is.null(hseq))}.}
@@ -50,6 +50,8 @@ values. Only used if \code{(!auto.optim && is.null(hseq))}.}
 the number of CPU cores to use when \code{!auto.optim} \bold{and} \code{type = "fixed"}. Experimental. Test
 your system first using \code{parallel::detectCores()} to identify the
 number of cores available to you.}
+
+\item{zero.action}{A numeric integer, either \code{-1}, \code{0} (default), \code{1} or \code{2} controlling how the function should behave in response to numerical errors at very small bandwidths, when such a bandwidth results in one or more zero or negative density values during the leave-one-out computations. See `Details'.}
 
 \item{verbose}{Logical value indicating whether to provide function progress
 commentary.}
@@ -74,19 +76,24 @@ based on either unbiased least squares cross-validation (LSCV) or likelihood (LI
 \details{
 This function implements the bivariate, edge-corrected versions of fixed-bandwidth least squares cross-validation and likelihood cross-validation
 as outlined in Sections 3.4.3 and 3.4.4 of Silverman (1986) in order to select an optimal fixed smoothing bandwidth. With \code{type = "adaptive"} it may also be used to select the global bandwidth
-for adaptive kernel density estimates, making use of multi-scale estimation (Davies and Baddeley, 2017) via \code{\link{multiscale.density}}.
+for adaptive kernel density estimates, making use of multi-scale estimation (Davies and Baddeley, 2018) via \code{\link{multiscale.density}}.
 Note that for computational reasons, the leave-one-out procedure is not performed on the pilot density in the adaptive setting; it
-is only performed on the final stage estimate. See also `Warning' below.
+is only performed on the final stage estimate. Current development efforts include extending this functionality. See also `Warning' below.
 
 Where \code{LSCV.density} is based on minimisation of an unbiased estimate of the mean integrated squared error (MISE) of the density, \code{LIK.density} is based on
 maximisation of the cross-validated leave-one-out average of the log-likelihood of the density estimate with respect to \eqn{h}.
+
+In both functions, the argument \code{zero.action} can be used to control the level of severity in response to small bandwidths that result (due to numerical error) in at least one density value being zero or less.
+When \code{zero.action = -1}, the function strictly forbids bandwidths that would result in one or more \emph{pixel} values of a kernel estimate of the original data (i.e.\ anything over the whole region) that are zero or less---this is the most restrictive truncation. With \code{zero.action = 0} (default), the function
+automatically forbids bandwidths that yield erroneous values at the leave-one-out data point locations only. With \code{zero.action = 1}, the minimum machine value (see \code{.Machine$double.xmin} at the prompt) is
+used to replace these individual leave-one-out values. When \code{zero.action = 2}, the minimum value of the valid (greater than zero) leave-one-out values is used to replace any erroneous leave-one-out values.
 }
 \section{Warning}{
  Leave-one-out CV for bandwidth selection in kernel
 density estimation is notoriously unstable in practice and has a tendency to
 produce rather small bandwidths, particularly for spatial data. Satisfactory bandwidths are not guaranteed
-for every application. This method can also be computationally expensive for
-large data sets and fine evaluation grid resolutions. The user may need to
+for every application; \code{zero.action} can curb adverse numeric effects for very small bandwidths during the optimisation procedures. This method can also be computationally expensive for
+large data sets and fine evaluation grid resolutions. The user may also need to
 experiment with adjusting \code{hlim} to find a suitable minimum.
 }
 
@@ -124,7 +131,7 @@ LSCV.density(pbccas,type="adaptive",hp=2)
 
 }
 \references{
-Davies, T.M. and Baddeley A. (2017), Fast computation of
+Davies, T.M. and Baddeley A. (2018), Fast computation of
 spatially adaptive kernel estimates, \emph{Statistics and Computing}, [to appear].
 
 Silverman, B.W. (1986), \emph{Density Estimation for Statistics

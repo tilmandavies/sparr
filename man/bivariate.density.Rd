@@ -181,7 +181,7 @@ shown above) are also implemented.
         \le} \code{resolution}. If \code{davies.baddeley} is supplied as a vector of
         length 3, then the values \code{[1], [2], and [3]} correspond to the
         parameters \eqn{\delta}, \eqn{\beta}, and \eqn{L_M=L_N} in Davies and
-        Baddeley (2017). If the argument is simply a single numeric value, it is
+        Baddeley (2018). If the argument is simply a single numeric value, it is
         used for both \eqn{\delta} and \eqn{\beta}, with
         \eqn{L_M=L_N=}\code{resolution} (i.e. no edge-correction surface
         coarsening).
@@ -224,7 +224,7 @@ Abramson, I. (1982). On bandwidth variation in kernel estimates
 --- a square root law, \emph{Annals of Statistics}, \bold{10}(4),
 1217-1223.
 
-Davies, T.M. and Baddeley A. (2017), Fast computation of
+Davies, T.M. and Baddeley A. (2018), Fast computation of
 spatially adaptive kernel estimates, \emph{Statistics and Computing}, [to appear].
 
 Davies, T.M. and Hazelton, M.L. (2010), Adaptive kernel estimation of spatial relative

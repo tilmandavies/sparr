@@ -72,7 +72,7 @@ When \code{type = "fixed"}, the function assumes you want to select a constant b
 \item{\bold{Adaptive}}{
 When \code{type = "adaptive"}, the function assumes you want to select a global bandwidth (argument \code{h0} in \code{\link{bivariate.density}}) for use in 2D adaptive kernel density estimation.
 \itemize{
-\item An expression similar to Taylor (1989) is not possible for the adaptive estimator. Thus, in the adaptive setting, the optimal bootstrap bandwidth is calculated by brute force as was performed in Davies and Baddeley (2017) by taking advantage of the multiscale estimation theory implemented in \code{\link{multiscale.density}}. The value that minimises an interpolating cubic spline of the estimated MISE on bandwidth is identified as the optimal global bandwidth.
+\item An expression similar to Taylor (1989) is not possible for the adaptive estimator. Thus, in the adaptive setting, the optimal bootstrap bandwidth is calculated by brute force as was performed in Davies and Baddeley (2018) by taking advantage of the multiscale estimation theory implemented in \code{\link{multiscale.density}}. The value that minimises an interpolating cubic spline of the estimated MISE on bandwidth is identified as the optimal global bandwidth.
 \item The user can pass either a fixed or adaptive \code{bivden} object to \code{ref.density}. If this is the case, \code{hp} is ignored and the pilot bandwidth for each iteration of the bootstrap in estimation of the \eqn{\hat{f}^*(x)} uses \code{ref.density$hp} (if \code{ref.density} is adaptive) or \code{ref.density$h0} (if \code{ref.density} is fixed). When \code{ref.density} is unsupplied, the function uses a fixed-bandwidth kernel estimate with bandwidth \code{eta} as the reference density, and if additionally \code{hp} is unsupplied, the same value \code{eta} is used for the constant pilot bandwidth.
 \item Control over the bootstrap is achieved with four optional named arguments passed as a list to \code{sim.adapt}. \code{N} controls the number of bootstrap iterates per bandwidth; \code{B} controls the resolution of the sequence of bandwidths trialled (i.e. between \code{hlim[1]} and \code{hlim[2]}); \code{dimz} specifies the resolution of the bandwidth axis in the trivariate convolution evaluated by \code{\link{multiscale.density}}; and \code{objective} specifies whether to return the set of estimated MISEs for all bandwidths (nice to plot), or merely the optimal bandwidth (see `Value').
 \item The \code{\dots} are intended for any relevant optional arguments to be passed to the internal call to \code{\link{multiscale.density}}, such as \code{gamma.scale} or \code{trim}.
@@ -86,7 +86,7 @@ The optimal fixed or global (for adaptive) scalar bandwidth. If \code{simargs$ob
 }
 
 \references{
-Davies, T.M. and Baddeley A. (2017), Fast computation of spatially adaptive kernel estimates, \emph{Statistics and Computing}, [to appear].\cr\cr
+Davies, T.M. and Baddeley A. (2018), Fast computation of spatially adaptive kernel estimates, \emph{Statistics and Computing}, [to appear].\cr\cr
 Hall, P., Marron, J.S. and Park, B.U. (1992) Smoothed cross-validation, \emph{Probability Theory and Related Fields}, \bold{92}, 1-20.\cr\cr
 Sain, S.R., Baggerly, K.A. and Scott, D.W. (1994) Cross-validation of multivariate densities, \emph{Journal of the American Statistical Association}, \bold{89}, 807-817.\cr\cr
 Taylor, C.C. (1989) Bootstrap choice of the smoothing parameter in kernel density estimation, \emph{Biometrika}, \bold{76}, 705-712.

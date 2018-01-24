@@ -5,12 +5,18 @@
 #' 
 #' This function implements the bivariate, edge-corrected versions of fixed-bandwidth least squares cross-validation and likelihood cross-validation
 #' as outlined in Sections 3.4.3 and 3.4.4 of Silverman (1986) in order to select an optimal fixed smoothing bandwidth. With \code{type = "adaptive"} it may also be used to select the global bandwidth
-#' for adaptive kernel density estimates, making use of multi-scale estimation (Davies and Baddeley, 2017) via \code{\link{multiscale.density}}.
+#' for adaptive kernel density estimates, making use of multi-scale estimation (Davies and Baddeley, 2018) via \code{\link{multiscale.density}}.
 #' Note that for computational reasons, the leave-one-out procedure is not performed on the pilot density in the adaptive setting; it
-#' is only performed on the final stage estimate. See also `Warning' below.
+#' is only performed on the final stage estimate. Current development efforts include extending this functionality. See also `Warning' below.
 #' 
 #' Where \code{LSCV.density} is based on minimisation of an unbiased estimate of the mean integrated squared error (MISE) of the density, \code{LIK.density} is based on
 #' maximisation of the cross-validated leave-one-out average of the log-likelihood of the density estimate with respect to \eqn{h}.
+#' 
+#' In both functions, the argument \code{zero.action} can be used to control the level of severity in response to small bandwidths that result (due to numerical error) in at least one density value being zero or less.
+#' When \code{zero.action = -1}, the function strictly forbids bandwidths that would result in one or more \emph{pixel} values of a kernel estimate of the original data (i.e.\ anything over the whole region) that are zero or less---this is the most restrictive truncation. With \code{zero.action = 0} (default), the function
+#' automatically forbids bandwidths that yield erroneous values at the leave-one-out data point locations only. With \code{zero.action = 1}, the minimum machine value (see \code{.Machine$double.xmin} at the prompt) is
+#' used to replace these individual leave-one-out values. When \code{zero.action = 2}, the minimum value of the valid (greater than zero) leave-one-out values is used to replace any erroneous leave-one-out values.
+#' 
 #' 
 #' 
 #' @aliases LIK.density
@@ -43,9 +49,10 @@
 #'   commentary.
 #' @param type A character string; \code{"fixed"} (default) performs classical leave-one-out
 #'   cross-validation for the fixed-bandwidth estimator. Alternatively, \code{"adaptive"} utilises
-#'   multiscale adaptive kernel estimation (Davies & Baddeley, 2017) to run the cross-validation
+#'   multiscale adaptive kernel estimation (Davies & Baddeley, 2018) to run the cross-validation
 #'   in an effort to find a suitable global bandwidth for the adaptive estimator. Note that data points are not `left out' of
-#'   the pilot density estimate when using this option. See also the entry for \code{...}.
+#'   the pilot density estimate when using this option (this capability is currently in development). See also the entry for \code{...}.
+#' @param zero.action A numeric integer, either \code{-1}, \code{0} (default), \code{1} or \code{2} controlling how the function should behave in response to numerical errors at very small bandwidths, when such a bandwidth results in one or more zero or negative density values during the leave-one-out computations. See `Details'.
 #' @param ... Additional arguments controlling pilot density estimation and multi-scale bandwidth-axis
 #'   resolution when \code{type = "adaptive"}. Relevant arguments are \code{hp}, \code{pilot.density},
 #'   \code{gamma.scale}, and \code{trim} from \code{\link{bivariate.density}}; and \code{dimz} from 
@@ -61,8 +68,8 @@
 #' @section Warning: Leave-one-out CV for bandwidth selection in kernel
 #' density estimation is notoriously unstable in practice and has a tendency to
 #' produce rather small bandwidths, particularly for spatial data. Satisfactory bandwidths are not guaranteed
-#' for every application. This method can also be computationally expensive for
-#' large data sets and fine evaluation grid resolutions. The user may need to
+#' for every application; \code{zero.action} can curb adverse numeric effects for very small bandwidths during the optimisation procedures. This method can also be computationally expensive for
+#' large data sets and fine evaluation grid resolutions. The user may also need to
 #' experiment with adjusting \code{hlim} to find a suitable minimum.
 #'
 #' @author T. M. Davies
@@ -74,7 +81,7 @@
 #'
 #' @references
 #' 
-#' Davies, T.M. and Baddeley A. (2017), Fast computation of
+#' Davies, T.M. and Baddeley A. (2018), Fast computation of
 #' spatially adaptive kernel estimates, \emph{Statistics and Computing}, [to appear].
 #' 
 #' Silverman, B.W. (1986), \emph{Density Estimation for Statistics
@@ -117,7 +124,8 @@
 #' 
 #' @export
 LSCV.density <- function(pp,hlim=NULL,hseq=NULL,resolution=64,edge=TRUE,auto.optim=TRUE,
-                         type=c("fixed","adaptive"),seqres=30,parallelise=NULL,verbose=TRUE,...){
+                         type=c("fixed","adaptive"),seqres=30,parallelise=NULL,
+                         zero.action=0,verbose=TRUE,...){
 
   if(class(pp)!="ppp") stop("data object 'pp' must be of class \"ppp\"")
   W <- Window(pp)
@@ -131,11 +139,13 @@ LSCV.density <- function(pp,hlim=NULL,hseq=NULL,resolution=64,edge=TRUE,auto.opt
     hlim <- checkran(hlim,"'hlim'")
   }
   
+  if(!zero.action%in%((-1):2)) stop("invalid 'zero.action'")
+  
   typ <- type[1]
   if(typ=="fixed"){
     if(auto.optim){
       if(verbose) cat("Searching for optimal h in ",prange(hlim),"...",sep="")
-      result <- optimise(LSCV.density.spatial.single,interval=hlim,pp=pp,res=resolution,edge=edge)$minimum
+      result <- optimise(LSCV.density.spatial.single,interval=hlim,pp=pp,res=resolution,edge=edge,za=zero.action)$minimum
       if(verbose) cat("Done.\n")
     } else {
       if(is.null(hseq)) hseq <- seq(hlim[1],hlim[2],length=seqres)
@@ -144,7 +154,7 @@ LSCV.density <- function(pp,hlim=NULL,hseq=NULL,resolution=64,edge=TRUE,auto.opt
         lscv.vec <- rep(NA,hn)
         if(verbose) pb <- txtProgressBar(1,hn)
         for(i in 1:hn){
-          lscv.vec[i] <- LSCV.density.spatial.single(hseq[i],pp,resolution,edge)
+          lscv.vec[i] <- LSCV.density.spatial.single(hseq[i],pp,resolution,edge,za=zero.action)
           if(verbose) setTxtProgressBar(pb,i)
         }
         if(verbose) close(pb)
@@ -154,7 +164,7 @@ LSCV.density <- function(pp,hlim=NULL,hseq=NULL,resolution=64,edge=TRUE,auto.opt
         if(parallelise>ncores) stop("cores requested exceeds available count")
         registerDoParallel(cores=parallelise)
         lscv.vec <- foreach(i=1:hn,.packages="spatstat",.combine=c) %dopar% {
-          return(LSCV.density.spatial.single(hseq[i],pp,resolution,edge))
+          return(LSCV.density.spatial.single(hseq[i],pp,resolution,edge,zero.action))
         }
         if(verbose) cat("Done.\n")
       }
@@ -167,7 +177,7 @@ LSCV.density <- function(pp,hlim=NULL,hseq=NULL,resolution=64,edge=TRUE,auto.opt
     
     if(is.null(ellip$hp)){
       if(verbose) cat("Selecting pilot bandwidth...")
-      hp <- LSCV.density(pp,verbose=FALSE)
+      hp <- LSCV.density(pp,verbose=FALSE,zero.action=zero.action)
       if(verbose) cat(paste("Done.\n   [ Found hp =",hp,"]\n"))
     } else {
       hp <- ellip$hp
@@ -205,7 +215,7 @@ LSCV.density <- function(pp,hlim=NULL,hseq=NULL,resolution=64,edge=TRUE,auto.opt
     h0range <- range(as.numeric(names(msobject$z)))
     if(auto.optim){
       if(verbose) cat("Searching for optimal h0 in ",prange(h0range),"...",sep="")
-      h0opt <- optimise(ms.loo,interval=h0range,object=msobject)$minimum
+      h0opt <- optimise(ms.loo,interval=h0range,object=msobject,za=zero.action)$minimum
       if(verbose) cat("Done.\n")
       return(h0opt)
     } else {
@@ -214,7 +224,7 @@ LSCV.density <- function(pp,hlim=NULL,hseq=NULL,resolution=64,edge=TRUE,auto.opt
       lscv.vec <- rep(NA,hn)
       if(verbose) pb <- txtProgressBar(1,hn)
       for(i in 1:hn){
-        lscv.vec[i] <- ms.loo(hseq[i],msobject)
+        lscv.vec[i] <- ms.loo(hseq[i],msobject,za=zero.action)
         if(verbose) setTxtProgressBar(pb,i)
       }
       if(verbose) close(pb)

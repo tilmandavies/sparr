@@ -3,7 +3,7 @@
 #' Takes slices of a multi-scale density/intensity estimate at desired
 #' global bandwidths
 #' 
-#' Davies & Baddeley (2017) demonstrate that once a multi-scale
+#' Davies & Baddeley (2018) demonstrate that once a multi-scale
 #' density/intensity estimate has been computed, we may take slices parallel to
 #' the spatial domain of the trivariate convolution to return the estimate at
 #' any desired global bandwidth. This function is the implementation thereof
@@ -42,7 +42,7 @@
 #' @seealso \code{\link{multiscale.density}}, \code{\link{bivariate.density}}
 #'
 #' @references
-#' Davies, T.M. and Baddeley A. (2017), Fast computation of
+#' Davies, T.M. and Baddeley A. (2018), Fast computation of
 #' spatially adaptive kernel estimates, \emph{Statistics and Computing}, [to appear].
 #' 
 #' @examples

@@ -6,12 +6,12 @@ citEntry(entry = "article",
                    as.person("J. C. Marshall"),
                    as.person("M. L. Hazelton")),
   journal      = "Statistics in Medicine",
-  year         = "2017",
+  year         = "2018",
   volume = "",
   pages        = "[in press]",
 
   textVersion  =
-  paste("T. M. Davies, J. C. Marshall, M. L. Hazelton (2017).",
+  paste("T. M. Davies, J. C. Marshall, M. L. Hazelton (2018).",
         "Tutorial on kernel estimation of continuous spatial and spatiotemporal relative risk;",
         "Statistics in Medicine, [in press].")
 )

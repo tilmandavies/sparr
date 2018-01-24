@@ -1,3 +1,26 @@
+        CHANGES IN sparr VERSION 2.2-01
+
+OVERVIEW
+
+    o Additional control over small bandwidth action in leave-one-out bandwidth selectors
+    o Newly visible function 'rimpoly' for random point generation
+    o Updated citation information
+    
+    
+NEW FUNCTIONS
+
+    o rimpoly
+    Random point generation based on a pixel image, returned with a polygonal window
+    
+    
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o LIK.density, LSCV.density
+    New argument 'zero.action' to provide greater control over the behaviour of leave-one-out
+    calculations at very small bandwidths.
+    
+
+
         CHANGES IN sparr VERSION 2.1-14
 
 OVERVIEW
