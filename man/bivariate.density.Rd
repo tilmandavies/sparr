@@ -59,7 +59,7 @@ supplied, \code{resolution} is ignored.}
   \code{\link[spatstat]{im}}) giving the pilot density to be used for
   calculation of the variable bandwidths in adaptive estimation, \bold{or} a
   \code{\link[spatstat]{ppp.object}} giving the data upon which to base a
-  fixed-bandwidth pilot estimate using \code{hp[1]}. If used, the pixel image
+  fixed-bandwidth pilot estimate using \code{hp}. If used, the pixel image
   \emph{must} be defined over the same domain as the data given
 \code{resolution} or the supplied pre-set \code{xy} evaluation grid;
   \bold{or} the planar point pattern data must be defined with respect to the

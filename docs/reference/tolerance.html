@@ -191,11 +191,13 @@ relative risk surfaces. Alternatively, the user may elect to calculate the
 <em>p</em>-values at given significance levels (i.e. ``tolerance contours'')
 can be an informative way of exploring the statistical significance of the
 extremity of risk across the defined study region.</p>
-<p>The Monte-Carlo method, while not dependent on asymptotic theory, is
-computationally expensive and it has been suggested might have some
+<p>Implementation of the Monte-Carlo method simply involves random allocation of case/control marks and
+re-estimation of the risk surface <code>ITER</code> times, against which the
+original estimate is compared.  While not dependent on asymptotic theory, it is
+computationally expensive, and it has been suggested that it might have some
 undesirable practical consequences in certain settings (Hazelton and Davies,
 2009). When performing the MC simulations, the same global (and pilot, if
-necessary) bandwidths and edge-correction regimen is employed as were used
+necessary) bandwidths and edge-correction regimens are employed as were used
 in the initial density estimates of the observed data. With regard to
 arguments to be passed to internal calls of <code><a href='risk.html'>risk</a></code>, the user
 should take care to use <code>...</code> to set the <code>epsilon</code> value to match
@@ -206,47 +208,8 @@ the <code>beta</code> argument to speed things up via partitioning, and the user
 should additionally access <code>...</code> to set the same <code>pilot.symmetry</code>
 value as was used for creation of the object passed to <code>rs</code>, in the
 same way as for any non-default use of <code>epsilon</code>. This will ensure the
-simulations are all performed under the same conditions as the original risk
+simulations are all performed under the same conditions as were used to estimate the original risk
 function.</p>
-<p>The asymptotic approach to the <em>p</em>-value calculation can be
-advantageous over a Monte-Carlo method, which can lead to excessive
-computation time for adaptive risk surfaces and large datasets. See the
-aforementioned references for further comments.</p>
-<p>Choosing different options for the argument <code>test</code> simply manipulates
-the `direction' of the p-values. That is, plotting tolerance contours at a
-significance level of 0.05 for a p-value surface calculated with <code>test
-= "double"</code> is equivalent to plotting tolerance contours at significance
-levels of 0.025 and 0.975 for <code>test = "upper"</code>.</p>
-<p>Implementation of the Monte-Carlo contours for the fixed-bandwidth
-estimator simply involves random allocation of case/control marks and
-re-estimation of the risk surface <code>ITER</code> times, against which the
-original estimate is compared. The bandwidth(s) for case and control
-densities in the permuted estimates are controlled by <code>hpsim</code>. If your
-risk surface is adaptive, <code>hpsim</code> is used to control the pilot
-bandwidths, <code>h0sim</code> the global bandwidths. In particular, for the
-adaptive symmetric estimator (Davies et al. 201), it is assumed that the
-original estimate was itself calculated as a symmetric estimate via use of
-the <code>pdef</code> argument. The <code>symchoice</code> argument governs the specific
-permuted data set to use for the pilot estimate, and if <code>hpsim</code> is
-<code>NULL</code>, the pilot bandwidth thereof is taken from the stored
-<code>pdef</code> object in the original estimate. An error will occur if you
-attempt to set <code>symchoice</code> with an <code>rs</code> argument in this function
-that does not contain density estimates with present <code>pdef</code> objects of
-class <code>"bivden"</code>. See the help file for <code><a href='bivariate.density.html'>bivariate.density</a></code>
-for details on using the <code>pdef</code> argument.</p>
-<p>In addition to the usage noted above, you may define either <code>hpsim</code>
-and/or <code>h0sim</code> as functions which re-calculate the case and control
-pilot (or fixed) bandwidth(s) and the global bandwidth(s) at each iteration,
-based on the data set of the permuted case/control marks. If so, these must
-strictly be functions that take the case data as the first argument and the
-control data as the second argument, each as a two-column matrix of the x-y
-coordinates. The function must strictly return a numeric vector of length 1
-or 2; these entries to be assigned to the relevant density estimates as per
-the usage notes on supply of a numeric vector for <code>hpsim</code>. Take care --
-warnings will be issued if, for example, you specify a <code>hpsim</code> function
-that returns two numeric values, but your <code>rs</code> object is a
-symmetric-adaptive estimate (in which case it only makes sense to yield one
-pilot bandwidth)!</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -263,6 +226,9 @@ display.</p>
 spatially adaptive kernel estimates, <em>Statistics and Computing</em>, [to appear].</p>
 <p>Davies, T.M. and Hazelton, M.L. (2010), Adaptive kernel estimation of spatial relative
 risk, <em>Statistics in Medicine</em>, <b>29</b>(23) 2423-2437.</p>
+<p>Davies, T.M., Jones, K. and Hazelton, M.L. (2016), Symmetric adaptive smoothing regimens for estimation of the spatial
+relative risk function, <em>Computational Statistics &amp; Data Analysis</em>,
+<b>101</b>, 12-28.</p>
 <p>Hazelton, M.L. and Davies, T.M. (2009), Inference based on kernel estimates
 of the relative risk function in geographical epidemiology,
 <em>Biometrical Journal</em>, <b>51</b>(1), 98-109.</p>

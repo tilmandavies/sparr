@@ -69,11 +69,13 @@ relative risk surfaces. Alternatively, the user may elect to calculate the
 can be an informative way of exploring the statistical significance of the
 extremity of risk across the defined study region.
 
-The Monte-Carlo method, while not dependent on asymptotic theory, is
-computationally expensive and it has been suggested might have some
+Implementation of the Monte-Carlo method simply involves random allocation of case/control marks and
+re-estimation of the risk surface \code{ITER} times, against which the
+original estimate is compared.  While not dependent on asymptotic theory, it is
+computationally expensive, and it has been suggested that it might have some
 undesirable practical consequences in certain settings (Hazelton and Davies,
 2009). When performing the MC simulations, the same global (and pilot, if
-necessary) bandwidths and edge-correction regimen is employed as were used
+necessary) bandwidths and edge-correction regimens are employed as were used
 in the initial density estimates of the observed data. With regard to
 arguments to be passed to internal calls of \code{\link{risk}}, the user
 should take care to use \code{...} to set the \code{epsilon} value to match
@@ -84,51 +86,8 @@ the \code{beta} argument to speed things up via partitioning, and the user
 should additionally access \code{...} to set the same \code{pilot.symmetry}
 value as was used for creation of the object passed to \code{rs}, in the
 same way as for any non-default use of \code{epsilon}. This will ensure the
-simulations are all performed under the same conditions as the original risk
+simulations are all performed under the same conditions as were used to estimate the original risk
 function.
-
-The asymptotic approach to the \emph{p}-value calculation can be
-advantageous over a Monte-Carlo method, which can lead to excessive
-computation time for adaptive risk surfaces and large datasets. See the
-aforementioned references for further comments.
-
-Choosing different options for the argument \code{test} simply manipulates
-the `direction' of the p-values. That is, plotting tolerance contours at a
-significance level of 0.05 for a p-value surface calculated with \code{test
-= "double"} is equivalent to plotting tolerance contours at significance
-levels of 0.025 and 0.975 for \code{test = "upper"}.
-
-Implementation of the Monte-Carlo contours for the fixed-bandwidth
-estimator simply involves random allocation of case/control marks and
-re-estimation of the risk surface \code{ITER} times, against which the
-original estimate is compared. The bandwidth(s) for case and control
-densities in the permuted estimates are controlled by \code{hpsim}. If your
-risk surface is adaptive, \code{hpsim} is used to control the pilot
-bandwidths, \code{h0sim} the global bandwidths. In particular, for the
-adaptive symmetric estimator (Davies et al. 201), it is assumed that the
-original estimate was itself calculated as a symmetric estimate via use of
-the \code{pdef} argument. The \code{symchoice} argument governs the specific
-permuted data set to use for the pilot estimate, and if \code{hpsim} is
-\code{NULL}, the pilot bandwidth thereof is taken from the stored
-\code{pdef} object in the original estimate. An error will occur if you
-attempt to set \code{symchoice} with an \code{rs} argument in this function
-that does not contain density estimates with present \code{pdef} objects of
-class \code{"bivden"}. See the help file for \code{\link{bivariate.density}}
-for details on using the \code{pdef} argument.
-
-In addition to the usage noted above, you may define either \code{hpsim}
-and/or \code{h0sim} as functions which re-calculate the case and control
-pilot (or fixed) bandwidth(s) and the global bandwidth(s) at each iteration,
-based on the data set of the permuted case/control marks. If so, these must
-strictly be functions that take the case data as the first argument and the
-control data as the second argument, each as a two-column matrix of the x-y
-coordinates. The function must strictly return a numeric vector of length 1
-or 2; these entries to be assigned to the relevant density estimates as per
-the usage notes on supply of a numeric vector for \code{hpsim}. Take care --
-warnings will be issued if, for example, you specify a \code{hpsim} function
-that returns two numeric values, but your \code{rs} object is a
-symmetric-adaptive estimate (in which case it only makes sense to yield one
-pilot bandwidth)!
 }
 \note{
 The returned \emph{p}-values are geared so that ``smallness''
@@ -179,6 +138,10 @@ spatially adaptive kernel estimates, \emph{Statistics and Computing}, [to appear
 
 Davies, T.M. and Hazelton, M.L. (2010), Adaptive kernel estimation of spatial relative
 risk, \emph{Statistics in Medicine}, \bold{29}(23) 2423-2437.
+
+Davies, T.M., Jones, K. and Hazelton, M.L. (2016), Symmetric adaptive smoothing regimens for estimation of the spatial
+relative risk function, \emph{Computational Statistics & Data Analysis},
+\bold{101}, 12-28.
 
 Hazelton, M.L. and Davies, T.M. (2009), Inference based on kernel estimates
 of the relative risk function in geographical epidemiology,

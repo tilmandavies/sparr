@@ -7,13 +7,13 @@
 #' as outlined in Sections 3.4.3 and 3.4.4 of Silverman (1986) in order to select an optimal fixed smoothing bandwidth. With \code{type = "adaptive"} it may also be used to select the global bandwidth
 #' for adaptive kernel density estimates, making use of multi-scale estimation (Davies and Baddeley, 2018) via \code{\link{multiscale.density}}.
 #' Note that for computational reasons, the leave-one-out procedure is not performed on the pilot density in the adaptive setting; it
-#' is only performed on the final stage estimate. Current development efforts include extending this functionality. See also `Warning' below.
+#' is only performed on the final stage estimate. Current development efforts include extending this functionality, see \code{\link{SLIK.adapt}}. See also `Warning' below.
 #' 
 #' Where \code{LSCV.density} is based on minimisation of an unbiased estimate of the mean integrated squared error (MISE) of the density, \code{LIK.density} is based on
 #' maximisation of the cross-validated leave-one-out average of the log-likelihood of the density estimate with respect to \eqn{h}.
 #' 
 #' In both functions, the argument \code{zero.action} can be used to control the level of severity in response to small bandwidths that result (due to numerical error) in at least one density value being zero or less.
-#' When \code{zero.action = -1}, the function strictly forbids bandwidths that would result in one or more \emph{pixel} values of a kernel estimate of the original data (i.e.\ anything over the whole region) that are zero or less---this is the most restrictive truncation. With \code{zero.action = 0} (default), the function
+#' When \code{zero.action = -1}, the function strictly forbids bandwidths that would result in one or more \emph{pixel} values of a kernel estimate of the original data (i.e. anything over the whole region) being zero or less---this is the most restrictive truncation. With \code{zero.action = 0} (default), the function
 #' automatically forbids bandwidths that yield erroneous values at the leave-one-out data point locations only. With \code{zero.action = 1}, the minimum machine value (see \code{.Machine$double.xmin} at the prompt) is
 #' used to replace these individual leave-one-out values. When \code{zero.action = 2}, the minimum value of the valid (greater than zero) leave-one-out values is used to replace any erroneous leave-one-out values.
 #' 
@@ -74,7 +74,7 @@
 #'
 #' @author T. M. Davies
 #'
-#' @seealso Functions for bandwidth selection in package
+#' @seealso \code{\link{SLIK.adapt}} and functions for bandwidth selection in package
 #'   \code{\link{spatstat}}: \code{\link[spatstat]{bw.diggle}};
 #'   \code{\link[spatstat]{bw.ppl}}; \code{\link[spatstat]{bw.scott}};
 #'   \code{\link[spatstat]{bw.frac}}.

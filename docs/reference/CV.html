@@ -207,11 +207,11 @@ call to <code>LSCV.density</code> to set this using fixed-bandwidth LSCV. The re
 as outlined in Sections 3.4.3 and 3.4.4 of Silverman (1986) in order to select an optimal fixed smoothing bandwidth. With <code>type = "adaptive"</code> it may also be used to select the global bandwidth
 for adaptive kernel density estimates, making use of multi-scale estimation (Davies and Baddeley, 2018) via <code><a href='multiscale.density.html'>multiscale.density</a></code>.
 Note that for computational reasons, the leave-one-out procedure is not performed on the pilot density in the adaptive setting; it
-is only performed on the final stage estimate. Current development efforts include extending this functionality. See also `Warning' below.</p>
+is only performed on the final stage estimate. Current development efforts include extending this functionality, see <code><a href='SLIK.adapt.html'>SLIK.adapt</a></code>. See also `Warning' below.</p>
 <p>Where <code>LSCV.density</code> is based on minimisation of an unbiased estimate of the mean integrated squared error (MISE) of the density, <code>LIK.density</code> is based on
 maximisation of the cross-validated leave-one-out average of the log-likelihood of the density estimate with respect to \(h\).</p>
 <p>In both functions, the argument <code>zero.action</code> can be used to control the level of severity in response to small bandwidths that result (due to numerical error) in at least one density value being zero or less.
-When <code>zero.action = -1</code>, the function strictly forbids bandwidths that would result in one or more <em>pixel</em> values of a kernel estimate of the original data (i.e.\ anything over the whole region) that are zero or less---this is the most restrictive truncation. With <code>zero.action = 0</code> (default), the function
+When <code>zero.action = -1</code>, the function strictly forbids bandwidths that would result in one or more <em>pixel</em> values of a kernel estimate of the original data (i.e. anything over the whole region) being zero or less---this is the most restrictive truncation. With <code>zero.action = 0</code> (default), the function
 automatically forbids bandwidths that yield erroneous values at the leave-one-out data point locations only. With <code>zero.action = 1</code>, the minimum machine value (see <code>.Machine$double.xmin</code> at the prompt) is
 used to replace these individual leave-one-out values. When <code>zero.action = 2</code>, the minimum value of the valid (greater than zero) leave-one-out values is used to replace any erroneous leave-one-out values.</p>
     
@@ -235,7 +235,7 @@ C.M., 1995. <em>Kernel Smoothing</em>, Chapman &amp; Hall, London.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Functions for bandwidth selection in package
+    <p><code><a href='SLIK.adapt.html'>SLIK.adapt</a></code> and functions for bandwidth selection in package
   <code>spatstat</code>: <code><a href='http://www.rdocumentation.org/packages/spatstat/topics/bw.diggle'>bw.diggle</a></code>;
   <code><a href='http://www.rdocumentation.org/packages/spatstat/topics/bw.ppl'>bw.ppl</a></code>; <code><a href='http://www.rdocumentation.org/packages/spatstat/topics/bw.scott'>bw.scott</a></code>;
   <code><a href='http://www.rdocumentation.org/packages/spatstat/topics/bw.frac'>bw.frac</a></code>.</p>

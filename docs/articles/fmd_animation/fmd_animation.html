@@ -86,35 +86,37 @@
     
 <div class="contents">
 <p>Below is example output of spatio-temporal smoothing the foot and mouth disease outbreak in Cumbria, UK from days 10 through 231.</p>
-<video controls loop autoplay><source src="fmd.mp4"></source></video><div id="code" class="section level2">
-<h2 class="hasAnchor">
-<a href="#code" class="anchor"></a>Code</h2>
+<video controls loop autoplay><source src="fmd.mp4"></source></video><section id="code" class="level2"><h2>Code</h2>
 <p>The following code generates the above animation.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sparr)
-<span class="kw">library</span>(animation)
-
-<span class="kw">data</span>(fmd)
-fmd_case &lt;-<span class="st"> </span>fmd<span class="op">$</span>cases
-fmd_cont &lt;-<span class="st"> </span>fmd<span class="op">$</span>controls
-
-hlam &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/LSCV.spattemp.html">LIK.spattemp</a></span>(fmd_case)
-
-f.breve &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/spattemp.density.html">spattemp.density</a></span>(fmd_case, <span class="dt">h=</span>hlam[<span class="dv">1</span>], <span class="dt">lambda=</span>hlam[<span class="dv">2</span>], <span class="dt">tlim=</span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">230</span>))
-g.tilde &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/bivariate.density.html">bivariate.density</a></span>(fmd_cont, <span class="dt">h0=</span>hlam[<span class="dv">1</span>])
-rho.breve &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/spattemp.risk.html">spattemp.risk</a></span>(<span class="dt">f=</span>f.breve,<span class="dt">g=</span>g.tilde, <span class="dt">tolerate=</span><span class="ot">TRUE</span>)
-
-colpal &lt;-<span class="st"> </span><span class="kw">spatstat.options</span>(<span class="st">"image.colfun"</span>)
-fmdcolours &lt;-<span class="st"> </span><span class="kw">colourmap</span>(<span class="kw">colpal</span>(<span class="dv">128</span>),<span class="dt">breaks=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">80</span>,<span class="kw">seq</span>(<span class="op">-</span><span class="dv">7</span>,<span class="dv">4</span>,<span class="dt">length=</span><span class="dv">128</span>)))
-mytimes &lt;-<span class="st"> </span><span class="dv">10</span><span class="op">:</span><span class="dv">230</span>
-animation<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/animation/topics/saveVideo">saveVideo</a></span>(
-  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(mytimes)){
-    <span class="kw">plot</span>(rho.breve,<span class="dt">tselect=</span>mytimes[i],<span class="dt">type=</span><span class="st">"conditional"</span>,<span class="dt">col=</span>fmdcolours,
-         <span class="dt">tol.args=</span><span class="kw">list</span>(<span class="dt">levels=</span><span class="kw">c</span>(<span class="fl">0.05</span>,<span class="fl">0.0001</span>),<span class="dt">lty=</span><span class="dv">2</span><span class="op">:</span><span class="dv">1</span>,<span class="dt">drawlabels=</span><span class="ot">FALSE</span>),
-         <span class="dt">sleep=</span><span class="dv">0</span>,<span class="dt">override.par=</span><span class="ot">FALSE</span>)
-    <span class="kw">title</span>(<span class="dt">xlab=</span><span class="st">"Easting"</span>,<span class="dt">ylab=</span><span class="st">"Northing"</span>)
-  },
-  <span class="dt">video.name=</span><span class="st">"fmd.mp4"</span>, <span class="dt">other.opts =</span> <span class="st">'-b:v 1M -pix_fmt yuv420p'</span>, <span class="dt">ani.width=</span><span class="dv">640</span>, <span class="dt">ani.height=</span><span class="dv">640</span>, <span class="dt">interval=</span><span class="dv">1</span><span class="op">/</span><span class="dv">12</span>)</code></pre></div>
+<pre class="sourceCode r" id="cb1"><code class="sourceCode r"><div class="sourceLine" id="cb1-1" data-line-number="1">
+<span class="kw">library</span>(sparr)</div>
+<div class="sourceLine" id="cb1-2" data-line-number="2">
+<span class="kw">library</span>(animation)</div>
+<div class="sourceLine" id="cb1-3" data-line-number="3"></div>
+<div class="sourceLine" id="cb1-4" data-line-number="4">
+<span class="kw">data</span>(fmd)</div>
+<div class="sourceLine" id="cb1-5" data-line-number="5">fmd_case &lt;-<span class="st"> </span>fmd<span class="op">$</span>cases</div>
+<div class="sourceLine" id="cb1-6" data-line-number="6">fmd_cont &lt;-<span class="st"> </span>fmd<span class="op">$</span>controls</div>
+<div class="sourceLine" id="cb1-7" data-line-number="7"></div>
+<div class="sourceLine" id="cb1-8" data-line-number="8">hlam &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/LSCV.spattemp.html">LIK.spattemp</a></span>(fmd_case)</div>
+<div class="sourceLine" id="cb1-9" data-line-number="9"></div>
+<div class="sourceLine" id="cb1-10" data-line-number="10">f.breve &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/spattemp.density.html">spattemp.density</a></span>(fmd_case, <span class="dt">h=</span>hlam[<span class="dv">1</span>], <span class="dt">lambda=</span>hlam[<span class="dv">2</span>], <span class="dt">tlim=</span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">230</span>))</div>
+<div class="sourceLine" id="cb1-11" data-line-number="11">g.tilde &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/bivariate.density.html">bivariate.density</a></span>(fmd_cont, <span class="dt">h0=</span>hlam[<span class="dv">1</span>])</div>
+<div class="sourceLine" id="cb1-12" data-line-number="12">rho.breve &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/spattemp.risk.html">spattemp.risk</a></span>(<span class="dt">f=</span>f.breve,<span class="dt">g=</span>g.tilde, <span class="dt">tolerate=</span><span class="ot">TRUE</span>)</div>
+<div class="sourceLine" id="cb1-13" data-line-number="13"></div>
+<div class="sourceLine" id="cb1-14" data-line-number="14">colpal &lt;-<span class="st"> </span><span class="kw">spatstat.options</span>(<span class="st">"image.colfun"</span>)</div>
+<div class="sourceLine" id="cb1-15" data-line-number="15">fmdcolours &lt;-<span class="st"> </span><span class="kw">colourmap</span>(<span class="kw">colpal</span>(<span class="dv">128</span>),<span class="dt">breaks=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">80</span>,<span class="kw">seq</span>(<span class="op">-</span><span class="dv">7</span>,<span class="dv">4</span>,<span class="dt">length=</span><span class="dv">128</span>)))</div>
+<div class="sourceLine" id="cb1-16" data-line-number="16">mytimes &lt;-<span class="st"> </span><span class="dv">10</span><span class="op">:</span><span class="dv">230</span>
 </div>
+<div class="sourceLine" id="cb1-17" data-line-number="17">animation<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/animation/topics/saveVideo">saveVideo</a></span>(</div>
+<div class="sourceLine" id="cb1-18" data-line-number="18">  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(mytimes)){</div>
+<div class="sourceLine" id="cb1-19" data-line-number="19">    <span class="kw">plot</span>(rho.breve,<span class="dt">tselect=</span>mytimes[i],<span class="dt">type=</span><span class="st">"conditional"</span>,<span class="dt">col=</span>fmdcolours,</div>
+<div class="sourceLine" id="cb1-20" data-line-number="20">         <span class="dt">tol.args=</span><span class="kw">list</span>(<span class="dt">levels=</span><span class="kw">c</span>(<span class="fl">0.05</span>,<span class="fl">0.0001</span>),<span class="dt">lty=</span><span class="dv">2</span><span class="op">:</span><span class="dv">1</span>,<span class="dt">drawlabels=</span><span class="ot">FALSE</span>),</div>
+<div class="sourceLine" id="cb1-21" data-line-number="21">         <span class="dt">sleep=</span><span class="dv">0</span>,<span class="dt">override.par=</span><span class="ot">FALSE</span>)</div>
+<div class="sourceLine" id="cb1-22" data-line-number="22">    <span class="kw">title</span>(<span class="dt">xlab=</span><span class="st">"Easting"</span>,<span class="dt">ylab=</span><span class="st">"Northing"</span>)</div>
+<div class="sourceLine" id="cb1-23" data-line-number="23">  },</div>
+<div class="sourceLine" id="cb1-24" data-line-number="24">  <span class="dt">video.name=</span><span class="st">"fmd.mp4"</span>, <span class="dt">other.opts =</span> <span class="st">'-b:v 1M -pix_fmt yuv420p'</span>, <span class="dt">ani.width=</span><span class="dv">640</span>, <span class="dt">ani.height=</span><span class="dv">640</span>, <span class="dt">interval=</span><span class="dv">1</span><span class="op">/</span><span class="dv">12</span>)</div></code></pre>
+</section>
 </div>
   </div>
 

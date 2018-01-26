@@ -64,7 +64,7 @@
 #' @param type A character string; \code{"fixed"} (default) performs classical leave-one-out
 #'   cross-validation for a jointly optimal fixed bandwidth. Alternatively, \code{"adaptive"} utilises
 #'   multiscale adaptive kernel estimation (Davies & Baddeley, 2018) to run the cross-validation
-#'   in an effort to find a suitable jointly optimal, common global bandwidth for the adaptive relative risk function. See `Details' and the entry for \code{pilot.args}.
+#'   in an effort to find a suitable jointly optimal, common global bandwidth for the adaptive relative risk function. See `Details'.
 #' @param method A character string controlling the selector to use. There are
 #'   three types, based on either the mean integrated squared error (MISE)
 #'   (Kelsall and Diggle, 1995; default -- \code{method = "kelsall-diggle"}); a
