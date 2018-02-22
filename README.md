@@ -34,10 +34,8 @@ library(sparr)
 #> Loading required package: nlme
 #> Loading required package: rpart
 #> 
-#> spatstat 1.53-2       (nickname: 'Quantum Entanglement') 
+#> spatstat 1.55-0       (nickname: 'Stunned Mullet') 
 #> For an introduction to spatstat, type 'beginner'
-#> 
-#> Note: spatstat version 1.53-2 is out of date by more than 4 months; we recommend upgrading to the latest version.
 #> 
 #> 
 #> Welcome to
