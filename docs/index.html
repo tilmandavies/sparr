@@ -29,7 +29,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="/index.html">
+  <a href="index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -83,66 +83,72 @@
     
 <div class="contents">
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-<section id="sparr-spatial-and-spatiotemporal-relative-risk" class="level1"><div class="page-header"><h1>sparr: Spatial and Spatiotemporal Relative Risk</h1></div>
+<div id="sparr-spatial-and-spatiotemporal-relative-risk" class="section level1">
+<div class="page-header"><h1 class="hasAnchor">
+<a href="#sparr-spatial-and-spatiotemporal-relative-risk" class="anchor"></a>sparr: Spatial and Spatiotemporal Relative Risk</h1></div>
 <p>The <code>sparr</code> package for R provides functions to estimate fixed and adaptive kernel-smoothed spatial relative risk surfaces via the density-ratio method and perform subsequent inference. Fixed-bandwidth spatiotemporal density and relative risk estimation is also supported.</p>
-<section id="installation" class="level2"><h2>Installation</h2>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
 <p>This package is available on CRAN, and we recommend installing it from there using the standard</p>
-<pre class="sourceCode r" id="cb1"><code class="sourceCode r"><div class="sourceLine" id="cb1-1" data-line-number="1">
-<span class="kw">install.packages</span>(<span class="st">'sparr'</span>)</div></code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">'sparr'</span>)</code></pre></div>
 <p>If you wish to live on the bleeding edge, you may install from github using <code>devtools</code>:</p>
-<pre class="sourceCode r" id="cb2"><code class="sourceCode r"><div class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></div>
-<div class="sourceLine" id="cb2-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">'tilmandavies/sparr'</span>)</div></code></pre>
-</section><section id="example" class="level2"><h2>Example</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("devtools")</span>
+devtools::<span class="kw">install_github</span>(<span class="st">'tilmandavies/sparr'</span>)</code></pre></div>
+</div>
+<div id="example" class="section level2">
+<h2 class="hasAnchor">
+<a href="#example" class="anchor"></a>Example</h2>
 <p>This is a basic example of relative risk estimation for primary biliary cirrhosis cases from north east England.</p>
-<pre class="sourceCode r" id="cb3"><code class="sourceCode r"><div class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># Load library</span></div>
-<div class="sourceLine" id="cb3-2" data-line-number="2">
-<span class="kw">library</span>(sparr)</div>
-<div class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; Loading required package: spatstat</span></div>
-<div class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; Loading required package: spatstat.data</span></div>
-<div class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt; Loading required package: nlme</span></div>
-<div class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; Loading required package: rpart</span></div>
-<div class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt; </span></div>
-<div class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; spatstat 1.54-0       (nickname: 'Vacuous Mission Statement') </span></div>
-<div class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; For an introduction to spatstat, type 'beginner'</span></div>
-<div class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt; </span></div>
-<div class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#&gt; </span></div>
-<div class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#&gt; Welcome to</span></div>
-<div class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#&gt;    _____ ___  ____  ____  ____         </span></div>
-<div class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt;   / ___// _ \/ _  \/ __ \/ __ \        </span></div>
-<div class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">#&gt;   \__ \/ ___/ __  /  ___/  ___/        </span></div>
-<div class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt;  ___/ / /  / / / / /\ \/ /\ \          </span></div>
-<div class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">#&gt; /____/_/  /_/ /_/_/  \__/  \_\   v2.2-01</span></div>
-<div class="sourceLine" id="cb3-18" data-line-number="18"><span class="co">#&gt; </span></div>
-<div class="sourceLine" id="cb3-19" data-line-number="19"><span class="co">#&gt; ***NB: MAJOR CHANGES FROM PREVIOUS VERSIONS &lt; 2.1-10***</span></div>
-<div class="sourceLine" id="cb3-20" data-line-number="20"><span class="co">#&gt; - type news(package="sparr") for an overview</span></div>
-<div class="sourceLine" id="cb3-21" data-line-number="21"><span class="co">#&gt; - type help("sparr") for documentation</span></div>
-<div class="sourceLine" id="cb3-22" data-line-number="22"><span class="co">#&gt; - type citation("sparr") for how to cite</span></div>
-<div class="sourceLine" id="cb3-23" data-line-number="23"></div>
-<div class="sourceLine" id="cb3-24" data-line-number="24"><span class="co"># Load data on cases of primary biliary cirrhosis from north east England</span></div>
-<div class="sourceLine" id="cb3-25" data-line-number="25">
-<span class="kw">data</span>(pbc)</div>
-<div class="sourceLine" id="cb3-26" data-line-number="26"></div>
-<div class="sourceLine" id="cb3-27" data-line-number="27"><span class="co"># Split into cases and controls</span></div>
-<div class="sourceLine" id="cb3-28" data-line-number="28">pbc_case &lt;-<span class="st"> </span><span class="kw">split</span>(pbc)<span class="op">$</span>case</div>
-<div class="sourceLine" id="cb3-29" data-line-number="29">pbc_cont &lt;-<span class="st"> </span><span class="kw">split</span>(pbc)<span class="op">$</span>control</div>
-<div class="sourceLine" id="cb3-30" data-line-number="30"></div>
-<div class="sourceLine" id="cb3-31" data-line-number="31"><span class="co"># Estimate global bandwidth for smoothing</span></div>
-<div class="sourceLine" id="cb3-32" data-line-number="32">h0 &lt;-<span class="st"> </span><span class="kw"><a href="reference/OS.html">OS</a></span>(pbc, <span class="dt">nstar=</span><span class="st">"geometric"</span>)</div>
-<div class="sourceLine" id="cb3-33" data-line-number="33"></div>
-<div class="sourceLine" id="cb3-34" data-line-number="34"><span class="co"># Compute a symmetric (pooled) adaptive relative risk estimate</span></div>
-<div class="sourceLine" id="cb3-35" data-line-number="35"><span class="co"># with tolerance contours</span></div>
-<div class="sourceLine" id="cb3-36" data-line-number="36">pbc_rr &lt;-<span class="st"> </span><span class="kw"><a href="reference/risk.html">risk</a></span>(pbc_case, pbc_cont, <span class="dt">h0=</span>h0, <span class="dt">adapt=</span><span class="ot">TRUE</span>, <span class="dt">tolerate=</span><span class="ot">TRUE</span>,</div>
-<div class="sourceLine" id="cb3-37" data-line-number="37">               <span class="dt">hp=</span><span class="kw"><a href="reference/OS.html">OS</a></span>(pbc)<span class="op">/</span><span class="dv">2</span>, <span class="dt">pilot.symmetry=</span><span class="st">"pooled"</span>, <span class="dt">davies.baddeley=</span><span class="fl">0.05</span>)</div>
-<div class="sourceLine" id="cb3-38" data-line-number="38"><span class="co">#&gt; Estimating case density...</span></div>
-<div class="sourceLine" id="cb3-39" data-line-number="39"><span class="co">#&gt; Done.</span></div>
-<div class="sourceLine" id="cb3-40" data-line-number="40"><span class="co">#&gt; Estimating control density...Done.</span></div>
-<div class="sourceLine" id="cb3-41" data-line-number="41"><span class="co">#&gt; Calculating tolerance contours...Done.</span></div>
-<div class="sourceLine" id="cb3-42" data-line-number="42"></div>
-<div class="sourceLine" id="cb3-43" data-line-number="43"><span class="co"># And produce a plot</span></div>
-<div class="sourceLine" id="cb3-44" data-line-number="44">
-<span class="kw">plot</span>(pbc_rr)</div></code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load library</span>
+<span class="kw">library</span>(sparr)
+<span class="co">#&gt; Loading required package: spatstat</span>
+<span class="co">#&gt; Loading required package: spatstat.data</span>
+<span class="co">#&gt; Loading required package: nlme</span>
+<span class="co">#&gt; Loading required package: rpart</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; spatstat 1.53-2       (nickname: 'Quantum Entanglement') </span>
+<span class="co">#&gt; For an introduction to spatstat, type 'beginner'</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Note: spatstat version 1.53-2 is out of date by more than 4 months; we recommend upgrading to the latest version.</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Welcome to</span>
+<span class="co">#&gt;    _____ ___  ____  ____  ____         </span>
+<span class="co">#&gt;   / ___// _ \/ _  \/ __ \/ __ \        </span>
+<span class="co">#&gt;   \__ \/ ___/ __  /  ___/  ___/        </span>
+<span class="co">#&gt;  ___/ / /  / / / / /\ \/ /\ \          </span>
+<span class="co">#&gt; /____/_/  /_/ /_/_/  \__/  \_\   v2.2-01</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; ***NB: MAJOR CHANGES FROM PREVIOUS VERSIONS &lt; 2.1-10***</span>
+<span class="co">#&gt; - type news(package="sparr") for an overview</span>
+<span class="co">#&gt; - type help("sparr") for documentation</span>
+<span class="co">#&gt; - type citation("sparr") for how to cite</span>
+
+<span class="co"># Load data on cases of primary biliary cirrhosis from north east England</span>
+<span class="kw">data</span>(pbc)
+
+<span class="co"># Split into cases and controls</span>
+pbc_case &lt;-<span class="st"> </span><span class="kw">split</span>(pbc)$case
+pbc_cont &lt;-<span class="st"> </span><span class="kw">split</span>(pbc)$control
+
+<span class="co"># Estimate global bandwidth for smoothing</span>
+h0 &lt;-<span class="st"> </span><span class="kw"><a href="reference/OS.html">OS</a></span>(pbc, <span class="dt">nstar=</span><span class="st">"geometric"</span>)
+
+<span class="co"># Compute a symmetric (pooled) adaptive relative risk estimate</span>
+<span class="co"># with tolerance contours</span>
+pbc_rr &lt;-<span class="st"> </span><span class="kw"><a href="reference/risk.html">risk</a></span>(pbc_case, pbc_cont, <span class="dt">h0=</span>h0, <span class="dt">adapt=</span><span class="ot">TRUE</span>, <span class="dt">tolerate=</span><span class="ot">TRUE</span>,
+               <span class="dt">hp=</span><span class="kw"><a href="reference/OS.html">OS</a></span>(pbc)/<span class="dv">2</span>, <span class="dt">pilot.symmetry=</span><span class="st">"pooled"</span>, <span class="dt">davies.baddeley=</span><span class="fl">0.05</span>)
+<span class="co">#&gt; Estimating case density...</span>
+<span class="co">#&gt; Done.</span>
+<span class="co">#&gt; Estimating control density...Done.</span>
+<span class="co">#&gt; Calculating tolerance contours...Done.</span>
+
+<span class="co"># And produce a plot</span>
+<span class="kw">plot</span>(pbc_rr)</code></pre></div>
 <p><img src="reference/figures/README-pbc-example-1.png" width="672"></p>
-</section></section>
+</div>
+</div>
 </div>
   </div>
 

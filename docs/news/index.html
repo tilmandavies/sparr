@@ -52,7 +52,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -106,6 +106,42 @@
     </div>
 
     <div class="contents">
+    <div id="sparr-2-2-01" class="section level1">
+<h1 class="hasAnchor">
+<a href="#sparr-2-2-01" class="anchor"></a>sparr 2.2-01</h1>
+<ul>
+<li><p>New experimental function <code>SLIK.adapt</code> for simultaneous global-pilot bandwidth selection for adaptive densities</p></li>
+<li><p>Newly visible function <code>rimpoly</code> for random point generation</p></li>
+<li><p>Additional control over small bandwidth action in leave-one-out bandwidth selectors</p></li>
+<li><p>Improved edge-correction calculations for brute force adaptive leave-one-out</p></li>
+<li><p>Updated citation information and documentation corrections</p></li>
+</ul>
+<div id="new-functions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-functions" class="anchor"></a>New Functions</h2>
+<ul>
+<li>
+<code>rimpoly</code>: Random spatial point generation based on a pixel image, returned with a polygonal window</li>
+<li>
+<code>SLIK.adapt</code>: Simultaneous bandwidth selector for global and pilot bandwidth for adaptive density estimates based on likelihood cross-validation</li>
+</ul>
+</div>
+<div id="significant-user-visible-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#significant-user-visible-changes" class="anchor"></a>Significant user-visible changes</h2>
+<ul>
+<li>
+<code>LIK.density</code>, <code>LSCV.density</code>: New argument <code>zero.action</code> to provide greater control over the behaviour of leave-one-out calculations at very small bandwidths.</li>
+</ul>
+</div>
+</div>
+    <div id="sparr-2-1-14" class="section level1">
+<h1 class="hasAnchor">
+<a href="#sparr-2-1-14" class="anchor"></a>sparr 2.1-14</h1>
+<ul>
+<li>Updated citation information</li>
+</ul>
+</div>
     <div id="sparr-2-1-13" class="section level1">
 <h1 class="hasAnchor">
 <a href="#sparr-2-1-13" class="anchor"></a>sparr 2.1-13</h1>
@@ -136,9 +172,9 @@
 <li><p>Accompanying tutorial currently submitted for publication; contact maintainer for preprint or see <a href="https://arxiv.org/abs/1707.06888" class="uri">https://arxiv.org/abs/1707.06888</a></p></li>
 <li><p>User is directed to the examples as part of <code>help("sparr")</code> for further assistance</p></li>
 </ul>
-<div id="new-functions" class="section level2">
+<div id="new-functions-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions" class="anchor"></a>New Functions</h2>
+<a href="#new-functions-1" class="anchor"></a>New Functions</h2>
 <ul>
 <li><p><code>LIK.density</code>, <code>BOOT.density</code>: New functions for bivariate density bandwidth selection.</p></li>
 <li><p><code>multiscale.density</code>, <code>multiscale.slice</code>: Multi-scale adaptive kernel density estimation.</p></li>
@@ -148,9 +184,9 @@
 <li><p><code>burk</code>, <code>fmd</code>: New datasets.</p></li>
 </ul>
 </div>
-<div id="significant-user-visible-changes" class="section level2">
+<div id="significant-user-visible-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#significant-user-visible-changes" class="anchor"></a>Significant user-visible changes</h2>
+<a href="#significant-user-visible-changes-1" class="anchor"></a>Significant user-visible changes</h2>
 <ul>
 <li><p><code>bivariate.density</code>, <code>risk</code>, <code>tolerance</code>, <code>LSCV.density</code>, <code>LSCV.risk</code>, <code>OS</code>, <code>NS</code>, <code>plot</code> usage changed.</p></li>
 <li><p>Significant speed improvements.</p></li>
@@ -164,6 +200,8 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#sparr-2-2-01">2.2-01</a></li>
+        <li><a href="#sparr-2-1-14">2.1-14</a></li>
         <li><a href="#sparr-2-1-13">2.1-13</a></li>
         <li><a href="#sparr-2-1-12">2.1-12</a></li>
         <li><a href="#sparr-2-1-11">2.1-11</a></li>
