@@ -117,10 +117,10 @@ Package: </td>
 <td> sparr</td>
 </tr><tr><td>
 Date:</td>
-<td> 2018-02-22</td>
+<td> 2018-03-11</td>
 </tr><tr><td>
 Version:</td>
-<td> 2.2-01</td>
+<td> 2.2-11</td>
 </tr><tr><td>
 License: </td>
 <td> GPL (&gt;= 2)</td>
@@ -151,7 +151,7 @@ well as some visualisation tools are provided.</p>
 in Fernando and Hazelton (2014). This includes their fixed-bandwith kernel estimator
 of spatiotemporal densities, relative risk, and asymptotic tolerance contours.</p>
 <p>Key content of <code>sparr</code> can be broken up as follows:
-    <b>DATASETS</b>
+    <b>DATASETS/DATA GENERATION</b>
     <code><a href='pbc.html'>pbc</a></code> a case/control planar point pattern (<code><a href='http://www.rdocumentation.org/packages/spatstat/topics/ppp.object'>ppp.object</a></code>) concerning liver disease in northern
 England.
     <code><a href='fmd.html'>fmd</a></code> an anonymised (jittered) case/control spatiotemporal point pattern of the 2001 outbreak of veterinary foot-and-mouth disease in Cumbria (courtesy of the Animal and Plant Health Agency, UK).
@@ -159,7 +159,10 @@ England.
 <p>Also available are a number of relevant additional spatial datasets built-in to the
 <code><a href='http://www.rdocumentation.org/packages/spatstat/topics/spatstat-package'>spatstat</a></code> package (Baddeley and Turner, 2005; Baddeley et al., 2015) through <code>spatstat.data</code>, such as
 <code><a href='http://www.rdocumentation.org/packages/spatstat.data/topics/chorley'>chorley</a></code>, which concerns the distribution of
-laryngeal cancer in an area of Lancashire, UK.</p>
+laryngeal cancer in an area of Lancashire, UK.
+    <code><a href='rimpoly.html'>rimpoly</a></code> a wrapper function of <code><a href='http://www.rdocumentation.org/packages/spatstat/topics/rpoint'>rpoint</a></code> to allow generated
+spatial point patterns based on a pixel <code><a href='http://www.rdocumentation.org/packages/spatstat/topics/im'>im</a></code>age to be returned with a
+polygonal <code><a href='http://www.rdocumentation.org/packages/spatstat/topics/owin'>owin</a></code>.</p>
 <p><b>SPATIAL</b>
     <em>Bandwidth calculators</em>
     <code><a href='OS.html'>OS</a></code> estimation of an isotropic
@@ -174,6 +177,8 @@ of an isotropic fixed bandwidth for bivariate, edge-corrected KDE (see e.g. Bowm
 Azzalini, 1997).
     <code>LIK.density</code> a likelihood cross-validated (LIK) estimate
 of an isotropic fixed bandwidth for bivariate, edge-corrected KDE (see e.g. Silverman, 1986).
+    <code><a href='SLIK.adapt.html'>SLIK.adapt</a></code> an experimental likelihood cross-validation function
+for simultaneous global/pilot bandwidth selection for adaptive density estimates.
     <code><a href='BOOT.density.html'>BOOT.density</a></code> a bootstrap approach to optimisation
 of an isotropic fixed bandwidth for bivariate, edge-corrected KDE (see e.g. Taylor, 1989).
     <code><a href='LSCV.risk.html'>LSCV.risk</a></code> Estimation of a jointly optimal,
@@ -248,7 +253,7 @@ currently imports <code><a href='http://www.rdocumentation.org/packages/doParall
     
     <p>To cite use of current versions of <code>sparr</code> in publications or research projects please use:</p>
 <p>Davies, T.M., Marshall, J.C. and Hazelton, M.L. (2018) Tutorial on kernel estimation of continuous spatial
-and spatiotemporal relative risk, <em>Statistics in Medicine</em>, [in press].</p>
+and spatiotemporal relative risk, <em>Statistics in Medicine</em>, <b>37</b>(7), 1191-1221. &lt;DOI:10.1002/sim.7577&gt;</p>
 <p>Old versions of <code>sparr</code> (&lt;= 2.1-09) can be referenced by Davies et al. (2011) (see reference list).</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
@@ -265,7 +270,7 @@ of Statistical Software</em>, <b>12</b>(6), 1-42.</p>
 application of density estimation to geographical epidemiology,
 <em>Statistics in Medicine</em>, <b>9</b>, 691-701.</p>
 <p>Bithell, J.F. (1991),
-Estimation of relative risk function,. <em>Statistics in Medicine</em>,
+Estimation of relative risk function, <em>Statistics in Medicine</em>,
 <b>10</b>, 1745-1751.</p>
 <p>Bowman, A.W. and Azzalini, A. (1997), <em>Applied
 Smoothing Techniques for Data Analysis: The Kernel Approach with S-Plus

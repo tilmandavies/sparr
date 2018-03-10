@@ -43,9 +43,8 @@ library(sparr)
 #>   / ___// _ \/ _  \/ __ \/ __ \        
 #>   \__ \/ ___/ __  /  ___/  ___/        
 #>  ___/ / /  / / / / /\ \/ /\ \          
-#> /____/_/  /_/ /_/_/  \__/  \_\   v2.2-01
+#> /____/_/  /_/ /_/_/  \__/  \_\   v2.2-11
 #> 
-#> ***NB: MAJOR CHANGES FROM PREVIOUS VERSIONS < 2.1-10***
 #> - type news(package="sparr") for an overview
 #> - type help("sparr") for documentation
 #> - type citation("sparr") for how to cite

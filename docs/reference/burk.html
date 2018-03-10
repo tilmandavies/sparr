@@ -157,9 +157,7 @@ package version 2.01-40; <a href='https://CRAN.R-project.org/package=splancs'>ht
 #&gt; Window area = 11035 square units
 #&gt; Fraction of frame area: 0.642</div><div class='input'>
 <span class='fu'>par</span>(<span class='kw'>mfrow</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>1</span>,<span class='fl'>3</span>))
-<span class='fu'>plot</span>(<span class='no'>burk</span>$<span class='no'>cases</span>)
-<span class='fu'>plot</span>(<span class='no'>burk</span>$<span class='no'>controls</span>)
-<span class='fu'>plot</span>(<span class='fu'>density</span>(<span class='fu'>marks</span>(<span class='no'>burk</span>$<span class='no'>cases</span>)),<span class='kw'>xlim</span><span class='kw'>=</span><span class='fu'>range</span>(<span class='fu'>marks</span>(<span class='no'>burk</span>$<span class='no'>cases</span>)))</div><div class='img'><img src='burk-1.png' alt='' width='700' height='432.632880098887' /></div></pre>
+<span class='fu'>plot</span>(<span class='no'>burk</span>$<span class='no'>cases</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>plot</span>(<span class='no'>burk</span>$<span class='no'>controls</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>plot</span>(<span class='fu'>density</span>(<span class='fu'>marks</span>(<span class='no'>burk</span>$<span class='no'>cases</span>)),<span class='kw'>xlim</span><span class='kw'>=</span><span class='fu'>range</span>(<span class='fu'>marks</span>(<span class='no'>burk</span>$<span class='no'>cases</span>)))</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
