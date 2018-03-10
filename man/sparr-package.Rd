@@ -12,8 +12,8 @@ risk surfaces via the density-ratio method and perform subsequent inference. Fix
 \details{
 \tabular{ll}{
 Package: \tab sparr\cr
-Date:\tab 2018-02-22\cr
-Version:\tab 2.2-1\cr
+Date:\tab 2018-03-11\cr
+Version:\tab 2.2-11\cr
 License: \tab GPL (>= 2)\cr
 }
 
@@ -48,7 +48,7 @@ of spatiotemporal densities, relative risk, and asymptotic tolerance contours.
 
 Key content of \code{sparr} can be broken up as follows:\cr
 
-\bold{DATASETS}
+\bold{DATASETS/DATA GENERATION}
 
 \code{\link{pbc}} a case/control planar point pattern (\code{\link[spatstat]{ppp.object}}) concerning liver disease in northern
 England.
@@ -60,7 +60,11 @@ England.
 Also available are a number of relevant additional spatial datasets built-in to the
 \code{\link[spatstat]{spatstat}} package (Baddeley and Turner, 2005; Baddeley et al., 2015) through \code{spatstat.data}, such as
 \code{\link[spatstat.data]{chorley}}, which concerns the distribution of
-laryngeal cancer in an area of Lancashire, UK.\cr
+laryngeal cancer in an area of Lancashire, UK.
+
+\code{\link{rimpoly}} a wrapper function of \code{\link[spatstat]{rpoint}} to allow generated
+spatial point patterns based on a pixel \code{\link[spatstat]{im}}age to be returned with a
+polygonal \code{\link[spatstat]{owin}}.\cr
 
 
 \bold{SPATIAL}
@@ -82,6 +86,9 @@ Azzalini, 1997).
 
 \code{\link{LIK.density}} a likelihood cross-validated (LIK) estimate
 of an isotropic fixed bandwidth for bivariate, edge-corrected KDE (see e.g. Silverman, 1986).
+
+\code{\link{SLIK.adapt}} an experimental likelihood cross-validation function
+for simultaneous global/pilot bandwidth selection for adaptive density estimates.
 
 \code{\link{BOOT.density}} a bootstrap approach to optimisation
 of an isotropic fixed bandwidth for bivariate, edge-corrected KDE (see e.g. Taylor, 1989).
@@ -189,7 +196,7 @@ currently imports \code{\link[doParallel]{doParallel}},
 To cite use of current versions of \code{sparr} in publications or research projects please use:\cr
 
 Davies, T.M., Marshall, J.C. and Hazelton, M.L. (2018) Tutorial on kernel estimation of continuous spatial
-and spatiotemporal relative risk, \emph{Statistics in Medicine}, [in press].
+and spatiotemporal relative risk, \emph{Statistics in Medicine}, \bold{37}(7), 1191-1221. <DOI:10.1002/sim.7577>
 
 Old versions of \code{sparr} (<= 2.1-09) can be referenced by Davies et al. (2011) (see reference list).
 }
@@ -212,7 +219,7 @@ application of density estimation to geographical epidemiology,
 \emph{Statistics in Medicine}, \bold{9}, 691-701.
 
 Bithell, J.F. (1991),
-Estimation of relative risk function,. \emph{Statistics in Medicine},
+Estimation of relative risk function, \emph{Statistics in Medicine},
 \bold{10}, 1745-1751.
 
 Bowman, A.W. and Azzalini, A. (1997), \emph{Applied

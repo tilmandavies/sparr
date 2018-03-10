@@ -86,7 +86,7 @@ the normal scale rule (in 2D and 1D) to the spatial and temporal margins of the 
 \emph{that the target density is normal}. This is considered rare
 in most real-world applications. Nevertheless, it remains a quick and easy
 `rule-of-thumb' method with which one may obtain a smoothing parameter. Note that a similar expression for the adaptive kernel
-estimator is not possible (Davies et al., 2017).
+estimator is not possible (Davies et al., 2018).
 }
 
 \examples{
@@ -108,8 +108,8 @@ estimation of spatial relative risk, \emph{Statistics in Medicine},
 \bold{29}(23) 2423-2437.
 
 Davies, T.M., Flynn, C.R. and Hazelton, M.L.
-(2017), On the utility of asymptotic bandwidth selectors for spatially
-adaptive kernel density estimation, \emph{Submitted}.
+(2018), On the utility of asymptotic bandwidth selectors for spatially
+adaptive kernel density estimation, \emph{Statistics & Probability Letters} [in press].
 
 Silverman, B.W. (1986), \emph{Density Estimation for Statistics and Data Analysis}, Chapman
 & Hall, New York.
