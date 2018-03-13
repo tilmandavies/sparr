@@ -44,6 +44,7 @@
 #' @param verbose Logical value indicating whether to provide function progress
 #'   commentary.
 #' @param zero.action A numeric vector of length 2, each value being either \code{-1}, \code{0} (default), \code{1} or \code{2} controlling how the function should behave in response to numerical errors at very small bandwidths, when such a bandwidth results in one or more zero or negative density values during the leave-one-out computations. See `Details'.
+#' @param optim.control An optional list to be passed to the \code{control} argument of \code{\link[stats]{optim}} for further control over the numeric optimisation when \code{hold = FALSE}. See the documentation for \code{\link[stats]{optim}} for further details.
 #' @param ... Additional arguments controlling density estimation for the internal calculations. Relevant arguments are \code{resolution}, \code{gamma.scale}, and \code{trim}. If unsupplied these default to \code{64}, \code{"geometric"}, and \code{5} respectively; see \code{\link{bivariate.density}} for a further explanation of these arguments.
 #'   
 #' @return A numeric vector of length 2 giving the likelihood-maximised global and pilot bandwidths.
@@ -83,7 +84,7 @@
 #' } 
 #' 
 #' @export
-SLIK.adapt <- function(pp,hold=FALSE,start=rep(OS(pp),2),hlim=NULL,edge=TRUE,zero.action=c(-1,0),parallelise=NULL,verbose=TRUE,...){
+SLIK.adapt <- function(pp,hold=FALSE,start=rep(OS(pp),2),hlim=NULL,edge=TRUE,zero.action=c(-1,0),optim.control=list(),parallelise=NULL,verbose=TRUE,...){
   if(class(pp)!="ppp") stop("data object 'pp' must be of class \"ppp\"")
   W <- Window(pp)
   # resolution <- checkit(resolution,"'resolution'")
@@ -116,7 +117,7 @@ SLIK.adapt <- function(pp,hold=FALSE,start=rep(OS(pp),2),hlim=NULL,edge=TRUE,zer
   
   # optimise/optim #
   if(!hold){
-    result <- optim(start,loowrap_nohold,pp=pp,edge=edge,gamma.scale=gamma.scale,trim=trim,resolution=resolution,vbs=verbose,parallel=parallelise,za=zero.action)$par
+    result <- optim(start,loowrap_nohold,pp=pp,edge=edge,gamma.scale=gamma.scale,trim=trim,resolution=resolution,vbs=verbose,parallel=parallelise,za=zero.action,control=optim.control)$par
     result <- as.numeric(result)
   } else {
     if(is.null(hlim)){

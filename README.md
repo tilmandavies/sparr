@@ -43,7 +43,7 @@ library(sparr)
 #>   / ___// _ \/ _  \/ __ \/ __ \        
 #>   \__ \/ ___/ __  /  ___/  ___/        
 #>  ___/ / /  / / / / /\ \/ /\ \          
-#> /____/_/  /_/ /_/_/  \__/  \_\   v2.2-11
+#> /____/_/  /_/ /_/_/  \__/  \_\   v2.2-12
 #> 
 #> - type news(package="sparr") for an overview
 #> - type help("sparr") for documentation

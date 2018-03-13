@@ -110,8 +110,8 @@ based on likelihood cross-validation.</p>
     
 
     <pre class="usage"><span class='fu'>SLIK.adapt</span>(<span class='no'>pp</span>, <span class='kw'>hold</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'>rep</span>(<span class='fu'><a href='OS.html'>OS</a></span>(<span class='no'>pp</span>), <span class='fl'>2</span>), <span class='kw'>hlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>edge</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>zero.action</span> <span class='kw'>=</span> <span class='fu'>c</span>(-<span class='fl'>1</span>, <span class='fl'>0</span>), <span class='kw'>parallelise</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>edge</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>zero.action</span> <span class='kw'>=</span> <span class='fu'>c</span>(-<span class='fl'>1</span>, <span class='fl'>0</span>), <span class='kw'>optim.control</span> <span class='kw'>=</span> <span class='fu'>list</span>(),
+  <span class='kw'>parallelise</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -146,6 +146,10 @@ estimates used.</p></td>
     <tr>
       <th>zero.action</th>
       <td><p>A numeric vector of length 2, each value being either <code>-1</code>, <code>0</code> (default), <code>1</code> or <code>2</code> controlling how the function should behave in response to numerical errors at very small bandwidths, when such a bandwidth results in one or more zero or negative density values during the leave-one-out computations. See `Details'.</p></td>
+    </tr>
+    <tr>
+      <th>optim.control</th>
+      <td><p>An optional list to be passed to the <code>control</code> argument of <code><a href='http://www.rdocumentation.org/packages/stats/topics/optim'>optim</a></code> for further control over the numeric optimisation when <code>hold = FALSE</code>. See the documentation for <code><a href='http://www.rdocumentation.org/packages/stats/topics/optim'>optim</a></code> for further details.</p></td>
     </tr>
     <tr>
       <th>parallelise</th>

@@ -1,3 +1,11 @@
+        CHANGES IN sparr VERSION 2.2-12
+
+OVERVIEW
+
+    o Added 'optim.control' argument to 'SLIK.adapt'
+    
+
+
         CHANGES IN sparr VERSION 2.2-11
 
 OVERVIEW

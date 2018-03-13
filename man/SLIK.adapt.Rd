@@ -5,8 +5,8 @@
 \title{Simultaneous global/pilot likelihood bandwidth selection}
 \usage{
 SLIK.adapt(pp, hold = FALSE, start = rep(OS(pp), 2), hlim = NULL,
-  edge = TRUE, zero.action = c(-1, 0), parallelise = NULL,
-  verbose = TRUE, ...)
+  edge = TRUE, zero.action = c(-1, 0), optim.control = list(),
+  parallelise = NULL, verbose = TRUE, ...)
 }
 \arguments{
 \item{pp}{An object of class \code{\link[spatstat]{ppp}} giving the observed
@@ -27,6 +27,8 @@ function attempts to choose this automatically. Ignored when \code{hold = FALSE}
 estimates used.}
 
 \item{zero.action}{A numeric vector of length 2, each value being either \code{-1}, \code{0} (default), \code{1} or \code{2} controlling how the function should behave in response to numerical errors at very small bandwidths, when such a bandwidth results in one or more zero or negative density values during the leave-one-out computations. See `Details'.}
+
+\item{optim.control}{An optional list to be passed to the \code{control} argument of \code{\link[stats]{optim}} for further control over the numeric optimisation when \code{hold = FALSE}. See the documentation for \code{\link[stats]{optim}} for further details.}
 
 \item{parallelise}{Numeric argument to invoke parallel processing in the brute force leave-one-out calculations, giving
 the number of CPU cores to use. Experimental. Test
