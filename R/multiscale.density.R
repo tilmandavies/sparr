@@ -129,7 +129,7 @@
 #' Chapman & Hall, New York.
 #' 
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' data(chorley) # Chorley-Ribble data (package 'spatstat')
 #' ch.multi <- multiscale.density(chorley,h0=1)
 #' plot(ch.multi)

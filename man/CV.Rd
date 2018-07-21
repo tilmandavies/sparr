@@ -105,7 +105,7 @@ pbccas <- split(pbc)$case
 LIK.density(pbccas)
 LSCV.density(pbccas)
 
-\dontrun{
+\donttest{
 #* FIXED 
 
 # custom limits

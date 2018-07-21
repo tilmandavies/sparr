@@ -138,7 +138,7 @@ global bandwidth value within \code{h0range} by using the
 \code{\link{bivden}}.
 }
 \examples{
-\dontrun{
+\donttest{
 data(chorley) # Chorley-Ribble data (package 'spatstat')
 ch.multi <- multiscale.density(chorley,h0=1)
 plot(ch.multi)

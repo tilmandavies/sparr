@@ -18,7 +18,7 @@
 #' @author J.C. Marshall
 #' 
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' 
 #' # System check
 #' sparr:::fftw_available()

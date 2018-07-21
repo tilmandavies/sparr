@@ -28,7 +28,7 @@ this function will automatically detect and use the faster option, otherwise wil
 defer to the built-in \code{\link[stats]{fft}}.
 }
 \examples{
-\dontrun{
+\donttest{
 
 # System check
 sparr:::fftw_available()

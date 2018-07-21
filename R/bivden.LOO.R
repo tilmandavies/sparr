@@ -81,11 +81,13 @@ bivden.LOO <- function(pp,h0,hp,edge,gamma.scale,trim,resolution,parallel,weight
       if(edge){
         gxy <- kernel2d(evalxy.in[,1]-pp$x[i],evalxy.in[,2]-pp$y[i],h.hypo.i)
         qi <- dintegral(gxy,Wm$xstep,Wm$ystep)
+      } else {
+        qi <- 1
       }
       ivals <- kernel2d(pp$x[i]-ppmi$x,pp$y[i]-ppmi$y,h.spec.mi)
       
       return(mean(wi*ivals)/qi)
     }	
   }
-  return(list(loo,qv,h.spec))
+  return(list(loo,qv,h.spec)) # qv and h.spec only filled in when parallel=NULL
 }

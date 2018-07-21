@@ -88,7 +88,7 @@ T.M. Davies
 \code{\link{spattemp.density}}, \code{\link{spattemp.slice}}, \code{\link{bivariate.density}}
 }
 \examples{
-\dontrun{
+\donttest{
 data(fmd)
 fmdcas <- fmd$cases
 fmdcon <- fmd$controls

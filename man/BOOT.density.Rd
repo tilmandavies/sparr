@@ -105,7 +105,7 @@ Even with the implemented computational tricks, bootstrapping for bandwidth sele
 }
 
 \examples{
-\dontrun{
+\donttest{
 data(pbc)
 
 ## Fixed bandwidth selection ##

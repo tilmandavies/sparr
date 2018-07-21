@@ -122,7 +122,7 @@ burkcas <- burk$cases
 burkden1 <- spattemp.density(burkcas,tres=128)
 summary(burkden1)
 
-\dontrun{
+\donttest{
 hlam <- LIK.spattemp(burkcas,tlim=c(400,5900),verbose=FALSE)
 burkden2 <- spattemp.density(burkcas,h=hlam[1],lambda=hlam[2],tlim=c(400,5900),tres=256)
 tims <- c(1000,2000,3500)

@@ -62,7 +62,7 @@
 #'
 #' @examples
 #' 
-#' \dontrun{
+#' \donttest{
 #' data(pbc)
 #' data(fmd)
 #' data(burk)

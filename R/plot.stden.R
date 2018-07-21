@@ -6,6 +6,7 @@ plot.stden <- function(x, tselect = NULL, type = c("joint", "conditional"), fix.
   if(is.null(ellip)) ellip <- list()
   if(is.null(ellip$box)) ellip$box <- FALSE
   if(is.null(ellip$ribargs)) ellip$ribargs <- list(box=TRUE)
+  if(is.null(ellip$log)) ellip$log <- FALSE
   mn <- is.null(ellip$main)
 
   typ <- type[1]
@@ -19,6 +20,7 @@ plot.stden <- function(x, tselect = NULL, type = c("joint", "conditional"), fix.
   
   zlimeq <- c(0,min(sapply(lst,max)[sapply(lst,max)>0]))
   zlimconstant <- range(sapply(lst,range))
+  if(ellip$log&&fix.range) zlimconstant <- log(zlimconstant)
   grt <- as.numeric(names(lst))
   
   if(!is.null(tselect)){

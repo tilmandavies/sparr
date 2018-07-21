@@ -213,7 +213,7 @@
 #' # Fixed bandwidth kernel density; diggle edge correction; coarser resolution
 #' chden2 <- bivariate.density(chorley,h0=1.5,edge="diggle",resolution=64) 
 #' 
-#' \dontrun{
+#' \donttest{
 #' # Adaptive smoothing; uniform edge correction
 #' chden3 <- bivariate.density(chorley,h0=1.5,hp=1,adapt=TRUE)
 #' 

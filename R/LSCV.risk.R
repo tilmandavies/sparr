@@ -142,7 +142,7 @@
 #'
 #' @examples
 #' 
-#' \dontrun{
+#' \donttest{
 #' 
 #' data(pbc)
 #' pbccas <- split(pbc)$case

@@ -13,7 +13,7 @@ SLIK.adapt(pp, hold = FALSE, start = rep(OS(pp), 2), hlim = NULL,
 2D data to be smoothed.}
 
 \item{hold}{Logical value indicating whether to hold the global and pilot bandwidths equal throughout the
-optimisation; defaults to \code{FALSE}. See `Details'.}
+optimisation; defaults to \code{FALSE}. See `Details'. There}
 
 \item{start}{A positively-valued numeric vector of length 2 giving the starting values to be used for the global/pilot
 optimisation routine when \code{hold = FALSE}. Defaults to the oversmoothing bandwidth (\code{\link{OS}}) for both values;
@@ -59,7 +59,7 @@ be computed by brute force, and this is computationally expensive.
 
 Identifiability problems can sometimes arise when the global and pilot bandwidths are allowed to `float freely' in the bivariate optimisation routine, which is the default
 behaviour of the function (with \code{hold = FALSE}). This can be curbed by setting \code{hold = TRUE}, which forces both the global and pilot
-to be held at the same value during optimisation. Doing this also has the beneficial side effect of turning the problem into one of univariate optimisation, thereby reducing total computational cost.
+to be held at the same value during optimisation. Doing this also has the beneficial side effect of turning the problem into one of univariate optimisation, thereby reducing total computational cost. Current work (Davies & Lawson, 2018) provides some empirical evidence that this strategy performs quite well in practice.
 
 Like \code{\link{LSCV.density}} and \code{\link{LIK.density}}, the argument \code{zero.action} can be used to control the level of severity in response to small bandwidths that result (due to numerical error) in at least one density value being zero or less. 
 When this argument is passed a vector of length 2, the first entry corresponds to the global bandwidth (and hence refers to checks of the final adaptive density estimate and its leave-one-out values) and the second to the pilot bandwidth (and hence checks the fixed-bandwidth pilot density and its leave-one-out values).
@@ -68,14 +68,14 @@ See the help page for \code{\link{LIK.density}} for an explanation of the four a
 }
 \section{Note}{
  While theoretically valid, this is a largely experimental function. There is presently little in the literature to suggest how well this
-type of simultaneous global/pilot bandwidth selection might perform in practice. Some current research efforts (T.M. Davies, A.B. Lawson, personal communication)
-seek to address these questions in the future.
+type of simultaneous global/pilot bandwidth selection might perform in practice. Current research efforts (Davies & Lawson, 2018)
+seek in part to address these questions.
 }
 
 \examples{
 
 
-\dontrun{
+\donttest{
 
 data(pbc)
 pbccas <- split(pbc)$case
@@ -87,6 +87,8 @@ SLIK.adapt(pbccas,hold=TRUE)
 
 }
 \references{
+Davies, T.M. and Lawson, A.B. (2018), An evaluation of likelihood-based bandwidth selectors for spatial and spatiotemporal kernel estimates, \emph{Submitted for publication}.
+
 Silverman, B.W. (1986), \emph{Density Estimation for Statistics
 and Data Analysis}, Chapman & Hall, New York.
 

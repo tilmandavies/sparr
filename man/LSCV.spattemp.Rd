@@ -75,7 +75,7 @@ large data sets and fine evaluation grid resolutions.
 }
 
 \examples{
-\dontrun{
+\donttest{
 
 data(burk) # Burkitt's Uganda lymphoma data
 burkcas <- burk$cases

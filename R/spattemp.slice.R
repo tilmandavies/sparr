@@ -64,7 +64,7 @@
 #'
 #' @examples
 #' 
-#' \dontrun{
+#' \donttest{
 #' data(fmd)
 #' fmdcas <- fmd$cases
 #' fmdcon <- fmd$controls

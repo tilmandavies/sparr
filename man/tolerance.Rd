@@ -99,7 +99,7 @@ display.
 }
 \examples{
 
-\dontrun{
+\donttest{
 
 data(pbc)
 h0 <- LSCV.risk(pbc,method="hazelton");h0

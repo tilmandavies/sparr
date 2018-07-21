@@ -82,7 +82,7 @@ Bootstrapping for spatiotemporal bandwidth selection for spatiotemporal data is 
 }
 
 \examples{
-\dontrun{
+\donttest{
 
 data(burk) # Burkitt's Uganda lymphoma data
 burkcas <- burk$cases
@@ -94,7 +94,7 @@ hlam1 <- BOOT.spattemp(burkcas)
 hlam2 <- BOOT.spattemp(burkcas,tlim=c(400,5800),eta=8,nu=450) 
 
 #~150 secs. Increase ref. bw., custom starting vals
-hlam3 <- BOOT.spattemp(burkcas,eta=20,nu=800,start=c(7,400))) 
+hlam3 <- BOOT.spattemp(burkcas,eta=20,nu=800,start=c(7,400)) 
 
 rbind(hlam1,hlam2,hlam3)
 }

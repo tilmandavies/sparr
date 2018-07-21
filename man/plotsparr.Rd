@@ -101,7 +101,7 @@ instance, one might also want to set \code{sleep = 0}.
 }
 \examples{
 
-\dontrun{
+\donttest{
 data(pbc)
 data(fmd)
 data(burk)

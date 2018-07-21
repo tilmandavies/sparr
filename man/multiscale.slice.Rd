@@ -50,7 +50,7 @@ argument of the preceding call to \code{multiscale.density} at the cost of
 additional computing time.)
 }
 \examples{
-\dontrun{
+\donttest{
 data(chorley) # Chorley-Ribble data (package 'spatstat')
 ch.multi <- multiscale.density(chorley,h0=1,h0fac=c(0.5,2))
 

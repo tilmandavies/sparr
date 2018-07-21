@@ -46,7 +46,7 @@
 #' spatially adaptive kernel estimates, \emph{Statistics and Computing}, [to appear].
 #' 
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' data(chorley) # Chorley-Ribble data (package 'spatstat')
 #' ch.multi <- multiscale.density(chorley,h0=1,h0fac=c(0.5,2))
 #' 

@@ -3,6 +3,8 @@
 OVERVIEW
 
     o Added 'optim.control' argument to 'SLIK.adapt'
+    o Added internal maximum bandwidth limit to 'SLIK.adapt'
+    o Minor bugs squashed, doc updates
     
 
 
