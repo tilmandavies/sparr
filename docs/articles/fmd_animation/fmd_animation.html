@@ -8,14 +8,17 @@
 <title>Foot and Mouth disease animation • sparr</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- pkgdown --><link href="../../pkgdown.css" rel="stylesheet">
-<script src="../../jquery.sticky-kit.min.js"></script><script src="../../pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../../pkgdown.css" rel="stylesheet">
+<script src="../../pkgdown.js"></script><meta property="og:title" content="Foot and Mouth disease animation">
+<meta property="og:description" content="">
+<meta name="twitter:card" content="summary">
+<!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
 <body>
-    <div class="container template-vignette">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -24,12 +27,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../../index.html">sparr</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../../index.html">sparr</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.2.12</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../..//index.html">
+  <a href="../../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -56,7 +63,7 @@
   </ul>
 </li>
 <li>
-  <a href="../../news/index.html">News</a>
+  <a href="../../news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -76,45 +83,47 @@
 
       
       </header><div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Foot and Mouth disease animation</h1>
             
-          </div>
+      
+      <small class="dont-index">Source: <a href="https://github.com/tilmandavies/sparr/blob/master/vignettes/fmd_animation/fmd_animation.Rmd"><code>vignettes/fmd_animation/fmd_animation.Rmd</code></a></small>
+      <div class="hidden name"><code>fmd_animation.Rmd</code></div>
+
+    </div>
 
     
     
-<div class="contents">
 <p>Below is example output of spatio-temporal smoothing the foot and mouth disease outbreak in Cumbria, UK from days 10 through 231.</p>
 <video controls loop autoplay><source src="fmd.mp4"></source></video><div id="code" class="section level2">
 <h2 class="hasAnchor">
 <a href="#code" class="anchor"></a>Code</h2>
 <p>The following code generates the above animation.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sparr)
-<span class="kw">library</span>(animation)
-
-<span class="kw">data</span>(fmd)
-fmd_case &lt;-<span class="st"> </span>fmd<span class="op">$</span>cases
-fmd_cont &lt;-<span class="st"> </span>fmd<span class="op">$</span>controls
-
-hlam &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/LSCV.spattemp.html">LIK.spattemp</a></span>(fmd_case)
-
-f.breve &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/spattemp.density.html">spattemp.density</a></span>(fmd_case, <span class="dt">h=</span>hlam[<span class="dv">1</span>], <span class="dt">lambda=</span>hlam[<span class="dv">2</span>], <span class="dt">tlim=</span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">230</span>))
-g.tilde &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/bivariate.density.html">bivariate.density</a></span>(fmd_cont, <span class="dt">h0=</span>hlam[<span class="dv">1</span>])
-rho.breve &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/spattemp.risk.html">spattemp.risk</a></span>(<span class="dt">f=</span>f.breve,<span class="dt">g=</span>g.tilde, <span class="dt">tolerate=</span><span class="ot">TRUE</span>)
-
-colpal &lt;-<span class="st"> </span><span class="kw">spatstat.options</span>(<span class="st">"image.colfun"</span>)
-fmdcolours &lt;-<span class="st"> </span><span class="kw">colourmap</span>(<span class="kw">colpal</span>(<span class="dv">128</span>),<span class="dt">breaks=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">80</span>,<span class="kw">seq</span>(<span class="op">-</span><span class="dv">7</span>,<span class="dv">4</span>,<span class="dt">length=</span><span class="dv">128</span>)))
-mytimes &lt;-<span class="st"> </span><span class="dv">10</span><span class="op">:</span><span class="dv">230</span>
-animation<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/animation/topics/saveVideo">saveVideo</a></span>(
-  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(mytimes)){
-    <span class="kw">plot</span>(rho.breve,<span class="dt">tselect=</span>mytimes[i],<span class="dt">type=</span><span class="st">"conditional"</span>,<span class="dt">col=</span>fmdcolours,
-         <span class="dt">tol.args=</span><span class="kw">list</span>(<span class="dt">levels=</span><span class="kw">c</span>(<span class="fl">0.05</span>,<span class="fl">0.0001</span>),<span class="dt">lty=</span><span class="dv">2</span><span class="op">:</span><span class="dv">1</span>,<span class="dt">drawlabels=</span><span class="ot">FALSE</span>),
-         <span class="dt">sleep=</span><span class="dv">0</span>,<span class="dt">override.par=</span><span class="ot">FALSE</span>)
-    <span class="kw">title</span>(<span class="dt">xlab=</span><span class="st">"Easting"</span>,<span class="dt">ylab=</span><span class="st">"Northing"</span>)
-  },
-  <span class="dt">video.name=</span><span class="st">"fmd.mp4"</span>, <span class="dt">other.opts =</span> <span class="st">'-b:v 1M -pix_fmt yuv420p'</span>, <span class="dt">ani.width=</span><span class="dv">640</span>, <span class="dt">ani.height=</span><span class="dv">640</span>, <span class="dt">interval=</span><span class="dv">1</span><span class="op">/</span><span class="dv">12</span>)</code></pre></div>
-</div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(sparr)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(animation)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">data</span>(fmd)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">fmd_case &lt;-<span class="st"> </span>fmd<span class="op">$</span>cases</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">fmd_cont &lt;-<span class="st"> </span>fmd<span class="op">$</span>controls</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">hlam &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/LSCV.spattemp.html">LIK.spattemp</a></span>(fmd_case)</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">f.breve &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/spattemp.density.html">spattemp.density</a></span>(fmd_case, <span class="dt">h=</span>hlam[<span class="dv">1</span>], <span class="dt">lambda=</span>hlam[<span class="dv">2</span>], <span class="dt">tlim=</span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">230</span>))</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">g.tilde &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/bivariate.density.html">bivariate.density</a></span>(fmd_cont, <span class="dt">h0=</span>hlam[<span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">rho.breve &lt;-<span class="st"> </span><span class="kw"><a href="../../reference/spattemp.risk.html">spattemp.risk</a></span>(<span class="dt">f=</span>f.breve,<span class="dt">g=</span>g.tilde, <span class="dt">tolerate=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">colpal &lt;-<span class="st"> </span><span class="kw">spatstat.options</span>(<span class="st">"image.colfun"</span>)</a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">fmdcolours &lt;-<span class="st"> </span><span class="kw">colourmap</span>(<span class="kw">colpal</span>(<span class="dv">128</span>),<span class="dt">breaks=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">80</span>,<span class="kw">seq</span>(<span class="op">-</span><span class="dv">7</span>,<span class="dv">4</span>,<span class="dt">length=</span><span class="dv">128</span>)))</a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">mytimes &lt;-<span class="st"> </span><span class="dv">10</span><span class="op">:</span><span class="dv">230</span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">animation<span class="op">::</span><span class="kw">saveVideo</span>(</a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(mytimes)){</a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">    <span class="kw">plot</span>(rho.breve,<span class="dt">tselect=</span>mytimes[i],<span class="dt">type=</span><span class="st">"conditional"</span>,<span class="dt">col=</span>fmdcolours,</a>
+<a class="sourceLine" id="cb1-20" data-line-number="20">         <span class="dt">tol.args=</span><span class="kw">list</span>(<span class="dt">levels=</span><span class="kw">c</span>(<span class="fl">0.05</span>,<span class="fl">0.0001</span>),<span class="dt">lty=</span><span class="dv">2</span><span class="op">:</span><span class="dv">1</span>,<span class="dt">drawlabels=</span><span class="ot">FALSE</span>),</a>
+<a class="sourceLine" id="cb1-21" data-line-number="21">         <span class="dt">sleep=</span><span class="dv">0</span>,<span class="dt">override.par=</span><span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb1-22" data-line-number="22">    <span class="kw">title</span>(<span class="dt">xlab=</span><span class="st">"Easting"</span>,<span class="dt">ylab=</span><span class="st">"Northing"</span>)</a>
+<a class="sourceLine" id="cb1-23" data-line-number="23">  },</a>
+<a class="sourceLine" id="cb1-24" data-line-number="24">  <span class="dt">video.name=</span><span class="st">"fmd.mp4"</span>, <span class="dt">other.opts =</span> <span class="st">'-b:v 1M -pix_fmt yuv420p'</span>, <span class="dt">ani.width=</span><span class="dv">640</span>, <span class="dt">ani.height=</span><span class="dv">640</span>, <span class="dt">interval=</span><span class="dv">1</span><span class="op">/</span><span class="dv">12</span>)</a></code></pre></div>
 </div>
   </div>
 
@@ -136,11 +145,13 @@ animation<span class="op">::</span><span class="kw"><a href="http://www.rdocumen
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
 </div>
+
+  
 
   </body>
 </html>

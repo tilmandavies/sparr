@@ -1,0 +1,8 @@
+pandoc: 2.2.2.1
+pkgdown: 1.1.0
+pkgdown_sha: ~
+articles:
+  fmd_animation: fmd_animation/fmd_animation.html
+  fmd_interactive: fmd_interactive/fmd_interactive.html
+  pbc_interactive: pbc_interactive/pbc_interactive.html
+

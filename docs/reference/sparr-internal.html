@@ -18,13 +18,25 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Internal <code>sparr</code> functions — sparr-internal" />
+
+<meta property="og:description" content="Internal sparr functions, only meant to be accessed by the user directly in a life-threatening situation." />
+<meta name="twitter:card" content="summary" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,12 +59,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">sparr</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">sparr</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.2.12</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -79,7 +95,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -91,6 +107,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -98,43 +115,47 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Internal <code>sparr</code> functions</h1>
+    
+    <div class="hidden name"><code>sparr-internal.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Internal <code><a href='sparr-package.html'>sparr</a></code> functions, only meant to be accessed by the user directly in a life-threatening situation.</p>
     
+    </div>
 
         
     <h2 class="hasAnchor" id="usage"><a class="anchor" href="#usage"></a>Usage</h2>
 
-    <p><code>adens(x,bwim,bwpts,resolution,edge,diggle,weights,intensity,hstep,qstep,qres,verbose)</code>
-<code>BAM.single(h,edge,BP)</code>
-<code>BAM.prep(cases,controls,lambda,erode,res)</code>
-<code>bivden.LOO(pp,h0,hp,gamma.scale,trim,resolution,parallel)</code>
-<code>checkdb(db)</code>
-<code>checkedge(edge)</code>
-<code>checkit(h,str)</code>
-<code>checkran(ran,nm)</code>
-<code>edgeh(bwim,pres,tres,step,W,verbose=FALSE)</code>
-<code>gethcats(h,breaks=NULL,step=0.05)</code>
-<code>identical_windows(w1,w2)</code>
-<code>KO(xy)</code>
-<code>LSCV.density.spatial.single(h,pp,res,edge)</code>
-<code>LSCV.risk.single(h,cases,controls,res,edge,hazey)</code>
-<code>posifybivden(x,eps=.Machine$double.xmin)</code>
-<code>processgamma(gamma.scale,pds)</code>
-<code>processnstar(n,pp)</code>
-<code>processscaler(s,pp)</code>
-<code>point_image_by_bw(h,hc,points,weights,WM)</code>
-<code>taperoff(x,zeropoint=0,onepoint=1,type=c("smooth", "cosine"))</code>
-<code>tol.asy.ada(f,g,beta,verbose=FALSE)</code>
-<code>tol.asy.fix(f,g,pooled,verbose=FALSE)</code>
-<code>tol.mc.ada(rs,ITER,parallelise,verbose,...)</code>
-<code>tol.mc.fix(rs,ITER,parallelise,verbose,...)</code></p>
+    <p><code>adens(x,bwim,bwpts,resolution,edge,diggle,weights,intensity,hstep,qstep,qres,verbose)</code><br />
+<code>BAM.single(h,edge,BP)</code><br />
+<code>BAM.prep(cases,controls,lambda,erode,res)</code><br />
+<code>bivden.LOO(pp,h0,hp,gamma.scale,trim,resolution,parallel)</code><br />
+<code>checkdb(db)</code><br />
+<code>checkedge(edge)</code><br />
+<code>checkit(h,str)</code><br />
+<code>checkran(ran,nm)</code><br />
+<code>edgeh(bwim,pres,tres,step,W,verbose=FALSE)</code><br />
+<code>gethcats(h,breaks=NULL,step=0.05)</code><br />
+<code>identical_windows(w1,w2)</code><br />
+<code>KO(xy)</code><br />
+<code>LSCV.density.spatial.single(h,pp,res,edge)</code><br />
+<code>LSCV.risk.single(h,cases,controls,res,edge,hazey)</code><br />
+<code>posifybivden(x,eps=.Machine$double.xmin)</code><br />
+<code>processgamma(gamma.scale,pds)</code><br />
+<code>processnstar(n,pp)</code><br />
+<code>processscaler(s,pp)</code><br />
+<code>point_image_by_bw(h,hc,points,weights,WM)</code><br />
+<code>taperoff(x,zeropoint=0,onepoint=1,type=c("smooth", "cosine"))</code><br />
+<code>tol.asy.ada(f,g,beta,verbose=FALSE)</code><br />
+<code>tol.asy.fix(f,g,pooled,verbose=FALSE)</code><br />
+<code>tol.mc.ada(rs,ITER,parallelise,verbose,...)</code><br />
+<code>tol.mc.fix(rs,ITER,parallelise,verbose,...)</code><br /></p>
     
 
   </div>
@@ -156,11 +177,14 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

@@ -18,13 +18,26 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Spatial relative risk/density ratio — risk" />
+
+<meta property="og:description" content="Estimates a relative risk function based on the ratio of two 2D
+kernel density estimates." />
+<meta name="twitter:card" content="summary" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,12 +60,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">sparr</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">sparr</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.2.12</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -79,7 +96,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -91,6 +108,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -98,22 +116,26 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Spatial relative risk/density ratio</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tilmandavies/sparr/blob/master/R/risk.R'><code>R/risk.R</code></a></small>
+    <div class="hidden name"><code>risk.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Estimates a <em>relative risk</em> function based on the ratio of two 2D
 kernel density estimates.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>risk</span>(<span class='no'>f</span>, <span class='kw'>g</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>h0</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hp</span> <span class='kw'>=</span> <span class='no'>h0</span>, <span class='kw'>adapt</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>tolerate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>doplot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>pilot.symmetry</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"none"</span>, <span class='st'>"f"</span>, <span class='st'>"g"</span>,
   <span class='st'>"pooled"</span>), <span class='kw'>epsilon</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -224,8 +246,8 @@ following components:</p>
 density to the `control' (Bithell, 1990; 1991). Using kernel density
 estimation to model these densities (Diggle, 1985), we obtain a workable
 estimate thereof. This function defines the risk function <em>r</em> in the
-following fashion:  <em>r</em><code> = (fd + epsilon*max(gd))/(gd +
-epsilon*max(gd))</code>,  where <code>fd</code> and <code>gd</code> denote the case and
+following fashion: <br /><br /> <em>r</em><code> = (fd + epsilon*max(gd))/(gd +
+epsilon*max(gd))</code>, <br /><br /> where <code>fd</code> and <code>gd</code> denote the case and
 control density estimates respectively. Note the (optional) additive
 constants defined by <code>epsilon</code> times the maximum of each of the
 densities in the numerator and denominator respectively (see Bowman and
@@ -312,7 +334,10 @@ relative risk, <em>Statistics in Medicine</em>, <b>14</b>, 2335-2342.</p>
 <span class='no'>pbcrr4</span> <span class='kw'>&lt;-</span> <span class='fu'>risk</span>(<span class='no'>f</span>,<span class='no'>g</span>,<span class='kw'>tolerate</span><span class='kw'>=</span><span class='fl'>TRUE</span>,<span class='kw'>verbose</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
 
 <span class='fu'>par</span>(<span class='kw'>mfrow</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>2</span>,<span class='fl'>2</span>))
-<span class='fu'>plot</span>(<span class='no'>pbcrr1</span>,<span class='kw'>override.par</span><span class='kw'>=</span><span class='fl'>FALSE</span>,<span class='kw'>main</span><span class='kw'>=</span><span class='st'>"Fixed"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>plot</span>(<span class='no'>pbcrr2</span>,<span class='kw'>override.par</span><span class='kw'>=</span><span class='fl'>FALSE</span>,<span class='kw'>main</span><span class='kw'>=</span><span class='st'>"Asymmetric adaptive"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>plot</span>(<span class='no'>pbcrr3</span>,<span class='kw'>override.par</span><span class='kw'>=</span><span class='fl'>FALSE</span>,<span class='kw'>main</span><span class='kw'>=</span><span class='st'>"Symmetric (pooled) adaptive"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>plot</span>(<span class='no'>pbcrr4</span>,<span class='kw'>override.par</span><span class='kw'>=</span><span class='fl'>FALSE</span>,<span class='kw'>main</span><span class='kw'>=</span><span class='st'>"Symmetric (case) adaptive"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>pbcrr1</span>,<span class='kw'>override.par</span><span class='kw'>=</span><span class='fl'>FALSE</span>,<span class='kw'>main</span><span class='kw'>=</span><span class='st'>"Fixed"</span>)
+<span class='fu'>plot</span>(<span class='no'>pbcrr2</span>,<span class='kw'>override.par</span><span class='kw'>=</span><span class='fl'>FALSE</span>,<span class='kw'>main</span><span class='kw'>=</span><span class='st'>"Asymmetric adaptive"</span>)
+<span class='fu'>plot</span>(<span class='no'>pbcrr3</span>,<span class='kw'>override.par</span><span class='kw'>=</span><span class='fl'>FALSE</span>,<span class='kw'>main</span><span class='kw'>=</span><span class='st'>"Symmetric (pooled) adaptive"</span>)
+<span class='fu'>plot</span>(<span class='no'>pbcrr4</span>,<span class='kw'>override.par</span><span class='kw'>=</span><span class='fl'>FALSE</span>,<span class='kw'>main</span><span class='kw'>=</span><span class='st'>"Symmetric (case) adaptive"</span>)</div><div class='img'><img src='risk-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -342,11 +367,14 @@ T.M. Davies
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

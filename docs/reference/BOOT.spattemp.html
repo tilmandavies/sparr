@@ -18,13 +18,25 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Bootstrap bandwidths for a spatiotemporal kernel density estimate — BOOT.spattemp" />
+
+<meta property="og:description" content="Bandwidth selection for standalone spatiotemporal density/intensity based on bootstrap estimation of the MISE, providing an isotropic scalar spatial bandwidth and a scalar temporal bandwidth." />
+<meta name="twitter:card" content="summary" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,12 +59,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">sparr</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">sparr</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.2.12</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -79,7 +95,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -91,6 +107,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -98,21 +115,25 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Bootstrap bandwidths for a spatiotemporal kernel density estimate</h1>
+    
+    <div class="hidden name"><code>BOOT.spattemp.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Bandwidth selection for standalone spatiotemporal density/intensity based on bootstrap estimation of the MISE, providing an isotropic scalar spatial bandwidth and a scalar temporal bandwidth.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>BOOT.spattemp</span>(<span class='no'>pp</span>, <span class='kw'>tt</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>eta</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>nu</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>sedge</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"uniform"</span>, <span class='st'>"none"</span>), <span class='kw'>tedge</span> <span class='kw'>=</span> <span class='no'>sedge</span>, <span class='kw'>ref.density</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>sres</span> <span class='kw'>=</span> <span class='fl'>64</span>, <span class='kw'>tres</span> <span class='kw'>=</span> <span class='no'>sres</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -186,26 +207,275 @@ where \(\hat{f}(x,t)\) is a density estimate of \(X\) constructed with `referenc
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='LSCV.spattemp.html'>LSCV.spattemp</a></code>, <code><a href='spattemp.density.html'>spattemp.density</a></code></p>
+    <div class='dont-index'><p><code><a href='LSCV.spattemp.html'>LSCV.spattemp</a></code>, <code><a href='spattemp.density.html'>spattemp.density</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"># NOT RUN {
-data(burk) # Burkitt's Uganda lymphoma data
-burkcas <- burk$cases
+    <pre class="examples"><div class='input'>
+<span class='fu'>data</span>(<span class='no'>burk</span>) <span class='co'># Burkitt's Uganda lymphoma data</span>
+<span class='no'>burkcas</span> <span class='kw'>&lt;-</span> <span class='no'>burk</span>$<span class='no'>cases</span>
 
-#~85 secs
-hlam1 <- BOOT.spattemp(burkcas) 
-
-#~75 secs. Widen time limits, reduce ref. bw.
-hlam2 <- BOOT.spattemp(burkcas,tlim=c(400,5800),eta=8,nu=450) 
-
-#~150 secs. Increase ref. bw., custom starting vals
-hlam3 <- BOOT.spattemp(burkcas,eta=20,nu=800,start=c(7,400))) 
-
-rbind(hlam1,hlam2,hlam3)
-# }
-</pre>
+<span class='co'>#~85 secs</span>
+<span class='no'>hlam1</span> <span class='kw'>&lt;-</span> <span class='fu'>BOOT.spattemp</span>(<span class='no'>burkcas</span>)</div><div class='output co'>#&gt; Initialising...Done.
+#&gt; Optimising...
+#&gt; h = 11.24394 ; lambda = 560.6947 
+#&gt; h = 67.31342 ; lambda = 560.6947 
+#&gt; h = 11.24394 ; lambda = 616.7642 
+#&gt; h = 39.27868 ; lambda = 574.7121 
+#&gt; h = 25.26131 ; lambda = 581.7208 
+#&gt; h = 18.25263 ; lambda = 585.2251 
+#&gt; h = 18.25263 ; lambda = 641.2946 
+#&gt; h = 16.50046 ; lambda = 621.1447 
+#&gt; h = 9.491773 ; lambda = 652.6837 
+#&gt; h = 16.06241 ; lambda = 602.0898 
+#&gt; h = 21.31893 ; lambda = 606.4702 
+#&gt; h = 13.76269 ; lambda = 614.1907 
+#&gt; h = 13.32465 ; lambda = 595.1359 
+#&gt; h = 14.1186 ; lambda = 601.6381 
+#&gt; h = 11.81888 ; lambda = 613.739 
+#&gt; h = 15.00153 ; lambda = 605.0021 
+#&gt; h = 12.87976 ; lambda = 610.8267 
+#&gt; h = 14.47109 ; lambda = 606.4582 
+#&gt; h = 14.11518 ; lambda = 619.0109 
+#&gt; h = 14.11347 ; lambda = 627.6973 
+#&gt; h = 14.82186 ; lambda = 619.9648 
+#&gt; h = 14.55707 ; lambda = 618.5213 
+#&gt; h = 14.19945 ; lambda = 639.7604 
+#&gt; h = 14.06363 ; lambda = 656.4115 
+#&gt; h = 13.62003 ; lambda = 665.5875 
+#&gt; h = 13.1515 ; lambda = 689.1206 
+#&gt; h = 13.10167 ; lambda = 717.8347 
+#&gt; h = 12.59577 ; lambda = 762.9034 
+#&gt; h = 11.68364 ; lambda = 795.6125 
+#&gt; h = 13.46863 ; lambda = 691.2117 
+#&gt; h = 12.9129 ; lambda = 764.9946 
+#&gt; h = 12.7936 ; lambda = 802.9316 
+#&gt; h = 11.92073 ; lambda = 874.6233 
+#&gt; h = 12.30771 ; lambda = 828.7704 
+#&gt; h = 12.50553 ; lambda = 868.7986 
+#&gt; h = 12.46042 ; lambda = 921.7462 
+#&gt; h = 12.94631 ; lambda = 895.9074 
+#&gt; h = 13.2656 ; lambda = 929.4758 
+#&gt; h = 12.93242 ; lambda = 1048.29 
+#&gt; h = 13.00184 ; lambda = 1170.97 
+#&gt; h = 13.73761 ; lambda = 1056.02 
+#&gt; h = 13.41831 ; lambda = 1022.452 
+#&gt; h = 13.08513 ; lambda = 1141.266 
+#&gt; h = 13.13025 ; lambda = 1088.319 
+#&gt; h = 12.64436 ; lambda = 1114.157 
+#&gt; h = 12.25739 ; lambda = 1160.01 
+#&gt; h = 12.44654 ; lambda = 1074.129 
+#&gt; h = 12.61746 ; lambda = 1077.677 
+#&gt; h = 12.3294 ; lambda = 1143.544 
+#&gt; h = 12.78167 ; lambda = 1072.104 
+#&gt; h = 12.80857 ; lambda = 1108.584 
+#&gt; h = 12.76079 ; lambda = 1100.858 
+#&gt; h = 12.62348 ; lambda = 1142.911 
+#&gt; h = 12.74212 ; lambda = 1089.806 
+#&gt; h = 12.66303 ; lambda = 1125.209 
+#&gt; h = 12.72235 ; lambda = 1098.656 
+#&gt; h = 12.60592 ; lambda = 1111.956 
+#&gt; h = 12.72207 ; lambda = 1103.632 
+#&gt; h = 12.80006 ; lambda = 1088.131 
+#&gt; h = 12.68329 ; lambda = 1107.651 
+#&gt; h = 12.68301 ; lambda = 1112.627 
+#&gt; h = 12.69284 ; lambda = 1109.134 
+#&gt; h = 12.65406 ; lambda = 1113.153 
+#&gt; h = 12.70507 ; lambda = 1106.012 
+#&gt; h = 12.69551 ; lambda = 1104.529 
+#&gt; h = 12.69484 ; lambda = 1105.68 
+#&gt; h = 12.67306 ; lambda = 1107.319 
+#&gt; h = 12.68106 ; lambda = 1106.992 
+#&gt; h = 12.66951 ; lambda = 1108.963 
+#&gt; h = 12.68851 ; lambda = 1106.501 
+#&gt; h = 12.68629 ; lambda = 1105.842 
+#&gt; h = 12.68554 ; lambda = 1106.294 
+#&gt; h = 12.69298 ; lambda = 1105.803 
+#&gt; h = 12.68404 ; lambda = 1106.695 
+#&gt; Done.</div><div class='input'>
+<span class='co'>#~75 secs. Widen time limits, reduce ref. bw.</span>
+<span class='no'>hlam2</span> <span class='kw'>&lt;-</span> <span class='fu'>BOOT.spattemp</span>(<span class='no'>burkcas</span>,<span class='kw'>tlim</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>400</span>,<span class='fl'>5800</span>),<span class='kw'>eta</span><span class='kw'>=</span><span class='fl'>8</span>,<span class='kw'>nu</span><span class='kw'>=</span><span class='fl'>450</span>)</div><div class='output co'>#&gt; Initialising...Done.
+#&gt; Optimising...
+#&gt; h = 8 ; lambda = 450 
+#&gt; h = 53 ; lambda = 450 
+#&gt; h = 8 ; lambda = 495 
+#&gt; h = 30.5 ; lambda = 461.25 
+#&gt; h = 19.25 ; lambda = 466.875 
+#&gt; h = 13.625 ; lambda = 469.6875 
+#&gt; h = 13.625 ; lambda = 514.6875 
+#&gt; h = 16.4375 ; lambda = 547.0312 
+#&gt; h = 19.25 ; lambda = 489.375 
+#&gt; h = 10.8125 ; lambda = 493.5938 
+#&gt; h = 10.8125 ; lambda = 538.5938 
+#&gt; h = 9.40625 ; lambda = 573.0469 
+#&gt; h = 8 ; lambda = 517.5 
+#&gt; h = 12.21875 ; lambda = 515.3906 
+#&gt; h = 9.40625 ; lambda = 516.7969 
+#&gt; h = 11.51562 ; lambda = 515.7422 
+#&gt; h = 11.51562 ; lambda = 560.7422 
+#&gt; h = 11.33984 ; lambda = 543.9551 
+#&gt; h = 10.8125 ; lambda = 583.5938 
+#&gt; h = 10.46094 ; lambda = 617.5195 
+#&gt; h = 9.757812 ; lambda = 595.3711 
+#&gt; h = 10.19727 ; lambda = 586.7139 
+#&gt; h = 9.845703 ; lambda = 665.6396 
+#&gt; h = 9.362305 ; lambda = 729.1626 
+#&gt; h = 9.625977 ; lambda = 759.9683 
+#&gt; h = 9.340332 ; lambda = 846.5955 
+#&gt; h = 8.527344 ; lambda = 871.6113 
+#&gt; h = 9.977539 ; lambda = 681.0425 
+#&gt; h = 10.24121 ; lambda = 711.8481 
+#&gt; h = 10.02148 ; lambda = 716.1768 
+#&gt; h = 9.669922 ; lambda = 795.1025 
+#&gt; h = 9.746826 ; lambda = 766.5875 
+#&gt; h = 9.351318 ; lambda = 810.379 
+#&gt; h = 9.853943 ; lambda = 739.7273 
+#&gt; h = 9.51886 ; lambda = 786.8285 
+#&gt; h = 9.770172 ; lambda = 751.5026 
+#&gt; h = 9.891022 ; lambda = 758.1219 
+#&gt; h = 9.692238 ; lambda = 759.5067 
+#&gt; h = 9.715584 ; lambda = 744.4217 
+#&gt; h = 9.723394 ; lambda = 749.9632 
+#&gt; h = 9.801329 ; lambda = 741.9591 
+#&gt; h = 9.719511 ; lambda = 755.1198 
+#&gt; h = 9.672733 ; lambda = 753.5804 
+#&gt; h = 9.745812 ; lambda = 752.022 
+#&gt; h = 9.741928 ; lambda = 757.1786 
+#&gt; h = 9.728028 ; lambda = 751.7671 
+#&gt; h = 9.75433 ; lambda = 748.6693 
+#&gt; h = 9.728215 ; lambda = 753.5072 
+#&gt; h = 9.746 ; lambda = 753.7622 
+#&gt; h = 9.732521 ; lambda = 752.2658 
+#&gt; h = 9.750118 ; lambda = 750.7807 
+#&gt; h = 9.733691 ; lambda = 752.8256 
+#&gt; h = 9.7204 ; lambda = 753.0693 
+#&gt; h = 9.739459 ; lambda = 752.2839 
+#&gt; h = 9.740629 ; lambda = 752.8436 
+#&gt; h = 9.738602 ; lambda = 752.6992 
+#&gt; Done.</div><div class='input'>
+<span class='co'>#~150 secs. Increase ref. bw., custom starting vals</span>
+<span class='no'>hlam3</span> <span class='kw'>&lt;-</span> <span class='fu'>BOOT.spattemp</span>(<span class='no'>burkcas</span>,<span class='kw'>eta</span><span class='kw'>=</span><span class='fl'>20</span>,<span class='kw'>nu</span><span class='kw'>=</span><span class='fl'>800</span>,<span class='kw'>start</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>7</span>,<span class='fl'>400</span>))</div><div class='output co'>#&gt; Initialising...Done.
+#&gt; Optimising...
+#&gt; h = 7 ; lambda = 400 
+#&gt; h = 47 ; lambda = 400 
+#&gt; h = 7 ; lambda = 440 
+#&gt; h = 47 ; lambda = 440 
+#&gt; h = 37 ; lambda = 430 
+#&gt; h = 77 ; lambda = 390 
+#&gt; h = 59.5 ; lambda = 402.5 
+#&gt; h = 67 ; lambda = 420 
+#&gt; h = 52 ; lambda = 405 
+#&gt; h = 42 ; lambda = 415 
+#&gt; h = 57 ; lambda = 410 
+#&gt; h = 22 ; lambda = 435 
+#&gt; h = 4.5 ; lambda = 447.5 
+#&gt; h = 17 ; lambda = 450 
+#&gt; h = 23.25 ; lambda = 441.25 
+#&gt; h = 8.25 ; lambda = 446.25 
+#&gt; h = 29.8125 ; lambda = 434.0625 
+#&gt; h = 15.4375 ; lambda = 442.1875 
+#&gt; h = 19.03125 ; lambda = 440.1562 
+#&gt; h = 17.78125 ; lambda = 433.9062 
+#&gt; h = 21.88281 ; lambda = 439.4141 
+#&gt; h = 18.91406 ; lambda = 444.5703 
+#&gt; h = 17.37109 ; lambda = 449.3555 
+#&gt; h = 16.0625 ; lambda = 445.3125 
+#&gt; h = 20.42773 ; lambda = 440.8887 
+#&gt; h = 20.31055 ; lambda = 445.3027 
+#&gt; h = 20.9502 ; lambda = 447.876 
+#&gt; h = 21.82422 ; lambda = 441.6211 
+#&gt; h = 19.6416 ; lambda = 443.833 
+#&gt; h = 21.09668 ; lambda = 442.3584 
+#&gt; h = 20.00537 ; lambda = 443.4644 
+#&gt; h = 19.88818 ; lambda = 447.8784 
+#&gt; h = 20.02307 ; lambda = 446.131 
+#&gt; h = 20.19336 ; lambda = 449.7168 
+#&gt; h = 20.28735 ; lambda = 452.843 
+#&gt; h = 20.70972 ; lambda = 450.2673 
+#&gt; h = 20.50433 ; lambda = 449.6701 
+#&gt; h = 20.48114 ; lambda = 457.2104 
+#&gt; h = 20.56644 ; lambda = 463.1642 
+#&gt; h = 20.34946 ; lambda = 466.3371 
+#&gt; h = 20.27202 ; lambda = 474.6706 
+#&gt; h = 20.5511 ; lambda = 484.9918 
+#&gt; h = 20.68298 ; lambda = 501.0662 
+#&gt; h = 20.38856 ; lambda = 512.5727 
+#&gt; h = 20.29962 ; lambda = 537.2769 
+#&gt; h = 20.71058 ; lambda = 563.6725 
+#&gt; h = 20.92985 ; lambda = 608.1734 
+#&gt; h = 20.5465 ; lambda = 644.3841 
+#&gt; h = 20.47826 ; lambda = 716.043 
+#&gt; h = 21.10849 ; lambda = 786.9395 
+#&gt; h = 20.90627 ; lambda = 724.5239 
+#&gt; h = 20.45467 ; lambda = 832.3935 
+#&gt; h = 20.21709 ; lambda = 944.5035 
+#&gt; h = 19.78907 ; lambda = 936.0226 
+#&gt; h = 19.23047 ; lambda = 1041.772 
+#&gt; h = 18.96929 ; lambda = 1270.232 
+#&gt; h = 18.21481 ; lambda = 1547.327 
+#&gt; h = 17.22819 ; lambda = 1644.596 
+#&gt; h = 15.73375 ; lambda = 1994.642 
+#&gt; h = 16.21254 ; lambda = 2150.151 
+#&gt; h = 18.47598 ; lambda = 1318.867 
+#&gt; h = 17.48937 ; lambda = 1416.135 
+#&gt; h = 17.12664 ; lambda = 1350.539 
+#&gt; h = 15.87885 ; lambda = 1676.268 
+#&gt; h = 16.52813 ; lambda = 1586.918 
+#&gt; h = 16.42658 ; lambda = 1292.861 
+#&gt; h = 16.62698 ; lambda = 1380.795 
+#&gt; h = 16.02848 ; lambda = 1617.173 
+#&gt; h = 16.30302 ; lambda = 1550.515 
+#&gt; h = 16.40187 ; lambda = 1344.392 
+#&gt; h = 16.43343 ; lambda = 1405.023 
+#&gt; h = 16.10947 ; lambda = 1574.743 
+#&gt; h = 16.4976 ; lambda = 1429.282 
+#&gt; h = 16.62802 ; lambda = 1283.791 
+#&gt; h = 16.38427 ; lambda = 1483.834 
+#&gt; h = 16.44844 ; lambda = 1508.092 
+#&gt; h = 16.43718 ; lambda = 1430.791 
+#&gt; h = 16.32385 ; lambda = 1485.342 
+#&gt; h = 16.23697 ; lambda = 1513.373 
+#&gt; h = 16.27093 ; lambda = 1538.386 
+#&gt; h = 16.39562 ; lambda = 1457.689 
+#&gt; h = 16.3352 ; lambda = 1459.198 
+#&gt; h = 16.31067 ; lambda = 1446.88 
+#&gt; h = 16.2389 ; lambda = 1474.533 
+#&gt; h = 16.16053 ; lambda = 1482.955 
+#&gt; h = 16.14735 ; lambda = 1444.493 
+#&gt; h = 16.05911 ; lambda = 1424.068 
+#&gt; h = 15.99722 ; lambda = 1480.568 
+#&gt; h = 15.84049 ; lambda = 1497.412 
+#&gt; h = 15.82731 ; lambda = 1458.949 
+#&gt; h = 15.91062 ; lambda = 1464.951 
+#&gt; h = 15.60376 ; lambda = 1517.87 
+#&gt; h = 15.73966 ; lambda = 1499.525 
+#&gt; h = 15.80978 ; lambda = 1467.065 
+#&gt; h = 15.79443 ; lambda = 1451.891 
+#&gt; h = 15.63882 ; lambda = 1501.639 
+#&gt; h = 15.70677 ; lambda = 1492.467 
+#&gt; h = 15.7769 ; lambda = 1460.006 
+#&gt; h = 15.74897 ; lambda = 1489.646 
+#&gt; h = 15.64595 ; lambda = 1515.048 
+#&gt; h = 15.76883 ; lambda = 1479.061 
+#&gt; h = 15.81102 ; lambda = 1476.239 
+#&gt; h = 15.78496 ; lambda = 1480.296 
+#&gt; h = 15.80482 ; lambda = 1469.711 
+#&gt; h = 15.76293 ; lambda = 1484.662 
+#&gt; h = 15.77906 ; lambda = 1485.898 
+#&gt; h = 15.77139 ; lambda = 1480.77 
+#&gt; h = 15.74936 ; lambda = 1485.136 
+#&gt; h = 15.75826 ; lambda = 1483.926 
+#&gt; h = 15.76671 ; lambda = 1480.034 
+#&gt; h = 15.76388 ; lambda = 1483.505 
+#&gt; h = 15.75075 ; lambda = 1486.661 
+#&gt; h = 15.76623 ; lambda = 1482.243 
+#&gt; h = 15.77184 ; lambda = 1481.822 
+#&gt; h = 15.76845 ; lambda = 1482.348 
+#&gt; Done.</div><div class='input'>
+<span class='fu'>rbind</span>(<span class='no'>hlam1</span>,<span class='no'>hlam2</span>,<span class='no'>hlam3</span>)</div><div class='output co'>#&gt;               h    lambda
+#&gt; hlam1 12.685536 1106.2945
+#&gt; hlam2  9.738602  752.6992
+#&gt; hlam3 15.766226 1482.2426</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -238,11 +508,14 @@ T. M. Davies
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

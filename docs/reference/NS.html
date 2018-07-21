@@ -18,13 +18,26 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Normal scale (NS) bandwidth selector — NS" />
+
+<meta property="og:description" content="Provides the asymptotically optimal fixed bandwidths for spatial or spatiotemporal 
+normal densities based on a simple expression." />
+<meta name="twitter:card" content="summary" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,12 +60,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">sparr</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">sparr</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.2.12</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -79,7 +96,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -91,6 +108,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -98,16 +116,20 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Normal scale (NS) bandwidth selector</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tilmandavies/sparr/blob/master/R/NS.R'><code>R/NS.R</code></a>, <a href='https://github.com/tilmandavies/sparr/blob/master/R/NS.spattemp.R'><code>R/NS.spattemp.R</code></a></small>
+    <div class="hidden name"><code>NS.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Provides the asymptotically optimal fixed bandwidths for spatial or spatiotemporal 
 normal densities based on a simple expression.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>NS</span>(<span class='no'>pp</span>, <span class='kw'>nstar</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"npoints"</span>, <span class='st'>"geometric"</span>), <span class='kw'>scaler</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"silverman"</span>, <span class='st'>"IQR"</span>,
   <span class='st'>"sd"</span>, <span class='st'>"var"</span>))
@@ -115,7 +137,7 @@ normal densities based on a simple expression.</p>
 <span class='fu'>NS.spattemp</span>(<span class='no'>pp</span>, <span class='kw'>tt</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>nstar</span> <span class='kw'>=</span> <span class='st'>"npoints"</span>, <span class='kw'>scaler</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"silverman"</span>,
   <span class='st'>"IQR"</span>, <span class='st'>"sd"</span>, <span class='st'>"var"</span>))</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -159,7 +181,8 @@ asymptotic mean integrated squared error assuming normally distributed data; see
 of Silverman (1986). The <code>NS</code> function returns a single bandwidth for isotropic smoothing
 of spatial (2D) data. The <code>NS.spattemp</code> function returns two values -- one for
 the spatial margin and another for the temporal margin, based on independently applying
-the normal scale rule (in 2D and 1D) to the spatial and temporal margins of the supplied data.</p><dl class='dl-horizontal'>
+the normal scale rule (in 2D and 1D) to the spatial and temporal margins of the supplied data.</p>
+<dl class='dl-horizontal'>
   <dt><b>Effective sample size</b></dt><dd><p>The formula
     requires a sample size, and this can be minimally tailored via <code>nstar</code>.
     By default, the function simply uses the number of observations in
@@ -251,11 +274,14 @@ T.M. Davies
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

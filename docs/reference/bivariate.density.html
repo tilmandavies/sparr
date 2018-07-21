@@ -18,13 +18,26 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Bivariate kernel density/intensity estimation — bivariate.density" />
+
+<meta property="og:description" content="Provides an isotropic adaptive or fixed bandwidth kernel density/intensity
+estimate of bivariate/planar/2D data." />
+<meta name="twitter:card" content="summary" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,12 +60,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">sparr</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">sparr</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.2.12</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -79,7 +96,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -91,6 +108,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -98,16 +116,20 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Bivariate kernel density/intensity estimation</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tilmandavies/sparr/blob/master/R/bivariate.density.R'><code>R/bivariate.density.R</code></a></small>
+    <div class="hidden name"><code>bivariate.density.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Provides an isotropic adaptive or fixed bandwidth kernel density/intensity
 estimate of bivariate/planar/2D data.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>bivariate.density</span>(<span class='no'>pp</span>, <span class='no'>h0</span>, <span class='kw'>hp</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>adapt</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>resolution</span> <span class='kw'>=</span> <span class='fl'>128</span>,
   <span class='kw'>gamma.scale</span> <span class='kw'>=</span> <span class='st'>"geometric"</span>, <span class='kw'>edge</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"uniform"</span>, <span class='st'>"diggle"</span>, <span class='st'>"none"</span>),
@@ -115,7 +137,7 @@ estimate of bivariate/planar/2D data.</p>
   <span class='kw'>pilot.density</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>leaveoneout</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>parallelise</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>davies.baddeley</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -272,7 +294,8 @@ its probability density function, \(\hat{f}(x)\), is given by
 $$\hat{f}(y)=n^{-1}\sum_{i=1}^{n}h(x_i)^{-2}K((y-x_i)/h(x_i)) $$
 where \(h(x)\) is the bandwidth function, and \(K(.)\) is the
 bivariate standard normal smoothing kernel. Edge-correction factors (not
-shown above) are also implemented.</p><dl class='dl-horizontal'>
+shown above) are also implemented.</p>
+<dl class='dl-horizontal'>
   <dt><b>Fixed</b></dt><dd><p>The classic fixed bandwidth kernel estimator is used when
     <code>adapt = FALSE</code>. This amounts to setting \(h(u)=\)<code>h0</code> for all \(u\).
     Further details can be found in the documentation for <code><a href='http://www.rdocumentation.org/packages/spatstat/topics/density.ppp'>density.ppp</a></code>.</p></dd>
@@ -366,16 +389,12 @@ Statistics and Data Analysis</em>, Chapman &amp; Hall, New York.</p>
 <span class='no'>chden1</span> <span class='kw'>&lt;-</span> <span class='fu'>bivariate.density</span>(<span class='no'>chorley</span>,<span class='kw'>h0</span><span class='kw'>=</span><span class='fl'>1.5</span>)
 
 <span class='co'># Fixed bandwidth kernel density; diggle edge correction; coarser resolution</span>
-<span class='no'>chden2</span> <span class='kw'>&lt;-</span> <span class='fu'>bivariate.density</span>(<span class='no'>chorley</span>,<span class='kw'>h0</span><span class='kw'>=</span><span class='fl'>1.5</span>,<span class='kw'>edge</span><span class='kw'>=</span><span class='st'>"diggle"</span>,<span class='kw'>resolution</span><span class='kw'>=</span><span class='fl'>64</span>)</div><span class='co'># NOT RUN {</span>
-<span class='co'># Adaptive smoothing; uniform edge correction</span>
-<span class='no'>chden3</span> <span class='kw'>&lt;-</span> <span class='fu'>bivariate.density</span>(<span class='no'>chorley</span>,<span class='kw'>h0</span><span class='kw'>=</span><span class='fl'>1.5</span>,<span class='kw'>hp</span><span class='kw'>=</span><span class='fl'>1</span>,<span class='kw'>adapt</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-
+<span class='no'>chden2</span> <span class='kw'>&lt;-</span> <span class='fu'>bivariate.density</span>(<span class='no'>chorley</span>,<span class='kw'>h0</span><span class='kw'>=</span><span class='fl'>1.5</span>,<span class='kw'>edge</span><span class='kw'>=</span><span class='st'>"diggle"</span>,<span class='kw'>resolution</span><span class='kw'>=</span><span class='fl'>64</span>)</div><div class='input'><span class='co'># Adaptive smoothing; uniform edge correction</span>
+<span class='no'>chden3</span> <span class='kw'>&lt;-</span> <span class='fu'>bivariate.density</span>(<span class='no'>chorley</span>,<span class='kw'>h0</span><span class='kw'>=</span><span class='fl'>1.5</span>,<span class='kw'>hp</span><span class='kw'>=</span><span class='fl'>1</span>,<span class='kw'>adapt</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; ================================================================================</div><div class='input'>
 <span class='co'># Adaptive smoothing; uniform edge correction; partitioning approximation</span>
-<span class='no'>chden4</span> <span class='kw'>&lt;-</span> <span class='fu'>bivariate.density</span>(<span class='no'>chorley</span>,<span class='kw'>h0</span><span class='kw'>=</span><span class='fl'>1.5</span>,<span class='kw'>hp</span><span class='kw'>=</span><span class='fl'>1</span>,<span class='kw'>adapt</span><span class='kw'>=</span><span class='fl'>TRUE</span>,<span class='kw'>davies.baddeley</span><span class='kw'>=</span><span class='fl'>0.025</span>)
-
+<span class='no'>chden4</span> <span class='kw'>&lt;-</span> <span class='fu'>bivariate.density</span>(<span class='no'>chorley</span>,<span class='kw'>h0</span><span class='kw'>=</span><span class='fl'>1.5</span>,<span class='kw'>hp</span><span class='kw'>=</span><span class='fl'>1</span>,<span class='kw'>adapt</span><span class='kw'>=</span><span class='fl'>TRUE</span>,<span class='kw'>davies.baddeley</span><span class='kw'>=</span><span class='fl'>0.025</span>)</div><div class='output co'>#&gt; ================================================================================</div><div class='input'>
 <span class='fu'>par</span>(<span class='kw'>mfrow</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>2</span>,<span class='fl'>2</span>))
-<span class='fu'>plot</span>(<span class='no'>chden1</span>);<span class='fu'>plot</span>(<span class='no'>chden2</span>);<span class='fu'>plot</span>(<span class='no'>chden3</span>);<span class='fu'>plot</span>(<span class='no'>chden4</span>)
-<span class='co'># }</span><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>chden1</span>);<span class='fu'>plot</span>(<span class='no'>chden2</span>);<span class='fu'>plot</span>(<span class='no'>chden3</span>);<span class='fu'>plot</span>(<span class='no'>chden4</span>)</div><div class='img'><img src='bivariate.density-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -405,11 +424,14 @@ T.M. Davies and J.C. Marshall
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

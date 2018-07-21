@@ -18,13 +18,25 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Cross-validation bandwidths for spatiotemporal kernel density estimates — LIK.spattemp" />
+
+<meta property="og:description" content="Bandwidth selection for standalone spatiotemporal density/intensity based on either unbiased least squares cross-validation (LSCV) or likelihood (LIK) cross-validation, providing an isotropic scalar spatial bandwidth and a scalar temporal bandwidth." />
+<meta name="twitter:card" content="summary" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,12 +59,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">sparr</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">sparr</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.2.12</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -79,7 +95,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -91,6 +107,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -98,15 +115,19 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Cross-validation bandwidths for spatiotemporal kernel density estimates</h1>
+    
+    <div class="hidden name"><code>LSCV.spattemp.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Bandwidth selection for standalone spatiotemporal density/intensity based on either unbiased least squares cross-validation (LSCV) or likelihood (LIK) cross-validation, providing an isotropic scalar spatial bandwidth and a scalar temporal bandwidth.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>LIK.spattemp</span>(<span class='no'>pp</span>, <span class='kw'>tt</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sedge</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"uniform"</span>, <span class='st'>"none"</span>),
   <span class='kw'>tedge</span> <span class='kw'>=</span> <span class='no'>sedge</span>, <span class='kw'>parallelise</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
@@ -115,7 +136,7 @@
   <span class='kw'>tedge</span> <span class='kw'>=</span> <span class='no'>sedge</span>, <span class='kw'>sres</span> <span class='kw'>=</span> <span class='fl'>64</span>, <span class='kw'>tres</span> <span class='kw'>=</span> <span class='no'>sres</span>, <span class='kw'>parallelise</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
   <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -178,25 +199,427 @@ large data sets and fine evaluation grid resolutions.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='BOOT.spattemp.html'>BOOT.spattemp</a></code>, <code><a href='spattemp.density.html'>spattemp.density</a></code></p>
+    <div class='dont-index'><p><code><a href='BOOT.spattemp.html'>BOOT.spattemp</a></code>, <code><a href='spattemp.density.html'>spattemp.density</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
+    <pre class="examples"><div class='input'>
 <span class='fu'>data</span>(<span class='no'>burk</span>) <span class='co'># Burkitt's Uganda lymphoma data</span>
 <span class='no'>burkcas</span> <span class='kw'>&lt;-</span> <span class='no'>burk</span>$<span class='no'>cases</span>
 
-<span class='no'>hlam1</span> <span class='kw'>&lt;-</span> <span class='fu'>LSCV.spattemp</span>(<span class='no'>burkcas</span>) <span class='co'>#~9 secs</span>
-<span class='no'>hlam2</span> <span class='kw'>&lt;-</span> <span class='fu'>LSCV.spattemp</span>(<span class='no'>burkcas</span>,<span class='kw'>tlim</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>400</span>,<span class='fl'>5800</span>))
-<span class='no'>hlam3</span> <span class='kw'>&lt;-</span> <span class='fu'>LSCV.spattemp</span>(<span class='no'>burkcas</span>,<span class='kw'>start</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>7</span>,<span class='fl'>400</span>))
-<span class='fu'>rbind</span>(<span class='no'>hlam1</span>,<span class='no'>hlam2</span>,<span class='no'>hlam3</span>)
-
-<span class='no'>hlam1</span> <span class='kw'>&lt;-</span> <span class='fu'>LIK.spattemp</span>(<span class='no'>burkcas</span>) <span class='co'>#~3 secs</span>
-<span class='no'>hlam2</span> <span class='kw'>&lt;-</span> <span class='fu'>LIK.spattemp</span>(<span class='no'>burkcas</span>,<span class='kw'>tlim</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>400</span>,<span class='fl'>5800</span>))
-<span class='no'>hlam3</span> <span class='kw'>&lt;-</span> <span class='fu'>LIK.spattemp</span>(<span class='no'>burkcas</span>,<span class='kw'>start</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>7</span>,<span class='fl'>400</span>))
-<span class='fu'>rbind</span>(<span class='no'>hlam1</span>,<span class='no'>hlam2</span>,<span class='no'>hlam3</span>)
-
-<span class='co'># }</span></pre>
+<span class='no'>hlam1</span> <span class='kw'>&lt;-</span> <span class='fu'>LSCV.spattemp</span>(<span class='no'>burkcas</span>) <span class='co'>#~9 secs</span></div><div class='output co'>#&gt; h = 11.24394 ; lambda = 459.5736 
+#&gt; h = 57.2013 ; lambda = 459.5736 
+#&gt; h = 11.24394 ; lambda = 505.5309 
+#&gt; h = 34.22262 ; lambda = 471.0629 
+#&gt; h = 22.73328 ; lambda = 476.8076 
+#&gt; h = 16.98861 ; lambda = 479.6799 
+#&gt; h = 5.499275 ; lambda = 485.4246 
+#&gt; h = 5.499275 ; lambda = 439.4672 
+#&gt; h = 6.935442 ; lambda = 455.9831 
+#&gt; h = 8.371609 ; lambda = 461.0097 
+#&gt; h = 2.62694 ; lambda = 463.8821 
+#&gt; h = 6.935442 ; lambda = 461.7278 
+#&gt; h = 4.063107 ; lambda = 463.164 
+#&gt; h = 4.781191 ; lambda = 462.8049 
+#&gt; h = 4.781191 ; lambda = 508.7623 
+#&gt; h = 4.422149 ; lambda = 543.4098 
+#&gt; h = 4.063107 ; lambda = 486.1426 
+#&gt; h = 5.140233 ; lambda = 485.6041 
+#&gt; h = 5.140233 ; lambda = 531.5614 
+#&gt; h = 5.319754 ; lambda = 565.9397 
+#&gt; h = 4.781191 ; lambda = 554.7196 
+#&gt; h = 4.60167 ; lambda = 589.2774 
+#&gt; h = 4.960712 ; lambda = 612.0766 
+#&gt; h = 4.915832 ; lambda = 586.248 
+#&gt; h = 4.377269 ; lambda = 643.964 
+#&gt; h = 3.995787 ; lambda = 700.1652 
+#&gt; h = 4.063107 ; lambda = 646.9934 
+#&gt; h = 4.702651 ; lambda = 601.4343 
+#&gt; h = 4.478249 ; lambda = 656.1209 
+#&gt; h = 4.416539 ; lambda = 689.5427 
+#&gt; h = 4.091157 ; lambda = 732.0723 
+#&gt; h = 4.549777 ; lambda = 634.0938 
+#&gt; h = 4.589047 ; lambda = 679.6725 
+#&gt; h = 4.536103 ; lambda = 670.7454 
+#&gt; h = 4.402865 ; lambda = 726.1942 
+#&gt; h = 4.439593 ; lambda = 703.1691 
+#&gt; h = 4.559157 ; lambda = 684.3718 
+#&gt; h = 4.452193 ; lambda = 688.2499 
+#&gt; h = 4.355683 ; lambda = 720.6737 
+#&gt; h = 4.490998 ; lambda = 683.2275 
+#&gt; h = 4.503599 ; lambda = 668.3083 
+#&gt; h = 4.455594 ; lambda = 694.4539 
+#&gt; h = 4.494399 ; lambda = 689.4314 
+#&gt; h = 4.515501 ; lambda = 690.0221 
+#&gt; h = 4.458995 ; lambda = 700.6579 
+#&gt; h = 4.482997 ; lambda = 687.5851 
+#&gt; h = 4.521802 ; lambda = 682.5626 
+#&gt; h = 4.472146 ; lambda = 691.4811 
+#&gt; h = 4.460745 ; lambda = 689.6347 
+#&gt; h = 4.485985 ; lambda = 689.4822 
+#&gt; h = 4.475134 ; lambda = 693.3782 
+#&gt; h = 4.4771 ; lambda = 691.93 
+#&gt; h = 4.490939 ; lambda = 689.9311 
+#&gt; h = 4.476844 ; lambda = 691.0936 
+#&gt; h = 4.467959 ; lambda = 693.5413 
+#&gt; h = 4.481479 ; lambda = 690.497 
+#&gt; h = 4.481734 ; lambda = 691.3334 
+#&gt; h = 4.480512 ; lambda = 691.2734 
+#&gt; h = 4.484891 ; lambda = 689.8405 
+#&gt; h = 4.479048 ; lambda = 691.4076 
+#&gt; h = 4.478081 ; lambda = 692.184 
+#&gt; h = 4.480629 ; lambda = 690.9188 
+#&gt; h = 4.479165 ; lambda = 691.0529 
+#&gt; h = 4.478492 ; lambda = 690.9427 </div><div class='input'><span class='no'>hlam2</span> <span class='kw'>&lt;-</span> <span class='fu'>LSCV.spattemp</span>(<span class='no'>burkcas</span>,<span class='kw'>tlim</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>400</span>,<span class='fl'>5800</span>))</div><div class='output co'>#&gt; h = 11.24394 ; lambda = 459.5736 
+#&gt; h = 57.2013 ; lambda = 459.5736 
+#&gt; h = 11.24394 ; lambda = 505.5309 
+#&gt; h = 34.22262 ; lambda = 471.0629 
+#&gt; h = 22.73328 ; lambda = 476.8076 
+#&gt; h = 16.98861 ; lambda = 479.6799 
+#&gt; h = 5.499275 ; lambda = 485.4246 
+#&gt; h = 5.499275 ; lambda = 439.4672 
+#&gt; h = 6.935442 ; lambda = 455.9831 
+#&gt; h = 8.371609 ; lambda = 461.0097 
+#&gt; h = 2.62694 ; lambda = 463.8821 
+#&gt; h = 6.935442 ; lambda = 461.7278 
+#&gt; h = 4.063107 ; lambda = 463.164 
+#&gt; h = 4.781191 ; lambda = 462.8049 
+#&gt; h = 4.781191 ; lambda = 508.7623 
+#&gt; h = 4.422149 ; lambda = 543.4098 
+#&gt; h = 5.499275 ; lambda = 531.3819 
+#&gt; h = 5.319754 ; lambda = 514.2377 
+#&gt; h = 4.60167 ; lambda = 537.5754 
+#&gt; h = 4.152868 ; lambda = 563.6508 
+#&gt; h = 4.063107 ; lambda = 532.1 
+#&gt; h = 5.005592 ; lambda = 518.7033 
+#&gt; h = 4.826071 ; lambda = 547.5164 
+#&gt; h = 4.848511 ; lambda = 566.8934 
+#&gt; h = 5.252433 ; lambda = 548.0213 
+#&gt; h = 4.764361 ; lambda = 540.1869 
+#&gt; h = 4.60728 ; lambda = 588.377 
+#&gt; h = 4.408124 ; lambda = 623.2139 
+#&gt; h = 4.492274 ; lambda = 649.9204 
+#&gt; h = 4.356231 ; lambda = 704.7872 
+#&gt; h = 4.051887 ; lambda = 706.2409 
+#&gt; h = 4.649355 ; lambda = 601.7303 
+#&gt; h = 4.733506 ; lambda = 628.4368 
+#&gt; h = 4.65216 ; lambda = 627.1311 
+#&gt; h = 4.495079 ; lambda = 675.3212 
+#&gt; h = 4.417942 ; lambda = 712.1167 
+#&gt; h = 4.335194 ; lambda = 698.1106 
+#&gt; h = 4.414435 ; lambda = 680.3657 
+#&gt; h = 4.41724 ; lambda = 705.7665 
+#&gt; h = 4.435999 ; lambda = 691.805 
+#&gt; h = 4.516643 ; lambda = 686.7605 
+#&gt; h = 4.567747 ; lambda = 689.9579 
+#&gt; h = 4.575724 ; lambda = 670.2768 
+#&gt; h = 4.540792 ; lambda = 675.6588 
+#&gt; h = 4.562356 ; lambda = 687.0981 
+#&gt; h = 4.511899 ; lambda = 678.2655 
+#&gt; h = 4.536048 ; lambda = 667.1638 
+#&gt; h = 4.521494 ; lambda = 681.8613 
+#&gt; h = 4.4926 ; lambda = 684.468 
+#&gt; h = 4.528744 ; lambda = 677.8611 
+#&gt; h = 4.53834 ; lambda = 681.457 
+#&gt; h = 4.518509 ; lambda = 679.0633 
+#&gt; h = 4.525759 ; lambda = 675.0631 
+#&gt; h = 4.52256 ; lambda = 680.1618 
+#&gt; h = 4.512325 ; lambda = 681.364 
+#&gt; h = 4.52464 ; lambda = 678.7368 
+#&gt; h = 4.520588 ; lambda = 677.6384 
+#&gt; h = 4.522067 ; lambda = 679.5309 
+#&gt; h = 4.515937 ; lambda = 679.8574 
+#&gt; h = 4.522464 ; lambda = 679.017 
+#&gt; h = 4.518905 ; lambda = 678.5494 
+#&gt; h = 4.521277 ; lambda = 679.2855 
+#&gt; h = 4.525232 ; lambda = 679.2392 
+#&gt; h = 4.52019 ; lambda = 679.1073 
+#&gt; h = 4.519003 ; lambda = 679.3759 
+#&gt; h = 4.519868 ; lambda = 679.2861 </div><div class='input'><span class='no'>hlam3</span> <span class='kw'>&lt;-</span> <span class='fu'>LSCV.spattemp</span>(<span class='no'>burkcas</span>,<span class='kw'>start</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>7</span>,<span class='fl'>400</span>))</div><div class='output co'>#&gt; h = 7 ; lambda = 400 
+#&gt; h = 47 ; lambda = 400 
+#&gt; h = 7 ; lambda = 440 
+#&gt; h = 27 ; lambda = 410 
+#&gt; h = 17 ; lambda = 415 
+#&gt; h = 12 ; lambda = 417.5 
+#&gt; h = 2 ; lambda = 422.5 
+#&gt; h = 9.5 ; lambda = 418.75 
+#&gt; h = 4.5 ; lambda = 421.25 
+#&gt; h = 2 ; lambda = 422.5 
+#&gt; h = 4.5 ; lambda = 381.25 
+#&gt; h = 5.125 ; lambda = 395.9375 
+#&gt; h = 2.625 ; lambda = 417.1875 
+#&gt; h = 5.90625 ; lambda = 404.2969 
+#&gt; h = 6.53125 ; lambda = 378.9844 
+#&gt; h = 5.007812 ; lambda = 410.6836 
+#&gt; h = 4.226562 ; lambda = 402.3242 
+#&gt; h = 5.486328 ; lambda = 403.8037 
+#&gt; h = 5.369141 ; lambda = 418.5498 
+#&gt; h = 5.491211 ; lambda = 429.856 
+#&gt; h = 5.847656 ; lambda = 411.6699 
+#&gt; h = 5.217773 ; lambda = 410.9302 
+#&gt; h = 5.100586 ; lambda = 425.6763 
+#&gt; h = 4.907715 ; lambda = 436.6125 
+#&gt; h = 5.251953 ; lambda = 433.2959 
+#&gt; h = 5.269043 ; lambda = 444.4788 
+#&gt; h = 5.000488 ; lambda = 451.6052 
+#&gt; h = 4.816162 ; lambda = 468.1329 
+#&gt; h = 5.168945 ; lambda = 470.4077 
+#&gt; h = 5.203125 ; lambda = 492.7734 
+#&gt; h = 4.93457 ; lambda = 499.8999 
+#&gt; h = 4.767334 ; lambda = 527.6105 
+#&gt; h = 4.969971 ; lambda = 568.7787 
+#&gt; h = 4.954712 ; lambda = 627.3654 
+#&gt; h = 4.518921 ; lambda = 662.2025 
+#&gt; h = 4.176819 ; lambda = 746.917 
+#&gt; h = 4.706299 ; lambda = 761.9574 
+#&gt; h = 4.721558 ; lambda = 703.3707 
+#&gt; h = 4.285767 ; lambda = 738.2077 
+#&gt; h = 4.453003 ; lambda = 710.4971 
+#&gt; h = 4.250366 ; lambda = 669.3289 
+#&gt; h = 4.60376 ; lambda = 694.8602 
+#&gt; h = 4.368164 ; lambda = 677.8394 
+#&gt; h = 4.544861 ; lambda = 690.605 
+#&gt; h = 4.478943 ; lambda = 738.8997 
+#&gt; h = 4.508926 ; lambda = 681.3768 
+#&gt; h = 4.417068 ; lambda = 701.2689 
+#&gt; h = 4.449017 ; lambda = 698.6029 
+#&gt; h = 4.50494 ; lambda = 669.4825 
+#&gt; h = 4.465987 ; lambda = 700.2435 
+#&gt; h = 4.406077 ; lambda = 717.4696 
+#&gt; h = 4.483214 ; lambda = 690.4 
+#&gt; h = 4.466244 ; lambda = 688.7594 
+#&gt; h = 4.466179 ; lambda = 691.6304 
+#&gt; h = 4.500377 ; lambda = 683.4275 
+#&gt; h = 4.487537 ; lambda = 687.2214 
+#&gt; h = 4.504572 ; lambda = 685.9909 
+#&gt; h = 4.475777 ; lambda = 690.2205 
+#&gt; h = 4.471455 ; lambda = 693.3992 
+#&gt; h = 4.475475 ; lambda = 691.8547 
+#&gt; h = 4.482912 ; lambda = 692.0342 
+#&gt; h = 4.481128 ; lambda = 691.5808 
+#&gt; h = 4.488867 ; lambda = 690.126 
+#&gt; h = 4.478823 ; lambda = 691.4225 
+#&gt; h = 4.480909 ; lambda = 690.2418 
+#&gt; h = 4.480964 ; lambda = 690.5765 
+#&gt; h = 4.476573 ; lambda = 691.5991 
+#&gt; h = 4.478233 ; lambda = 691.2993 </div><div class='input'><span class='fu'>rbind</span>(<span class='no'>hlam1</span>,<span class='no'>hlam2</span>,<span class='no'>hlam3</span>)</div><div class='output co'>#&gt;              h   lambda
+#&gt; hlam1 4.479165 691.0529
+#&gt; hlam2 4.520190 679.1073
+#&gt; hlam3 4.478823 691.4225</div><div class='input'>
+<span class='no'>hlam1</span> <span class='kw'>&lt;-</span> <span class='fu'>LIK.spattemp</span>(<span class='no'>burkcas</span>) <span class='co'>#~3 secs</span></div><div class='output co'>#&gt; h = 11.24394 ; lambda = 459.5736 
+#&gt; h = 57.2013 ; lambda = 459.5736 
+#&gt; h = 11.24394 ; lambda = 505.5309 
+#&gt; h = 34.22262 ; lambda = 471.0629 
+#&gt; h = 22.73328 ; lambda = 476.8076 
+#&gt; h = 16.98861 ; lambda = 479.6799 
+#&gt; h = 5.499275 ; lambda = 485.4246 
+#&gt; h = 8.371609 ; lambda = 483.9884 
+#&gt; h = 8.371609 ; lambda = 529.9458 
+#&gt; h = 6.935442 ; lambda = 565.1319 
+#&gt; h = 4.063107 ; lambda = 543.5893 
+#&gt; h = 9.448735 ; lambda = 515.0455 
+#&gt; h = 5.858316 ; lambda = 534.0747 
+#&gt; h = 8.55113 ; lambda = 519.8028 
+#&gt; h = 7.114963 ; lambda = 600.9463 
+#&gt; h = 6.48664 ; lambda = 659.4252 
+#&gt; h = 4.870951 ; lambda = 704.7542 
+#&gt; h = 7.631086 ; lambda = 566.0407 
+#&gt; h = 7.182283 ; lambda = 660.334 
+#&gt; h = 7.305704 ; lambda = 707.9351 
+#&gt; h = 6.161258 ; lambda = 801.3197 
+#&gt; h = 6.528715 ; lambda = 742.4999 
+#&gt; h = 7.347779 ; lambda = 791.0098 
+#&gt; h = 7.778349 ; lambda = 856.8022 
+#&gt; h = 6.57079 ; lambda = 825.5746 
+#&gt; h = 6.203333 ; lambda = 884.3944 
+#&gt; h = 7.389854 ; lambda = 874.0846 
+#&gt; h = 7.174569 ; lambda = 841.1884 
+#&gt; h = 6.39758 ; lambda = 875.7532 
+#&gt; h = 5.922481 ; lambda = 918.1249 
+#&gt; h = 5.793801 ; lambda = 860.1394 
+#&gt; h = 6.829377 ; lambda = 845.9262 
+#&gt; h = 6.656168 ; lambda = 896.1047 
+#&gt; h = 6.698857 ; lambda = 931.3697 
+#&gt; h = 7.130653 ; lambda = 901.5427 
+#&gt; h = 6.580849 ; lambda = 882.2006 
+#&gt; h = 6.450328 ; lambda = 967.6442 
+#&gt; h = 6.54509 ; lambda = 937.2147 
+#&gt; h = 6.663098 ; lambda = 986.3838 
+#&gt; h = 6.642536 ; lambda = 960.338 
+#&gt; h = 6.796302 ; lambda = 954.4931 
+#&gt; h = 6.607893 ; lambda = 941.5343 
+#&gt; h = 6.664214 ; lambda = 912.566 
+#&gt; h = 6.658794 ; lambda = 924.509 
+#&gt; h = 6.567831 ; lambda = 934.6735 
+#&gt; h = 6.6661 ; lambda = 932.1957 
+#&gt; h = 6.717001 ; lambda = 915.1704 
+#&gt; h = 6.63517 ; lambda = 934.9433 
+#&gt; h = 6.642476 ; lambda = 942.63 
+#&gt; h = 6.654715 ; lambda = 929.0392 
+#&gt; h = 6.623785 ; lambda = 931.7869 
+#&gt; h = 6.655521 ; lambda = 932.0935 
+#&gt; h = 6.635977 ; lambda = 937.9975 
+#&gt; h = 6.65003 ; lambda = 931.2788 
+#&gt; h = 6.629679 ; lambda = 934.1286 
+#&gt; h = 6.649061 ; lambda = 932.6023 </div><div class='input'><span class='no'>hlam2</span> <span class='kw'>&lt;-</span> <span class='fu'>LIK.spattemp</span>(<span class='no'>burkcas</span>,<span class='kw'>tlim</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>400</span>,<span class='fl'>5800</span>))</div><div class='output co'>#&gt; h = 11.24394 ; lambda = 459.5736 
+#&gt; h = 57.2013 ; lambda = 459.5736 
+#&gt; h = 11.24394 ; lambda = 505.5309 
+#&gt; h = 34.22262 ; lambda = 471.0629 
+#&gt; h = 22.73328 ; lambda = 476.8076 
+#&gt; h = 16.98861 ; lambda = 479.6799 
+#&gt; h = 5.499275 ; lambda = 485.4246 
+#&gt; h = 8.371609 ; lambda = 483.9884 
+#&gt; h = 8.371609 ; lambda = 529.9458 
+#&gt; h = 6.935442 ; lambda = 565.1319 
+#&gt; h = 4.063107 ; lambda = 543.5893 
+#&gt; h = 9.448735 ; lambda = 515.0455 
+#&gt; h = 5.858316 ; lambda = 534.0747 
+#&gt; h = 8.55113 ; lambda = 519.8028 
+#&gt; h = 7.114963 ; lambda = 600.9463 
+#&gt; h = 6.48664 ; lambda = 659.4252 
+#&gt; h = 4.870951 ; lambda = 704.7542 
+#&gt; h = 7.631086 ; lambda = 566.0407 
+#&gt; h = 7.182283 ; lambda = 660.334 
+#&gt; h = 7.305704 ; lambda = 707.9351 
+#&gt; h = 6.161258 ; lambda = 801.3197 
+#&gt; h = 6.528715 ; lambda = 742.4999 
+#&gt; h = 7.347779 ; lambda = 791.0098 
+#&gt; h = 7.778349 ; lambda = 856.8022 
+#&gt; h = 6.57079 ; lambda = 825.5746 
+#&gt; h = 6.203333 ; lambda = 884.3944 
+#&gt; h = 7.389854 ; lambda = 874.0846 
+#&gt; h = 7.174569 ; lambda = 841.1884 
+#&gt; h = 6.39758 ; lambda = 875.7532 
+#&gt; h = 5.922481 ; lambda = 918.1249 
+#&gt; h = 5.793801 ; lambda = 860.1394 
+#&gt; h = 6.829377 ; lambda = 845.9262 
+#&gt; h = 6.656168 ; lambda = 896.1047 
+#&gt; h = 6.698857 ; lambda = 931.3697 
+#&gt; h = 7.130653 ; lambda = 901.5427 
+#&gt; h = 6.580849 ; lambda = 882.2006 
+#&gt; h = 6.450328 ; lambda = 967.6442 
+#&gt; h = 6.54509 ; lambda = 937.2147 
+#&gt; h = 6.663098 ; lambda = 986.3838 
+#&gt; h = 6.642536 ; lambda = 960.338 
+#&gt; h = 6.601411 ; lambda = 908.2464 
+#&gt; h = 6.632255 ; lambda = 947.3151 
+#&gt; h = 6.786021 ; lambda = 941.4702 
+#&gt; h = 6.605323 ; lambda = 938.2785 
+#&gt; h = 6.671925 ; lambda = 922.3332 
+#&gt; h = 6.69176 ; lambda = 909.8422 
+#&gt; h = 6.578391 ; lambda = 929.242 
+#&gt; h = 6.66874 ; lambda = 930.8378 
+#&gt; h = 6.735342 ; lambda = 914.8924 
+#&gt; h = 6.637828 ; lambda = 932.432 
+#&gt; h = 6.634643 ; lambda = 940.9366 
+#&gt; h = 6.662604 ; lambda = 926.984 
+#&gt; h = 6.631692 ; lambda = 928.5783 
+#&gt; h = 6.640954 ; lambda = 929.1431 
+#&gt; h = 6.616177 ; lambda = 934.5911 
+#&gt; h = 6.650998 ; lambda = 928.8858 
+#&gt; h = 6.654124 ; lambda = 925.5969 
+#&gt; h = 6.65005 ; lambda = 927.3057 
+#&gt; h = 6.660094 ; lambda = 927.0484 
+#&gt; h = 6.645739 ; lambda = 928.6194 
+#&gt; h = 6.646687 ; lambda = 930.1995 
+#&gt; h = 6.647527 ; lambda = 929.4761 </div><div class='input'><span class='no'>hlam3</span> <span class='kw'>&lt;-</span> <span class='fu'>LIK.spattemp</span>(<span class='no'>burkcas</span>,<span class='kw'>start</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>7</span>,<span class='fl'>400</span>))</div><div class='output co'>#&gt; h = 7 ; lambda = 400 
+#&gt; h = 47 ; lambda = 400 
+#&gt; h = 7 ; lambda = 440 
+#&gt; h = 27 ; lambda = 410 
+#&gt; h = 17 ; lambda = 415 
+#&gt; h = 12 ; lambda = 417.5 
+#&gt; h = 2 ; lambda = 422.5 
+#&gt; h = 9.5 ; lambda = 418.75 
+#&gt; h = 9.5 ; lambda = 458.75 
+#&gt; h = 8.875 ; lambda = 444.0625 
+#&gt; h = 6.375 ; lambda = 465.3125 
+#&gt; h = 7.15625 ; lambda = 453.6719 
+#&gt; h = 5.28125 ; lambda = 449.6094 
+#&gt; h = 7.976562 ; lambda = 445.4492 
+#&gt; h = 8.132812 ; lambda = 459.1211 
+#&gt; h = 8.699219 ; lambda = 468.6816 
+#&gt; h = 7.3125 ; lambda = 467.3438 
+#&gt; h = 6.980469 ; lambda = 478.291 
+#&gt; h = 7.957031 ; lambda = 483.7402 
+#&gt; h = 8.357422 ; lambda = 498.7744 
+#&gt; h = 7.205078 ; lambda = 517.9443 
+#&gt; h = 6.741211 ; lambda = 547.356 
+#&gt; h = 8.118164 ; lambda = 567.8394 
+#&gt; h = 8.687012 ; lambda = 612.6135 
+#&gt; h = 6.501953 ; lambda = 616.4209 
+#&gt; h = 5.574219 ; lambda = 675.2441 
+#&gt; h = 7.878906 ; lambda = 636.9043 
+#&gt; h = 8.447754 ; lambda = 681.6785 
+#&gt; h = 6.262695 ; lambda = 685.4858 
+#&gt; h = 5.334961 ; lambda = 744.3091 
+#&gt; h = 7.639648 ; lambda = 705.9692 
+#&gt; h = 8.208496 ; lambda = 750.7434 
+#&gt; h = 6.023438 ; lambda = 754.5508 
+#&gt; h = 6.487305 ; lambda = 725.1392 
+#&gt; h = 7.864258 ; lambda = 745.6226 
+#&gt; h = 7.463867 ; lambda = 730.5884 
+#&gt; h = 6.311523 ; lambda = 749.7583 
+#&gt; h = 6.643555 ; lambda = 738.811 
+#&gt; h = 7.620117 ; lambda = 744.2603 
+#&gt; h = 7.336914 ; lambda = 739.48 
+#&gt; h = 6.516602 ; lambda = 747.7026 
+#&gt; h = 6.753418 ; lambda = 743.4241 
+#&gt; h = 7.446777 ; lambda = 744.093 
+#&gt; h = 6.84436 ; lambda = 740.1315 
+#&gt; h = 6.260864 ; lambda = 744.0756 
+#&gt; h = 7.067902 ; lambda = 740.6289 
+#&gt; h = 7.158844 ; lambda = 737.3363 
+#&gt; h = 6.854774 ; lambda = 741.9021 
+#&gt; h = 7.078316 ; lambda = 742.3995 
+#&gt; h = 7.195293 ; lambda = 743.5335 
+#&gt; h = 7.291443 ; lambda = 741.1263 
+#&gt; h = 6.963942 ; lambda = 741.7082 
+#&gt; h = 6.974356 ; lambda = 743.4788 
+#&gt; h = 6.927583 ; lambda = 744.9037 
+#&gt; h = 6.813209 ; lambda = 744.2124 
+#&gt; h = 7.012039 ; lambda = 742.8527 
+#&gt; h = 6.97568 ; lambda = 746.0483 
+#&gt; h = 6.981549 ; lambda = 748.2183 
+#&gt; h = 6.897093 ; lambda = 750.2693 
+#&gt; h = 6.83962 ; lambda = 753.9776 
+#&gt; h = 6.893587 ; lambda = 757.2923 
+#&gt; h = 6.876589 ; lambda = 763.4865 
+#&gt; h = 6.73466 ; lambda = 769.2458 
+#&gt; h = 6.796382 ; lambda = 763.9889 
+#&gt; h = 6.771629 ; lambda = 778.7547 
+#&gt; h = 6.737633 ; lambda = 791.1432 
+#&gt; h = 6.879562 ; lambda = 785.3839 
+#&gt; h = 6.952013 ; lambda = 793.453 
+#&gt; h = 6.813057 ; lambda = 821.1097 
+#&gt; h = 6.781291 ; lambda = 849.9212 
+#&gt; h = 6.995671 ; lambda = 852.231 
+#&gt; h = 6.931161 ; lambda = 836.959 
+#&gt; h = 6.760439 ; lambda = 893.4273 
+#&gt; h = 6.664652 ; lambda = 943.4145 
+#&gt; h = 6.514781 ; lambda = 956.3767 
+#&gt; h = 6.618876 ; lambda = 926.5223 
+#&gt; h = 6.502238 ; lambda = 1020.016 
+#&gt; h = 6.572001 ; lambda = 977.492 
+#&gt; h = 6.711527 ; lambda = 892.4448 
+#&gt; h = 6.676646 ; lambda = 913.7066 
+#&gt; h = 6.606883 ; lambda = 956.2302 
+#&gt; h = 6.659205 ; lambda = 924.3375 
+#&gt; h = 6.613429 ; lambda = 907.4453 
+#&gt; h = 6.651846 ; lambda = 934.4222 
+#&gt; h = 6.692175 ; lambda = 932.2374 
+#&gt; h = 6.637201 ; lambda = 927.9511 
+#&gt; h = 6.629842 ; lambda = 938.0358 
+#&gt; h = 6.637183 ; lambda = 934.6112 
+#&gt; h = 6.651828 ; lambda = 941.0823 
+#&gt; h = 6.640858 ; lambda = 931.2339 
+#&gt; h = 6.626195 ; lambda = 931.4229 
+#&gt; h = 6.645433 ; lambda = 933.6724 
+#&gt; h = 6.641759 ; lambda = 937.0497 
+#&gt; h = 6.641083 ; lambda = 932.6878 </div><div class='input'><span class='fu'>rbind</span>(<span class='no'>hlam1</span>,<span class='no'>hlam2</span>,<span class='no'>hlam3</span>)</div><div class='output co'>#&gt;              h   lambda
+#&gt; hlam1 6.649061 932.6023
+#&gt; hlam2 6.650998 928.8858
+#&gt; hlam3 6.641083 932.6878</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -227,11 +650,14 @@ T. M. Davies
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+
