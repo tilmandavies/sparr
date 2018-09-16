@@ -62,7 +62,7 @@ estimation of the fixed or adaptive kernel-smoothed relative risk function." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sparr</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.2.12</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.2.13</span>
       </span>
     </div>
 
@@ -133,9 +133,9 @@ estimation of the fixed or adaptive kernel-smoothed relative risk function.</p>
 
     <pre class="usage"><span class='fu'>LSCV.risk</span>(<span class='no'>f</span>, <span class='kw'>g</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hseq</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"fixed"</span>,
   <span class='st'>"adaptive"</span>), <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"kelsall-diggle"</span>, <span class='st'>"hazelton"</span>, <span class='st'>"davies"</span>),
-  <span class='kw'>resolution</span> <span class='kw'>=</span> <span class='fl'>64</span>, <span class='kw'>edge</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>hp</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pilot.symmetry</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"none"</span>,
-  <span class='st'>"f"</span>, <span class='st'>"g"</span>, <span class='st'>"pooled"</span>), <span class='kw'>auto.optim</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>seqres</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>parallelise</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>resolution</span> <span class='kw'>=</span> <span class='fl'>64</span>, <span class='kw'>edge</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>hp</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>pilot.symmetry</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"none"</span>, <span class='st'>"f"</span>, <span class='st'>"g"</span>, <span class='st'>"pooled"</span>), <span class='kw'>auto.optim</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>seqres</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>parallelise</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -297,7 +297,7 @@ find a suitable minimum.</p>
 the planar kernel-smoothed density-ratio, <em>Spatial and Spatio-temporal
 Epidemiology</em>, <b>5</b>, 51-65.</p>
 <p>Davies, T.M. and Baddeley A. (2018), Fast computation of
-spatially adaptive kernel estimates, <em>Statistics and Computing</em>, [to appear].</p>
+spatially adaptive kernel estimates, <em>Statistics and Computing</em>, <b>28</b>(4), 937-956.</p>
 <p>Davies, T.M. and Hazelton, M.L. (2010), Adaptive kernel
 estimation of spatial relative risk, <em>Statistics in Medicine</em>,
 <b>29</b>(23) 2423-2437.</p>
@@ -329,7 +329,7 @@ London.</p>
 
 <span class='co'># FIXED (for common h)</span>
 
-<span class='fu'>LSCV.risk</span>(<span class='no'>pbccas</span>,<span class='no'>pbccon</span>)</div><div class='output co'>#&gt; Searching for optimal Kelsall-Diggle h in [0.1,15.278]...Done.</div><div class='output co'>#&gt; [1] 8.051627</div><div class='input'><span class='fu'>LSCV.risk</span>(<span class='no'>pbccas</span>,<span class='no'>pbccon</span>,<span class='kw'>method</span><span class='kw'>=</span><span class='st'>"hazelton"</span>)</div><div class='output co'>#&gt; Searching for optimal Hazelton h in [0.1,15.278]...Done.</div><div class='output co'>#&gt; [1] 3.078997</div><div class='input'><span class='no'>hcv</span> <span class='kw'>&lt;-</span> <span class='fu'>LSCV.risk</span>(<span class='no'>pbccas</span>,<span class='no'>pbccon</span>,<span class='kw'>method</span><span class='kw'>=</span><span class='st'>"davies"</span>,<span class='kw'>auto.optim</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; ================================================================================</div><div class='input'><span class='fu'>plot</span>(<span class='no'>hcv</span>[,<span class='fl'>1</span>],<span class='fu'>log</span>(<span class='no'>hcv</span>[,<span class='fl'>2</span>]));<span class='fu'>abline</span>(<span class='kw'>v</span><span class='kw'>=</span><span class='no'>hcv</span>[<span class='fu'>which.min</span>(<span class='no'>hcv</span>[,<span class='fl'>2</span>]),<span class='fl'>1</span>],<span class='kw'>col</span><span class='kw'>=</span><span class='fl'>2</span>,<span class='kw'>lty</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='img'><img src='LSCV.risk-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>LSCV.risk</span>(<span class='no'>pbccas</span>,<span class='no'>pbccon</span>)</div><div class='output co'>#&gt; Searching for optimal Kelsall-Diggle h in [0.1,15.278]...Done.</div><div class='output co'>#&gt; [1] 8.029713</div><div class='input'><span class='fu'>LSCV.risk</span>(<span class='no'>pbccas</span>,<span class='no'>pbccon</span>,<span class='kw'>method</span><span class='kw'>=</span><span class='st'>"hazelton"</span>)</div><div class='output co'>#&gt; Searching for optimal Hazelton h in [0.1,15.278]...Done.</div><div class='output co'>#&gt; [1] 3.04405</div><div class='input'><span class='no'>hcv</span> <span class='kw'>&lt;-</span> <span class='fu'>LSCV.risk</span>(<span class='no'>pbccas</span>,<span class='no'>pbccon</span>,<span class='kw'>method</span><span class='kw'>=</span><span class='st'>"davies"</span>,<span class='kw'>auto.optim</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; ================================================================================</div><div class='input'><span class='fu'>plot</span>(<span class='no'>hcv</span>[,<span class='fl'>1</span>],<span class='fu'>log</span>(<span class='no'>hcv</span>[,<span class='fl'>2</span>]));<span class='fu'>abline</span>(<span class='kw'>v</span><span class='kw'>=</span><span class='no'>hcv</span>[<span class='fu'>which.min</span>(<span class='no'>hcv</span>[,<span class='fl'>2</span>]),<span class='fl'>1</span>],<span class='kw'>col</span><span class='kw'>=</span><span class='fl'>2</span>,<span class='kw'>lty</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='img'><img src='LSCV.risk-1.png' alt='' width='700' height='433' /></div><div class='input'>
 
 <span class='co'># ADAPTIVE (for common h0)</span>
 
@@ -337,12 +337,12 @@ London.</p>
 #&gt;  --f--
 #&gt;  --g--
 #&gt; Done.
-#&gt;    [ Using hp(f) = 0.427712498752032 ; hp(g) = 0.286539611062715 ]
+#&gt;    [ Using hp(f) = 0.427712498752032 ; hp(g) = 0.287154888700348 ]
 #&gt; Computing multi-scale estimates...
 #&gt;  --f--
 #&gt;  --g--
 #&gt; Done.
-#&gt; Searching for optimal h0 in [0.105866014203302, 13.7203855365642]...Done.</div><div class='output co'>#&gt; [1] 5.809374</div><div class='input'>
+#&gt; Searching for optimal h0 in [0.105866014203302, 13.7203855365642]...Done.</div><div class='output co'>#&gt; [1] 5.809375</div><div class='input'>
 <span class='co'># change pilot bandwidths used</span>
 <span class='fu'>LSCV.risk</span>(<span class='no'>pbccas</span>,<span class='no'>pbccon</span>,<span class='kw'>type</span><span class='kw'>=</span><span class='st'>"adaptive"</span>,<span class='kw'>hp</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fu'><a href='OS.html'>OS</a></span>(<span class='no'>pbccas</span>)/<span class='fl'>2</span>,<span class='fu'><a href='OS.html'>OS</a></span>(<span class='no'>pbccon</span>)/<span class='fl'>2</span>))</div><div class='output co'>#&gt; Computing multi-scale estimates...
 #&gt;  --f--
@@ -360,12 +360,12 @@ London.</p>
 #&gt;  --f--
 #&gt;  --g--
 #&gt; Done.
-#&gt;    [ Using hp(f) = 0.427712498752032 ; hp(g) = 0.286539611062715 ]
+#&gt;    [ Using hp(f) = 0.427712498752032 ; hp(g) = 0.287154888700348 ]
 #&gt; Computing multi-scale estimates...
 #&gt;  --f--
 #&gt;  --g--
 #&gt; Done.
-#&gt; Searching for optimal h0 in [0.105866014203302, 13.7203855365642]...Done.</div><div class='output co'>#&gt; [1] 1.905048</div><div class='input'><span class='fu'>LSCV.risk</span>(<span class='no'>pbccas</span>,<span class='no'>pbccon</span>,<span class='kw'>type</span><span class='kw'>=</span><span class='st'>"adaptive"</span>,<span class='kw'>method</span><span class='kw'>=</span><span class='st'>"hazelton"</span>,<span class='kw'>hp</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fu'><a href='OS.html'>OS</a></span>(<span class='no'>pbccas</span>)/<span class='fl'>2</span>,<span class='fu'><a href='OS.html'>OS</a></span>(<span class='no'>pbccon</span>)/<span class='fl'>2</span>))</div><div class='output co'>#&gt; Computing multi-scale estimates...
+#&gt; Searching for optimal h0 in [0.105866014203302, 13.7203855365642]...Done.</div><div class='output co'>#&gt; [1] 1.905046</div><div class='input'><span class='fu'>LSCV.risk</span>(<span class='no'>pbccas</span>,<span class='no'>pbccon</span>,<span class='kw'>type</span><span class='kw'>=</span><span class='st'>"adaptive"</span>,<span class='kw'>method</span><span class='kw'>=</span><span class='st'>"hazelton"</span>,<span class='kw'>hp</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fu'><a href='OS.html'>OS</a></span>(<span class='no'>pbccas</span>)/<span class='fl'>2</span>,<span class='fu'><a href='OS.html'>OS</a></span>(<span class='no'>pbccon</span>)/<span class='fl'>2</span>))</div><div class='output co'>#&gt; Computing multi-scale estimates...
 #&gt;  --f--
 #&gt;  --g--
 #&gt; Done.

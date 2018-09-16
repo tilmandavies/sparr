@@ -62,7 +62,7 @@ based on either unbiased least squares cross-validation (LSCV) or likelihood (LI
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sparr</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.2.12</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.2.13</span>
       </span>
     </div>
 
@@ -131,13 +131,15 @@ based on either unbiased least squares cross-validation (LSCV) or likelihood (LI
     
     </div>
 
-    <pre class="usage"><span class='fu'>LIK.density</span>(<span class='no'>pp</span>, <span class='kw'>hlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hseq</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>resolution</span> <span class='kw'>=</span> <span class='fl'>64</span>, <span class='kw'>edge</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>auto.optim</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"fixed"</span>, <span class='st'>"adaptive"</span>), <span class='kw'>seqres</span> <span class='kw'>=</span> <span class='fl'>30</span>,
-  <span class='kw'>parallelise</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>zero.action</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>LIK.density</span>(<span class='no'>pp</span>, <span class='kw'>hlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hseq</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>resolution</span> <span class='kw'>=</span> <span class='fl'>64</span>,
+  <span class='kw'>edge</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>auto.optim</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"fixed"</span>, <span class='st'>"adaptive"</span>),
+  <span class='kw'>seqres</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>parallelise</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>zero.action</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>)
 
-<span class='fu'>LSCV.density</span>(<span class='no'>pp</span>, <span class='kw'>hlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hseq</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>resolution</span> <span class='kw'>=</span> <span class='fl'>64</span>, <span class='kw'>edge</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>auto.optim</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"fixed"</span>, <span class='st'>"adaptive"</span>), <span class='kw'>seqres</span> <span class='kw'>=</span> <span class='fl'>30</span>,
-  <span class='kw'>parallelise</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>zero.action</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>LSCV.density</span>(<span class='no'>pp</span>, <span class='kw'>hlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hseq</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>resolution</span> <span class='kw'>=</span> <span class='fl'>64</span>,
+  <span class='kw'>edge</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>auto.optim</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"fixed"</span>, <span class='st'>"adaptive"</span>),
+  <span class='kw'>seqres</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>parallelise</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>zero.action</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -249,7 +251,7 @@ experiment with adjusting <code>hlim</code> to find a suitable minimum.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Davies, T.M. and Baddeley A. (2018), Fast computation of
-spatially adaptive kernel estimates, <em>Statistics and Computing</em>, [to appear].</p>
+spatially adaptive kernel estimates, <em>Statistics and Computing</em>, <b>28</b>(4), 937-956.</p>
 <p>Silverman, B.W. (1986), <em>Density Estimation for Statistics
 and Data Analysis</em>, Chapman &amp; Hall, New York.</p>
 <p>Wand, M.P. and Jones,
@@ -268,11 +270,11 @@ C.M., 1995. <em>Kernel Smoothing</em>, Chapman &amp; Hall, London.</p>
 <span class='fu'>data</span>(<span class='no'>pbc</span>)
 <span class='no'>pbccas</span> <span class='kw'>&lt;-</span> <span class='fu'>split</span>(<span class='no'>pbc</span>)$<span class='no'>case</span>
 
-<span class='fu'>LIK.density</span>(<span class='no'>pbccas</span>)</div><div class='output co'>#&gt; Searching for optimal h in [0.0999999999999091, 15.2778333333333]...Done.</div><div class='output co'>#&gt; [1] 2.468882</div><div class='input'><span class='fu'>LSCV.density</span>(<span class='no'>pbccas</span>)</div><div class='output co'>#&gt; Searching for optimal h in [0.0999999999999091, 15.2778333333333]...Done.</div><div class='output co'>#&gt; [1] 0.4277125</div><div class='input'>
+<span class='fu'>LIK.density</span>(<span class='no'>pbccas</span>)</div><div class='output co'>#&gt; Searching for optimal h in [0.0999999999999091, 15.2778333333333]...Done.</div><div class='output co'>#&gt; [1] 2.465722</div><div class='input'><span class='fu'>LSCV.density</span>(<span class='no'>pbccas</span>)</div><div class='output co'>#&gt; Searching for optimal h in [0.0999999999999091, 15.2778333333333]...Done.</div><div class='output co'>#&gt; [1] 0.4277125</div><div class='input'>
 </div><div class='input'><span class='co'>#* FIXED </span>
 
 <span class='co'># custom limits</span>
-<span class='fu'>LIK.density</span>(<span class='no'>pbccas</span>,<span class='kw'>hlim</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>0.01</span>,<span class='fl'>4</span>))</div><div class='output co'>#&gt; Searching for optimal h in [0.01, 4]...Done.</div><div class='output co'>#&gt; [1] 2.468869</div><div class='input'><span class='fu'>LSCV.density</span>(<span class='no'>pbccas</span>,<span class='kw'>hlim</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>0.01</span>,<span class='fl'>4</span>))</div><div class='output co'>#&gt; Searching for optimal h in [0.01, 4]...Done.</div><div class='output co'>#&gt; [1] 0.4277527</div><div class='input'>
+<span class='fu'>LIK.density</span>(<span class='no'>pbccas</span>,<span class='kw'>hlim</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>0.01</span>,<span class='fl'>4</span>))</div><div class='output co'>#&gt; Searching for optimal h in [0.01, 4]...Done.</div><div class='output co'>#&gt; [1] 2.465704</div><div class='input'><span class='fu'>LSCV.density</span>(<span class='no'>pbccas</span>,<span class='kw'>hlim</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>0.01</span>,<span class='fl'>4</span>))</div><div class='output co'>#&gt; Searching for optimal h in [0.01, 4]...Done.</div><div class='output co'>#&gt; [1] 0.4277527</div><div class='input'>
 <span class='co'># disable edge correction</span>
 <span class='fu'>LIK.density</span>(<span class='no'>pbccas</span>,<span class='kw'>hlim</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>0.01</span>,<span class='fl'>4</span>),<span class='kw'>edge</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; Searching for optimal h in [0.01, 4]...Done.</div><div class='output co'>#&gt; [1] 2.245576</div><div class='input'><span class='fu'>LSCV.density</span>(<span class='no'>pbccas</span>,<span class='kw'>hlim</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>0.01</span>,<span class='fl'>4</span>),<span class='kw'>edge</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; Searching for optimal h in [0.01, 4]...Done.</div><div class='output co'>#&gt; [1] 0.4277527</div><div class='input'>
 <span class='co'># obtain objective function</span>

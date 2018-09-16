@@ -62,7 +62,7 @@ based on likelihood cross-validation." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sparr</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.2.12</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.2.13</span>
       </span>
     </div>
 
@@ -131,7 +131,7 @@ based on likelihood cross-validation.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>SLIK.adapt</span>(<span class='no'>pp</span>, <span class='kw'>hold</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'>rep</span>(<span class='fu'><a href='OS.html'>OS</a></span>(<span class='no'>pp</span>), <span class='fl'>2</span>), <span class='kw'>hlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <pre class="usage"><span class='fu'>SLIK.adapt</span>(<span class='no'>pp</span>, <span class='kw'>hold</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'>rep</span>(<span class='fu'><a href='OS.html'>OS</a></span>(<span class='no'>pp</span>), <span class='fl'>2</span>), <span class='kw'>hlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>edge</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>zero.action</span> <span class='kw'>=</span> <span class='fu'>c</span>(-<span class='fl'>1</span>, <span class='fl'>0</span>), <span class='kw'>optim.control</span> <span class='kw'>=</span> <span class='fu'>list</span>(),
   <span class='kw'>parallelise</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
@@ -146,7 +146,7 @@ based on likelihood cross-validation.</p>
     <tr>
       <th>hold</th>
       <td><p>Logical value indicating whether to hold the global and pilot bandwidths equal throughout the
-optimisation; defaults to <code>FALSE</code>. See `Details'.</p></td>
+optimisation; defaults to <code>TRUE</code>. See `Details'.</p></td>
     </tr>
     <tr>
       <th>start</th>
@@ -197,20 +197,20 @@ commentary.</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function is a generalisation of <code>LIK.density</code>, and is used in attempts to simultaneously choose
-an optimal global and pilot bandwidth for adaptive kernel density estimates. Where <code>LIK.density</code> for adaptive
+    <p>This function is a generalisation of <code><a href='CV.html'>LIK.density</a></code>, and is used in attempts to simultaneously choose
+an optimal global and pilot bandwidth for adaptive kernel density estimates. Where <code><a href='CV.html'>LIK.density</a></code> for adaptive
 estimates assumes the pilot density is held constant (and is not subject to the leave-one-out operations), this function
 allows the pilot bandwidth to vary alongside the global.</p>
-<p>Thus, in contrast to <code>LIK.density</code> the internal leave-one-out operations now also affect the
+<p>Thus, in contrast to <code><a href='CV.html'>LIK.density</a></code> the internal leave-one-out operations now also affect the
 pilot estimation stage. Hence, the set of variable bandwidths changes as each point is left out. In turn, this means the leave-one-out operations must
 be computed by brute force, and this is computationally expensive.</p>
 <p>Identifiability problems can sometimes arise when the global and pilot bandwidths are allowed to `float freely' in the bivariate optimisation routine, which is the default
 behaviour of the function (with <code>hold = FALSE</code>). This can be curbed by setting <code>hold = TRUE</code>, which forces both the global and pilot
 to be held at the same value during optimisation. Doing this also has the beneficial side effect of turning the problem into one of univariate optimisation, thereby reducing total computational cost. Current work (Davies &amp; Lawson, 2018) provides some empirical evidence that this strategy performs quite well in practice.</p>
-<p>Like <code><a href='CV.html'>LSCV.density</a></code> and <code>LIK.density</code>, the argument <code>zero.action</code> can be used to control the level of severity in response to small bandwidths that result (due to numerical error) in at least one density value being zero or less. 
+<p>Like <code><a href='CV.html'>LSCV.density</a></code> and <code><a href='CV.html'>LIK.density</a></code>, the argument <code>zero.action</code> can be used to control the level of severity in response to small bandwidths that result (due to numerical error) in at least one density value being zero or less. 
 When this argument is passed a vector of length 2, the first entry corresponds to the global bandwidth (and hence refers to checks of the final adaptive density estimate and its leave-one-out values) and the second to the pilot bandwidth (and hence checks the fixed-bandwidth pilot density and its leave-one-out values).
 Alternatively a single value may be supplied, which will be taken to be the same for both global and pilot.
-See the help page for <code>LIK.density</code> for an explanation of the four allowable values (<code>-1</code>, <code>0</code>, <code>1</code>, <code>2</code>) for each component of this argument.</p>
+See the help page for <code><a href='CV.html'>LIK.density</a></code> for an explanation of the four allowable values (<code>-1</code>, <code>0</code>, <code>1</code>, <code>2</code>) for each component of this argument.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -241,172 +241,34 @@ C.M., 1995. <em>Kernel Smoothing</em>, Chapman &amp; Hall, London.</p>
 <span class='fu'>data</span>(<span class='no'>pbc</span>)
 <span class='no'>pbccas</span> <span class='kw'>&lt;-</span> <span class='fu'>split</span>(<span class='no'>pbc</span>)$<span class='no'>case</span>
 
-<span class='fu'>SLIK.adapt</span>(<span class='no'>pbccas</span>)</div><div class='output co'>#&gt; h0: 3.174248; hp: 3.174248
-#&gt; h0: 3.491673; hp: 3.174248
-#&gt; h0: 3.174248; hp: 3.491673
-#&gt; h0: 2.856824; hp: 3.491673
-#&gt; h0: 2.539399; hp: 3.650386
-#&gt; h0: 2.539399; hp: 3.332961
-#&gt; h0: 2.221974; hp: 3.253605
-#&gt; h0: 1.587124; hp: 3.729742
-#&gt; h0: 2.777467; hp: 3.313122
-#&gt; h0: 1.983905; hp: 3.590868
-#&gt; h0: 1.587124; hp: 3.729742
-#&gt; h0: 1.66648; hp: 3.194087
-#&gt; h0: 1.230021; hp: 2.965938
-#&gt; h0: 1.428412; hp: 3.531351
-#&gt; h0: 2.023583; hp: 3.323041
-#&gt; h0: 1.626802; hp: 3.461915
-#&gt; h0: 1.428412; hp: 3.531351
-#&gt; h0: 1.309377; hp: 3.065134
-#&gt; h0: 1.815273; hp: 3.459435
-#&gt; h0: 1.478009; hp: 3.196567
-#&gt; h0: 1.730957; hp: 3.393718
-#&gt; h0: 1.562325; hp: 3.262284
-#&gt; h0: 1.688799; hp: 3.360859
-#&gt; h0: 1.604483; hp: 3.295143
-#&gt; h0: 1.66772; hp: 3.34443
-#&gt; h0: 1.628042; hp: 3.612257
-#&gt; h0: 1.608823; hp: 3.821342
-#&gt; h0: 1.567905; hp: 3.938827
-#&gt; h0: 1.642767; hp: 3.493029
-#&gt; h0: 1.592859; hp: 3.790228
-#&gt; h0: 1.63029; hp: 3.567329
-#&gt; h0: 1.605336; hp: 3.715928
-#&gt; h0: 1.624051; hp: 3.604479
-#&gt; h0: 1.606072; hp: 3.963907
-#&gt; h0: 1.595707; hp: 4.214903
-#&gt; h0: 1.580479; hp: 4.431766
-#&gt; h0: 1.613158; hp: 3.811301
-#&gt; h0: 1.591372; hp: 4.224944
-#&gt; h0: 1.607712; hp: 3.914712
-#&gt; h0: 1.594595; hp: 4.308272
-#&gt; h0: 1.605266; hp: 3.943075
-#&gt; h0: 1.593262; hp: 4.243266
-#&gt; h0: 1.604099; hp: 3.99685
-#&gt; h0: 1.59454; hp: 4.268678
-#&gt; h0: 1.602585; hp: 4.024476
-#&gt; h0: 1.594192; hp: 4.242528
-#&gt; h0: 1.601622; hp: 4.05827
-#&gt; h0: 1.594745; hp: 4.248697
-#&gt; h0: 1.600625; hp: 4.080531
-#&gt; h0: 1.594709; hp: 4.237164
-#&gt; h0: 1.599894; hp: 4.102993
-#&gt; h0: 1.594976; hp: 4.237365
-#&gt; h0: 1.592152; hp: 4.315782
-#&gt; h0: 1.590789; hp: 4.349274
-#&gt; h0: 1.597618; hp: 4.164563
-#&gt; h0: 1.593065; hp: 4.287704
-#&gt; h0: 1.59648; hp: 4.195349
-#&gt; h0: 1.594204; hp: 4.256919
-#&gt; h0: 1.595911; hp: 4.210741
-#&gt; h0: 1.594773; hp: 4.241526
-#&gt; h0: 1.595626; hp: 4.218437
-#&gt; h0: 1.594896; hp: 4.2409
-#&gt; h0: 1.59449; hp: 4.253898
-#&gt; h0: 1.594246; hp: 4.259827
-#&gt; h0: 1.595281; hp: 4.228785
-#&gt; h0: 1.594591; hp: 4.24948
-#&gt; h0: 1.595109; hp: 4.233959
-#&gt; h0: 1.594763; hp: 4.244306
-#&gt; h0: 1.595022; hp: 4.236545
-#&gt; h0: 1.59485; hp: 4.241719
-#&gt; h0: 1.594763; hp: 4.244306
-#&gt; h0: 1.594769; hp: 4.245254
-#&gt; h0: 1.594925; hp: 4.239337
-#&gt; h0: 1.594821; hp: 4.243282
-#&gt; h0: 1.594769; hp: 4.245254
-#&gt; h0: 1.594775; hp: 4.244101
-#&gt; h0: 1.594865; hp: 4.2417
-#&gt; h0: 1.594805; hp: 4.243301
-#&gt; h0: 1.59485; hp: 4.2421
-#&gt; h0: 1.594821; hp: 4.243663
-#&gt; h0: 1.594807; hp: 4.244635
-#&gt; h0: 1.594792; hp: 4.244844
-#&gt; h0: 1.594836; hp: 4.242786
-#&gt; h0: 1.594807; hp: 4.244158
-#&gt; h0: 1.594828; hp: 4.243129
-#&gt; h0: 1.594814; hp: 4.243815
-#&gt; h0: 1.594807; hp: 4.244158
-#&gt; h0: 1.594814; hp: 4.244196
-#&gt; h0: 1.594811; hp: 4.244654
-#&gt; h0: 1.594807; hp: 4.244349
-#&gt; h0: 1.594818; hp: 4.243834
-#&gt; h0: 1.594811; hp: 4.244177
-#&gt; h0: 1.594816; hp: 4.24392
-#&gt; h0: 1.594812; hp: 4.244092
-#&gt; h0: 1.594815; hp: 4.243963
-#&gt; h0: 1.594816; hp: 4.244344
-#&gt; h0: 1.594817; hp: 4.244609
-#&gt; h0: 1.594815; hp: 4.244578
-#&gt; h0: 1.594815; hp: 4.244117
-#&gt; h0: 1.594815; hp: 4.244424
-#&gt; h0: 1.594815; hp: 4.244193
-#&gt; h0: 1.594815; hp: 4.244347
-#&gt; h0: 1.594815; hp: 4.244232
-#&gt; h0: 1.594815; hp: 4.244309
-#&gt; h0: 1.594815; hp: 4.244251
-#&gt; h0: 1.594816; hp: 4.244399
-#&gt; h0: 1.594817; hp: 4.2445
-#&gt; h0: 1.594818; hp: 4.244593
-#&gt; h0: 1.594819; hp: 4.244764
-#&gt; h0: 1.594819; hp: 4.244749
-#&gt; h0: 1.594821; hp: 4.244951
-#&gt; h0: 1.594822; hp: 4.245044
-#&gt; h0: 1.594824; hp: 4.245316
-#&gt; h0: 1.594825; hp: 4.245402
-#&gt; h0: 1.594829; hp: 4.245807
-#&gt; h0: 1.59483; hp: 4.2459
-#&gt; h0: 1.594834; hp: 4.246374
-#&gt; h0: 1.594841; hp: 4.247137
-#&gt; h0: 1.59485; hp: 4.248184
-#&gt; h0: 1.594855; hp: 4.248751
-#&gt; h0: 1.594868; hp: 4.250223
-#&gt; h0: 1.594885; hp: 4.252032
-#&gt; h0: 1.59491; hp: 4.254861
-#&gt; h0: 1.594928; hp: 4.256901
-#&gt; h0: 1.59487; hp: 4.250363
-#&gt; h0: 1.594912; hp: 4.255001
-#&gt; h0: 1.594934; hp: 4.25739
-#&gt; h0: 1.594974; hp: 4.261888
-#&gt; h0: 1.595026; hp: 4.267651
-#&gt; h0: 1.594997; hp: 4.264417
-#&gt; h0: 1.595041; hp: 4.269195
-#&gt; h0: 1.595038; hp: 4.268916
-#&gt; h0: 1.59496; hp: 4.260271
-#&gt; h0: 1.595012; hp: 4.266034
-#&gt; h0: 1.594973; hp: 4.261712
-#&gt; h0: 1.594999; hp: 4.264594
-#&gt; h0: 1.595012; hp: 4.266034
-#&gt; h0: 1.595022; hp: 4.267122
-#&gt; h0: 1.594986; hp: 4.263197
-#&gt; h0: 1.59501; hp: 4.265814
-#&gt; h0: 1.594992; hp: 4.263851
-#&gt; h0: 1.595004; hp: 4.26516
-#&gt; h0: 1.59501; hp: 4.265814
-#&gt; h0: 1.595005; hp: 4.265336
-#&gt; h0: 1.594999; hp: 4.264647
-#&gt; h0: 1.595005; hp: 4.265213
-#&gt; h0: 1.595; hp: 4.264748
-#&gt; h0: 1.595005; hp: 4.265261
-#&gt; h0: 1.595001; hp: 4.2648
-#&gt; h0: 1.595005; hp: 4.265212
-#&gt; h0: 1.595001; hp: 4.264864
-#&gt; h0: 1.595005; hp: 4.265223
-#&gt; h0: 1.595002; hp: 4.264906
-#&gt; h0: 1.595004; hp: 4.265202
-#&gt; h0: 1.595002; hp: 4.264949
-#&gt; h0: 1.595004; hp: 4.265202
-#&gt; h0: 1.595002; hp: 4.26498
-#&gt; h0: 1.595004; hp: 4.265191
-#&gt; h0: 1.595003; hp: 4.265009
-#&gt; h0: 1.595004; hp: 4.265189
-#&gt; h0: 1.595003; hp: 4.265032
-#&gt; h0: 1.595004; hp: 4.265183
-#&gt; h0: 1.595005; hp: 4.265269
-#&gt; h0: 1.595005; hp: 4.26531
-#&gt; h0: 1.595003; hp: 4.265102</div><div class='output co'>#&gt;       h0       hp 
-#&gt; 1.595004 4.265183 </div><div class='input'><span class='fu'>SLIK.adapt</span>(<span class='no'>pbccas</span>,<span class='kw'>hold</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; h0: 5.897416; hp: 5.897416
+<span class='fu'>SLIK.adapt</span>(<span class='no'>pbccas</span>)</div><div class='output co'>#&gt; h0: 5.897416; hp: 5.897416
+#&gt; h0: 9.480417; hp: 9.480417
+#&gt; h0: 3.683; hp: 3.683
+#&gt; h0: 2.314416; hp: 2.314416
+#&gt; h0: 1.468584; hp: 1.468584
+#&gt; h0: 2.837169; hp: 2.837169
+#&gt; h0: 1.991337; hp: 1.991337
+#&gt; h0: 1.791663; hp: 1.791663
+#&gt; h0: 2.114742; hp: 2.114742
+#&gt; h0: 1.915069; hp: 1.915069
+#&gt; h0: 2.038474; hp: 2.038474
+#&gt; h0: 1.962205; hp: 1.962205
+#&gt; h0: 1.944201; hp: 1.944201
+#&gt; h0: 1.933073; hp: 1.933073
+#&gt; h0: 1.926196; hp: 1.926196
+#&gt; h0: 1.937323; hp: 1.937323
+#&gt; h0: 1.930446; hp: 1.930446
+#&gt; h0: 1.928823; hp: 1.928823
+#&gt; h0: 1.93145; hp: 1.93145
+#&gt; h0: 1.929826; hp: 1.929826
+#&gt; h0: 1.929443; hp: 1.929443
+#&gt; h0: 1.929206; hp: 1.929206
+#&gt; h0: 1.929589; hp: 1.929589
+#&gt; h0: 1.929352; hp: 1.929352
+#&gt; h0: 1.929296; hp: 1.929296
+#&gt; h0: 1.929256; hp: 1.929256
+#&gt; h0: 1.929256; hp: 1.929256</div><div class='output co'>#&gt;       h0       hp 
+#&gt; 1.929256 1.929256 </div><div class='input'><span class='fu'>SLIK.adapt</span>(<span class='no'>pbccas</span>,<span class='kw'>hold</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; h0: 5.897416; hp: 5.897416
 #&gt; h0: 9.480417; hp: 9.480417
 #&gt; h0: 3.683; hp: 3.683
 #&gt; h0: 2.314416; hp: 2.314416

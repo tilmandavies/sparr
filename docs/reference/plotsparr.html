@@ -62,7 +62,7 @@ rrs, rrst and msden." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sparr</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.2.12</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.2.13</span>
       </span>
     </div>
 
@@ -145,14 +145,16 @@ rrs, rrst and msden." />
   <span class='fl'>0.05</span>, <span class='kw'>lty</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>drawlabels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='no'>...</span>)
 
 <span class='co'># S3 method for rrst</span>
-<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='kw'>tselect</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"joint"</span>, <span class='st'>"conditional"</span>),
-  <span class='kw'>fix.range</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>tol.show</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>tol.type</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"upper"</span>, <span class='st'>"lower"</span>,
-  <span class='st'>"two.sided"</span>), <span class='kw'>tol.args</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>levels</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>lty</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>drawlabels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-  <span class='kw'>sleep</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>override.par</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='kw'>tselect</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"joint"</span>,
+  <span class='st'>"conditional"</span>), <span class='kw'>fix.range</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>tol.show</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>tol.type</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"upper"</span>, <span class='st'>"lower"</span>, <span class='st'>"two.sided"</span>), <span class='kw'>tol.args</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>levels</span> <span class='kw'>=</span>
+  <span class='fl'>0.05</span>, <span class='kw'>lty</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>drawlabels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>sleep</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>override.par</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>expscale</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for stden</span>
-<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='kw'>tselect</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"joint"</span>, <span class='st'>"conditional"</span>),
-  <span class='kw'>fix.range</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>sleep</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>override.par</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='kw'>tselect</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"joint"</span>,
+  <span class='st'>"conditional"</span>), <span class='kw'>fix.range</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>sleep</span> <span class='kw'>=</span> <span class='fl'>0.2</span>,
+  <span class='kw'>override.par</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -221,6 +223,11 @@ estimate (default) or conditional spatial density given time.</p></td>
     <tr>
       <th>fix.range</th>
       <td><p>Logical value indicating whether use the same color scale limits for each plot in the sequence. Ignored if the user supplies a pre-defined <code><a href='http://www.rdocumentation.org/packages/spatstat/topics/colourmap'>colourmap</a></code> to the <code>col</code> argument, which is matched to <code>...</code> above and passed to <code><a href='http://www.rdocumentation.org/packages/spatstat/topics/plot.im'>plot.im</a></code>. See `Examples'.</p></td>
+    </tr>
+    <tr>
+      <th>expscale</th>
+      <td><p>Logical value indicating whether to force a raw-risk scale. Useful for users
+wishing to plot a log-relative risk surface, but to have the raw-risk displayed on the colour ribbon.</p></td>
     </tr>
     </table>
     

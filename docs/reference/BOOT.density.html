@@ -61,7 +61,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sparr</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.2.12</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.2.13</span>
       </span>
     </div>
 
@@ -218,7 +218,7 @@ where \(\hat{f}(x)\) is a density estimate of \(X\) constructed with `reference'
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Davies, T.M. and Baddeley A. (2018), Fast computation of spatially adaptive kernel estimates, <em>Statistics and Computing</em>, [to appear].<br /><br />
+    <p>Davies, T.M. and Baddeley A. (2018), Fast computation of spatially adaptive kernel estimates, <em>Statistics and Computing</em>, <b>28</b>(4), 937-956.<br /><br />
 Hall, P., Marron, J.S. and Park, B.U. (1992) Smoothed cross-validation, <em>Probability Theory and Related Fields</em>, <b>92</b>, 1-20.<br /><br />
 Sain, S.R., Baggerly, K.A. and Scott, D.W. (1994) Cross-validation of multivariate densities, <em>Journal of the American Statistical Association</em>, <b>89</b>, 807-817.<br /><br />
 Taylor, C.C. (1989) Bootstrap choice of the smoothing parameter in kernel density estimation, <em>Biometrika</em>, <b>76</b>, 705-712.</p>
@@ -244,13 +244,13 @@ Taylor, C.C. (1989) Bootstrap choice of the smoothing parameter in kernel densit
 <span class='no'>pbcfix</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bivariate.density.html'>bivariate.density</a></span>(<span class='no'>pbc</span>,<span class='kw'>h0</span><span class='kw'>=</span><span class='fl'>2.5</span>,<span class='kw'>resolution</span><span class='kw'>=</span><span class='fl'>64</span>)
 <span class='fu'>system.time</span>(<span class='no'>hfix</span> <span class='kw'>&lt;-</span> <span class='fu'>BOOT.density</span>(<span class='no'>pbc</span>,<span class='kw'>ref.density</span><span class='kw'>=</span><span class='no'>pbcfix</span>,<span class='kw'>parallelise</span><span class='kw'>=</span><span class='fl'>4</span>)) <span class='co'># parallelisation; 14 secs</span></div><div class='output co'>#&gt; Initialising...Done.
 #&gt; Searching for optimal h in [0.0999999999999091, 15.2778333333333]...Done.</div><div class='output co'>#&gt;    user  system elapsed 
-#&gt;  27.701   8.210  15.440 </div><div class='input'><span class='no'>hfix</span></div><div class='output co'>#&gt; [1] 1.641965</div><div class='input'>
+#&gt;  26.781   8.597  14.442 </div><div class='input'><span class='no'>hfix</span></div><div class='output co'>#&gt; [1] 1.641965</div><div class='input'>
 <span class='co'>## Global (for adaptive) bandwidth selection ##</span>
 <span class='co'># ~200 secs next line; use 'parallelise' for speedup</span>
 <span class='fu'>system.time</span>(<span class='no'>hada</span> <span class='kw'>&lt;-</span> <span class='fu'>BOOT.density</span>(<span class='no'>pbc</span>,<span class='kw'>type</span><span class='kw'>=</span><span class='st'>"adaptive"</span>)) <span class='co'># minimal usage for adaptive bootstrap</span></div><div class='output co'>#&gt; Initialising...Done.
 #&gt; Searching for optimal h0 in [0.0999999999999091, 15.2778333333333]:
 #&gt; ================================================================================</div><div class='output co'>#&gt;    user  system elapsed 
-#&gt; 176.981   9.955 187.670 </div><div class='input'><span class='no'>hada</span></div><div class='output co'>#&gt; [1] 2.72801</div><div class='input'>
+#&gt; 145.028   8.559 154.531 </div><div class='input'><span class='no'>hada</span></div><div class='output co'>#&gt; [1] 2.72801</div><div class='input'>
 <span class='co'># ~80 secs next line. Set custom h limits; increase reference bandwidth;</span>
 <span class='co'>#    set custom pilot bandwidth; return objective function</span>
 <span class='fu'>system.time</span>(<span class='no'>hada</span> <span class='kw'>&lt;-</span> <span class='fu'>BOOT.density</span>(<span class='no'>pbc</span>,<span class='kw'>hlim</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>0.9</span>,<span class='fl'>8</span>),<span class='kw'>eta</span><span class='kw'>=</span><span class='fl'>3.5</span>,<span class='kw'>type</span><span class='kw'>=</span><span class='st'>"adaptive"</span>,
@@ -259,8 +259,8 @@ Taylor, C.C. (1989) Bootstrap choice of the smoothing parameter in kernel densit
 #&gt; Searching for optimal h0 in [0.9, 8]:
 #&gt;    --bootstrapping on 6 / 8 cores--
 #&gt; Done.</div><div class='output co'>#&gt;    user  system elapsed 
-#&gt; 269.427  11.867  76.036 </div><div class='input'><span class='no'>hada</span>[<span class='fu'>which.min</span>(<span class='no'>hada</span>[,<span class='fl'>2</span>]),<span class='fl'>1</span>]</div><div class='output co'>#&gt;    h0seq 
-#&gt; 3.290399 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>hada</span>);<span class='fu'>abline</span>(<span class='kw'>v</span><span class='kw'>=</span><span class='no'>hada</span>[<span class='fu'>which.min</span>(<span class='no'>hada</span>[,<span class='fl'>2</span>]),<span class='fl'>1</span>],<span class='kw'>col</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='img'><img src='BOOT.density-1.png' alt='' width='700' height='433' /></div></pre>
+#&gt; 227.791   9.784  68.021 </div><div class='input'><span class='no'>hada</span>[<span class='fu'>which.min</span>(<span class='no'>hada</span>[,<span class='fl'>2</span>]),<span class='fl'>1</span>]</div><div class='output co'>#&gt;    h0seq 
+#&gt; 3.140417 </div><div class='input'><span class='fu'>plot</span>(<span class='no'>hada</span>);<span class='fu'>abline</span>(<span class='kw'>v</span><span class='kw'>=</span><span class='no'>hada</span>[<span class='fu'>which.min</span>(<span class='no'>hada</span>[,<span class='fl'>2</span>]),<span class='fl'>1</span>],<span class='kw'>col</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='img'><img src='BOOT.density-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

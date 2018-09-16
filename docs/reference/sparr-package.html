@@ -62,7 +62,7 @@ risk surfaces via the density-ratio method and perform subsequent inference. Fix
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sparr</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.2.12</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.2.13</span>
       </span>
     </div>
 
@@ -136,8 +136,8 @@ risk surfaces via the density-ratio method and perform subsequent inference. Fix
 
     <table class='table'>
 <tr><td>Package:</td><td>sparr</td></tr>
-<tr><td>Date:</td><td>2018-07-21</td></tr>
-<tr><td>Version:</td><td>2.2-12</td></tr>
+<tr><td>Date:</td><td>2018-09-16</td></tr>
+<tr><td>Version:</td><td>2.2-13</td></tr>
 <tr><td>License:</td><td>GPL (&gt;= 2)</td></tr>
 <tr><td></td><td>Package:</td></tr>
 </table>
@@ -191,7 +191,7 @@ KDE, based on the asymptotically optimal value for a normal density
 <p><code><a href='CV.html'>LSCV.density</a></code> a least-squares cross-validated (LSCV) estimate
 of an isotropic fixed bandwidth for bivariate, edge-corrected KDE (see e.g. Bowman and
 Azzalini, 1997).</p>
-<p><code>LIK.density</code> a likelihood cross-validated (LIK) estimate
+<p><code><a href='CV.html'>LIK.density</a></code> a likelihood cross-validated (LIK) estimate
 of an isotropic fixed bandwidth for bivariate, edge-corrected KDE (see e.g. Silverman, 1986).</p>
 <p><code><a href='SLIK.adapt.html'>SLIK.adapt</a></code> an experimental likelihood cross-validation function
 for simultaneous global/pilot bandwidth selection for adaptive density estimates.</p>
@@ -217,25 +217,25 @@ calculation of asymptotic or Monte-Carlo <em>p</em>-value surfaces.</p>
 <p><em>Visualisation</em></p>
 <p><code>S3</code> methods of the <code>plot</code> function; see
 <code><a href='plotsparr.html'>plot.bivden</a></code> for visualising a single bivariate density
-estimate from <code><a href='bivariate.density.html'>bivariate.density</a></code>, <code>plot.rrs</code> for
+estimate from <code><a href='bivariate.density.html'>bivariate.density</a></code>, <code><a href='plotsparr.html'>plot.rrs</a></code> for
 visualisation of a spatial relative risk function from
-<code><a href='risk.html'>risk</a></code>, or <code>plot.msden</code> for viewing animations of
+<code><a href='risk.html'>risk</a></code>, or <code><a href='plotsparr.html'>plot.msden</a></code> for viewing animations of
 multi-scale density estimates from <code><a href='multiscale.density.html'>multiscale.density</a></code>.</p>
 <p><code><a href='tol.contour.html'>tol.contour</a></code> provides more flexibility for plotting and
 superimposing tolerance contours upon an existing plot of spatial relative risk (i.e. given output from
 <code><a href='tolerance.html'>tolerance</a></code>).</p>
 <p><em>Printing and summarising</em></p>
-<p><code>S3</code> methods (<code><a href='printsparr.html'>print.bivden</a></code>, <code>print.rrs</code>,
-<code>print.msden</code>, <code><a href='summarysparr.html'>summary.bivden</a></code>,
-<code>summary.rrs</code>, and <code>summary.msden</code>) are available for
+<p><code>S3</code> methods (<code><a href='printsparr.html'>print.bivden</a></code>, <code><a href='printsparr.html'>print.rrs</a></code>,
+<code><a href='printsparr.html'>print.msden</a></code>, <code><a href='summarysparr.html'>summary.bivden</a></code>,
+<code><a href='summarysparr.html'>summary.rrs</a></code>, and <code><a href='summarysparr.html'>summary.msden</a></code>) are available for
 the bivariate density, spatial relative risk, and multi-scale adaptive density objects.</p>
     <p><b>SPATIOTEMPORAL</b></p>
 <p><em>Bandwidth calculators</em></p>
-<p><code>OS.spattemp</code> estimation of an isotropic
+<p><code><a href='OS.html'>OS.spattemp</a></code> estimation of an isotropic
 smoothing parameter for the spatial margin and another for the temporal margin
 for spatiotemporal densities, based on the 2D and 1D versions, respectively, of the
 oversmoothing principle introduced by Terrell (1990).</p>
-<p><code>NS.spattemp</code> as above, based on the 2D and 1D versions of the
+<p><code><a href='NS.html'>NS.spattemp</a></code> as above, based on the 2D and 1D versions of the
 normal scale rule (Silverman, 1986).</p>
 <p><code><a href='LSCV.spattemp.html'>LSCV.spattemp</a></code> least-squares cross-validated (LSCV) estimates
 of scalar spatial and temporal bandwidths for edge-corrected spatiotemporal KDE.</p>
@@ -248,10 +248,10 @@ for spatiotemporal, edge-corrected KDE (Taylor, 1989).</p>
 <p><code><a href='spattemp.slice.html'>spattemp.slice</a></code> extraction function of the spatial density/relative risk at prespecified time(s).</p>
     <p><em>Visualisation</em></p>
 <p><code>S3</code> methods of the <code>plot</code> function; see
-<code>plot.stden</code> for various options (including animation) for visualisation of a spatiotemporal density,
-and <code>plot.rrst</code> for viewing spatiotemporal relative risk surfaces (including animation and tolerance contour superimposition).</p>
+<code><a href='plotsparr.html'>plot.stden</a></code> for various options (including animation) for visualisation of a spatiotemporal density,
+and <code><a href='plotsparr.html'>plot.rrst</a></code> for viewing spatiotemporal relative risk surfaces (including animation and tolerance contour superimposition).</p>
     <p><em>Printing and summarising objects</em></p>
-<p><code>S3</code> methods (<code>print.stden</code>, <code>print.rrst</code>, <code>summary.stden</code>, and <code>summary.rrst</code>) are available for
+<p><code>S3</code> methods (<code><a href='printsparr.html'>print.stden</a></code>, <code><a href='printsparr.html'>print.rrst</a></code>, <code><a href='summarysparr.html'>summary.stden</a></code>, and <code><a href='summarysparr.html'>summary.rrst</a></code>) are available for
 the spatiotemporal density and spatiotemporal relative risk objects respectively.</p>
     
     <h2 class="hasAnchor" id="dependencies"><a class="anchor" href="#dependencies"></a>Dependencies</h2>
@@ -297,7 +297,7 @@ Illustrations.</em> Oxford University Press Inc., New York. ISBN
 for the planar kernel-smoothed density-ratio, <em>Spatial and
 Spatio-temporal Epidemiology</em>, <b>5</b>, 51-65.</p>
 <p>Davies, T.M. and Baddeley A. (2018), Fast computation of spatially adaptive kernel estimates,
-<em>Statistics and Computing</em>, [to appear].</p>
+<em>Statistics and Computing</em>, <b>28</b>(4), 937-956.</p>
 <p>Davies, T.M., Cornwall, J. and Sheard, P.W. (2013) Modelling dichotomously marked muscle fibre configurations, <em>Statistics in Medicine</em>, <b>32</b>, 4240-4258.</p>
 <p>Davies, T.M. and Hazelton, M.L. (2010), Adaptive kernel
 estimation of spatial relative risk, <em>Statistics in Medicine</em>,
