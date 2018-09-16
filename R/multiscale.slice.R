@@ -43,7 +43,7 @@
 #'
 #' @references
 #' Davies, T.M. and Baddeley A. (2018), Fast computation of
-#' spatially adaptive kernel estimates, \emph{Statistics and Computing}, [to appear].
+#' spatially adaptive kernel estimates, \emph{Statistics and Computing}, \bold{28}(4), 937-956.
 #' 
 #' @examples
 #' \donttest{

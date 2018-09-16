@@ -3,11 +3,10 @@
 \name{OS}
 \alias{OS}
 \alias{OS.spattemp}
-\alias{OS.spattemp}
 \title{Oversmoothing (OS) bandwidth selector}
 \usage{
-OS(pp, nstar = c("npoints", "geometric"), scaler = c("silverman", "IQR",
-  "sd", "var"))
+OS(pp, nstar = c("npoints", "geometric"), scaler = c("silverman",
+  "IQR", "sd", "var"))
 
 OS.spattemp(pp, tt = NULL, nstar = "npoints", scaler = c("silverman",
   "IQR", "sd", "var"))

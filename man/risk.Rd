@@ -6,8 +6,8 @@
 \title{Spatial relative risk/density ratio}
 \usage{
 risk(f, g = NULL, log = TRUE, h0 = NULL, hp = h0, adapt = FALSE,
-  tolerate = FALSE, doplot = FALSE, pilot.symmetry = c("none", "f", "g",
-  "pooled"), epsilon = 0, verbose = TRUE, ...)
+  tolerate = FALSE, doplot = FALSE, pilot.symmetry = c("none", "f",
+  "g", "pooled"), epsilon = 0, verbose = TRUE, ...)
 }
 \arguments{
 \item{f}{Either a pre-calculated object of class \code{\link{bivden}}

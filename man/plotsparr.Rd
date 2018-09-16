@@ -7,10 +7,6 @@
 \alias{plot.msden}
 \alias{plot.stden}
 \alias{plot.rrst}
-\alias{plot.msden}
-\alias{plot.rrs}
-\alias{plot.rrst}
-\alias{plot.stden}
 \title{Plotting sparr objects}
 \usage{
 \method{plot}{bivden}(x, what = c("z", "edge", "bw"), add.pts = FALSE,
@@ -23,13 +19,15 @@
   tol.type = c("upper", "lower", "two.sided"), tol.args = list(levels =
   0.05, lty = 1, drawlabels = TRUE), ...)
 
-\method{plot}{rrst}(x, tselect = NULL, type = c("joint", "conditional"),
-  fix.range = FALSE, tol.show = TRUE, tol.type = c("upper", "lower",
-  "two.sided"), tol.args = list(levels = 0.05, lty = 1, drawlabels = TRUE),
-  sleep = 0.2, override.par = TRUE, ...)
+\method{plot}{rrst}(x, tselect = NULL, type = c("joint",
+  "conditional"), fix.range = FALSE, tol.show = TRUE,
+  tol.type = c("upper", "lower", "two.sided"), tol.args = list(levels =
+  0.05, lty = 1, drawlabels = TRUE), sleep = 0.2, override.par = TRUE,
+  expscale = FALSE, ...)
 
-\method{plot}{stden}(x, tselect = NULL, type = c("joint", "conditional"),
-  fix.range = FALSE, sleep = 0.2, override.par = TRUE, ...)
+\method{plot}{stden}(x, tselect = NULL, type = c("joint",
+  "conditional"), fix.range = FALSE, sleep = 0.2,
+  override.par = TRUE, ...)
 }
 \arguments{
 \item{x}{An object of class \code{\link{bivden}}, \code{\link{stden}},
@@ -70,6 +68,9 @@ the animation.}
 estimate (default) or conditional spatial density given time.}
 
 \item{fix.range}{Logical value indicating whether use the same color scale limits for each plot in the sequence. Ignored if the user supplies a pre-defined \code{\link[spatstat]{colourmap}} to the \code{col} argument, which is matched to \code{...} above and passed to \code{\link[spatstat]{plot.im}}. See `Examples'.}
+
+\item{expscale}{Logical value indicating whether to force a raw-risk scale. Useful for users
+wishing to plot a log-relative risk surface, but to have the raw-risk displayed on the colour ribbon.}
 }
 \value{
 Plots to the relevant graphics device.

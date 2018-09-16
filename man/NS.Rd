@@ -3,11 +3,10 @@
 \name{NS}
 \alias{NS}
 \alias{NS.spattemp}
-\alias{NS.spattemp}
 \title{Normal scale (NS) bandwidth selector}
 \usage{
-NS(pp, nstar = c("npoints", "geometric"), scaler = c("silverman", "IQR",
-  "sd", "var"))
+NS(pp, nstar = c("npoints", "geometric"), scaler = c("silverman",
+  "IQR", "sd", "var"))
 
 NS.spattemp(pp, tt = NULL, nstar = "npoints", scaler = c("silverman",
   "IQR", "sd", "var"))

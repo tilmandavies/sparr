@@ -3,16 +3,17 @@
 \name{LIK.density}
 \alias{LIK.density}
 \alias{LSCV.density}
-\alias{LIK.density}
 \title{Cross-validation bandwidths for spatial kernel density estimates}
 \usage{
-LIK.density(pp, hlim = NULL, hseq = NULL, resolution = 64, edge = TRUE,
-  auto.optim = TRUE, type = c("fixed", "adaptive"), seqres = 30,
-  parallelise = NULL, zero.action = 0, verbose = TRUE, ...)
+LIK.density(pp, hlim = NULL, hseq = NULL, resolution = 64,
+  edge = TRUE, auto.optim = TRUE, type = c("fixed", "adaptive"),
+  seqres = 30, parallelise = NULL, zero.action = 0, verbose = TRUE,
+  ...)
 
-LSCV.density(pp, hlim = NULL, hseq = NULL, resolution = 64, edge = TRUE,
-  auto.optim = TRUE, type = c("fixed", "adaptive"), seqres = 30,
-  parallelise = NULL, zero.action = 0, verbose = TRUE, ...)
+LSCV.density(pp, hlim = NULL, hseq = NULL, resolution = 64,
+  edge = TRUE, auto.optim = TRUE, type = c("fixed", "adaptive"),
+  seqres = 30, parallelise = NULL, zero.action = 0, verbose = TRUE,
+  ...)
 }
 \arguments{
 \item{pp}{An object of class \code{\link[spatstat]{ppp}} giving the observed
@@ -132,7 +133,7 @@ LSCV.density(pbccas,type="adaptive",hp=2)
 }
 \references{
 Davies, T.M. and Baddeley A. (2018), Fast computation of
-spatially adaptive kernel estimates, \emph{Statistics and Computing}, [to appear].
+spatially adaptive kernel estimates, \emph{Statistics and Computing}, \bold{28}(4), 937-956.
 
 Silverman, B.W. (1986), \emph{Density Estimation for Statistics
 and Data Analysis}, Chapman & Hall, New York.

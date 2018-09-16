@@ -12,8 +12,8 @@ risk surfaces via the density-ratio method and perform subsequent inference. Fix
 \details{
 \tabular{ll}{
 Package: \tab sparr\cr
-Date:\tab 2018-07-21\cr
-Version:\tab 2.2-12\cr
+Date:\tab 2018-09-16\cr
+Version:\tab 2.2-13\cr
 License: \tab GPL (>= 2)\cr
 }
 
@@ -234,7 +234,7 @@ for the planar kernel-smoothed density-ratio, \emph{Spatial and
 Spatio-temporal Epidemiology}, \bold{5}, 51-65.
 
 Davies, T.M. and Baddeley A. (2018), Fast computation of spatially adaptive kernel estimates,
-\emph{Statistics and Computing}, [to appear].
+\emph{Statistics and Computing}, \bold{28}(4), 937-956.
 
 Davies, T.M., Cornwall, J. and Sheard, P.W. (2013) Modelling dichotomously marked muscle fibre configurations, \emph{Statistics in Medicine}, \bold{32}, 4240-4258.
 

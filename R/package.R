@@ -234,7 +234,7 @@
 #' Spatio-temporal Epidemiology}, \bold{5}, 51-65.
 #' 
 #' Davies, T.M. and Baddeley A. (2018), Fast computation of spatially adaptive kernel estimates,
-#' \emph{Statistics and Computing}, [to appear].
+#' \emph{Statistics and Computing}, \bold{28}(4), 937-956.
 #' 
 #' Davies, T.M., Cornwall, J. and Sheard, P.W. (2013) Modelling dichotomously marked muscle fibre configurations, \emph{Statistics in Medicine}, \bold{32}, 4240-4258.
 #' 

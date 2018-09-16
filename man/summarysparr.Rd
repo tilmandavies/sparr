@@ -7,10 +7,6 @@
 \alias{summary.msden}
 \alias{summary.stden}
 \alias{summary.rrst}
-\alias{summary.msden}
-\alias{summary.rrs}
-\alias{summary.rrst}
-\alias{summary.stden}
 \title{Summarising sparr objects}
 \usage{
 \method{summary}{bivden}(object, ...)

@@ -86,7 +86,7 @@
 #' @references
 #'
 #' Davies, T.M. and Baddeley A. (2018), Fast computation of
-#' spatially adaptive kernel estimates, \emph{Statistics and Computing}, [to appear].
+#' spatially adaptive kernel estimates, \emph{Statistics and Computing}, \bold{28}(4), 937-956.
 #'
 #' Davies, T.M. and Hazelton, M.L. (2010), Adaptive kernel estimation of spatial relative
 #' risk, \emph{Statistics in Medicine}, \bold{29}(23) 2423-2437.

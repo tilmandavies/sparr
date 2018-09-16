@@ -1,12 +1,16 @@
 #' @rdname plotsparr
 #' @method plot rrst
 #' @export
-plot.rrst <- function(x, tselect = NULL, type = c("joint", "conditional"), fix.range = FALSE, tol.show = TRUE, tol.type = c("upper", "lower", "two.sided"), tol.args = list(levels = 0.05, lty = 1, drawlabels = TRUE), sleep = 0.2, override.par = TRUE, ...){
+plot.rrst <- function(x, tselect = NULL, type = c("joint", "conditional"), fix.range = FALSE, tol.show = TRUE, tol.type = c("upper", "lower", "two.sided"), tol.args = list(levels = 0.05, lty = 1, drawlabels = TRUE), sleep = 0.2, override.par = TRUE, expscale = FALSE, ...){
   ellip <- list(...)
   if(is.null(ellip)) ellip <- list()
   if(is.null(ellip$box)) ellip$box <- FALSE
   if(is.null(ellip$ribargs)) ellip$ribargs <- list(box=TRUE)
+  if(!is.null(ellip$zlim)) fix.range <- TRUE
+  ellip$log <- FALSE
   mn <- is.null(ellip$main)
+  
+  
   
   typ <- type[1]
   if(typ=="joint"){
@@ -21,6 +25,7 @@ plot.rrst <- function(x, tselect = NULL, type = c("joint", "conditional"), fix.r
   
   zlimeq <- c(0,min(sapply(lst,max)[sapply(lst,max)>0]))
   zlimconstant <- range(sapply(lst,range))
+  
   grt <- as.numeric(names(lst))
   
   if(!is.null(tselect)){
@@ -43,6 +48,23 @@ plot.rrst <- function(x, tselect = NULL, type = c("joint", "conditional"), fix.r
       plst <- plst[index]
     }
   }
+  
+  if(!is.null(ellip$zlim)) zlimconstant <- ellip$zlim
+  
+  if(expscale){
+    lst <- lapply(lst,exp)
+    ellip$log <- FALSE
+    
+    if(fix.range&&is.null(ellip$col)){
+      # if(is.null(ellip$zlim)){
+        ellip$col <- beachcolourmap(range=exp(zlimconstant),sealevel=1)
+      # } else {
+        # ellip$col <- beachcolourmap(range=ellip$zlim,sealevel=1)
+      # }
+    }
+  }
+  
+  if(!fix.range) rngs <- lapply(lst,range,na.rm=TRUE)
   
   if(length(lst)==1) sleep <- 0
   
@@ -69,9 +91,21 @@ plot.rrst <- function(x, tselect = NULL, type = c("joint", "conditional"), fix.r
     ellip$x <- lst[[i]]
     if(mn) ellip$main <- paste("t =",round(grt[i],5))
     if(diff(range(lst[[i]]))==0&&is.null(ellip$zlim)&&!fix.range) ellip$zlim <- zlimeq
-    if(fix.range) ellip$zlim <- zlimconstant
+    if(fix.range){
+      ellip$zlim <- zlimconstant
+      if(expscale) ellip$zlim <- NULL
+    } else {
+      ellip$zlim <- rngs[[i]]
+      if(expscale&&(is.null(ellip$col)||i>1)){
+        ellip$col <- beachcolourmap(range=ellip$zlim,sealevel=1)
+        ellip$zlim <- NULL
+      }
+    }
+    
+    # print(ellip)
     
     do.call("plot.im",ellip)
+    
     if(drawtol){
       tellip$z <- plst[[i]]
       suppressWarnings(do.call("contour",tellip))

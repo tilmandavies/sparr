@@ -1,3 +1,22 @@
+        CHANGES IN sparr VERSION 2.2-13
+
+OVERVIEW
+
+    o Changed default of 'hold' argument in 'SLIK.adapt'
+    o Finer control when plotting 'rrst' objects
+    o Reference updates
+ 
+    
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o SLIK.adapt
+    Argument 'hold' now defaults to 'TRUE'
+    o plot.rrst
+    New argument 'expscale' for raw-risk scale on image plots of
+    log-relative risk surfaces 
+    
+
+
         CHANGES IN sparr VERSION 2.2-12
 
 OVERVIEW

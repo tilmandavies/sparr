@@ -7,10 +7,6 @@
 \alias{print.msden}
 \alias{print.stden}
 \alias{print.rrst}
-\alias{print.msden}
-\alias{print.rrs}
-\alias{print.rrst}
-\alias{print.stden}
 \title{Printing sparr objects}
 \usage{
 \method{print}{bivden}(x, ...)

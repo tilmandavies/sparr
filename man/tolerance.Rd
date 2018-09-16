@@ -4,8 +4,9 @@
 \alias{tolerance}
 \title{Tolerance by \emph{p}-value surfaces}
 \usage{
-tolerance(rs, method = c("ASY", "MC"), ref.density = NULL, beta = 0.025,
-  ITER = 100, parallelise = NULL, verbose = TRUE, ...)
+tolerance(rs, method = c("ASY", "MC"), ref.density = NULL,
+  beta = 0.025, ITER = 100, parallelise = NULL, verbose = TRUE,
+  ...)
 }
 \arguments{
 \item{rs}{An object of class \code{\link{rrs}} giving the estimated relative
@@ -134,7 +135,7 @@ tol.contour(adatol2,levels=c(0.1,0.05,0.01),lty=3:1,add=TRUE)
 }
 \references{
 Davies, T.M. and Baddeley A. (2018), Fast computation of
-spatially adaptive kernel estimates, \emph{Statistics and Computing}, [to appear].
+spatially adaptive kernel estimates, \emph{Statistics and Computing}, \bold{28}(4), 937-956.
 
 Davies, T.M. and Hazelton, M.L. (2010), Adaptive kernel estimation of spatial relative
 risk, \emph{Statistics in Medicine}, \bold{29}(23) 2423-2437.

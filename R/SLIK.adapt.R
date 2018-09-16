@@ -28,7 +28,7 @@
 #' @param pp An object of class \code{\link[spatstat]{ppp}} giving the observed
 #'   2D data to be smoothed.
 #' @param hold Logical value indicating whether to hold the global and pilot bandwidths equal throughout the
-#'   optimisation; defaults to \code{FALSE}. See `Details'. 
+#'   optimisation; defaults to \code{TRUE}. See `Details'. 
 #' @param hlim An optional vector of length 2 giving the limits of the
 #'   optimisation routine with respect to the bandwidth when \code{hold = TRUE}. If unspecified, the
 #'   function attempts to choose this automatically. Ignored when \code{hold = FALSE}.
@@ -85,7 +85,7 @@
 #' } 
 #' 
 #' @export
-SLIK.adapt <- function(pp,hold=FALSE,start=rep(OS(pp),2),hlim=NULL,edge=TRUE,zero.action=c(-1,0),optim.control=list(),parallelise=NULL,verbose=TRUE,...){
+SLIK.adapt <- function(pp,hold=TRUE,start=rep(OS(pp),2),hlim=NULL,edge=TRUE,zero.action=c(-1,0),optim.control=list(),parallelise=NULL,verbose=TRUE,...){
   if(class(pp)!="ppp") stop("data object 'pp' must be of class \"ppp\"")
   W <- Window(pp)
   # resolution <- checkit(resolution,"'resolution'")

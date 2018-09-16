@@ -6,9 +6,9 @@
 \usage{
 LSCV.risk(f, g = NULL, hlim = NULL, hseq = NULL, type = c("fixed",
   "adaptive"), method = c("kelsall-diggle", "hazelton", "davies"),
-  resolution = 64, edge = TRUE, hp = NULL, pilot.symmetry = c("none",
-  "f", "g", "pooled"), auto.optim = TRUE, seqres = 30, parallelise = NA,
-  verbose = TRUE, ...)
+  resolution = 64, edge = TRUE, hp = NULL,
+  pilot.symmetry = c("none", "f", "g", "pooled"), auto.optim = TRUE,
+  seqres = 30, parallelise = NA, verbose = TRUE, ...)
 }
 \arguments{
 \item{f}{Either a pre-calculated object of class \code{\link{bivden}}
@@ -175,7 +175,7 @@ the planar kernel-smoothed density-ratio, \emph{Spatial and Spatio-temporal
 Epidemiology}, \bold{5}, 51-65.
 
 Davies, T.M. and Baddeley A. (2018), Fast computation of
-spatially adaptive kernel estimates, \emph{Statistics and Computing}, [to appear].
+spatially adaptive kernel estimates, \emph{Statistics and Computing}, \bold{28}(4), 937-956.
 
 Davies, T.M. and Hazelton, M.L. (2010), Adaptive kernel
 estimation of spatial relative risk, \emph{Statistics in Medicine},

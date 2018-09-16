@@ -4,7 +4,7 @@
 \alias{SLIK.adapt}
 \title{Simultaneous global/pilot likelihood bandwidth selection}
 \usage{
-SLIK.adapt(pp, hold = FALSE, start = rep(OS(pp), 2), hlim = NULL,
+SLIK.adapt(pp, hold = TRUE, start = rep(OS(pp), 2), hlim = NULL,
   edge = TRUE, zero.action = c(-1, 0), optim.control = list(),
   parallelise = NULL, verbose = TRUE, ...)
 }
@@ -13,7 +13,7 @@ SLIK.adapt(pp, hold = FALSE, start = rep(OS(pp), 2), hlim = NULL,
 2D data to be smoothed.}
 
 \item{hold}{Logical value indicating whether to hold the global and pilot bandwidths equal throughout the
-optimisation; defaults to \code{FALSE}. See `Details'.}
+optimisation; defaults to \code{TRUE}. See `Details'.}
 
 \item{start}{A positively-valued numeric vector of length 2 giving the starting values to be used for the global/pilot
 optimisation routine when \code{hold = FALSE}. Defaults to the oversmoothing bandwidth (\code{\link{OS}}) for both values;

@@ -48,6 +48,8 @@
 #' @param sleep Single positive numeric value giving the amount of time (in
 #'   seconds) to \code{\link[base]{Sys.sleep}} before drawing the next image in
 #'   the animation.
+#' @param expscale Logical value indicating whether to force a raw-risk scale. Useful for users
+#'   wishing to plot a log-relative risk surface, but to have the raw-risk displayed on the colour ribbon.
 #' @param override.par Logical value indicating whether to override the
 #'   existing graphics device parameters prior to plotting, resetting
 #'   \code{mfrow} and \code{mar}. See `Details' for when you might want to
