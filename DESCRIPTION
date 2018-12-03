@@ -13,6 +13,6 @@ Suggests: fftwtools (>= 0.9.8)
 License: GPL (>= 2)
 LazyLoad: yes
 NeedsCompilation: no
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 URL: http://tilmandavies.github.io/sparr, https://github.com/tilmandavies/sparr
 BugReports: https://github.com/tilmandavies/sparr/issues
