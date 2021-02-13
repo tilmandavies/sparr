@@ -25,7 +25,7 @@
 #' 
 #' @rdname SLIK.adapt
 #' 
-#' @param pp An object of class \code{\link[spatstat]{ppp}} giving the observed
+#' @param pp An object of class \code{\link[spatstat.geom]{ppp}} giving the observed
 #'   2D data to be smoothed.
 #' @param hold Logical value indicating whether to hold the global and pilot bandwidths equal throughout the
 #'   optimisation; defaults to \code{TRUE}. See `Details'. 
@@ -58,9 +58,9 @@
 #' @author T. M. Davies
 #'
 #' @seealso Functions for bandwidth selection in package
-#'   \code{\link{spatstat}}: \code{\link[spatstat]{bw.diggle}};
-#'   \code{\link[spatstat]{bw.ppl}}; \code{\link[spatstat]{bw.scott}};
-#'   \code{\link[spatstat]{bw.frac}}.
+#'   \code{\link{spatstat}}: \code{\link[spatstat.core]{bw.diggle}};
+#'   \code{\link[spatstat.core]{bw.ppl}}; \code{\link[spatstat.core]{bw.scott}};
+#'   \code{\link[spatstat.core]{bw.frac}}.
 #'
 #' @references
 #' Davies, T.M. and Lawson, A.B. (2018), An evaluation of likelihood-based bandwidth selectors for spatial and spatiotemporal kernel estimates, \emph{Submitted for publication}.

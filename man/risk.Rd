@@ -5,16 +5,27 @@
 \alias{rrs}
 \title{Spatial relative risk/density ratio}
 \usage{
-risk(f, g = NULL, log = TRUE, h0 = NULL, hp = h0, adapt = FALSE,
-  tolerate = FALSE, doplot = FALSE, pilot.symmetry = c("none", "f",
-  "g", "pooled"), epsilon = 0, verbose = TRUE, ...)
+risk(
+  f,
+  g = NULL,
+  log = TRUE,
+  h0 = NULL,
+  hp = h0,
+  adapt = FALSE,
+  tolerate = FALSE,
+  doplot = FALSE,
+  pilot.symmetry = c("none", "f", "g", "pooled"),
+  epsilon = 0,
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
 \item{f}{Either a pre-calculated object of class \code{\link{bivden}}
 representing the `case' (numerator) density estimate, or an object of class
-\code{\link[spatstat]{ppp}} giving the observed case data. Alternatively, if
-\code{f} is \code{\link[spatstat]{ppp}} object with dichotomous
-factor-valued \code{\link[spatstat]{marks}}, the function treats the first
+\code{\link[spatstat.geom]{ppp}} giving the observed case data. Alternatively, if
+\code{f} is \code{\link[spatstat.geom]{ppp}} object with dichotomous
+factor-valued \code{\link[spatstat.geom]{marks}}, the function treats the first
 level as the case data, and the second as the control data, obviating the
 need to supply \code{g}.}
 
@@ -73,7 +84,7 @@ Ignored if \code{f} and \code{g} are already \code{\link{bivden}} objects.}
 \value{
 An object of class \code{"rrs"}. This is a named list with the
 following components:
-\item{rr}{A pixel \code{\link[spatstat]{im}}age of the
+\item{rr}{A pixel \code{\link[spatstat.geom]{im}}age of the
   estimated risk surface.}
 \item{f}{An object of class \code{\link{bivden}}
   used as the numerator or `case' density estimate.}
@@ -81,7 +92,7 @@ following components:
   class \code{\link{bivden}} used as the denominator or `control' density
   estimate.}
 \item{P}{Only included if \code{tolerate = TRUE}. A pixel
-  \code{\link[spatstat]{im}}age of the \emph{p}-value surface for tolerance
+  \code{\link[spatstat.geom]{im}}age of the \emph{p}-value surface for tolerance
   contours; \code{NULL} otherwise.}
 }
 \description{
@@ -123,7 +134,7 @@ asymptotic tolerance contours as per Hazelton and Davies (2009) and Davies
 and Hazelton (2010). When \code{adapt = FALSE}, the reference density
 estimate (argument \code{ref.density} in \code{\link{tolerance}}) is taken
 to be the estimated control density. The returned pixel
-\code{\link[spatstat]{im}}age of \emph{p}-values (see `Value') is
+\code{\link[spatstat.geom]{im}}age of \emph{p}-values (see `Value') is
 interpreted as an upper-tailed test i.e. smaller \emph{p}-values represent
 greater evidence in favour of significantly increased risk. For greater
 control over calculation of tolerance contours, use \code{\link{tolerance}}.

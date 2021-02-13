@@ -3,14 +3,14 @@
 #' Draw contours based on a \emph{p}-value matrix.
 #' 
 #' Note that no checks on the numeric content of \code{pim} are made. The
-#' function assumes the pixel \code{\link[spatstat]{im}}age of \emph{p}-values
+#' function assumes the pixel \code{\link[spatstat.geom]{im}}age of \emph{p}-values
 #' in \code{pim} is supplied with respect to an upper-tailed test for elevated
 #' risk (this is exactly the way the \emph{p}-value surface is returned when
 #' \code{\link{tolerance}} is used). This is important if one makes subsequent
 #' use of \code{test}, which manipulates the \emph{p}-values to draw at desired
 #' significance \code{levels}.
 #' 
-#' @param pim A pixel \code{\link[spatstat]{im}}age of \emph{p}-values,
+#' @param pim A pixel \code{\link[spatstat.geom]{im}}age of \emph{p}-values,
 #'   typically obtained from a call to \code{\link{tolerance}}, computed with
 #'   respect to a test for elevated risk.
 #' @param test An optional character string giving the type of manipulation to

@@ -4,9 +4,16 @@
 \alias{tolerance}
 \title{Tolerance by \emph{p}-value surfaces}
 \usage{
-tolerance(rs, method = c("ASY", "MC"), ref.density = NULL,
-  beta = 0.025, ITER = 100, parallelise = NULL, verbose = TRUE,
-  ...)
+tolerance(
+  rs,
+  method = c("ASY", "MC"),
+  ref.density = NULL,
+  beta = 0.025,
+  ITER = 100,
+  parallelise = NULL,
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
 \item{rs}{An object of class \code{\link{rrs}} giving the estimated relative
@@ -19,7 +26,7 @@ permutations of the data. See `Details'.}
 
 \item{ref.density}{Required if \code{rs} is based on fixed-bandwidth
 estimates of the case and control densities and \code{method = "ASY"}.
-Either a pixel \code{\link[spatstat]{im}}age or an object of class
+Either a pixel \code{\link[spatstat.geom]{im}}age or an object of class
 \code{\link{bivden}} giving the reference density to use in asymptotic
 formulae. May be unnormalised. Ignored if \code{rs} is based on adaptive
 kernel estimates or if \code{method = "MC"}.}
@@ -50,7 +57,7 @@ typically used to set the appropriate \code{epsilon} and
 \code{pilot.symmetry} values for the internal calls to \code{\link{risk}}.}
 }
 \value{
-A pixel \code{\link[spatstat]{im}}age of the estimated
+A pixel \code{\link[spatstat.geom]{im}}age of the estimated
 \emph{p}-value surface.
 }
 \description{

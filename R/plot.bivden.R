@@ -5,7 +5,7 @@
 #' 
 #' 
 #' In all instances, visualisation is deferred to
-#' \code{\link[spatstat]{plot.im}}, for which there are a variety of
+#' \code{\link[spatstat.geom]{plot.im}}, for which there are a variety of
 #' customisations available the user can access via \code{...}. The one
 #' exception is when plotting observation-specific \code{"diggle"} edge
 #' correction factors---in this instance, a plot of the spatial observations is
@@ -37,7 +37,7 @@
 #' @param tselect Either a single numeric value giving the time at which to return the plot, or a vector of length 2 giving an interval of times over which to plot. This argument must respect the stored temporal bound in \code{x$tlim}, else an error will be thrown. By default, the full set of images (i.e. over the entire available time span) is plotted.
 #' @param type A character string to select plotting of joint/unconditional spatiotemporal
 #'   estimate (default) or conditional spatial density given time.
-#' @param fix.range Logical value indicating whether use the same color scale limits for each plot in the sequence. Ignored if the user supplies a pre-defined \code{\link[spatstat]{colourmap}} to the \code{col} argument, which is matched to \code{...} above and passed to \code{\link[spatstat]{plot.im}}. See `Examples'.
+#' @param fix.range Logical value indicating whether use the same color scale limits for each plot in the sequence. Ignored if the user supplies a pre-defined \code{\link[spatstat.geom]{colourmap}} to the \code{col} argument, which is matched to \code{...} above and passed to \code{\link[spatstat.geom]{plot.im}}. See `Examples'.
 #' @param tol.show Logical value indicating whether to show pre-computed tolerance contours on the plot(s). The object \code{x} must already have the relevant \emph{p}-value surface(s) stored in order for this argument to have any effect.
 #' @param tol.type A character string used to control the type of tolerance contour displayed; a test for elevated risk (\code{"upper"}), decreased risk (\code{"lower"}), or a two-tailed test (\code{two.sided}).
 #' @param tol.args A named list of valid arguments to be passed directly to \code{\link[graphics]{contour}} to control the appearance of plotted contours. Commonly used items are \code{levels}, \code{lty}, \code{lwd} and \code{drawlabels}.
@@ -55,8 +55,8 @@
 #'   \code{mfrow} and \code{mar}. See `Details' for when you might want to
 #'   disable this.
 #' @param ...  Additional graphical parameters to be passed to
-#'   \code{\link[spatstat]{plot.im}}, or in one instance, to
-#'   \code{\link[spatstat]{plot.ppp}} (see `Details').
+#'   \code{\link[spatstat.geom]{plot.im}}, or in one instance, to
+#'   \code{\link[spatstat.geom]{plot.ppp}} (see `Details').
 #'
 #' @return Plots to the relevant graphics device.
 #'

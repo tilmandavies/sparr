@@ -5,18 +5,38 @@
 \alias{LSCV.density}
 \title{Cross-validation bandwidths for spatial kernel density estimates}
 \usage{
-LIK.density(pp, hlim = NULL, hseq = NULL, resolution = 64,
-  edge = TRUE, auto.optim = TRUE, type = c("fixed", "adaptive"),
-  seqres = 30, parallelise = NULL, zero.action = 0, verbose = TRUE,
-  ...)
+LIK.density(
+  pp,
+  hlim = NULL,
+  hseq = NULL,
+  resolution = 64,
+  edge = TRUE,
+  auto.optim = TRUE,
+  type = c("fixed", "adaptive"),
+  seqres = 30,
+  parallelise = NULL,
+  zero.action = 0,
+  verbose = TRUE,
+  ...
+)
 
-LSCV.density(pp, hlim = NULL, hseq = NULL, resolution = 64,
-  edge = TRUE, auto.optim = TRUE, type = c("fixed", "adaptive"),
-  seqres = 30, parallelise = NULL, zero.action = 0, verbose = TRUE,
-  ...)
+LSCV.density(
+  pp,
+  hlim = NULL,
+  hseq = NULL,
+  resolution = 64,
+  edge = TRUE,
+  auto.optim = TRUE,
+  type = c("fixed", "adaptive"),
+  seqres = 30,
+  parallelise = NULL,
+  zero.action = 0,
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
-\item{pp}{An object of class \code{\link[spatstat]{ppp}} giving the observed
+\item{pp}{An object of class \code{\link[spatstat.geom]{ppp}} giving the observed
 2D data to be smoothed.}
 
 \item{hlim}{An optional vector of length 2 giving the limits of the
@@ -143,9 +163,9 @@ C.M., 1995. \emph{Kernel Smoothing}, Chapman & Hall, London.
 }
 \seealso{
 \code{\link{SLIK.adapt}} and functions for bandwidth selection in package
-  \code{\link{spatstat}}: \code{\link[spatstat]{bw.diggle}};
-  \code{\link[spatstat]{bw.ppl}}; \code{\link[spatstat]{bw.scott}};
-  \code{\link[spatstat]{bw.frac}}.
+  \code{\link{spatstat}}: \code{\link[spatstat.core]{bw.diggle}};
+  \code{\link[spatstat.core]{bw.ppl}}; \code{\link[spatstat.core]{bw.scott}};
+  \code{\link[spatstat.core]{bw.frac}}.
 }
 \author{
 T. M. Davies

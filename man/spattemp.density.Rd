@@ -16,13 +16,13 @@ spattemp.density(pp, h = NULL, tt = NULL, lambda = NULL,
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{pp}{
-An object of class \code{\link[spatstat]{ppp}} giving the spatial coordinates of the observations to be smoothed. Possibly marked with the time of each event; see argument \code{tt}.
+An object of class \code{\link[spatstat.geom]{ppp}} giving the spatial coordinates of the observations to be smoothed. Possibly marked with the time of each event; see argument \code{tt}.
 }
   \item{h}{
 Fixed bandwidth to smooth the spatial margin. A numeric value > 0. If unsupplied, the oversmoothing bandwidth is used as per \code{\link{OS}}.
 }
   \item{tt}{
-A numeric vector of equal length to the number of points in \code{pp}, giving the time corresponding to each spatial observation. If unsupplied, the function attempts to use the values in the \code{\link[spatstat]{marks}} attribute of the \code{\link[spatstat]{ppp.object}} in \code{pp}.
+A numeric vector of equal length to the number of points in \code{pp}, giving the time corresponding to each spatial observation. If unsupplied, the function attempts to use the values in the \code{\link[spatstat.geom]{marks}} attribute of the \code{\link[spatstat.geom:ppp]{ppp.object}} in \code{pp}.
 }
   \item{lambda}{
 Fixed bandwidth to smooth the temporal margin; a numeric value > 0. If unsupplied, the function internally computes the Sheather-Jones bandwith using \code{\link[stats]{bw.SJ}} (Sheather & Jones, 1991).
@@ -65,10 +65,10 @@ The objects returned by this function (see `Value' below) are necessary for kern
 \value{
 An object of class \code{"stden"}. This is effectively a list with the following components:
 \item{z}{
-A named (by time-point) list of pixel \code{\link[spatstat]{im}}ages corresponding to the joint spatiotemporal density over space at each discretised time.
+A named (by time-point) list of pixel \code{\link[spatstat.geom]{im}}ages corresponding to the joint spatiotemporal density over space at each discretised time.
 }
 \item{z.cond}{
-A named (by time-point) list of pixel \code{\link[spatstat]{im}}ages corresponding to the conditional spatial density given each discretised time.
+A named (by time-point) list of pixel \code{\link[spatstat.geom]{im}}ages corresponding to the conditional spatial density given each discretised time.
 }
 \item{h}{
 The scalar bandwidth used for spatial smoothing.
@@ -80,19 +80,19 @@ The scalar bandwidth used for temporal smoothing.
 A numeric vector of length two giving the temporal bound of the density estimate.
 }
 \item{spatial.z}{
-A pixel \code{\link[spatstat]{im}}age giving the overall spatial margin as a single 2D density estimate (i.e. ignoring time).
+A pixel \code{\link[spatstat.geom]{im}}age giving the overall spatial margin as a single 2D density estimate (i.e. ignoring time).
 }
 \item{temporal.z}{
 An object of class \code{\link[stats]{density}} giving the overall temporal margin as a single 1D density estimate (i.e. ignoring space).
 }
 \item{qs}{
-A pixel \code{\link[spatstat]{im}}age giving the edge-correction surface for the spatial margin. \code{NULL} if \code{sedge = "none"}.
+A pixel \code{\link[spatstat.geom]{im}}age giving the edge-correction surface for the spatial margin. \code{NULL} if \code{sedge = "none"}.
 }
 \item{qt}{
 A numeric vector giving the edge-correction weights for the temporal margin. \code{NULL} if \code{tedge = "none"}.
 }
 \item{pp}{
-A \code{\link[spatstat]{ppp.object}} of the spatial data passed to the argument of the same name in the initial function call, with \code{\link[spatstat]{marks}} of the observation times.
+A \code{\link[spatstat.geom:ppp]{ppp.object}} of the spatial data passed to the argument of the same name in the initial function call, with \code{\link[spatstat.geom]{marks}} of the observation times.
 }
 \item{tgrid}{
 A numeric vector giving the discretised time grid at which the spatiotemporal density was evaluated (matches the names of \code{z} and \code{z.cond}).

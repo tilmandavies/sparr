@@ -47,9 +47,9 @@
 #'
 #' @param f Either a pre-calculated object of class \code{\link{bivden}}
 #'   representing the `case' (numerator) density estimate, or an object of class
-#'   \code{\link[spatstat]{ppp}} giving the observed case data. Alternatively, if
-#'   \code{f} is \code{\link[spatstat]{ppp}} object with dichotomous
-#'   factor-valued \code{\link[spatstat]{marks}}, the function treats the first
+#'   \code{\link[spatstat.geom]{ppp}} giving the observed case data. Alternatively, if
+#'   \code{f} is \code{\link[spatstat.geom]{ppp}} object with dichotomous
+#'   factor-valued \code{\link[spatstat.geom]{marks}}, the function treats the first
 #'   level as the case data, and the second as the control data, obviating the
 #'   need to supply \code{g}.
 #' @param g As for \code{f}, for the `control' (denominator) density; this
@@ -469,10 +469,10 @@ LSCV.risk <- function(f, g = NULL, hlim = NULL, hseq = NULL, type = c("fixed", "
 # See the documentation for these arguments in \code{\link{multiscale.density}}. By default, \code{trim = 5};
 # \code{dimz = resolution}; \code{pilot.density = NULL}; and 
 # Otherwise, the \code{pilot.density} component can be a single
-# pixel \code{\link[spatstat]{im}}age (defined on the same domain as the data in \code{f} and \code{g}, and also matching \code{resolution}), posing as the common pilot density (i.e. if the selected global bandwidth 
+# pixel \code{\link[spatstat.geom]{im}}age (defined on the same domain as the data in \code{f} and \code{g}, and also matching \code{resolution}), posing as the common pilot density (i.e. if the selected global bandwidth 
 # is intended for a symmetric adaptive relative risk surface, see Davies et al. 2016). Aternatively, the \code{pilot.density} component can be provided as a list 
 # of two pixel images -- one for the case density, the other for the control (in that order).
 # The \code{hp} component is only used if \code{pilot.args$pilot.density} is unsupplied, in which case it should be a vector of length one or two giving either a common pilot bandwidth
-# or the case and control pilot bandwidths respectively. Either way, unless \code{pilot.args$pilot.density} is a single pixel \code{\link[spatstat]{im}}age as noted above, 
+# or the case and control pilot bandwidths respectively. Either way, unless \code{pilot.args$pilot.density} is a single pixel \code{\link[spatstat.geom]{im}}age as noted above, 
 # the pilot densities are computed separately using the case (\code{f}) and control (\code{g}) data supplied to the function for an asymmetric adaptive relative risk surface (Davies & Hazelton, 2010).
  

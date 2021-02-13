@@ -19,10 +19,10 @@ LSCV.spattemp(pp, tt = NULL, tlim = NULL, sedge = c("uniform", "none"),
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{pp}{
-An object of class \code{\link[spatstat]{ppp}} giving the spatial coordinates of the observations to be smoothed. Possibly marked with the time of each event; see argument \code{tt}.
+An object of class \code{\link[spatstat.geom]{ppp}} giving the spatial coordinates of the observations to be smoothed. Possibly marked with the time of each event; see argument \code{tt}.
 }
   \item{tt}{
-A numeric vector of equal length to the number of points in \code{pp}, giving the time corresponding to each spatial observation. If unsupplied, the function attempts to use the values in the \code{\link[spatstat]{marks}} attribute of the \code{\link[spatstat]{ppp.object}} in \code{pp}.
+A numeric vector of equal length to the number of points in \code{pp}, giving the time corresponding to each spatial observation. If unsupplied, the function attempts to use the values in the \code{\link[spatstat.geom]{marks}} attribute of the \code{\link[spatstat.geom:ppp]{ppp.object}} in \code{pp}.
 }
   \item{tlim}{
 A numeric vector of length 2 giving the limits of the temporal domain over which to smooth. If supplied, all times in \code{tt} must fall within this interval (equality with limits allowed). If unsupplied, the function simply uses the range of the observed temporal values.

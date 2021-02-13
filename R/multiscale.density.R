@@ -21,11 +21,11 @@
 #' 
 #' The distinct values of global bandwidth used (which define the
 #' aforementioned \code{h0range}) and hence the total number of pixel
-#' \code{\link[spatstat]{im}ages} returned depend on both the width of the span
+#' \code{\link[spatstat.geom]{im}ages} returned depend on both the width of the span
 #' \code{h0fac} and the discretisation applied to the bandwidth axis through
 #' \code{dimz}. Increasing this z-resolution will provide more pixel images and
 #' hence greater numeric precision, but increases computational cost. The
-#' returned pixel \code{\link[spatstat]{im}ages} that represent the multiscale
+#' returned pixel \code{\link[spatstat.geom]{im}ages} that represent the multiscale
 #' estimates are stored in a named list (see `Value'), whose names reflect the
 #' corresponding distinct global bandwidth. See `Examples' for the easy way to
 #' extract these distinct global bandwidths.
@@ -37,7 +37,7 @@
 #' 
 #' @aliases multiscale.density msden
 #' 
-#' @param pp An object of class \code{\link[spatstat]{ppp}} giving the observed
+#' @param pp An object of class \code{\link[spatstat.geom]{ppp}} giving the observed
 #'   2D data set to be smoothed.
 #' @param h0 Reference global bandwidth for adaptive smoothing; numeric value >
 #'   0. Multiscale estimates will be computed by rescaling this value as per
@@ -68,13 +68,13 @@
 #'   estimate (integrates to the sample size over the study region), or a density
 #'   estimate (default, integrates to 1).
 #' @param pilot.density An optional pixel image (class
-#'   \code{\link[spatstat]{im}}) giving the pilot density to be used for
+#'   \code{\link[spatstat.geom]{im}}) giving the pilot density to be used for
 #'   calculation of the variable bandwidths in adaptive estimation, \bold{or} a
-#'   \code{\link[spatstat]{ppp.object}} giving the data upon which to base a
+#'   \code{\link[spatstat.geom:ppp]{ppp.object}} giving the data upon which to base a
 #'   fixed-bandwidth pilot estimate using \code{hp}. See the documentation for
 #'   \code{\link{bivariate.density}}.
 #' @param xy Optional alternative specification of the spatial evaluation grid;
-#'   matches the argument of the same tag in \code{\link[spatstat]{as.mask}}. If
+#'   matches the argument of the same tag in \code{\link[spatstat.geom]{as.mask}}. If
 #'   supplied, \code{resolution} is ignored.
 #' @param taper Logical value indicating whether to taper off the trivariate
 #'   kernel outside the range of \code{h0*h0fac} in the scale space; see Davies &
@@ -84,11 +84,11 @@
 #' 
 #' @return An object of class \code{"msden"}. This is very similar to a
 #' \code{\link{bivden}} object, with lists of pixel
-#' \code{\link[spatstat]{im}}ages in the \code{z}, \code{him}, and \code{q}
+#' \code{\link[spatstat.geom]{im}}ages in the \code{z}, \code{him}, and \code{q}
 #' components (instead of standalone images).
 #' \item{z}{A list of the resulting
 #'   density/intensity estimates; each member being a pixel image object of class
-#'   \code{\link[spatstat]{im}}. They are placed in increasing order of the
+#'   \code{\link[spatstat.geom]{im}}. They are placed in increasing order of the
 #'   discretised values of \code{h0}.}
 #' \item{h0}{A copy of the reference value of \code{h0} used.}
 #' \item{h0range}{A vector of length 2 giving the actual range
@@ -98,18 +98,18 @@
 #'   number of data points, giving the bandwidth used for the corresponding
 #'   observation in \code{pp} with respect to the reference global bandwidth
 #'   \code{h0}.}
-#' \item{him}{A list of pixel images (class \code{\link[spatstat]{im}}),
+#' \item{him}{A list of pixel images (class \code{\link[spatstat.geom]{im}}),
 #'   corresponding to \code{z}, giving the
 #'   `hypothetical' Abramson bandwidth at each pixel coordinate conditional upon
 #'   the observed data and the global bandwidth used.}
-#' \item{q}{Edge-correction weights; list of pixel \code{\link[spatstat]{im}}ages
+#' \item{q}{Edge-correction weights; list of pixel \code{\link[spatstat.geom]{im}}ages
 #'   corresponding to \code{z} if \code{edge = "uniform"}, and \code{NULL} if
 #'   \code{edge = "none"}.}
 #' \item{gamma}{The numeric value of \code{gamma.scale} used in scaling the bandwidths.}
 #' \item{geometric}{The geometric mean of the
 #'   untrimmed variable bandwidth factors. This will be identical to \code{gamma}
 #'   if \code{gamma.scale = "geometric"} as per default.}
-#' \item{pp}{A copy of the \code{\link[spatstat]{ppp.object}} initially passed to the
+#' \item{pp}{A copy of the \code{\link[spatstat.geom:ppp]{ppp.object}} initially passed to the
 #'   \code{pp} argument, containing the data that were smoothed.}
 #' 
 #' @author T.M. Davies and A. Baddeley

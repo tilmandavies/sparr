@@ -9,25 +9,49 @@
 \alias{plot.rrst}
 \title{Plotting sparr objects}
 \usage{
-\method{plot}{bivden}(x, what = c("z", "edge", "bw"), add.pts = FALSE,
-  auto.axes = TRUE, override.par = TRUE, ...)
+\method{plot}{bivden}(
+  x,
+  what = c("z", "edge", "bw"),
+  add.pts = FALSE,
+  auto.axes = TRUE,
+  override.par = TRUE,
+  ...
+)
 
-\method{plot}{msden}(x, what = c("z", "edge", "bw"), sleep = 0.2,
-  override.par = TRUE, ...)
+\method{plot}{msden}(x, what = c("z", "edge", "bw"), sleep = 0.2, override.par = TRUE, ...)
 
-\method{plot}{rrs}(x, auto.axes = TRUE, tol.show = TRUE,
-  tol.type = c("upper", "lower", "two.sided"), tol.args = list(levels =
-  0.05, lty = 1, drawlabels = TRUE), ...)
+\method{plot}{rrs}(
+  x,
+  auto.axes = TRUE,
+  tol.show = TRUE,
+  tol.type = c("upper", "lower", "two.sided"),
+  tol.args = list(levels = 0.05, lty = 1, drawlabels = TRUE),
+  ...
+)
 
-\method{plot}{rrst}(x, tselect = NULL, type = c("joint",
-  "conditional"), fix.range = FALSE, tol.show = TRUE,
-  tol.type = c("upper", "lower", "two.sided"), tol.args = list(levels =
-  0.05, lty = 1, drawlabels = TRUE), sleep = 0.2, override.par = TRUE,
-  expscale = FALSE, ...)
+\method{plot}{rrst}(
+  x,
+  tselect = NULL,
+  type = c("joint", "conditional"),
+  fix.range = FALSE,
+  tol.show = TRUE,
+  tol.type = c("upper", "lower", "two.sided"),
+  tol.args = list(levels = 0.05, lty = 1, drawlabels = TRUE),
+  sleep = 0.2,
+  override.par = TRUE,
+  expscale = FALSE,
+  ...
+)
 
-\method{plot}{stden}(x, tselect = NULL, type = c("joint",
-  "conditional"), fix.range = FALSE, sleep = 0.2,
-  override.par = TRUE, ...)
+\method{plot}{stden}(
+  x,
+  tselect = NULL,
+  type = c("joint", "conditional"),
+  fix.range = FALSE,
+  sleep = 0.2,
+  override.par = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{An object of class \code{\link{bivden}}, \code{\link{stden}},
@@ -49,8 +73,8 @@ existing graphics device parameters prior to plotting, resetting
 disable this.}
 
 \item{...}{Additional graphical parameters to be passed to
-\code{\link[spatstat]{plot.im}}, or in one instance, to
-\code{\link[spatstat]{plot.ppp}} (see `Details').}
+\code{\link[spatstat.geom]{plot.im}}, or in one instance, to
+\code{\link[spatstat.geom]{plot.ppp}} (see `Details').}
 
 \item{sleep}{Single positive numeric value giving the amount of time (in
 seconds) to \code{\link[base]{Sys.sleep}} before drawing the next image in
@@ -67,7 +91,7 @@ the animation.}
 \item{type}{A character string to select plotting of joint/unconditional spatiotemporal
 estimate (default) or conditional spatial density given time.}
 
-\item{fix.range}{Logical value indicating whether use the same color scale limits for each plot in the sequence. Ignored if the user supplies a pre-defined \code{\link[spatstat]{colourmap}} to the \code{col} argument, which is matched to \code{...} above and passed to \code{\link[spatstat]{plot.im}}. See `Examples'.}
+\item{fix.range}{Logical value indicating whether use the same color scale limits for each plot in the sequence. Ignored if the user supplies a pre-defined \code{\link[spatstat.geom]{colourmap}} to the \code{col} argument, which is matched to \code{...} above and passed to \code{\link[spatstat.geom]{plot.im}}. See `Examples'.}
 
 \item{expscale}{Logical value indicating whether to force a raw-risk scale. Useful for users
 wishing to plot a log-relative risk surface, but to have the raw-risk displayed on the colour ribbon.}
@@ -81,7 +105,7 @@ Plots to the relevant graphics device.
 }
 \details{
 In all instances, visualisation is deferred to
-\code{\link[spatstat]{plot.im}}, for which there are a variety of
+\code{\link[spatstat.geom]{plot.im}}, for which there are a variety of
 customisations available the user can access via \code{...}. The one
 exception is when plotting observation-specific \code{"diggle"} edge
 correction factors---in this instance, a plot of the spatial observations is
@@ -110,7 +134,7 @@ data(burk)
 # 'bivden' object
 pbcden <- bivariate.density(split(pbc)$case,h0=3,hp=2,adapt=TRUE,davies.baddeley=0.05,verbose=FALSE)
 plot(pbcden)
-plot(pbcden,what="bw",main="PBC cases\\n variable bandwidth surface",xlab="Easting",ylab="Northing")
+plot(pbcden,what="bw",main="PBC cases\n variable bandwidth surface",xlab="Easting",ylab="Northing")
 
 # 'stden' object
 burkden <- spattemp.density(burk$cases,tres=128) # observation times are stored in marks(burk$cases)

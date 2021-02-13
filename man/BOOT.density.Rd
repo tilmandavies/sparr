@@ -16,7 +16,7 @@ BOOT.density(pp, hlim = NULL, eta = NULL, type = c("fixed", "adaptive"),
 
 \arguments{
   \item{pp}{
-An object of class \code{\link[spatstat]{ppp}} giving the observed 2D data to be smoothed.
+An object of class \code{\link[spatstat.geom]{ppp}} giving the observed 2D data to be smoothed.
 }
   \item{hlim}{
 An optional vector of length 2 giving the limits of the optimisation routine with respect to the bandwidth. If \code{NULL}, the function attempts to choose this automatically.
@@ -115,7 +115,7 @@ BOOT.density(pbc,eta=OS(pbc)*2) # double default reference bandwidth
 
 # supplying pre-defined reference density as fixed-bandwidth 'bivden' object
 pbcfix <- bivariate.density(pbc,h0=2.5,resolution=64)
-system.time(hfix <- BOOT.density(pbc,ref.density=pbcfix,parallelise=4)) # parallelisation; 14 secs
+system.time(hfix <- BOOT.density(pbc,ref.density=pbcfix,parallelise=2)) # parallelisation; 14 secs
 hfix
 
 ## Global (for adaptive) bandwidth selection ##
@@ -126,7 +126,7 @@ hada
 # ~80 secs next line. Set custom h limits; increase reference bandwidth;
 #    set custom pilot bandwidth; return objective function
 system.time(hada <- BOOT.density(pbc,hlim=c(0.9,8),eta=3.5,type="adaptive",
-                                 hp=OS(pbc)/2,parallelise=6,
+                                 hp=OS(pbc)/2,parallelise=2,
                                  sim.adapt=list(objective=TRUE)))
 hada[which.min(hada[,2]),1]
 plot(hada);abline(v=hada[which.min(hada[,2]),1],col=2)

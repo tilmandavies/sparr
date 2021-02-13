@@ -4,18 +4,30 @@
 \alias{LSCV.risk}
 \title{Jointly optimal bandwidth selection for the spatial relative risk function}
 \usage{
-LSCV.risk(f, g = NULL, hlim = NULL, hseq = NULL, type = c("fixed",
-  "adaptive"), method = c("kelsall-diggle", "hazelton", "davies"),
-  resolution = 64, edge = TRUE, hp = NULL,
-  pilot.symmetry = c("none", "f", "g", "pooled"), auto.optim = TRUE,
-  seqres = 30, parallelise = NA, verbose = TRUE, ...)
+LSCV.risk(
+  f,
+  g = NULL,
+  hlim = NULL,
+  hseq = NULL,
+  type = c("fixed", "adaptive"),
+  method = c("kelsall-diggle", "hazelton", "davies"),
+  resolution = 64,
+  edge = TRUE,
+  hp = NULL,
+  pilot.symmetry = c("none", "f", "g", "pooled"),
+  auto.optim = TRUE,
+  seqres = 30,
+  parallelise = NA,
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
 \item{f}{Either a pre-calculated object of class \code{\link{bivden}}
 representing the `case' (numerator) density estimate, or an object of class
-\code{\link[spatstat]{ppp}} giving the observed case data. Alternatively, if
-\code{f} is \code{\link[spatstat]{ppp}} object with dichotomous
-factor-valued \code{\link[spatstat]{marks}}, the function treats the first
+\code{\link[spatstat.geom]{ppp}} giving the observed case data. Alternatively, if
+\code{f} is \code{\link[spatstat.geom]{ppp}} object with dichotomous
+factor-valued \code{\link[spatstat.geom]{marks}}, the function treats the first
 level as the case data, and the second as the control data, obviating the
 need to supply \code{g}.}
 
