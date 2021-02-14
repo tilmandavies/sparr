@@ -46,7 +46,7 @@
 #'   permutations of the data. See `Details'.
 #' @param ref.density Required if \code{rs} is based on fixed-bandwidth
 #'   estimates of the case and control densities and \code{method = "ASY"}.
-#'   Either a pixel \code{\link[spatstat]{im}}age or an object of class
+#'   Either a pixel \code{\link[spatstat.geom]{im}}age or an object of class
 #'   \code{\link{bivden}} giving the reference density to use in asymptotic
 #'   formulae. May be unnormalised. Ignored if \code{rs} is based on adaptive
 #'   kernel estimates or if \code{method = "MC"}.
@@ -71,7 +71,7 @@
 #'   typically used to set the appropriate \code{epsilon} and
 #'   \code{pilot.symmetry} values for the internal calls to \code{\link{risk}}.
 #'
-#' @return A pixel \code{\link[spatstat]{im}}age of the estimated
+#' @return A pixel \code{\link[spatstat.geom]{im}}age of the estimated
 #' \emph{p}-value surface.
 #'
 #' @note The returned \emph{p}-values are geared so that ``smallness''

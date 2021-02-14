@@ -49,13 +49,13 @@ where \eqn{\hat{f}(x|t)} and \eqn{\hat{g}(x|t)} are the conditional densities ov
 \value{
 An object of class ``\code{rrst}''. This is effectively a list with the following members:
 \item{rr}{
-A named (by time-point) list of pixel \code{\link[spatstat]{im}}ages corresponding to the joint spatiotemporal relative risk over space at each discretised time.
+A named (by time-point) list of pixel \code{\link[spatstat.geom]{im}}ages corresponding to the joint spatiotemporal relative risk over space at each discretised time.
 }
 \item{rr.cond}{
-A named list of pixel \code{\link[spatstat]{im}}ages corresponding to the conditional spatial relative risk given each discretised time.
+A named list of pixel \code{\link[spatstat.geom]{im}}ages corresponding to the conditional spatial relative risk given each discretised time.
 }
 \item{P}{
-A named list of pixel \code{\link[spatstat]{im}}ages of the \eqn{p}-value surfaces testing for elevated risk for the joint estimate. If \code{tolerate = FALSE}, this will be \code{NULL}.
+A named list of pixel \code{\link[spatstat.geom]{im}}ages of the \eqn{p}-value surfaces testing for elevated risk for the joint estimate. If \code{tolerate = FALSE}, this will be \code{NULL}.
 }
 \item{P.cond}{
 As above, for the conditional relative risk surfaces.

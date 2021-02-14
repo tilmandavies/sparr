@@ -9,7 +9,7 @@
 #' 
 #' @name pbc
 #' @format \code{pbc} is a dichotomously marked
-#' \code{\link[spatstat]{ppp.object}}, with locations expressed in UK Ordnance
+#' \code{\link[spatstat.geom:ppp]{ppp.object}}, with locations expressed in UK Ordnance
 #' Survey Coordinates (km).
 #' @docType data
 #' @keywords data

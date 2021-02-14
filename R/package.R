@@ -39,7 +39,7 @@
 #' 
 #' \bold{DATASETS/DATA GENERATION}
 #' 
-#' \code{\link{pbc}} a case/control planar point pattern (\code{\link[spatstat]{ppp.object}}) concerning liver disease in northern
+#' \code{\link{pbc}} a case/control planar point pattern (\code{\link[spatstat.geom:ppp]{ppp.object}}) concerning liver disease in northern
 #' England.
 #' 
 #' \code{\link{fmd}} an anonymised (jittered) case/control spatiotemporal point pattern of the 2001 outbreak of veterinary foot-and-mouth disease in Cumbria (courtesy of the Animal and Plant Health Agency, UK).
@@ -51,9 +51,9 @@
 #' \code{\link[spatstat.data]{chorley}}, which concerns the distribution of
 #' laryngeal cancer in an area of Lancashire, UK.
 #' 
-#' \code{\link{rimpoly}} a wrapper function of \code{\link[spatstat]{rpoint}} to allow generated
-#' spatial point patterns based on a pixel \code{\link[spatstat]{im}}age to be returned with a
-#' polygonal \code{\link[spatstat]{owin}}.\cr
+#' \code{\link{rimpoly}} a wrapper function of \code{\link[spatstat.core]{rpoint}} to allow generated
+#' spatial point patterns based on a pixel \code{\link[spatstat.geom]{im}}age to be returned with a
+#' polygonal \code{\link[spatstat.geom]{owin}}.\cr
 #' 
 #' 
 #' \bold{SPATIAL}
@@ -179,8 +179,8 @@
 #' @docType package
 #' @section Dependencies: The \code{sparr} package depends upon
 #' \code{\link[spatstat]{spatstat}}. In particular, the user should familiarise
-#' themselves with \code{\link[spatstat]{ppp}} objects and
-#' \code{\link[spatstat]{im}} objects, which are used throughout. For spatiotemporal density estimation, \code{sparr} is assisted by importing from the \code{misc3d} package, and for the
+#' themselves with \code{\link[spatstat.geom]{ppp}} objects and
+#' \code{\link[spatstat.geom]{im}} objects, which are used throughout. For spatiotemporal density estimation, \code{sparr} is assisted by importing from the \code{misc3d} package, and for the
 #' experimental capabilities involving parallel processing, \code{sparr} also
 #' currently imports \code{\link[doParallel]{doParallel}},
 #' \code{\link[parallel]{parallel}}, and \code{\link[foreach]{foreach}}.
@@ -312,5 +312,5 @@ NULL
 #' @importFrom doParallel registerDoParallel
 #' @importFrom foreach %dopar% foreach
 #' @importFrom misc3d kde3d
-#' @import spatstat
+#' @import spatstat.geom spatstat.core spatstat
 NULL

@@ -5,14 +5,27 @@
 \alias{bivden}
 \title{Bivariate kernel density/intensity estimation}
 \usage{
-bivariate.density(pp, h0, hp = NULL, adapt = FALSE, resolution = 128,
-  gamma.scale = "geometric", edge = c("uniform", "diggle", "none"),
-  weights = NULL, intensity = FALSE, trim = 5, xy = NULL,
-  pilot.density = NULL, leaveoneout = FALSE, parallelise = NULL,
-  davies.baddeley = NULL, verbose = TRUE)
+bivariate.density(
+  pp,
+  h0,
+  hp = NULL,
+  adapt = FALSE,
+  resolution = 128,
+  gamma.scale = "geometric",
+  edge = c("uniform", "diggle", "none"),
+  weights = NULL,
+  intensity = FALSE,
+  trim = 5,
+  xy = NULL,
+  pilot.density = NULL,
+  leaveoneout = FALSE,
+  parallelise = NULL,
+  davies.baddeley = NULL,
+  verbose = TRUE
+)
 }
 \arguments{
-\item{pp}{An object of class \code{\link[spatstat]{ppp}} giving the observed
+\item{pp}{An object of class \code{\link[spatstat.geom]{ppp}} giving the observed
 2D data set to be smoothed.}
 
 \item{h0}{Global bandwidth for adaptive smoothing or fixed bandwidth for
@@ -39,7 +52,7 @@ given the pilot density (as per Silverman, 1986). See `Details'.}
 \code{"uniform"} (default) corrects based on evaluation grid coordinate and
 \code{"diggle"} reweights each observation-specific kernel. Setting
 \code{edge = "none"} requests no edge correction. Further details can be
-found in the documentation for \code{\link[spatstat]{density.ppp}}.}
+found in the documentation for \code{\link[spatstat.core]{density.ppp}}.}
 
 \item{weights}{Optional numeric vector of nonnegative weights corresponding to
 each observation in \code{pp}. Must have length equal to \code{npoints(pp)}.}
@@ -52,13 +65,13 @@ estimate (default, integrates to 1).}
 estimation. See `Details'.}
 
 \item{xy}{Optional alternative specification of the evaluation grid; matches
-the argument of the same tag in \code{\link[spatstat]{as.mask}}. If
+the argument of the same tag in \code{\link[spatstat.geom]{as.mask}}. If
 supplied, \code{resolution} is ignored.}
 
 \item{pilot.density}{An optional pixel image (class
-  \code{\link[spatstat]{im}}) giving the pilot density to be used for
+  \code{\link[spatstat.geom]{im}}) giving the pilot density to be used for
   calculation of the variable bandwidths in adaptive estimation, \bold{or} a
-  \code{\link[spatstat]{ppp.object}} giving the data upon which to base a
+  \code{\link[spatstat.geom:ppp]{ppp.object}} giving the data upon which to base a
   fixed-bandwidth pilot estimate using \code{hp}. If used, the pixel image
   \emph{must} be defined over the same domain as the data given
 \code{resolution} or the supplied pre-set \code{xy} evaluation grid;
@@ -88,7 +101,7 @@ If \code{leaveoneout = FALSE}, an object of class \code{"bivden"}.
 This is effectively a list with the following components:
 \item{z}{The
 resulting density/intensity estimate, a pixel image object of class
-\code{\link[spatstat]{im}}.}
+\code{\link[spatstat.geom]{im}}.}
 
 \item{h0}{A copy of the value of \code{h0}
 used.} \item{hp}{A copy of the value of \code{hp} used.}
@@ -98,12 +111,12 @@ vector of length equal to the number of data points, giving the bandwidth
 used for the corresponding observation in \code{pp}.}
 
 \item{him}{A pixel
-image (class \code{\link[spatstat]{im}}), giving the `hypothetical' Abramson
+image (class \code{\link[spatstat.geom]{im}}), giving the `hypothetical' Abramson
 bandwidth at each pixel coordinate conditional upon the observed data.
 \code{NULL} for fixed-bandwidth estimates.}
 
 \item{q}{Edge-correction
-weights; a pixel \code{\link[spatstat]{im}}age if \code{edge = "uniform"}, a
+weights; a pixel \code{\link[spatstat.geom]{im}}age if \code{edge = "uniform"}, a
 numeric vector if \code{edge = "diggle"}, and \code{NULL} if \code{edge =
 "none"}.}
 
@@ -114,7 +127,7 @@ bandwidths. \code{NA} if a fixed bandwidth estimate is computed.}
 factors \eqn{\tilde{f}(x_i)^{-1/2}}. \code{NA} if a fixed bandwidth estimate
 is computed.}
 
-\item{pp}{A copy of the \code{\link[spatstat]{ppp.object}}
+\item{pp}{A copy of the \code{\link[spatstat.geom:ppp]{ppp.object}}
 initially passed to the \code{pp} argument, containing the data that were
 smoothed.}
 
@@ -139,7 +152,7 @@ shown above) are also implemented.
   \item{\bold{Fixed}}{
     The classic fixed bandwidth kernel estimator is used when
     \code{adapt = FALSE}. This amounts to setting \eqn{h(u)=}\code{h0} for all \eqn{u}.
-    Further details can be found in the documentation for \code{\link[spatstat]{density.ppp}}.}
+    Further details can be found in the documentation for \code{\link[spatstat.core]{density.ppp}}.}
   \item{\bold{Adaptive}}{Setting \code{adapt = TRUE} requests computation of Abramson's (1982)
     variable-bandwidth estimator. Under this framework, we have
     \eqn{h(u)=}\code{h0}*min[\eqn{\tilde{f}(u)^{-1/2}},\eqn{G*}\code{trim}]/\eqn{\gamma},
@@ -192,7 +205,7 @@ shown above) are also implemented.
         final estimation stages. Experimental code to do this via parallel
         processing using the \code{\link{foreach}} routine is implemented.
         Fixed-bandwidth leave-one-out can be performed directly in
-        \code{\link[spatstat]{density.ppp}}.
+        \code{\link[spatstat.core]{density.ppp}}.
     }
   }
 }

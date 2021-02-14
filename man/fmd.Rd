@@ -4,19 +4,21 @@
 \name{fmd}
 \alias{fmd}
 \title{Veterinary foot-and-mouth disease outbreak data}
-\format{\code{fmd} is a named list with two members:
+\format{
+\code{fmd} is a named list with two members:
 \describe{
 \item{\code{$cases}}{
-An object of class \code{\link[spatstat]{ppp}} giving the spatial locations of the 410 infected
-farms within a polygonal study region representing the county of Cumbria. The \code{\link[spatstat]{marks}}
+An object of class \code{\link[spatstat.geom]{ppp}} giving the spatial locations of the 410 infected
+farms within a polygonal study region representing the county of Cumbria. The \code{\link[spatstat.geom]{marks}}
 component of this object contain the integer day of infection (from beginning of study period).
 }
 
 \item{\code{$controls}}{
-An object of class \code{\link[spatstat]{ppp}} defined over the same spatial study region with the locations
+An object of class \code{\link[spatstat.geom]{ppp}} defined over the same spatial study region with the locations
 of the 1866 uninfected farms.
 }
-}}
+}
+}
 \description{
 Data of the spatial locations and time of farms infected by veterinary foot-and-mouth disease
 in the county of Cumbria, UK, over a course of nearly 250 days between February and August in 2001.

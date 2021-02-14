@@ -19,8 +19,8 @@
 #'     \code{pp}: \code{nstar = "npoints"}. Alternatively, the user can specify their own value by simply
 #'     supplying a single positive numeric value to \code{nstar}. 
 #'     For \code{OS} (not applicable to \code{OS.spattemp}), if \code{pp} is a
-#'     \code{\link[spatstat]{ppp.object}} with factor-valued
-#'     \code{\link[spatstat]{marks}}, then the user has the option of using
+#'     \code{\link[spatstat.geom:ppp]{ppp.object}} with factor-valued
+#'     \code{\link[spatstat.geom]{marks}}, then the user has the option of using
 #'     \code{nstar = "geometric"}, which sets the sample size used in the formula
 #'     to the geometric mean of the counts of observations of each mark. This can
 #'     be useful for e.g. relative risk calculations, see Davies and Hazelton
@@ -49,12 +49,12 @@
 #' 
 #' @rdname OS
 #' 
-#' @param pp An object of class \code{\link[spatstat]{ppp}} giving the observed
+#' @param pp An object of class \code{\link[spatstat.geom]{ppp}} giving the observed
 #'   2D data to be smoothed.
 #' @param tt A numeric vector of equal length to the number of points in \code{pp}, 
 #' giving the time corresponding to each spatial observation. If unsupplied, 
-#' the function attempts to use the values in the \code{\link[spatstat]{marks}} 
-#' attribute of the \code{\link[spatstat]{ppp.object}} in \code{pp}.
+#' the function attempts to use the values in the \code{\link[spatstat.geom]{marks}} 
+#' attribute of the \code{\link[spatstat.geom:ppp]{ppp.object}} in \code{pp}.
 #' @param nstar Optional. Controls the value to use in place of the number of
 #'   observations \emph{n} in the oversmoothing formula. Either a character
 #'   string, \code{"npoints"} (default) or \code{"geometric"} (only possible for \code{OS}), or a positive

@@ -5,14 +5,21 @@
 \alias{OS.spattemp}
 \title{Oversmoothing (OS) bandwidth selector}
 \usage{
-OS(pp, nstar = c("npoints", "geometric"), scaler = c("silverman",
-  "IQR", "sd", "var"))
+OS(
+  pp,
+  nstar = c("npoints", "geometric"),
+  scaler = c("silverman", "IQR", "sd", "var")
+)
 
-OS.spattemp(pp, tt = NULL, nstar = "npoints", scaler = c("silverman",
-  "IQR", "sd", "var"))
+OS.spattemp(
+  pp,
+  tt = NULL,
+  nstar = "npoints",
+  scaler = c("silverman", "IQR", "sd", "var")
+)
 }
 \arguments{
-\item{pp}{An object of class \code{\link[spatstat]{ppp}} giving the observed
+\item{pp}{An object of class \code{\link[spatstat.geom]{ppp}} giving the observed
 2D data to be smoothed.}
 
 \item{nstar}{Optional. Controls the value to use in place of the number of
@@ -27,8 +34,8 @@ value(s). See `Details'.}
 
 \item{tt}{A numeric vector of equal length to the number of points in \code{pp}, 
 giving the time corresponding to each spatial observation. If unsupplied, 
-the function attempts to use the values in the \code{\link[spatstat]{marks}} 
-attribute of the \code{\link[spatstat]{ppp.object}} in \code{pp}.}
+the function attempts to use the values in the \code{\link[spatstat.geom]{marks}} 
+attribute of the \code{\link[spatstat.geom:ppp]{ppp.object}} in \code{pp}.}
 }
 \value{
 A single numeric value of the estimated spatial bandwidth for \code{OS}, or a named numeric vector of length 2 giving
@@ -47,6 +54,7 @@ of spatial (2D) data. The \code{OS.spattemp} function returns two values -- one 
 the spatial margin and another for the temporal margin, based on independently applying
 Terrell's (1990) rule (in 2D and 1D) to the spatial and temporal margins of the supplied data.
 
+
 \describe{
   \item{\bold{Effective sample size}}{ The formula
     requires a sample size, and this can be minimally tailored via \code{nstar}.
@@ -54,8 +62,8 @@ Terrell's (1990) rule (in 2D and 1D) to the spatial and temporal margins of the 
     \code{pp}: \code{nstar = "npoints"}. Alternatively, the user can specify their own value by simply
     supplying a single positive numeric value to \code{nstar}. 
     For \code{OS} (not applicable to \code{OS.spattemp}), if \code{pp} is a
-    \code{\link[spatstat]{ppp.object}} with factor-valued
-    \code{\link[spatstat]{marks}}, then the user has the option of using
+    \code{\link[spatstat.geom:ppp]{ppp.object}} with factor-valued
+    \code{\link[spatstat.geom]{marks}}, then the user has the option of using
     \code{nstar = "geometric"}, which sets the sample size used in the formula
     to the geometric mean of the counts of observations of each mark. This can
     be useful for e.g. relative risk calculations, see Davies and Hazelton

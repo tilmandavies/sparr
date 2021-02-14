@@ -19,7 +19,7 @@ available range provided by \code{stob$tlim}; see `Details'.}
 unnecessary.}
 }
 \value{
-A list of lists of pixel \code{\link[spatstat]{im}}ages, each of which corresponds to
+A list of lists of pixel \code{\link[spatstat.geom]{im}}ages, each of which corresponds to
  the requested times in \code{tt}, and are named as such.\cr
  If \code{stob} is an object of class \code{\link{stden}}:
  

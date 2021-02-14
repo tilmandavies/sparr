@@ -4,11 +4,12 @@
 \name{burk}
 \alias{burk}
 \title{Burkitt's lymphoma in Uganda}
-\format{\code{burk} is a named list with three members:
+\format{
+\code{burk} is a named list with three members:
 \describe{
 \item{\code{$cases}}{
-An object of class \code{\link[spatstat]{ppp}} giving the spatial locations (eastings/northings) 
-of the 188 cases of Burkitt's lymphoma recorded in individuals of various ages (mostly children); the spatial study region as a polygonal \code{\link[spatstat]{owin}}; as well as the time
+An object of class \code{\link[spatstat.geom]{ppp}} giving the spatial locations (eastings/northings) 
+of the 188 cases of Burkitt's lymphoma recorded in individuals of various ages (mostly children); the spatial study region as a polygonal \code{\link[spatstat.geom]{owin}}; as well as the time
 (in days since 1/1/1960) of each observation stored as the \code{marks} of the points.
 }
 
@@ -17,14 +18,15 @@ A numeric vector of length 188 giving the age of each individual in \code{$cases
 }
 
 \item{\code{$controls}}{
-An object of class \code{\link[spatstat]{ppp}} giving 500 \bold{artificially simulated} spatial-only
+An object of class \code{\link[spatstat.geom]{ppp}} giving 500 \bold{artificially simulated} spatial-only
 observations to pose as a `control' data set representing the at-risk population. The data were
 generated from a smooth kernel estimate of the spatial margin of the cases. The similarity between the case point distribution
 and the true at-risk population dispersion can be seen in e.g. Figure 2 of Middleton and Greenland (1954).
 
 }
 
-}}
+}
+}
 \source{
 The case data were extracted from the \code{\link[splancs]{burkitt}} object of the \code{splancs} R package;
 see \cr\cr

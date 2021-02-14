@@ -9,26 +9,26 @@ rimpoly(n, z, w = NULL, correction = 1.1, maxpass = 50)
 \arguments{
 \item{n}{Number of points to generate.}
 
-\item{z}{A pixel image of class \code{\link[spatstat]{im}} defining the probability density of the points, possibly unnormalised.}
+\item{z}{A pixel image of class \code{\link[spatstat.geom]{im}} defining the probability density of the points, possibly unnormalised.}
 
-\item{w}{A polygonal window of class \code{\link[spatstat]{owin}}. See `Details'.}
+\item{w}{A polygonal window of class \code{\link[spatstat.geom]{owin}}. See `Details'.}
 
 \item{correction}{An adjustment to the number of points generated at the initial pass of the internal loop in an effort to minimise the total number of passes required to reach \eqn{n} points. See `Details'.}
 
 \item{maxpass}{The maximum number of passes allowed before the function exits. If this is reached before \eqn{n} points are found that fall within \code{w}, a warning is issued.}
 }
 \value{
-An object of class \code{\link[spatstat]{ppp}} containing the \code{n} generated points, defined with the polygonal \code{\link[spatstat]{owin}}, \code{w}.
+An object of class \code{\link[spatstat.geom]{ppp}} containing the \code{n} generated points, defined with the polygonal \code{\link[spatstat.geom]{owin}}, \code{w}.
 }
 \description{
 Generates a random point pattern of \eqn{n} iid points with any specified distribution based on a pixel image and a corresponding polygonal window.
 }
 \details{
-This function is a deliberate variant of \code{\link[spatstat]{rpoint}} (Baddeley et. al, 2015), to be accessed when the user desires 
+This function is a deliberate variant of \code{\link[spatstat.core]{rpoint}} (Baddeley et. al, 2015), to be accessed when the user desires 
 a randomly generated point pattern based on a pixel image, but wants the window of the point pattern to be a corresponding irregular polygon, as opposed to a binary
 image mask (which, when converted to a polygon directly, gives jagged edges based on the union of the pixels). When the user specifies their own polygonal window, a \code{while} loop is called and repeated as many
 times as necessary (up to \code{maxpass} times) to find \code{n} points inside \code{w} (when \code{w = NULL}, then the aforementioned union of the pixels of \code{z}
-is used, obtained via \code{as.polygonal(Window(z))}). The loop is necessary because the standard behaviour of \code{\link[spatstat]{rpoint}} can (and often does)
+is used, obtained via \code{as.polygonal(Window(z))}). The loop is necessary because the standard behaviour of \code{\link[spatstat.core]{rpoint}} can (and often does)
 yield points that sit in corners of pixels which lie outside the corresponding \code{w}.
 
 The \code{correction} argument is used to determine how many points are generated initially,

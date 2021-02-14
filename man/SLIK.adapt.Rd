@@ -4,12 +4,21 @@
 \alias{SLIK.adapt}
 \title{Simultaneous global/pilot likelihood bandwidth selection}
 \usage{
-SLIK.adapt(pp, hold = TRUE, start = rep(OS(pp), 2), hlim = NULL,
-  edge = TRUE, zero.action = c(-1, 0), optim.control = list(),
-  parallelise = NULL, verbose = TRUE, ...)
+SLIK.adapt(
+  pp,
+  hold = TRUE,
+  start = rep(OS(pp), 2),
+  hlim = NULL,
+  edge = TRUE,
+  zero.action = c(-1, 0),
+  optim.control = list(),
+  parallelise = NULL,
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
-\item{pp}{An object of class \code{\link[spatstat]{ppp}} giving the observed
+\item{pp}{An object of class \code{\link[spatstat.geom]{ppp}} giving the observed
 2D data to be smoothed.}
 
 \item{hold}{Logical value indicating whether to hold the global and pilot bandwidths equal throughout the
@@ -97,9 +106,9 @@ C.M., 1995. \emph{Kernel Smoothing}, Chapman & Hall, London.
 }
 \seealso{
 Functions for bandwidth selection in package
-  \code{\link{spatstat}}: \code{\link[spatstat]{bw.diggle}};
-  \code{\link[spatstat]{bw.ppl}}; \code{\link[spatstat]{bw.scott}};
-  \code{\link[spatstat]{bw.frac}}.
+  \code{\link{spatstat}}: \code{\link[spatstat.core]{bw.diggle}};
+  \code{\link[spatstat.core]{bw.ppl}}; \code{\link[spatstat.core]{bw.scott}};
+  \code{\link[spatstat.core]{bw.frac}}.
 }
 \author{
 T. M. Davies

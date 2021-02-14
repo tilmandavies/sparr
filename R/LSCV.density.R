@@ -23,7 +23,7 @@
 #' 
 #' @rdname CV
 #' 
-#' @param pp An object of class \code{\link[spatstat]{ppp}} giving the observed
+#' @param pp An object of class \code{\link[spatstat.geom]{ppp}} giving the observed
 #'   2D data to be smoothed.
 #' @param hlim An optional vector of length 2 giving the limits of the
 #'   optimisation routine with respect to the bandwidth. If unspecified, the
@@ -75,9 +75,9 @@
 #' @author T. M. Davies
 #'
 #' @seealso \code{\link{SLIK.adapt}} and functions for bandwidth selection in package
-#'   \code{\link{spatstat}}: \code{\link[spatstat]{bw.diggle}};
-#'   \code{\link[spatstat]{bw.ppl}}; \code{\link[spatstat]{bw.scott}};
-#'   \code{\link[spatstat]{bw.frac}}.
+#'   \code{\link{spatstat}}: \code{\link[spatstat.core]{bw.diggle}};
+#'   \code{\link[spatstat.core]{bw.ppl}}; \code{\link[spatstat.core]{bw.scott}};
+#'   \code{\link[spatstat.core]{bw.frac}}.
 #'
 #' @references
 #' 

@@ -9,13 +9,13 @@
 #' @format \code{fmd} is a named list with two members:
 #' \describe{
 #' \item{\code{$cases}}{
-#' An object of class \code{\link[spatstat]{ppp}} giving the spatial locations of the 410 infected
-#' farms within a polygonal study region representing the county of Cumbria. The \code{\link[spatstat]{marks}}
+#' An object of class \code{\link[spatstat.geom]{ppp}} giving the spatial locations of the 410 infected
+#' farms within a polygonal study region representing the county of Cumbria. The \code{\link[spatstat.geom]{marks}}
 #' component of this object contain the integer day of infection (from beginning of study period).
 #' }
 #' 
 #' \item{\code{$controls}}{
-#' An object of class \code{\link[spatstat]{ppp}} defined over the same spatial study region with the locations
+#' An object of class \code{\link[spatstat.geom]{ppp}} defined over the same spatial study region with the locations
 #' of the 1866 uninfected farms.
 #' }
 #' }
