@@ -115,7 +115,7 @@ BOOT.density(pbc,eta=OS(pbc)*2) # double default reference bandwidth
 
 # supplying pre-defined reference density as fixed-bandwidth 'bivden' object
 pbcfix <- bivariate.density(pbc,h0=2.5,resolution=64)
-system.time(hfix <- BOOT.density(pbc,ref.density=pbcfix,parallelise=2)) # parallelisation; 14 secs
+system.time(hfix <- BOOT.density(pbc,ref.density=pbcfix))
 hfix
 
 ## Global (for adaptive) bandwidth selection ##
@@ -124,10 +124,9 @@ system.time(hada <- BOOT.density(pbc,type="adaptive")) # minimal usage for adapt
 hada
 
 # ~80 secs next line. Set custom h limits; increase reference bandwidth;
-#    set custom pilot bandwidth; return objective function
+#    set custom pilot bandwidth; return objective function; use 'parallelise' for speedup
 system.time(hada <- BOOT.density(pbc,hlim=c(0.9,8),eta=3.5,type="adaptive",
-                                 hp=OS(pbc)/2,parallelise=2,
-                                 sim.adapt=list(objective=TRUE)))
+                                 hp=OS(pbc)/2,sim.adapt=list(objective=TRUE)))
 hada[which.min(hada[,2]),1]
 plot(hada);abline(v=hada[which.min(hada[,2]),1],col=2)
 }

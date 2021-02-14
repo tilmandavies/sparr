@@ -1,8 +1,8 @@
 Package: sparr
 Type: Package
 Title: Spatial and Spatiotemporal Relative Risk
-Version: 2.2-13
-Date: 2018-09-16
+Version: 2.2-15
+Date: 2021-02-14
 Authors@R: c(
   person(c("Tilman", "M."), "Davies", role = c("aut", "cre"), email = "tdavies@maths.otago.ac.nz"),
   person(c("Jonathan", "C."), "Marshall", role = c("aut"), email = "j.c.marshall@massey.ac.nz"))

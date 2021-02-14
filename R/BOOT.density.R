@@ -103,15 +103,30 @@ BOOT.density <- function(pp,hlim=NULL,eta=NULL,type=c("fixed","adaptive"),hp=NUL
     # epsilon.eta <- safelookup(edg.eta,pp,warn=FALSE)
   
     # remove expensive constant (just when rmdiag==TRUE) from 'boot.opt.spatial'; supply as argument
-    if(!rmdiag) boot3 <- d.etadens^2
-    else boot3 <- n^(-2)*sum(outer(1:n,1:n,function(i,j) epsilon.eta[i]^(-1)*epsilon.eta[j]^(-1)*kernel2d(pp$x[i]-pp$x[j],pp$y[i]-pp$y[j],sqrt(2*eta^2)))[-seq(1,n^2,n+1)])
+    if(!rmdiag){
+      boot3 <- d.etadens^2
+    } else {
+      if(n<10000){  ### need more sophisticated solution here
+        boot3 <- n^(-2)*sum(outer(1:n,1:n,function(i,j) epsilon.eta[i]^(-1)*epsilon.eta[j]^(-1)*kernel2d(pp$x[i]-pp$x[j],pp$y[i]-pp$y[j],sqrt(2*eta^2)))[-seq(1,n^2,n+1)])
+      } else {
+        nseq <- 1:n
+        boot3 <- 0
+        if(verbose) pb <- txtProgressBar(0,n,char='.')
+        for(i in nseq){
+          boot3 <- boot3 + sum(epsilon.eta[i]^(-1)*epsilon.eta[nseq[-i]]^(-1)*kernel2d(pp$x[i]-pp$x[nseq[-i]],pp$y[i]-pp$y[nseq[-i]],sqrt(2*eta^2)))
+          if(verbose) setTxtProgressBar(pb,i)
+        }
+        if(verbose) close(pb)
+        boot3 <- n^(-2)*boot3
+      }
+    }
   
-    if(verbose) cat("Done.\nSearching for optimal h in ",prange(hlim),"...",sep="")
+    if(verbose) cat("Done.\nSearching for optimal h in ",prange(hlim),"...\n",sep="")
     result <- optimise(boot.opt.spatial.fix,interval=hlim,rmdiag=rmdiag,edg=edg,WM=WM,
                        resolution=resolution,fM=fM,ifft_scale=ifft_scale,
                        inn=inn,GN=GN,evalyx.redu=evalyx.redu,pp=pp,
                        epsilon.eta=epsilon.eta,eta=eta,nn=n,boot3=boot3,
-                       use_fftw=use_fftw,parallelise=parallelise)$minimum
+                       use_fftw=use_fftw,parallelise=parallelise,verb=verbose)$minimum
     if(verbose) cat("Done.\n")
   
   } else if(typ=="adaptive"){

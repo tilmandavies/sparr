@@ -1,3 +1,12 @@
+# sparr 2.2-15
+
+* Updated internals to handle new `spatstat` structure
+
+# sparr 2.2-14
+
+* Improved handling of `rmdiag` in `BOOT.density` for large datasets
+* Increased text output when running `BOOT.density` for fixed bandwidth with `auto.optim=TRUE`
+
 # sparr 2.2-13
 
 * Changed default of `hold` argument in `SLIK.adapt`
