@@ -1,5 +1,7 @@
 boot.opt.spatial.fix <- function(h,rmdiag,edg,WM,resolution,fM,ifft_scale,inn,GN,evalyx.redu,
-                                 pp,epsilon.eta,eta,nn,boot3,use_fftw,parallelise){
+                                 pp,epsilon.eta,eta,nn,boot3,use_fftw,parallelise,verb){
+  
+  if(verb) cat("h:",h,"\n")
   
   if(edg){
     # get edge surface for 'h'

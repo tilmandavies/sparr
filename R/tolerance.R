@@ -127,7 +127,7 @@
 #'
 #' # MC
 #' fixtol2 <- tolerance(riskfix,method="MC",ITER=200) 
-#' adatol2 <- tolerance(riskada,method="MC",ITER=200,parallelise=4) # ~1 minute with parallelisation
+#' adatol2 <- tolerance(riskada,method="MC",ITER=200,parallelise=2) # ~90secs with parallelisation
 #' par(mfrow=c(1,2))
 #' plot(riskfix)
 #' tol.contour(fixtol2,levels=c(0.1,0.05,0.01),lty=3:1,add=TRUE)
