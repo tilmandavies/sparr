@@ -248,24 +248,85 @@ Taylor, C.C. (1989) Bootstrap choice of the smoothing parameter in kernel densit
 <span class='co'>## Fixed bandwidth selection ##</span>
 <span class='fu'>BOOT.density</span><span class='op'>(</span><span class='va'>pbc</span><span class='op'>)</span> <span class='co'># ~20 secs</span>
 </div><div class='output co'>#&gt; Initialising...Done.
-#&gt; Searching for optimal h in [0.0999999999999091, 15.2778333333333]...</div><div class='output co'>#&gt; <span class='error'>Error in f(arg, ...): unused argument (verb = TRUE)</span></div><div class='input'><span class='fu'>BOOT.density</span><span class='op'>(</span><span class='va'>pbc</span>,eta<span class='op'>=</span><span class='fu'><a href='OS.html'>OS</a></span><span class='op'>(</span><span class='va'>pbc</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>2</span><span class='op'>)</span> <span class='co'># halve default reference bandwidth</span>
+#&gt; Searching for optimal h in [0.0999999999999091, 15.2778333333333]...
+#&gt; h: 5.897416 
+#&gt; h: 9.480417 
+#&gt; h: 3.683 
+#&gt; h: 2.314416 
+#&gt; h: 1.468584 
+#&gt; h: 1.770519 
+#&gt; h: 1.821183 
+#&gt; h: 1.78084 
+#&gt; h: 1.777511 
+#&gt; h: 1.777469 
+#&gt; h: 1.777428 
+#&gt; h: 1.777469 
+#&gt; Done.</div><div class='output co'>#&gt; [1] 1.777469</div><div class='input'><span class='fu'>BOOT.density</span><span class='op'>(</span><span class='va'>pbc</span>,eta<span class='op'>=</span><span class='fu'><a href='OS.html'>OS</a></span><span class='op'>(</span><span class='va'>pbc</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>2</span><span class='op'>)</span> <span class='co'># halve default reference bandwidth</span>
 </div><div class='output co'>#&gt; Initialising...Done.
-#&gt; Searching for optimal h in [0.0999999999999091, 15.2778333333333]...</div><div class='output co'>#&gt; <span class='error'>Error in f(arg, ...): unused argument (verb = TRUE)</span></div><div class='input'><span class='fu'>BOOT.density</span><span class='op'>(</span><span class='va'>pbc</span>,eta<span class='op'>=</span><span class='fu'><a href='OS.html'>OS</a></span><span class='op'>(</span><span class='va'>pbc</span><span class='op'>)</span><span class='op'>*</span><span class='fl'>2</span><span class='op'>)</span> <span class='co'># double default reference bandwidth</span>
+#&gt; Searching for optimal h in [0.0999999999999091, 15.2778333333333]...
+#&gt; h: 5.897416 
+#&gt; h: 9.480417 
+#&gt; h: 3.683 
+#&gt; h: 2.314416 
+#&gt; h: 1.468584 
+#&gt; h: 0.9458317 
+#&gt; h: 1.308393 
+#&gt; h: 1.265221 
+#&gt; h: 1.219808 
+#&gt; h: 1.231512 
+#&gt; h: 1.232196 
+#&gt; h: 1.232007 
+#&gt; h: 1.232047 
+#&gt; h: 1.231966 
+#&gt; h: 1.232007 
+#&gt; Done.</div><div class='output co'>#&gt; [1] 1.232007</div><div class='input'><span class='fu'>BOOT.density</span><span class='op'>(</span><span class='va'>pbc</span>,eta<span class='op'>=</span><span class='fu'><a href='OS.html'>OS</a></span><span class='op'>(</span><span class='va'>pbc</span><span class='op'>)</span><span class='op'>*</span><span class='fl'>2</span><span class='op'>)</span> <span class='co'># double default reference bandwidth</span>
 </div><div class='output co'>#&gt; Initialising...Done.
-#&gt; Searching for optimal h in [0.0999999999999091, 15.2778333333333]...</div><div class='output co'>#&gt; <span class='error'>Error in f(arg, ...): unused argument (verb = TRUE)</span></div><div class='input'>
+#&gt; Searching for optimal h in [0.0999999999999091, 15.2778333333333]...
+#&gt; h: 5.897416 
+#&gt; h: 9.480417 
+#&gt; h: 3.683 
+#&gt; h: 2.314416 
+#&gt; h: 1.468584 
+#&gt; h: 2.190551 
+#&gt; h: 2.02887 
+#&gt; h: 1.81486 
+#&gt; h: 1.94454 
+#&gt; h: 1.940646 
+#&gt; h: 1.935422 
+#&gt; h: 1.93594 
+#&gt; h: 1.93598 
+#&gt; h: 1.935899 
+#&gt; h: 1.93594 
+#&gt; Done.</div><div class='output co'>#&gt; [1] 1.93594</div><div class='input'>
 <span class='co'># supplying pre-defined reference density as fixed-bandwidth 'bivden' object</span>
 <span class='va'>pbcfix</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bivariate.density.html'>bivariate.density</a></span><span class='op'>(</span><span class='va'>pbc</span>,h0<span class='op'>=</span><span class='fl'>2.5</span>,resolution<span class='op'>=</span><span class='fl'>64</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span><span class='op'>(</span><span class='va'>hfix</span> <span class='op'>&lt;-</span> <span class='fu'>BOOT.density</span><span class='op'>(</span><span class='va'>pbc</span>,ref.density<span class='op'>=</span><span class='va'>pbcfix</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Initialising...Done.
-#&gt; Searching for optimal h in [0.0999999999999091, 15.2778333333333]...</div><div class='output co'>#&gt; <span class='error'>Error in f(arg, ...): unused argument (verb = TRUE)</span></div><div class='output co'>#&gt; <span class='message'>Timing stopped at: 1.129 0.032 1.161</span></div><div class='input'><span class='va'>hfix</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'hfix' not found</span></div><div class='input'>
+#&gt; Searching for optimal h in [0.0999999999999091, 15.2778333333333]...
+#&gt; h: 5.897416 
+#&gt; h: 9.480417 
+#&gt; h: 3.683 
+#&gt; h: 2.314416 
+#&gt; h: 1.468584 
+#&gt; h: 1.505088 
+#&gt; h: 1.686309 
+#&gt; h: 1.926225 
+#&gt; h: 1.638642 
+#&gt; h: 1.643595 
+#&gt; h: 1.642006 
+#&gt; h: 1.641965 
+#&gt; h: 1.641925 
+#&gt; h: 1.641965 
+#&gt; Done.</div><div class='output co'>#&gt;    user  system elapsed 
+#&gt;  13.875   2.327  16.209 </div><div class='input'><span class='va'>hfix</span>
+</div><div class='output co'>#&gt; [1] 1.641965</div><div class='input'>
 <span class='co'>## Global (for adaptive) bandwidth selection ##</span>
 <span class='co'># ~200 secs next line; use 'parallelise' for speedup</span>
 <span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span><span class='op'>(</span><span class='va'>hada</span> <span class='op'>&lt;-</span> <span class='fu'>BOOT.density</span><span class='op'>(</span><span class='va'>pbc</span>,type<span class='op'>=</span><span class='st'>"adaptive"</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># minimal usage for adaptive bootstrap</span>
 </div><div class='output co'>#&gt; Initialising...Done.
 #&gt; Searching for optimal h0 in [0.0999999999999091, 15.2778333333333]:
 #&gt; ================================================================================</div><div class='output co'>#&gt;    user  system elapsed 
-#&gt; 137.581   6.843 144.087 </div><div class='input'><span class='va'>hada</span>
+#&gt; 154.054   7.071 160.484 </div><div class='input'><span class='va'>hada</span>
 </div><div class='output co'>#&gt; [1] 2.723498</div><div class='input'>
 <span class='co'># ~80 secs next line. Set custom h limits; increase reference bandwidth;</span>
 <span class='co'>#    set custom pilot bandwidth; return objective function; use 'parallelise' for speedup</span>
@@ -274,7 +335,7 @@ Taylor, C.C. (1989) Bootstrap choice of the smoothing parameter in kernel densit
 </div><div class='output co'>#&gt; Initialising...Done.
 #&gt; Searching for optimal h0 in [0.9, 8]:
 #&gt; ================================================================================</div><div class='output co'>#&gt;    user  system elapsed 
-#&gt; 131.893   5.849 137.869 </div><div class='input'><span class='va'>hada</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/which.min.html'>which.min</a></span><span class='op'>(</span><span class='va'>hada</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>]</span><span class='op'>)</span>,<span class='fl'>1</span><span class='op'>]</span>
+#&gt; 149.546   5.881 154.888 </div><div class='input'><span class='va'>hada</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/which.min.html'>which.min</a></span><span class='op'>(</span><span class='va'>hada</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>]</span><span class='op'>)</span>,<span class='fl'>1</span><span class='op'>]</span>
 </div><div class='output co'>#&gt;    h0seq 
 #&gt; 3.290163 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>hada</span><span class='op'>)</span>;<span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>v<span class='op'>=</span><span class='va'>hada</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/which.min.html'>which.min</a></span><span class='op'>(</span><span class='va'>hada</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>]</span><span class='op'>)</span>,<span class='fl'>1</span><span class='op'>]</span>,col<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
 </div><div class='img'><img src='BOOT.density-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
