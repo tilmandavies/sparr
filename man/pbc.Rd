@@ -23,8 +23,7 @@ analysis of these data in the spirit of \code{\link{sparr}} was performed in
 Davies and Hazelton (2010). Also included is the polygonal study region.
 }
 \section{Acknowledgements}{
- The authors thank Prof. Peter Diggle at Lancaster
-University (\url{https://www.lancs.ac.uk/staff/diggle/}) for providing access
+ The authors thank Prof. Peter Diggle for providing access
 to these data.
 }
 
