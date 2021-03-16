@@ -24,7 +24,7 @@ Davies and Hazelton (2010). Also included is the polygonal study region.
 }
 \section{Acknowledgements}{
  The authors thank Prof. Peter Diggle at Lancaster
-University (\url{http://www.lancs.ac.uk/staff/diggle/}) for providing access
+University (\url{https://www.lancs.ac.uk/staff/diggle/}) for providing access
 to these data.
 }
 

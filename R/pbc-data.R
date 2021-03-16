@@ -14,7 +14,7 @@
 #' @docType data
 #' @keywords data
 #' @section Acknowledgements: The authors thank Prof. Peter Diggle at Lancaster
-#' University (\url{http://www.lancs.ac.uk/staff/diggle/}) for providing access
+#' University (\url{https://www.lancs.ac.uk/staff/diggle/}) for providing access
 #' to these data.
 #' @references Davies, T.M. and Hazelton, M.L. (2010), Adaptive kernel
 #' estimation of spatial relative risk, \emph{Statistics in Medicine},

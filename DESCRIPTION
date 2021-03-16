@@ -2,7 +2,7 @@ Package: sparr
 Type: Package
 Title: Spatial and Spatiotemporal Relative Risk
 Version: 2.2-15
-Date: 2021-02-14
+Date: 2021-03-16
 Authors@R: c(
   person(c("Tilman", "M."), "Davies", role = c("aut", "cre"), email = "tilman.davies@otago.ac.nz"),
   person(c("Jonathan", "C."), "Marshall", role = c("aut"), email = "j.c.marshall@massey.ac.nz"))
@@ -14,5 +14,5 @@ License: GPL (>= 2)
 LazyLoad: yes
 NeedsCompilation: no
 RoxygenNote: 7.1.1
-URL: http://tilmandavies.github.io/sparr, https://github.com/tilmandavies/sparr
-BugReports: https://github.com/tilmandavies/sparr/issues
+URL: https://tilmandavies.github.io/sparr/, https://github.com/tilmandavies/sparr/
+BugReports: https://github.com/tilmandavies/sparr/issues/
