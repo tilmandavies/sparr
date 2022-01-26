@@ -51,7 +51,7 @@
 #' \code{\link[spatstat.data]{chorley}}, which concerns the distribution of
 #' laryngeal cancer in an area of Lancashire, UK.
 #' 
-#' \code{\link{rimpoly}} a wrapper function of \code{\link[spatstat.core]{rpoint}} to allow generated
+#' \code{\link{rimpoly}} a wrapper function of \code{\link[spatstat.random]{rpoint}} to allow generated
 #' spatial point patterns based on a pixel \code{\link[spatstat.geom]{im}}age to be returned with a
 #' polygonal \code{\link[spatstat.geom]{owin}}.\cr
 #' 
@@ -312,5 +312,8 @@ NULL
 #' @importFrom doParallel registerDoParallel
 #' @importFrom foreach %dopar% foreach
 #' @importFrom misc3d kde3d
-#' @import spatstat.geom spatstat.core spatstat
+#' @importFrom spatstat.random rpoint
+#' @import spatstat.geom spatstat
+#' @rawNamespace import("spatstat.core", except="rpoint")
+
 NULL

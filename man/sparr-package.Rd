@@ -62,7 +62,7 @@ Also available are a number of relevant additional spatial datasets built-in to 
 \code{\link[spatstat.data]{chorley}}, which concerns the distribution of
 laryngeal cancer in an area of Lancashire, UK.
 
-\code{\link{rimpoly}} a wrapper function of \code{\link[spatstat.core]{rpoint}} to allow generated
+\code{\link{rimpoly}} a wrapper function of \code{\link[spatstat.random]{rpoint}} to allow generated
 spatial point patterns based on a pixel \code{\link[spatstat.geom]{im}}age to be returned with a
 polygonal \code{\link[spatstat.geom]{owin}}.\cr
 
