@@ -24,11 +24,11 @@ An object of class \code{\link[spatstat.geom]{ppp}} containing the \code{n} gene
 Generates a random point pattern of \eqn{n} iid points with any specified distribution based on a pixel image and a corresponding polygonal window.
 }
 \details{
-This function is a deliberate variant of \code{\link[spatstat.core]{rpoint}} (Baddeley et. al, 2015), to be accessed when the user desires 
+This function is a deliberate variant of \code{\link[spatstat.random]{rpoint}} (Baddeley et. al, 2015), to be accessed when the user desires 
 a randomly generated point pattern based on a pixel image, but wants the window of the point pattern to be a corresponding irregular polygon, as opposed to a binary
 image mask (which, when converted to a polygon directly, gives jagged edges based on the union of the pixels). When the user specifies their own polygonal window, a \code{while} loop is called and repeated as many
 times as necessary (up to \code{maxpass} times) to find \code{n} points inside \code{w} (when \code{w = NULL}, then the aforementioned union of the pixels of \code{z}
-is used, obtained via \code{as.polygonal(Window(z))}). The loop is necessary because the standard behaviour of \code{\link[spatstat.core]{rpoint}} can (and often does)
+is used, obtained via \code{as.polygonal(Window(z))}). The loop is necessary because the standard behaviour of \code{\link[spatstat.random]{rpoint}} can (and often does)
 yield points that sit in corners of pixels which lie outside the corresponding \code{w}.
 
 The \code{correction} argument is used to determine how many points are generated initially,

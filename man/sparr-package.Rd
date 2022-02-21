@@ -12,8 +12,8 @@ risk surfaces via the density-ratio method and perform subsequent inference. Fix
 \details{
 \tabular{ll}{
 Package: \tab sparr\cr
-Date:\tab 2021-03-16\cr
-Version:\tab 2.2-15\cr
+Date:\tab 2022-02-21\cr
+Version:\tab 2.2-16\cr
 License: \tab GPL (>= 2)\cr
 }
 
@@ -62,7 +62,7 @@ Also available are a number of relevant additional spatial datasets built-in to 
 \code{\link[spatstat.data]{chorley}}, which concerns the distribution of
 laryngeal cancer in an area of Lancashire, UK.
 
-\code{\link{rimpoly}} a wrapper function of \code{\link[spatstat.core]{rpoint}} to allow generated
+\code{\link{rimpoly}} a wrapper function of \code{\link[spatstat.random]{rpoint}} to allow generated
 spatial point patterns based on a pixel \code{\link[spatstat.geom]{im}}age to be returned with a
 polygonal \code{\link[spatstat.geom]{owin}}.\cr
 
@@ -306,6 +306,6 @@ Otago, Dunedin, New Zealand.}\cr
 J.C. Marshall\cr
 \emph{Institute of Fundamantal Sciences, Massey University, Palmerston North, New Zealand.}\cr
 
-Maintainer: T.M.D. \email{tdavies@maths.otago.ac.nz}
+Maintainer: T.M.D. \email{tilman.davies@otago.ac.nz}
 }
 \keyword{package}

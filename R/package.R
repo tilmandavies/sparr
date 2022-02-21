@@ -51,7 +51,7 @@
 #' \code{\link[spatstat.data]{chorley}}, which concerns the distribution of
 #' laryngeal cancer in an area of Lancashire, UK.
 #' 
-#' \code{\link{rimpoly}} a wrapper function of \code{\link[spatstat.core]{rpoint}} to allow generated
+#' \code{\link{rimpoly}} a wrapper function of \code{\link[spatstat.random]{rpoint}} to allow generated
 #' spatial point patterns based on a pixel \code{\link[spatstat.geom]{im}}age to be returned with a
 #' polygonal \code{\link[spatstat.geom]{owin}}.\cr
 #' 
@@ -190,7 +190,7 @@
 #' J.C. Marshall\cr
 #' \emph{Institute of Fundamantal Sciences, Massey University, Palmerston North, New Zealand.}\cr
 #' 
-#' Maintainer: T.M.D. \email{tdavies@@maths.otago.ac.nz}
+#' Maintainer: T.M.D. \email{tilman.davies@@otago.ac.nz}
 #' 
 #' @section Citation:
 #' To cite use of current versions of \code{sparr} in publications or research projects please use:\cr
