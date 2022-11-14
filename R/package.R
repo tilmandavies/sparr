@@ -312,5 +312,5 @@ NULL
 #' @importFrom doParallel registerDoParallel
 #' @importFrom foreach %dopar% foreach
 #' @importFrom misc3d kde3d
-#' @import spatstat.geom spatstat.core spatstat
+#' @import spatstat.geom spatstat.explore spatstat
 NULL

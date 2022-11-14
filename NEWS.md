@@ -1,3 +1,11 @@
+# sparr 2.2-17
+
+* Further further updated to handle new `spatstat` structure
+
+# sparr 2.2-16
+
+* Further updated to handle new `spatstat` structure
+
 # sparr 2.2-15
 
 * Updated internals to handle new `spatstat` structure

@@ -52,7 +52,7 @@ given the pilot density (as per Silverman, 1986). See `Details'.}
 \code{"uniform"} (default) corrects based on evaluation grid coordinate and
 \code{"diggle"} reweights each observation-specific kernel. Setting
 \code{edge = "none"} requests no edge correction. Further details can be
-found in the documentation for \code{\link[spatstat.core]{density.ppp}}.}
+found in the documentation for \code{\link[spatstat.explore]{density.ppp}}.}
 
 \item{weights}{Optional numeric vector of nonnegative weights corresponding to
 each observation in \code{pp}. Must have length equal to \code{npoints(pp)}.}
@@ -152,7 +152,7 @@ shown above) are also implemented.
   \item{\bold{Fixed}}{
     The classic fixed bandwidth kernel estimator is used when
     \code{adapt = FALSE}. This amounts to setting \eqn{h(u)=}\code{h0} for all \eqn{u}.
-    Further details can be found in the documentation for \code{\link[spatstat.core]{density.ppp}}.}
+    Further details can be found in the documentation for \code{\link[spatstat.explore]{density.ppp}}.}
   \item{\bold{Adaptive}}{Setting \code{adapt = TRUE} requests computation of Abramson's (1982)
     variable-bandwidth estimator. Under this framework, we have
     \eqn{h(u)=}\code{h0}*min[\eqn{\tilde{f}(u)^{-1/2}},\eqn{G*}\code{trim}]/\eqn{\gamma},
@@ -205,7 +205,7 @@ shown above) are also implemented.
         final estimation stages. Experimental code to do this via parallel
         processing using the \code{\link{foreach}} routine is implemented.
         Fixed-bandwidth leave-one-out can be performed directly in
-        \code{\link[spatstat.core]{density.ppp}}.
+        \code{\link[spatstat.explore]{density.ppp}}.
     }
   }
 }

@@ -163,9 +163,9 @@ C.M., 1995. \emph{Kernel Smoothing}, Chapman & Hall, London.
 }
 \seealso{
 \code{\link{SLIK.adapt}} and functions for bandwidth selection in package
-  \code{\link{spatstat}}: \code{\link[spatstat.core]{bw.diggle}};
-  \code{\link[spatstat.core]{bw.ppl}}; \code{\link[spatstat.core]{bw.scott}};
-  \code{\link[spatstat.core]{bw.frac}}.
+  \code{\link{spatstat}}: \code{\link[spatstat.explore]{bw.diggle}};
+  \code{\link[spatstat.explore]{bw.ppl}}; \code{\link[spatstat.explore]{bw.scott}};
+  \code{\link[spatstat.explore]{bw.frac}}.
 }
 \author{
 T. M. Davies

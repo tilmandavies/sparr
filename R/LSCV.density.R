@@ -75,9 +75,9 @@
 #' @author T. M. Davies
 #'
 #' @seealso \code{\link{SLIK.adapt}} and functions for bandwidth selection in package
-#'   \code{\link{spatstat}}: \code{\link[spatstat.core]{bw.diggle}};
-#'   \code{\link[spatstat.core]{bw.ppl}}; \code{\link[spatstat.core]{bw.scott}};
-#'   \code{\link[spatstat.core]{bw.frac}}.
+#'   \code{\link{spatstat}}: \code{\link[spatstat.explore]{bw.diggle}};
+#'   \code{\link[spatstat.explore]{bw.ppl}}; \code{\link[spatstat.explore]{bw.scott}};
+#'   \code{\link[spatstat.explore]{bw.frac}}.
 #'
 #' @references
 #' 
@@ -127,7 +127,7 @@ LSCV.density <- function(pp,hlim=NULL,hseq=NULL,resolution=64,edge=TRUE,auto.opt
                          type=c("fixed","adaptive"),seqres=30,parallelise=NULL,
                          zero.action=0,verbose=TRUE,...){
 
-  if(class(pp)!="ppp") stop("data object 'pp' must be of class \"ppp\"")
+  if(!inherits(pp,"ppp")) stop("data object 'pp' must be of class \"ppp\"")
   W <- Window(pp)
   
   if(is.null(hlim)){

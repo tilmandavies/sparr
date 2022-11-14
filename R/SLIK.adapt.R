@@ -58,9 +58,9 @@
 #' @author T. M. Davies
 #'
 #' @seealso Functions for bandwidth selection in package
-#'   \code{\link{spatstat}}: \code{\link[spatstat.core]{bw.diggle}};
-#'   \code{\link[spatstat.core]{bw.ppl}}; \code{\link[spatstat.core]{bw.scott}};
-#'   \code{\link[spatstat.core]{bw.frac}}.
+#'   \code{\link{spatstat}}: \code{\link[spatstat.explore]{bw.diggle}};
+#'   \code{\link[spatstat.explore]{bw.ppl}}; \code{\link[spatstat.explore]{bw.scott}};
+#'   \code{\link[spatstat.explore]{bw.frac}}.
 #'
 #' @references
 #' Davies, T.M. and Lawson, A.B. (2018), An evaluation of likelihood-based bandwidth selectors for spatial and spatiotemporal kernel estimates, \emph{Submitted for publication}.
@@ -86,7 +86,7 @@
 #' 
 #' @export
 SLIK.adapt <- function(pp,hold=TRUE,start=rep(OS(pp),2),hlim=NULL,edge=TRUE,zero.action=c(-1,0),optim.control=list(),parallelise=NULL,verbose=TRUE,...){
-  if(class(pp)!="ppp") stop("data object 'pp' must be of class \"ppp\"")
+  if(!inherits(pp,"ppp")) stop("data object 'pp' must be of class \"ppp\"")
   W <- Window(pp)
   # resolution <- checkit(resolution,"'resolution'")
   

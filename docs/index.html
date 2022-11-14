@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,23 +33,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">sparr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2-15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.2-17</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -70,8 +66,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/tilmandavies/sparr/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/tilmandavies/sparr/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -87,69 +83,69 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="sparr-spatial-and-spatiotemporal-relative-risk" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#sparr-spatial-and-spatiotemporal-relative-risk" class="anchor"></a>sparr: Spatial and Spatiotemporal Relative Risk</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="sparr-spatial-and-spatiotemporal-relative-risk">sparr: Spatial and Spatiotemporal Relative Risk<a class="anchor" aria-label="anchor" href="#sparr-spatial-and-spatiotemporal-relative-risk"></a>
+</h1></div>
 <p>The <code>sparr</code> package for R provides functions to estimate fixed and adaptive kernel-smoothed spatial relative risk surfaces via the density-ratio method and perform subsequent inference. Fixed-bandwidth spatiotemporal density and relative risk estimation is also supported.</p>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <p>This package is available on CRAN, and we recommend installing it from there using the standard</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">'sparr'</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'sparr'</span><span class="op">)</span></span></code></pre></div>
 <p>If you wish to live on the bleeding edge, you may install from github using <code>devtools</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'tilmandavies/sparr'</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">'tilmandavies/sparr'</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="example" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example" class="anchor"></a>Example</h2>
+<div class="section level2">
+<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+</h2>
 <p>This is a basic example of relative risk estimation for primary biliary cirrhosis cases from north east England.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Load library</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://tilmandavies.github.io/sparr">sparr</a></span><span class="op">)</span>
-<span class="co">#&gt; Loading required package: spatstat</span>
-<span class="co">#&gt; Loading required package: spatstat.data</span>
-<span class="co">#&gt; Loading required package: nlme</span>
-<span class="co">#&gt; Loading required package: rpart</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; spatstat 1.57-1.004       (nickname: 'Chocolate Teapot') </span>
-<span class="co">#&gt; For an introduction to spatstat, type 'beginner'</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Welcome to</span>
-<span class="co">#&gt;    _____ ___  ____  ____  ____         </span>
-<span class="co">#&gt;   / ___// _ \/ _  \/ __ \/ __ \        </span>
-<span class="co">#&gt;   \__ \/ ___/ __  /  ___/  ___/        </span>
-<span class="co">#&gt;  ___/ / /  / / / / /\ \/ /\ \          </span>
-<span class="co">#&gt; /____/_/  /_/ /_/_/  \__/  \_\   v2.2-13</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; - type news(package="sparr") for an overview</span>
-<span class="co">#&gt; - type help("sparr") for documentation</span>
-<span class="co">#&gt; - type citation("sparr") for how to cite</span>
-
-<span class="co"># Load data on cases of primary biliary cirrhosis from north east England</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">pbc</span><span class="op">)</span>
-
-<span class="co"># Split into cases and controls</span>
-<span class="va">pbc_case</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">pbc</span><span class="op">)</span><span class="op">$</span><span class="va">case</span>
-<span class="va">pbc_cont</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">pbc</span><span class="op">)</span><span class="op">$</span><span class="va">control</span>
-
-<span class="co"># Estimate global bandwidth for smoothing</span>
-<span class="va">h0</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/OS.html">OS</a></span><span class="op">(</span><span class="va">pbc</span>, nstar<span class="op">=</span><span class="st">"geometric"</span><span class="op">)</span>
-
-<span class="co"># Compute a symmetric (pooled) adaptive relative risk estimate</span>
-<span class="co"># with tolerance contours</span>
-<span class="va">pbc_rr</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/risk.html">risk</a></span><span class="op">(</span><span class="va">pbc_case</span>, <span class="va">pbc_cont</span>, h0<span class="op">=</span><span class="va">h0</span>, adapt<span class="op">=</span><span class="cn">TRUE</span>, tolerate<span class="op">=</span><span class="cn">TRUE</span>,
-               hp<span class="op">=</span><span class="fu"><a href="reference/OS.html">OS</a></span><span class="op">(</span><span class="va">pbc</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span>, pilot.symmetry<span class="op">=</span><span class="st">"pooled"</span>, davies.baddeley<span class="op">=</span><span class="fl">0.05</span><span class="op">)</span>
-<span class="co">#&gt; Estimating case density...</span>
-<span class="co">#&gt; Done.</span>
-<span class="co">#&gt; Estimating control density...Done.</span>
-<span class="co">#&gt; Calculating tolerance contours...Done.</span>
-
-<span class="co"># And produce a plot</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">pbc_rr</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Load library</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tilmandavies.github.io/sparr/" class="external-link">sparr</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: spatstat</span></span>
+<span><span class="co">#&gt; Loading required package: spatstat.data</span></span>
+<span><span class="co">#&gt; Loading required package: nlme</span></span>
+<span><span class="co">#&gt; Loading required package: rpart</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; spatstat 1.57-1.004       (nickname: 'Chocolate Teapot') </span></span>
+<span><span class="co">#&gt; For an introduction to spatstat, type 'beginner'</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Welcome to</span></span>
+<span><span class="co">#&gt;    _____ ___  ____  ____  ____         </span></span>
+<span><span class="co">#&gt;   / ___// _ \/ _  \/ __ \/ __ \        </span></span>
+<span><span class="co">#&gt;   \__ \/ ___/ __  /  ___/  ___/        </span></span>
+<span><span class="co">#&gt;  ___/ / /  / / / / /\ \/ /\ \          </span></span>
+<span><span class="co">#&gt; /____/_/  /_/ /_/_/  \__/  \_\   v2.2-13</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; - type news(package="sparr") for an overview</span></span>
+<span><span class="co">#&gt; - type help("sparr") for documentation</span></span>
+<span><span class="co">#&gt; - type citation("sparr") for how to cite</span></span>
+<span></span>
+<span><span class="co"># Load data on cases of primary biliary cirrhosis from north east England</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">pbc</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Split into cases and controls</span></span>
+<span><span class="va">pbc_case</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="va">pbc</span><span class="op">)</span><span class="op">$</span><span class="va">case</span></span>
+<span><span class="va">pbc_cont</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="va">pbc</span><span class="op">)</span><span class="op">$</span><span class="va">control</span></span>
+<span></span>
+<span><span class="co"># Estimate global bandwidth for smoothing</span></span>
+<span><span class="va">h0</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/OS.html">OS</a></span><span class="op">(</span><span class="va">pbc</span>, nstar<span class="op">=</span><span class="st">"geometric"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Compute a symmetric (pooled) adaptive relative risk estimate</span></span>
+<span><span class="co"># with tolerance contours</span></span>
+<span><span class="va">pbc_rr</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/risk.html">risk</a></span><span class="op">(</span><span class="va">pbc_case</span>, <span class="va">pbc_cont</span>, h0<span class="op">=</span><span class="va">h0</span>, adapt<span class="op">=</span><span class="cn">TRUE</span>, tolerate<span class="op">=</span><span class="cn">TRUE</span>,</span>
+<span>               hp<span class="op">=</span><span class="fu"><a href="reference/OS.html">OS</a></span><span class="op">(</span><span class="va">pbc</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span>, pilot.symmetry<span class="op">=</span><span class="st">"pooled"</span>, davies.baddeley<span class="op">=</span><span class="fl">0.05</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Estimating case density...</span></span>
+<span><span class="co">#&gt; Done.</span></span>
+<span><span class="co">#&gt; Estimating control density...Done.</span></span>
+<span><span class="co">#&gt; Calculating tolerance contours...Done.</span></span>
+<span></span>
+<span><span class="co"># And produce a plot</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pbc_rr</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-pbc-example-1.png"><!-- --></p>
 </div>
 </div>
@@ -157,46 +153,51 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=sparr">https://​cloud.r-project.org/​package=sparr</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/tilmandavies/sparr/">https://​github.com/​tilmandavies/​sparr/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/tilmandavies/sparr/issues">https://​github.com/​tilmandavies/​sparr/​issues</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=sparr" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/tilmandavies/sparr/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/tilmandavies/sparr/issues/" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li>GPL (&gt;= 2)</li>
 </ul>
 </div>
+
+
 <div class="citation">
-<h2>Citation</h2>
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html">Citing sparr</a></li>
+<li><a href="authors.html#citation">Citing sparr</a></li>
 </ul>
 </div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Tilman M. Davies <br><small class="roles"> Author, maintainer </small>  </li>
 <li>Jonathan C. Marshall <br><small class="roles"> Author </small>  </li>
 </ul>
 </div>
 
+
+
   </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Tilman M. Davies, Jonathan C. Marshall.</p>
+  <p></p>
+<p>Developed by Tilman M. Davies, Jonathan C. Marshall.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -204,6 +205,8 @@
 
   
 
+
+  
 
   </body>
 </html>
