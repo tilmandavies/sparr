@@ -252,7 +252,7 @@ Davies, T.M., Jones, K. and Hazelton, M.L.
 relative risk function, \emph{Computational Statistics & Data Analysis},
 \bold{101}, 12-28.
 
-Elson, R., Davies, T. M., Lake, I. R., Vivancos, R., Blomquist, P. B., Charlett, A. and Dabrera, G. (2021), The spatio-temporal distribution of COVID-19 infection in England between January and June 2020, \emph{Epidemiology \& Infection}, \bold{149}, e73.
+Elson, R., Davies, T. M., Lake, I. R., Vivancos, R., Blomquist, P. B., Charlett, A. and Dabrera, G. (2021), The spatio-temporal distribution of COVID-19 infection in England between January and June 2020, \emph{Epidemiology and Infection}, \bold{149}, e73.
 
 Fernando, W.T.P.S. and Hazelton, M.L. (2014), Generalizing the spatial relative risk function, \emph{Spatial and Spatio-temporal Epidemiology}, \bold{8}, 1-10.
 

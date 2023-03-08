@@ -1,8 +1,8 @@
-citHeader("To cite sparr in publications use:")
 
-citEntry(entry = "article",
+
+bibentry(bibtype = "article", header = "To cite sparr in publications use:",
   title        = "Tutorial on kernel estimation of continuous spatial and spatiotemporal relative risk",
-  author       = personList(as.person("T. M. Davies"),
+  author       = c(as.person("T. M. Davies"),
                    as.person("J. C. Marshall"),
                    as.person("M. L. Hazelton")),
   journal      = "Statistics in Medicine",
