@@ -12,6 +12,8 @@ risk(
   h0 = NULL,
   hp = h0,
   adapt = FALSE,
+  shrink = FALSE,
+  shrink.args = list(rescale = TRUE, type = c("lasso", "Bithell"), lambda = NA),
   tolerate = FALSE,
   doplot = FALSE,
   pilot.symmetry = c("none", "f", "g", "pooled"),
@@ -52,6 +54,17 @@ densities for adaptive risk surfaces. Ignored if \code{adapt = FALSE} or if
 \item{adapt}{A logical value indicating whether to employ adaptive smoothing
 for internally estimating the densities. Ignored if \code{f} and \code{g}
 are already \code{\link{bivden}} objects.}
+
+\item{shrink}{A logical value indicating whether to compute the shrinkage estimator
+of Hazelton (2023). This is only possible for \code{adapt=FALSE}.}
+
+\item{shrink.args}{A named list of optional arguments controlling the shrinkage estimator.
+Possible entries are \code{rescale} (a logical value indicating whether to integrate
+to one with respect to the control distribution over the window); \code{type} 
+(a character string stipulating the shrinkage methodology to be used, either the
+default \code{"lasso"} or the alternative \code{"Bithell"}); and \code{lambda}
+(a non-negative numeric value determining the degree of shrinkage towards uniform
+relative risk---when set to its default \code{NA}, it is selected via cross-validation).}
 
 \item{tolerate}{A logical value indicating whether to internally calculate a
 corresponding asymptotic p-value surface (for tolerance contours) for the
@@ -109,7 +122,8 @@ epsilon*max(gd))}, \cr\cr where \code{fd} and \code{gd} denote the case and
 control density estimates respectively. Note the (optional) additive
 constants defined by \code{epsilon} times the maximum of each of the
 densities in the numerator and denominator respectively (see Bowman and
-Azzalini, 1997).
+Azzalini, 1997). A more recent shrinkage estimator developed by Hazelton (2023)
+is also implemented.
 
 The log-risk function \emph{rho}, given by \emph{rho} = log[\emph{r}], is
 argued to be preferable in practice as it imparts a sense of symmetry in the
@@ -146,15 +160,18 @@ pbccas <- split(pbc)$case
 pbccon <- split(pbc)$control
 h0 <- OS(pbc,nstar="geometric")
 
-# Fixed 
+# Fixed (with tolerance contours)
 pbcrr1 <- risk(pbccas,pbccon,h0=h0,tolerate=TRUE)
 
+# Fixed shrinkage
+pbcrr2 <- risk(pbccas,pbccon,h0=h0,shrink=TRUE,shrink.args=list(lambda=4))
+
 # Asymmetric adaptive
-pbcrr2 <- risk(pbccas,pbccon,h0=h0,adapt=TRUE,hp=c(OS(pbccas)/2,OS(pbccon)/2),
+pbcrr3 <- risk(pbccas,pbccon,h0=h0,adapt=TRUE,hp=c(OS(pbccas)/2,OS(pbccon)/2),
                tolerate=TRUE,davies.baddeley=0.05)
 
 # Symmetric (pooled) adaptive
-pbcrr3 <- risk(pbccas,pbccon,h0=h0,adapt=TRUE,tolerate=TRUE,hp=OS(pbc)/2,
+pbcrr4 <- risk(pbccas,pbccon,h0=h0,adapt=TRUE,tolerate=TRUE,hp=OS(pbc)/2,
                pilot.symmetry="pooled",davies.baddeley=0.05)
 
 # Symmetric (case) adaptive; from two existing 'bivden' objects
@@ -162,13 +179,13 @@ f <- bivariate.density(pbccas,h0=h0,hp=2,adapt=TRUE,pilot.density=pbccas,
                        edge="diggle",davies.baddeley=0.05,verbose=FALSE) 
 g <- bivariate.density(pbccon,h0=h0,hp=2,adapt=TRUE,pilot.density=pbccas,
                        edge="diggle",davies.baddeley=0.05,verbose=FALSE)
-pbcrr4 <- risk(f,g,tolerate=TRUE,verbose=FALSE)
+pbcrr5 <- risk(f,g,tolerate=TRUE,verbose=FALSE)
 
 par(mfrow=c(2,2))
 plot(pbcrr1,override.par=FALSE,main="Fixed")
-plot(pbcrr2,override.par=FALSE,main="Asymmetric adaptive")
-plot(pbcrr3,override.par=FALSE,main="Symmetric (pooled) adaptive")
-plot(pbcrr4,override.par=FALSE,main="Symmetric (case) adaptive") 
+plot(pbcrr2,override.par=FALSE,main="Fixed shrinkage")
+plot(pbcrr3,override.par=FALSE,main="Asymmetric adaptive")
+plot(pbcrr4,override.par=FALSE,main="Symmetric (pooled) adaptive") 
 
 }
 \references{
@@ -195,6 +212,9 @@ relative risk function, \emph{Computational Statistics & Data Analysis},
 Diggle, P.J. (1985), A kernel method for smoothing
 point process data, \emph{Journal of the Royal Statistical Society Series
 C}, \bold{34}(2), 138-147.
+
+Hazelton, M.L. (2023), Shrinkage estimators of the spatial relative
+risk function, \emph{Submitted for publication}.
 
 Hazelton, M.L. and Davies, T.M. (2009),
 Inference based on kernel estimates of the relative risk function in

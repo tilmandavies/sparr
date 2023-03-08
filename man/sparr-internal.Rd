@@ -9,6 +9,8 @@
 \alias{checkedge}
 \alias{checkit}
 \alias{checkran}
+\alias{cv.RelRisk}
+\alias{cv.RelRisk.Bithell}
 \alias{edgeh}
 \alias{gethcats}
 \alias{identical_windows}
@@ -40,6 +42,8 @@ Internal \code{\link{sparr}} functions, only meant to be accessed by the user di
 \code{checkedge(edge)}\cr
 \code{checkit(h,str)}\cr
 \code{checkran(ran,nm)}\cr
+\code{cv.RelRisk(X1,X2=NULL,h=NA,lambda.min=0.1,lambda.max=20,LHmin=TRUE,n.lambda=32)}\cr
+\code{cv.RelRisk.Bithell(X1,X2=NULL,h=NA,lambda.min=0.1,lambda.max=20,LHmin=TRUE,n.lambda=32)}\cr
 \code{edgeh(bwim,pres,tres,step,W,verbose=FALSE)}\cr
 \code{gethcats(h,breaks=NULL,step=0.05)}\cr
 \code{identical_windows(w1,w2)}\cr

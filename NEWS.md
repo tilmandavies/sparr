@@ -1,3 +1,11 @@
+# sparr 2.3-10
+
+* Incorporated new shrinkage estimator of spatial relative risk
+
+## Significant user-visible changes
+
+* `risk`: New arguments `shrink` and `shrink.args` implemented for shrinkage estimator
+
 # sparr 2.2-17
 
 * Further further updated to handle new `spatstat` structure

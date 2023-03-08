@@ -12,8 +12,8 @@ risk surfaces via the density-ratio method and perform subsequent inference. Fix
 \details{
 \tabular{ll}{
 Package: \tab sparr\cr
-Date:\tab 2022-11-09\cr
-Version:\tab 2.2-17\cr
+Date:\tab 2023-03-08\cr
+Version:\tab 2.3-10\cr
 License: \tab GPL (>= 2)\cr
 }
 
@@ -26,7 +26,7 @@ to control densities (Bithell, 1990; 1991; Kelsall and Diggle, 1995a,b), describ
 `risk' of the disease, given the underlying at-risk population. This is a
 technique that has been applied successfully for mainly exploratory purposes
 in a number of different analyses (see for example Sabel et al., 2000;
-Prince et al., 2001; Wheeler, 2007). It has also grown in popularity in very
+Prince et al., 2001; Wheeler, 2007, Elson et al., 2021). It has also grown in popularity in very
 different fields that pose similarly styled research questions, such as ecology
 (e.g. Campos and Fedigan, 2014); physiology (Davies et al., 2013); and archaeology
 (e.g. Bevan, 2012; Smith et al. 2015).
@@ -112,7 +112,7 @@ estimates for multiple global bandwidths as per Davies and Baddeley
 based on taking a slice from a multi-scale estimate.
 
 \code{\link{risk}} estimation of a (log) spatial relative risk function, either from data or
-pre-existing bivariate density estimates; fixed (Kelsall and Diggle, 1995a) or both asymmetric (Davies and Hazelton, 2010) and symmetric (Davies et al., 2016) adaptive estimates are possible.
+pre-existing bivariate density estimates; fixed (Kelsall and Diggle, 1995a); fixed with shrinkage (Hazelton, 2023); or both asymmetric (Davies and Hazelton, 2010) and symmetric (Davies et al., 2016) adaptive estimates are possible.
 
 \code{\link{tolerance}}
 calculation of asymptotic or Monte-Carlo \emph{p}-value surfaces.
@@ -252,11 +252,16 @@ Davies, T.M., Jones, K. and Hazelton, M.L.
 relative risk function, \emph{Computational Statistics & Data Analysis},
 \bold{101}, 12-28.
 
+Elson, R., Davies, T. M., Lake, I. R., Vivancos, R., Blomquist, P. B., Charlett, A. and Dabrera, G. (2021), The spatio-temporal distribution of COVID-19 infection in England between January and June 2020, \emph{Epidemiology \& Infection}, \bold{149}, e73.
+
 Fernando, W.T.P.S. and Hazelton, M.L. (2014), Generalizing the spatial relative risk function, \emph{Spatial and Spatio-temporal Epidemiology}, \bold{8}, 1-10.
 
 Hazelton, M.L. (2008), Letter to the editor: Kernel
 estimation of risk surfaces without the need for edge correction,
 \emph{Statistics in Medicine}, \bold{27}, 2269-2272.
+
+Hazelton, M.L. (2023), Shrinkage estimators of the spatial relative
+risk function, \emph{Submitted for publication}.
 
 Hazelton, M.L. and
 Davies, T.M. (2009), Inference based on kernel estimates of the relative

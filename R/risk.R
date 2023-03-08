@@ -12,7 +12,8 @@
 #' control density estimates respectively. Note the (optional) additive
 #' constants defined by \code{epsilon} times the maximum of each of the
 #' densities in the numerator and denominator respectively (see Bowman and
-#' Azzalini, 1997).
+#' Azzalini, 1997). A more recent shrinkage estimator developed by Hazelton (2023)
+#' is also implemented.
 #' 
 #' The log-risk function \emph{rho}, given by \emph{rho} = log[\emph{r}], is
 #' argued to be preferable in practice as it imparts a sense of symmetry in the
@@ -70,6 +71,15 @@
 #' @param adapt A logical value indicating whether to employ adaptive smoothing
 #'   for internally estimating the densities. Ignored if \code{f} and \code{g}
 #'   are already \code{\link{bivden}} objects.
+#' @param shrink A logical value indicating whether to compute the shrinkage estimator
+#'   of Hazelton (2023). This is only possible for \code{adapt=FALSE}.
+#' @param shrink.args A named list of optional arguments controlling the shrinkage estimator.
+#'   Possible entries are \code{rescale} (a logical value indicating whether to integrate
+#'   to one with respect to the control distribution over the window); \code{type} 
+#'   (a character string stipulating the shrinkage methodology to be used, either the
+#'   default \code{"lasso"} or the alternative \code{"Bithell"}); and \code{lambda}
+#'   (a non-negative numeric value determining the degree of shrinkage towards uniform
+#'   relative risk---when set to its default \code{NA}, it is selected via cross-validation).
 #' @param tolerate A logical value indicating whether to internally calculate a
 #'   corresponding asymptotic p-value surface (for tolerance contours) for the
 #'   estimated relative risk function. See `Details'.
@@ -133,6 +143,9 @@
 #' point process data, \emph{Journal of the Royal Statistical Society Series
 #' C}, \bold{34}(2), 138-147.
 #'
+#' Hazelton, M.L. (2023), Shrinkage estimators of the spatial relative
+#' risk function, \emph{Submitted for publication}.
+#'
 #' Hazelton, M.L. and Davies, T.M. (2009),
 #' Inference based on kernel estimates of the relative risk function in
 #' geographical epidemiology, \emph{Biometrical Journal}, \bold{51}(1),
@@ -152,15 +165,18 @@
 #' pbccon <- split(pbc)$control
 #' h0 <- OS(pbc,nstar="geometric")
 #' 
-#' # Fixed 
+#' # Fixed (with tolerance contours)
 #' pbcrr1 <- risk(pbccas,pbccon,h0=h0,tolerate=TRUE)
 #' 
+#' # Fixed shrinkage
+#' pbcrr2 <- risk(pbccas,pbccon,h0=h0,shrink=TRUE,shrink.args=list(lambda=4))
+#' 
 #' # Asymmetric adaptive
-#' pbcrr2 <- risk(pbccas,pbccon,h0=h0,adapt=TRUE,hp=c(OS(pbccas)/2,OS(pbccon)/2),
+#' pbcrr3 <- risk(pbccas,pbccon,h0=h0,adapt=TRUE,hp=c(OS(pbccas)/2,OS(pbccon)/2),
 #'                tolerate=TRUE,davies.baddeley=0.05)
 #' 
 #' # Symmetric (pooled) adaptive
-#' pbcrr3 <- risk(pbccas,pbccon,h0=h0,adapt=TRUE,tolerate=TRUE,hp=OS(pbc)/2,
+#' pbcrr4 <- risk(pbccas,pbccon,h0=h0,adapt=TRUE,tolerate=TRUE,hp=OS(pbc)/2,
 #'                pilot.symmetry="pooled",davies.baddeley=0.05)
 #' 
 #' # Symmetric (case) adaptive; from two existing 'bivden' objects
@@ -168,145 +184,234 @@
 #'                        edge="diggle",davies.baddeley=0.05,verbose=FALSE) 
 #' g <- bivariate.density(pbccon,h0=h0,hp=2,adapt=TRUE,pilot.density=pbccas,
 #'                        edge="diggle",davies.baddeley=0.05,verbose=FALSE)
-#' pbcrr4 <- risk(f,g,tolerate=TRUE,verbose=FALSE)
+#' pbcrr5 <- risk(f,g,tolerate=TRUE,verbose=FALSE)
 #' 
 #' par(mfrow=c(2,2))
 #' plot(pbcrr1,override.par=FALSE,main="Fixed")
-#' plot(pbcrr2,override.par=FALSE,main="Asymmetric adaptive")
-#' plot(pbcrr3,override.par=FALSE,main="Symmetric (pooled) adaptive")
-#' plot(pbcrr4,override.par=FALSE,main="Symmetric (case) adaptive") 
+#' plot(pbcrr2,override.par=FALSE,main="Fixed shrinkage")
+#' plot(pbcrr3,override.par=FALSE,main="Asymmetric adaptive")
+#' plot(pbcrr4,override.par=FALSE,main="Symmetric (pooled) adaptive") 
 #' 
 #' @export
-risk <- function(f, g = NULL, log = TRUE, h0 = NULL, hp = h0, adapt = FALSE,
-                  tolerate = FALSE, doplot = FALSE,
-                  pilot.symmetry = c("none","f","g","pooled"), epsilon = 0,
-                  verbose = TRUE, ...){
-
-  if(is.null(g)){
-    if(!inherits(f,"ppp")) stop("'f' must be an object of class 'ppp' if 'g' unsupplied")
+risk <- function (f, g = NULL, log = TRUE, h0 = NULL, hp = h0, adapt = FALSE, shrink = FALSE, shrink.args = list(rescale = TRUE, type = c("lasso", "Bithell"), lambda = NA),
+                   tolerate = FALSE, doplot = FALSE, pilot.symmetry = c("none", "f", "g", "pooled"), epsilon = 0, verbose = TRUE, ...) 
+{
+  if (is.null(g)) {
+    if (!inherits(f, "ppp")) 
+      stop("'f' must be an object of class 'ppp' if 'g' unsupplied")
     fm <- marks(f)
-    if(!is.factor(fm)) marks(f) <- fm <- factor(fm)
-    if(nlevels(fm)!=2) stop("'f' marks must be dichotomous if 'g' unsupplied")
+    if (!is.factor(fm)) 
+      marks(f) <- fm <- factor(fm)
+    if (nlevels(fm) != 2) 
+      stop("'f' marks must be dichotomous if 'g' unsupplied")
     fs <- split(f)
     f <- fs[[1]]
     g <- fs[[2]]
-  } else {
+  }
+  else {
     fc <- class(f)
     gc <- class(g)
-    if(!all(fc==gc)) stop("'f' and 'g' must be of identical class")
-    if(!(inherits(f,"ppp")||inherits(f,"bivden"))) stop("'f' and 'g' must be of class 'ppp' or 'bivden'")
+    if (!all(fc == gc)) 
+      stop("'f' and 'g' must be of identical class")
+    if (!(inherits(f, "ppp") || inherits(f, "bivden"))) 
+      stop("'f' and 'g' must be of class 'ppp' or 'bivden'")
   }
+  
   
   epsi <- epsilon[1]
-  if(epsi<0) stop("invalid 'epsilon'; must be scalar and non-negative")
+  if (epsi > 0)
+    warning("use of non-zero epsilon parameter is not recommended; use option 'shrink = TRUE' to employ either lasso or Bithell-type shrinkage")
   
-  if(inherits(f,"ppp")){
-    if(!identical_windows(Window(f),Window(g))) stop("study windows for 'f' and 'g' must be identical")
-    
+  if (shrink) {
+    epsi <- 0
+    lambda <- shrink.args$lambda
+    shrink.rescale <- shrink.args$rescale
+    shrink.type <- shrink.args$type[1]
+    if(is.null(lambda)) lambda <- NA
+    if(is.null(shrink.rescale)) shrink.rescale <- TRUE
+    if(is.null(shrink.type)) shrink.type <- "lasso"
+    if(adapt) stop("shrinkage only implemented for fixed bandwidth estimators")
+    if(is.numeric(lambda)&&(lambda<0)) stop("shrinkage parameter 'lambda' must be non-negative")
+  }
+  
+  if (epsi < 0) 
+    stop("invalid 'epsilon'; must be scalar and non-negative")
+  
+  
+  if (inherits(f, "ppp")) {
+    if (!identical_windows(Window(f), Window(g))) 
+      stop("study windows for 'f' and 'g' must be identical")
     marks(f) <- NULL
     marks(g) <- NULL
-    pooled <- suppressWarnings(superimpose(f,g))
-    if(is.null(h0)) h0 <- OS(pooled,nstar=sqrt(f$n*g$n))
-    
-    if(length(h0)==1){
-      h0f <- h0g <- checkit(h0[1],"'h0[1]'")
-    } else {
-      h0f <- checkit(h0[1],"'h0[1]'")
-      h0g <- checkit(h0[2],"'h0[2]'")
+    pooled <- suppressWarnings(superimpose(f, g))
+    if (is.null(h0)) 
+      h0 <- OS(pooled, nstar = sqrt(f$n * g$n))
+    if (length(h0) == 1) {
+      h0f <- h0g <- checkit(h0[1], "'h0[1]'")
     }
-    
-    if(!adapt){
-      if(verbose) message("Estimating case and control densities...", appendLF=FALSE)
-      fd <- bivariate.density(f,h0=h0f,adapt=FALSE,...)
-      gd <- bivariate.density(g,h0=h0g,adapt=FALSE,...)
-      if(verbose) message("Done.")
-    } else {
+    else {
+      h0f <- checkit(h0[1], "'h0[1]'")
+      h0g <- checkit(h0[2], "'h0[2]'")
+    }
+    if (!adapt) {
+      if (verbose) 
+        message("Estimating case and control densities...", 
+                appendLF = FALSE)
       
-      if(is.null(hp)) hp <- c(h0f,h0g)
+      fd <- bivariate.density(f, h0 = h0f, adapt = FALSE, ...)
+      gd <- bivariate.density(g, h0 = h0g, adapt = FALSE, ...)
       
-      if(length(hp)==1){
-        hfp <- hgp <- checkit(hp[1],"'hp[1]'")
-      } else {
-        hfp <- checkit(hp[1],"'hp[1]'")
-        hgp <- checkit(hp[2],"'hp[2]'")
+      if(shrink){
+        if(h0f != h0g) stop("common case-control bandwidth required when employing shrinkage")
+        
+        h <- c(h0f,h0g)
+        
+        X1 <- fd$pp
+        X2 <- gd$pp
+        n1 <- npoints(X1)
+        n2 <- npoints(X2)
+        
+        if (shrink.type=="lasso"){
+          if (is.na(lambda)) lambda <- cv.RelRisk(X1,X2,h=h)$lambda
+          case1 <- (fd$z-lambda/(n1*2*pi*h[1]^2))/(gd$z+lambda/(n2*2*pi*h[2]^2))
+          case2 <- (fd$z+lambda/(n1*2*pi*h[1]^2))/(gd$z-lambda/(n2*2*pi*h[2]^2))
+          logRR <- case1*0
+          logRR[case1 > 1] <- log(case1[case1 > 1])
+          logRR[1/case2 > 1] <- log(case2[1/case2 > 1])
+          if (shrink.rescale) logRR <- logRR - log(integral(exp(logRR)*gd$z)) #+log(n2)
+        } else if (shrink.type=="Bithell"){
+          if (is.na(lambda)) lambda <- cv.RelRisk.Bithell(X1,X2,h=h)$lambda
+          logRR <- log(fd$z+lambda/(n1*2*pi*h[1]^2)) - log(gd$z + lambda/(n1*2*pi*h[1]^2))
+        } else {
+          stop("invalid shrinkage type")
+        }
       }
       
+      if (verbose) 
+        message("Done.")
       
-      # ##  Problematic doing symmetry by pixel images---trimming calculations inconsistent. ## #
-      # pilotdata <- switch(pilot.symmetry,none=1,f=f,g=g,pooled=pooled,NA)
-      # if(any(is.na(pilotdata))) stop("invalid 'pilot.symmetry' argument")
-      # if(verbose) message("Estimating pilot(s)...", appendLF=FALSE)
-      # if(pilot.symmetry=="none"){
-      #   fp <- bivariate.density(f,h0=hfp,adapt=FALSE,...)
-      #   gp <- bivariate.density(g,h0=hgp,adapt=FALSE,...)
-      #   fgeo <- log(posifybivden(safelookup(fp$z,f,warn=FALSE))^(-0.5))
-      #   ggeo <- log(posifybivden(safelookup(gp$z,g,warn=FALSE))^(-0.5))
-      #   gam <- exp(npoints(pooled)^(-1)*(sum(fgeo)+sum(ggeo)))
-      # } else {
-      #   fp <- gp <- bivariate.density(pilotdata,h0=hfp[1],adapt=FALSE,...)
-      #   gam <- exp(mean(log(posifybivden(safelookup(fp$z,pilotdata,warn=FALSE))^(-0.5))))
-      # }
-      # if(verbose) message("Done.")
-      
-      # Deferring to raw data symmetry below
+    } # adaptive estimator here, still ppp
+    else {
+      if (is.null(hp)) 
+        hp <- c(h0f, h0g)
+      if (length(hp) == 1) {
+        hfp <- hgp <- checkit(hp[1], "'hp[1]'")
+      }
+      else {
+        hfp <- checkit(hp[1], "'hp[1]'")
+        hgp <- checkit(hp[2], "'hp[2]'")
+      }
       pilot.symmetry <- pilot.symmetry[1]
       pdat <- list()
-      if(pilot.symmetry=="none"){
+      if (pilot.symmetry == "none") {
         pdat[[1]] <- f
         pdat[[2]] <- g
-      } else if(pilot.symmetry=="f"){
+      }
+      else if (pilot.symmetry == "f") {
         pdat[[1]] <- pdat[[2]] <- f
-      } else if(pilot.symmetry=="g"){
+      }
+      else if (pilot.symmetry == "g") {
         pdat[[1]] <- pdat[[2]] <- g
-      } else if(pilot.symmetry=="pooled"){
+      }
+      else if (pilot.symmetry == "pooled") {
         pdat[[1]] <- pdat[[2]] <- pooled
-      } else {
+      }
+      else {
         stop("invalid 'pilot.symmetry' argument")
       }
-      
-      if(verbose) message("Estimating case density...", appendLF=FALSE)
-      fd <- bivariate.density(f,h0=h0f,hp=hfp,adapt=TRUE,pilot.density=pdat[[1]],verbose=FALSE,...) #gamma.scale=gam,
-      if(verbose) message("Done.\nEstimating control density...", appendLF=FALSE)
-      gd <- bivariate.density(g,h0=h0g,hp=hgp,adapt=TRUE,pilot.density=pdat[[2]],verbose=FALSE,...) #gamma.scale=gam,
-      if(verbose) message("Done.")
+      if (verbose) 
+        message("Estimating case density...", appendLF = FALSE)
+      fd <- bivariate.density(f, h0 = h0f, hp = hfp, adapt = TRUE, 
+                              pilot.density = pdat[[1]], verbose = FALSE, ...)
+      if (verbose) 
+        message("Done.\nEstimating control density...", 
+                appendLF = FALSE)
+      gd <- bivariate.density(g, h0 = h0g, hp = hgp, adapt = TRUE, 
+                              pilot.density = pdat[[2]], verbose = FALSE, ...)
+      if (verbose) 
+        message("Done.")
     }
-  } else {
-    if(!compatible(f$z,g$z)) stop("incompatible images in 'f' and 'g'... kernel estimates must be evaluated on identical domains")
+  }
+  else { ##here bivden
+    if (!compatible(f$z, g$z)) 
+      stop("incompatible images in 'f' and 'g'... kernel estimates must be evaluated on identical domains")
     fd <- f
     gd <- g
-    fda <- is.na(fd$gamma)||is.na(fd$geometric)
-    gda <- is.na(gd$gamma)||is.na(gd$geometric)
-    adapt <- switch(as.character(fda+gda),"0"=TRUE,"2"=FALSE,NA)
-    if(is.na(adapt)) stop("'f' and 'g' smoothed differently... must both be either fixed or adaptive")
+    fda <- is.na(fd$gamma) || is.na(fd$geometric)
+    gda <- is.na(gd$gamma) || is.na(gd$geometric)
+    adapt <- switch(as.character(fda + gda), `0` = TRUE, 
+                    `2` = FALSE, NA)
+    if (is.na(adapt)) 
+      stop("'f' and 'g' smoothed differently... must both be either fixed or adaptive")
+    
+    if(shrink){
+      if(!is.na(f$gamma)||!is.na(g$gamma)) stop("shrinkage only implemented for fixed bandwidth estimates")
+      h0f <- fd$h0
+      h0g <- gd$h0
+      if(f$h0!=g$h0) stop("common case-control bandwidth required when employing shrinkage")
+      
+      h <- c(h0f,h0g)
+      X1 <- fd$pp
+      X2 <- gd$pp
+      n1 <- npoints(X1)
+      n2 <- npoints(X2)
+      
+      if (shrink.type=="lasso"){
+        if (is.na(lambda)) lambda <- cv.RelRisk(X1,X2,h=h)$lambda
+        case1 <- (fd$z-lambda/(n1*2*pi*h[1]^2))/(gd$z+lambda/(n2*2*pi*h[2]^2))
+        case2 <- (fd$z+lambda/(n1*2*pi*h[1]^2))/(gd$z-lambda/(n2*2*pi*h[2]^2))
+        logRR <- case1*0
+        logRR[case1 > 1] <- log(case1[case1 > 1])
+        logRR[1/case2 > 1] <- log(case2[1/case2 > 1])
+        if (shrink.rescale) logRR <- logRR - log(integral(exp(logRR)*gd$z))#+log(n2)
+      } else if (shrink.type=="Bithell"){
+        if (is.na(lambda)) lambda <- cv.RelRisk.Bithell(X1,X2,h=h)$lambda
+        logRR <- log(fd$z+lambda/(n1*2*pi*h[1]^2)) - log(gd$z + lambda/(n1*2*pi*h[1]^2))
+      } else {
+        stop("invalid shrinkage type")
+      }
+    }
   }
   
-  eg <- epsi*max(gd$z)
-  #rr <- (fd$z+eg)/(gd$z+eg)
-  #if(log) rr <- log(rr)
+  ## here final risk
+  if (!shrink){
+    eg <- epsi * max(gd$z)
+    if (log) suppressWarnings(rr <- log(fd$z + eg) - log(gd$z + eg))
+    else rr <- (fd$z + eg)/(gd$z + eg)
+  } else {
+    if (log) rr <- logRR
+    else rr <- exp(logRR)
+    #       fd <- list(z=f1,h0=h0,hp=NA,h=NA,him=NA,q=NA,gamma=NA,geometric=NA,pp=X1)
+    # 	    gd <- list(z=f2,h0=h0,hp=NA,h=NA,him=NA,q=NA,gamma=NA,geometric=NA,pp=X2)
+    # 	    class(fd) <- class(gd) <- "bivden"
+  }
   
-  if(log) suppressWarnings(rr <- log(fd$z+eg) - log(gd$z+eg))
-  else rr <- (fd$z+eg)/(gd$z+eg)
+  
+  if(tolerate & shrink) warning("tolerance contours not computed when 'shrink=TRUE'")
   
   ps <- NULL
-  if(tolerate){
-    if(verbose) message("Calculating tolerance contours...", appendLF=FALSE)
-    if(adapt) ps <- tol.asy.ada(fd,gd,0.025,verbose=FALSE)$p
-    else ps <- tol.asy.fix(fd,gd,gd,verbose=FALSE)$p
-    if(verbose) message("Done.")
+  if (tolerate & !shrink) {
+    if (verbose) 
+      message("Calculating tolerance contours...", 
+              appendLF = FALSE)
+    if (adapt) 
+      ps <- tol.asy.ada(fd, gd, 0.025, verbose = FALSE)$p
+    else ps <- tol.asy.fix(fd, gd, gd, verbose = FALSE)$p
+    if (verbose) 
+      message("Done.")
   }
-  
-  if(doplot){
-    plot.im(rr,main="",box=FALSE,ribargs=list(box=TRUE))
+  if (doplot) {
+    plot.im(rr, main = "", box = FALSE, ribargs = list(box = TRUE))
     axis(1)
     axis(2)
-    box(bty="l")
-    plot(Window(fd$pp),add=TRUE)
-    if(!is.null(ps)) contour(fd$z$xcol,fd$z$yrow,t(as.matrix(ps)),levels=0.05,add=TRUE)
+    box(bty = "l")
+    plot(Window(fd$pp), add = TRUE)
+    if (!is.null(ps)) 
+      contour(fd$z$xcol, fd$z$yrow, t(as.matrix(ps)), levels = 0.05, 
+              add = TRUE)
     return(invisible(NULL))
   }
-  
-  result <- list(rr=rr,f=fd,g=gd,P=ps)
+  result <- list(rr = rr, f = fd, g = gd, P = ps)
   class(result) <- "rrs"
-  
   return(result)
 }
