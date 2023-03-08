@@ -18,7 +18,7 @@ kernel density estimates."><!-- mathjax --><script src="https://cdnjs.cloudflare
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sparr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.2-17</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.3-10</span>
       </span>
     </div>
 
@@ -78,6 +78,8 @@ kernel density estimates.</p>
 <span>  h0 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  hp <span class="op">=</span> <span class="va">h0</span>,</span>
 <span>  adapt <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  shrink <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  shrink.args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>rescale <span class="op">=</span> <span class="cn">TRUE</span>, type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lasso"</span>, <span class="st">"Bithell"</span><span class="op">)</span>, lambda <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span>,</span>
 <span>  tolerate <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  doplot <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  pilot.symmetry <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"f"</span>, <span class="st">"g"</span>, <span class="st">"pooled"</span><span class="op">)</span>,</span>
@@ -131,6 +133,21 @@ densities for adaptive risk surfaces. Ignored if <code>adapt = FALSE</code> or i
 <dd><p>A logical value indicating whether to employ adaptive smoothing
 for internally estimating the densities. Ignored if <code>f</code> and <code>g</code>
 are already <code><a href="bivariate.density.html">bivden</a></code> objects.</p></dd>
+
+
+<dt>shrink</dt>
+<dd><p>A logical value indicating whether to compute the shrinkage estimator
+of Hazelton (2023). This is only possible for <code>adapt=FALSE</code>.</p></dd>
+
+
+<dt>shrink.args</dt>
+<dd><p>A named list of optional arguments controlling the shrinkage estimator.
+Possible entries are <code>rescale</code> (a logical value indicating whether to integrate
+to one with respect to the control distribution over the window); <code>type</code> 
+(a character string stipulating the shrinkage methodology to be used, either the
+default <code>"lasso"</code> or the alternative <code>"Bithell"</code>); and <code>lambda</code>
+(a non-negative numeric value determining the degree of shrinkage towards uniform
+relative risk---when set to its default <code>NA</code>, it is selected via cross-validation).</p></dd>
 
 
 <dt>tolerate</dt>
@@ -209,7 +226,8 @@ epsilon*max(gd))</code>, <br><br> where <code>fd</code> and <code>gd</code> deno
 control density estimates respectively. Note the (optional) additive
 constants defined by <code>epsilon</code> times the maximum of each of the
 densities in the numerator and denominator respectively (see Bowman and
-Azzalini, 1997).</p>
+Azzalini, 1997). A more recent shrinkage estimator developed by Hazelton (2023)
+is also implemented.</p>
 <p>The log-risk function <em>rho</em>, given by <em>rho</em> = log[<em>r</em>], is
 argued to be preferable in practice as it imparts a sense of symmetry in the
 way the case and control densities are treated (Kelsall and Diggle,
@@ -256,6 +274,8 @@ relative risk function, <em>Computational Statistics &amp; Data Analysis</em>,
 <p>Diggle, P.J. (1985), A kernel method for smoothing
 point process data, <em>Journal of the Royal Statistical Society Series
 C</em>, <b>34</b>(2), 138-147.</p>
+<p>Hazelton, M.L. (2023), Shrinkage estimators of the spatial relative
+risk function, <em>Submitted for publication</em>.</p>
 <p>Hazelton, M.L. and Davies, T.M. (2009),
 Inference based on kernel estimates of the relative risk function in
 geographical epidemiology, <em>Biometrical Journal</em>, <b>51</b>(1),
@@ -279,15 +299,20 @@ relative risk, <em>Statistics in Medicine</em>, <b>14</b>, 2335-2342.</p>
 <span class="r-in"><span><span class="va">pbccon</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="va">pbc</span><span class="op">)</span><span class="op">$</span><span class="va">control</span></span></span>
 <span class="r-in"><span><span class="va">h0</span> <span class="op">&lt;-</span> <span class="fu"><a href="OS.html">OS</a></span><span class="op">(</span><span class="va">pbc</span>,nstar<span class="op">=</span><span class="st">"geometric"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Fixed </span></span></span>
+<span class="r-in"><span><span class="co"># Fixed (with tolerance contours)</span></span></span>
 <span class="r-in"><span><span class="va">pbcrr1</span> <span class="op">&lt;-</span> <span class="fu">risk</span><span class="op">(</span><span class="va">pbccas</span>,<span class="va">pbccon</span>,h0<span class="op">=</span><span class="va">h0</span>,tolerate<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Estimating case and control densities...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Done.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Calculating tolerance contours...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Done.</span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Fixed shrinkage</span></span></span>
+<span class="r-in"><span><span class="va">pbcrr2</span> <span class="op">&lt;-</span> <span class="fu">risk</span><span class="op">(</span><span class="va">pbccas</span>,<span class="va">pbccon</span>,h0<span class="op">=</span><span class="va">h0</span>,shrink<span class="op">=</span><span class="cn">TRUE</span>,shrink.args<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>lambda<span class="op">=</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Estimating case and control densities...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Done.</span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Asymmetric adaptive</span></span></span>
-<span class="r-in"><span><span class="va">pbcrr2</span> <span class="op">&lt;-</span> <span class="fu">risk</span><span class="op">(</span><span class="va">pbccas</span>,<span class="va">pbccon</span>,h0<span class="op">=</span><span class="va">h0</span>,adapt<span class="op">=</span><span class="cn">TRUE</span>,hp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="OS.html">OS</a></span><span class="op">(</span><span class="va">pbccas</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span>,<span class="fu"><a href="OS.html">OS</a></span><span class="op">(</span><span class="va">pbccon</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span><span class="va">pbcrr3</span> <span class="op">&lt;-</span> <span class="fu">risk</span><span class="op">(</span><span class="va">pbccas</span>,<span class="va">pbccon</span>,h0<span class="op">=</span><span class="va">h0</span>,adapt<span class="op">=</span><span class="cn">TRUE</span>,hp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="OS.html">OS</a></span><span class="op">(</span><span class="va">pbccas</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span>,<span class="fu"><a href="OS.html">OS</a></span><span class="op">(</span><span class="va">pbccon</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>               tolerate<span class="op">=</span><span class="cn">TRUE</span>,davies.baddeley<span class="op">=</span><span class="fl">0.05</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Estimating case density...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Done.</span>
@@ -297,7 +322,7 @@ relative risk, <em>Statistics in Medicine</em>, <b>14</b>, 2335-2342.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Done.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Symmetric (pooled) adaptive</span></span></span>
-<span class="r-in"><span><span class="va">pbcrr3</span> <span class="op">&lt;-</span> <span class="fu">risk</span><span class="op">(</span><span class="va">pbccas</span>,<span class="va">pbccon</span>,h0<span class="op">=</span><span class="va">h0</span>,adapt<span class="op">=</span><span class="cn">TRUE</span>,tolerate<span class="op">=</span><span class="cn">TRUE</span>,hp<span class="op">=</span><span class="fu"><a href="OS.html">OS</a></span><span class="op">(</span><span class="va">pbc</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span>,</span></span>
+<span class="r-in"><span><span class="va">pbcrr4</span> <span class="op">&lt;-</span> <span class="fu">risk</span><span class="op">(</span><span class="va">pbccas</span>,<span class="va">pbccon</span>,h0<span class="op">=</span><span class="va">h0</span>,adapt<span class="op">=</span><span class="cn">TRUE</span>,tolerate<span class="op">=</span><span class="cn">TRUE</span>,hp<span class="op">=</span><span class="fu"><a href="OS.html">OS</a></span><span class="op">(</span><span class="va">pbc</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span>,</span></span>
 <span class="r-in"><span>               pilot.symmetry<span class="op">=</span><span class="st">"pooled"</span>,davies.baddeley<span class="op">=</span><span class="fl">0.05</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Estimating case density...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Done.</span>
@@ -311,13 +336,13 @@ relative risk, <em>Statistics in Medicine</em>, <b>14</b>, 2335-2342.</p>
 <span class="r-in"><span>                       edge<span class="op">=</span><span class="st">"diggle"</span>,davies.baddeley<span class="op">=</span><span class="fl">0.05</span>,verbose<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span> </span></span>
 <span class="r-in"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="bivariate.density.html">bivariate.density</a></span><span class="op">(</span><span class="va">pbccon</span>,h0<span class="op">=</span><span class="va">h0</span>,hp<span class="op">=</span><span class="fl">2</span>,adapt<span class="op">=</span><span class="cn">TRUE</span>,pilot.density<span class="op">=</span><span class="va">pbccas</span>,</span></span>
 <span class="r-in"><span>                       edge<span class="op">=</span><span class="st">"diggle"</span>,davies.baddeley<span class="op">=</span><span class="fl">0.05</span>,verbose<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">pbcrr4</span> <span class="op">&lt;-</span> <span class="fu">risk</span><span class="op">(</span><span class="va">f</span>,<span class="va">g</span>,tolerate<span class="op">=</span><span class="cn">TRUE</span>,verbose<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pbcrr5</span> <span class="op">&lt;-</span> <span class="fu">risk</span><span class="op">(</span><span class="va">f</span>,<span class="va">g</span>,tolerate<span class="op">=</span><span class="cn">TRUE</span>,verbose<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pbcrr1</span>,override.par<span class="op">=</span><span class="cn">FALSE</span>,main<span class="op">=</span><span class="st">"Fixed"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pbcrr2</span>,override.par<span class="op">=</span><span class="cn">FALSE</span>,main<span class="op">=</span><span class="st">"Asymmetric adaptive"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pbcrr3</span>,override.par<span class="op">=</span><span class="cn">FALSE</span>,main<span class="op">=</span><span class="st">"Symmetric (pooled) adaptive"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pbcrr4</span>,override.par<span class="op">=</span><span class="cn">FALSE</span>,main<span class="op">=</span><span class="st">"Symmetric (case) adaptive"</span><span class="op">)</span> </span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pbcrr2</span>,override.par<span class="op">=</span><span class="cn">FALSE</span>,main<span class="op">=</span><span class="st">"Fixed shrinkage"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pbcrr3</span>,override.par<span class="op">=</span><span class="cn">FALSE</span>,main<span class="op">=</span><span class="st">"Asymmetric adaptive"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pbcrr4</span>,override.par<span class="op">=</span><span class="cn">FALSE</span>,main<span class="op">=</span><span class="st">"Symmetric (pooled) adaptive"</span><span class="op">)</span> </span></span>
 <span class="r-plt img"><img src="risk-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
@@ -334,7 +359,7 @@ relative risk, <em>Statistics in Medicine</em>, <b>14</b>, 2335-2342.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

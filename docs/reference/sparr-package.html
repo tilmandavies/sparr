@@ -18,7 +18,7 @@ risk surfaces via the density-ratio method and perform subsequent inference. Fix
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sparr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.2-17</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.3-10</span>
       </span>
     </div>
 
@@ -74,7 +74,7 @@ risk surfaces via the density-ratio method and perform subsequent inference. Fix
     <div id="details">
     <h2>Details</h2>
     
-<table class="table table"><tr><td>Package:</td><td>sparr</td></tr><tr><td>Date:</td><td>2022-11-09</td></tr><tr><td>Version:</td><td>2.2-17</td></tr><tr><td>License:</td><td>GPL (&gt;= 2)</td></tr></table><p>Kernel smoothing, and the
+<table class="table table"><tr><td>Package:</td><td>sparr</td></tr><tr><td>Date:</td><td>2023-03-08</td></tr><tr><td>Version:</td><td>2.3-10</td></tr><tr><td>License:</td><td>GPL (&gt;= 2)</td></tr></table><p>Kernel smoothing, and the
 flexibility afforded by this methodology, provides an attractive approach to
 estimating complex probability density functions.</p>
 <p>The <em>spatial relative risk function</em>, constructed as a ratio of estimated case
@@ -82,7 +82,7 @@ to control densities (Bithell, 1990; 1991; Kelsall and Diggle, 1995a,b), describ
 `risk' of the disease, given the underlying at-risk population. This is a
 technique that has been applied successfully for mainly exploratory purposes
 in a number of different analyses (see for example Sabel et al., 2000;
-Prince et al., 2001; Wheeler, 2007). It has also grown in popularity in very
+Prince et al., 2001; Wheeler, 2007, Elson et al., 2021). It has also grown in popularity in very
 different fields that pose similarly styled research questions, such as ecology
 (e.g. Campos and Fedigan, 2014); physiology (Davies et al., 2013); and archaeology
 (e.g. Bevan, 2012; Smith et al. 2015).</p>
@@ -145,7 +145,7 @@ estimates for multiple global bandwidths as per Davies and Baddeley
 <p><code><a href="multiscale.slice.html">multiscale.slice</a></code> a single adaptive kernel estimate
 based on taking a slice from a multi-scale estimate.</p>
 <p><code><a href="risk.html">risk</a></code> estimation of a (log) spatial relative risk function, either from data or
-pre-existing bivariate density estimates; fixed (Kelsall and Diggle, 1995a) or both asymmetric (Davies and Hazelton, 2010) and symmetric (Davies et al., 2016) adaptive estimates are possible.</p>
+pre-existing bivariate density estimates; fixed (Kelsall and Diggle, 1995a); fixed with shrinkage (Hazelton, 2023); or both asymmetric (Davies and Hazelton, 2010) and symmetric (Davies et al., 2016) adaptive estimates are possible.</p>
 <p><code><a href="tolerance.html">tolerance</a></code>
 calculation of asymptotic or Monte-Carlo <em>p</em>-value surfaces.</p>
 <p><em>Visualisation</em></p>
@@ -250,10 +250,13 @@ Software</em> <b>39</b>(1), 1-14.</p>
 (2016), Symmetric adaptive smoothing regimens for estimation of the spatial
 relative risk function, <em>Computational Statistics &amp; Data Analysis</em>,
 <b>101</b>, 12-28.</p>
+<p>Elson, R., Davies, T. M., Lake, I. R., Vivancos, R., Blomquist, P. B., Charlett, A. and Dabrera, G. (2021), The spatio-temporal distribution of COVID-19 infection in England between January and June 2020, <em>Epidemiology \&amp; Infection</em>, <b>149</b>, e73.</p>
 <p>Fernando, W.T.P.S. and Hazelton, M.L. (2014), Generalizing the spatial relative risk function, <em>Spatial and Spatio-temporal Epidemiology</em>, <b>8</b>, 1-10.</p>
 <p>Hazelton, M.L. (2008), Letter to the editor: Kernel
 estimation of risk surfaces without the need for edge correction,
 <em>Statistics in Medicine</em>, <b>27</b>, 2269-2272.</p>
+<p>Hazelton, M.L. (2023), Shrinkage estimators of the spatial relative
+risk function, <em>Submitted for publication</em>.</p>
 <p>Hazelton, M.L. and
 Davies, T.M. (2009), Inference based on kernel estimates of the relative
 risk function in geographical epidemiology, <em>Biometrical Journal</em>,
@@ -306,7 +309,7 @@ J.C. Marshall<br><em>Institute of Fundamantal Sciences, Massey University, Palme
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
