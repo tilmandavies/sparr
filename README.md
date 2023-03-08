@@ -35,10 +35,20 @@ cirrhosis cases from north east England.
 library(sparr)
 #> Loading required package: spatstat
 #> Loading required package: spatstat.data
+#> Loading required package: spatstat.geom
+#> spatstat.geom 3.0-5
+#> Loading required package: spatstat.random
+#> spatstat.random 3.1-3
+#> Loading required package: spatstat.explore
 #> Loading required package: nlme
+#> spatstat.explore 3.0-6
+#> Loading required package: spatstat.model
 #> Loading required package: rpart
+#> spatstat.model 3.1-2
+#> Loading required package: spatstat.linnet
+#> spatstat.linnet 3.0-4
 #> 
-#> spatstat 1.57-1.004       (nickname: 'Chocolate Teapot') 
+#> spatstat 3.0-3 
 #> For an introduction to spatstat, type 'beginner'
 #> 
 #> 
@@ -47,7 +57,7 @@ library(sparr)
 #>   / ___// _ \/ _  \/ __ \/ __ \        
 #>   \__ \/ ___/ __  /  ___/  ___/        
 #>  ___/ / /  / / / / /\ \/ /\ \          
-#> /____/_/  /_/ /_/_/  \__/  \_\   v2.2-13
+#> /____/_/  /_/ /_/_/  \__/  \_\   v2.3-10
 #> 
 #> - type news(package="sparr") for an overview
 #> - type help("sparr") for documentation
