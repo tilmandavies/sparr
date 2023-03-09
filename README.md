@@ -36,7 +36,7 @@ library(sparr)
 #> Loading required package: spatstat
 #> Loading required package: spatstat.data
 #> Loading required package: spatstat.geom
-#> spatstat.geom 3.0-5
+#> spatstat.geom 3.0-6
 #> Loading required package: spatstat.random
 #> spatstat.random 3.1-3
 #> Loading required package: spatstat.explore
@@ -44,9 +44,9 @@ library(sparr)
 #> spatstat.explore 3.0-6
 #> Loading required package: spatstat.model
 #> Loading required package: rpart
-#> spatstat.model 3.1-2
+#> spatstat.model 3.2-1
 #> Loading required package: spatstat.linnet
-#> spatstat.linnet 3.0-4
+#> spatstat.linnet 3.0-6
 #> 
 #> spatstat 3.0-3 
 #> For an introduction to spatstat, type 'beginner'

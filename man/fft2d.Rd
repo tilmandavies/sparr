@@ -4,7 +4,7 @@
 \alias{fft2d}
 \title{2D fast-Fourier wrapper around 'fftwtools' or 'stats' package}
 \usage{
-fft2d(x, inverse = FALSE, fftw = sparr::fftw_available())
+fft2d(x, inverse = FALSE, fftw = fftw_available())
 }
 \arguments{
 \item{x}{A numeric matrix to be transformed.}

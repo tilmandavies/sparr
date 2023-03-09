@@ -28,7 +28,7 @@
 #' }
 #' 
 #' @export
-fft2d <- function(x, inverse=FALSE, fftw = sparr::fftw_available()) {
+fft2d <- function(x, inverse=FALSE, fftw = fftw_available()) {
   if (fftw) {
     fftwtools::fftw2d(data=x, inverse=inverse)
   } else {

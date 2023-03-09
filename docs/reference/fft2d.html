@@ -71,7 +71,7 @@ package if available, else reverts to built-in functionality</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fft2d</span><span class="op">(</span><span class="va">x</span>, inverse <span class="op">=</span> <span class="cn">FALSE</span>, fftw <span class="op">=</span> <span class="fu">sparr</span><span class="fu">::</span><span class="fu">fftw_available</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fft2d</span><span class="op">(</span><span class="va">x</span>, inverse <span class="op">=</span> <span class="cn">FALSE</span>, fftw <span class="op">=</span> <span class="fu">fftw_available</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -117,10 +117,10 @@ defer to the built-in <code><a href="https://rdrr.io/r/stats/fft.html" class="ex
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/fft.html" class="external-link">fft</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2000</span><span class="op">^</span><span class="fl">2</span>,<span class="fl">2000</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    user  system elapsed </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   0.440   0.002   0.443 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0.459   0.000   0.461 </span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="fu">fft2d</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2000</span><span class="op">^</span><span class="fl">2</span>,<span class="fl">2000</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> 'fftw_available' is not an exported object from 'namespace:sparr'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Timing stopped at: 0 0 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    user  system elapsed </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0.603   0.015   0.636 </span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
