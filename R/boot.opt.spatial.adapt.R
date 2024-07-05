@@ -9,7 +9,7 @@ boot.opt.spatial.adapt <- function(pp,h0ref,h0fac,hp,edg,refden,N,B,res,dimz,ver
       h0seq <- seq(tempadapt$h0range[1],tempadapt$h0range[2],length=B)
       for(j in 1:B){
         bj <- multiscale.slice(tempadapt,h0seq[j])
-        isemat[i,j] <- integral((bj$z-refden)^2)
+        isemat[i,j] <- spatstat.univar::integral((bj$z-refden)^2)
       }
       if(verbose) setTxtProgressBar(pb,i)
     }
@@ -30,7 +30,7 @@ boot.opt.spatial.adapt <- function(pp,h0ref,h0fac,hp,edg,refden,N,B,res,dimz,ver
       isevec <- rep(NA,B)
       for(j in 1:B){
         bj <- multiscale.slice(tempadapt,h0seq[j])
-        isevec[j] <- integral((bj$z-refden)^2)
+        isevec[j] <- spatstat.univar::integral((bj$z-refden)^2)
       }
       return(rbind(isevec,h0seq))
     }

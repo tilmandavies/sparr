@@ -59,7 +59,7 @@ spattemp.risk <- function(f,g,log=TRUE,tolerate=FALSE,finiteness=TRUE,verbose=TR
     gse <- is.null(g$q)
     if(fse!=gse) stop("edge-correction for 'f' and 'g' must be consistent")
     
-    g$z <- g$z/integral(g$z)
+    g$z <- g$z/spatstat.univar::integral(g$z)
     
     # if(positive){
     #   fres <- lapply(fres,posifybivden)

@@ -79,7 +79,7 @@ adens <- function(x,bwim,bwpts,resolution,edge,diggle,weights,intensity,hstep,qs
   result <- im(result,xcol=WM$xcol,yrow=WM$yrow)
 
   if(edge && !diggle) result <- result/edg
-  if(!intensity) result <- result/integral(result)
+  if(!intensity) result <- result/spatstat.univar::integral(result)
   
   return(list(result=result,rlist=resultlist,edg=edg))
 }

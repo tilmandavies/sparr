@@ -34,10 +34,11 @@ have been jittered and randomly thinned by an unspecified amount to preserve ano
 data(fmd)
 summary(fmd$cases)
 summary(fmd$controls)
- 
-par(mfrow=c(1,2))
+
+oldpar <- par(mfrow=c(1,2))
 plot(fmd$cases)
 plot(fmd$controls)
+par(oldpar)
 
 }
 \references{

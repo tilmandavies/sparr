@@ -186,11 +186,12 @@
 #'                        edge="diggle",davies.baddeley=0.05,verbose=FALSE)
 #' pbcrr5 <- risk(f,g,tolerate=TRUE,verbose=FALSE)
 #' 
-#' par(mfrow=c(2,2))
+#' oldpar <- par(mfrow=c(2,2))
 #' plot(pbcrr1,override.par=FALSE,main="Fixed")
 #' plot(pbcrr2,override.par=FALSE,main="Fixed shrinkage")
 #' plot(pbcrr3,override.par=FALSE,main="Asymmetric adaptive")
 #' plot(pbcrr4,override.par=FALSE,main="Symmetric (pooled) adaptive") 
+#' par(oldpar)
 #' 
 #' @export
 risk <- function (f, g = NULL, log = TRUE, h0 = NULL, hp = h0, adapt = FALSE, shrink = FALSE, shrink.args = list(rescale = TRUE, type = c("lasso", "Bithell"), lambda = NA),
@@ -278,7 +279,7 @@ risk <- function (f, g = NULL, log = TRUE, h0 = NULL, hp = h0, adapt = FALSE, sh
           logRR <- case1*0
           logRR[case1 > 1] <- log(case1[case1 > 1])
           logRR[1/case2 > 1] <- log(case2[1/case2 > 1])
-          if (shrink.rescale) logRR <- logRR - log(integral(exp(logRR)*gd$z)) #+log(n2)
+          if (shrink.rescale) logRR <- logRR - log(spatstat.univar::integral(exp(logRR)*gd$z)) #+log(n2)
         } else if (shrink.type=="Bithell"){
           if (is.na(lambda)) lambda <- cv.RelRisk.Bithell(X1,X2,h=h)$lambda
           logRR <- log(fd$z+lambda/(n1*2*pi*h[1]^2)) - log(gd$z + lambda/(n1*2*pi*h[1]^2))
@@ -363,7 +364,7 @@ risk <- function (f, g = NULL, log = TRUE, h0 = NULL, hp = h0, adapt = FALSE, sh
         logRR <- case1*0
         logRR[case1 > 1] <- log(case1[case1 > 1])
         logRR[1/case2 > 1] <- log(case2[1/case2 > 1])
-        if (shrink.rescale) logRR <- logRR - log(integral(exp(logRR)*gd$z))#+log(n2)
+        if (shrink.rescale) logRR <- logRR - log(spatstat.univar::integral(exp(logRR)*gd$z))#+log(n2)
       } else if (shrink.type=="Bithell"){
         if (is.na(lambda)) lambda <- cv.RelRisk.Bithell(X1,X2,h=h)$lambda
         logRR <- log(fd$z+lambda/(n1*2*pi*h[1]^2)) - log(gd$z + lambda/(n1*2*pi*h[1]^2))

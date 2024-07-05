@@ -1,18 +1,19 @@
 Package: sparr
 Type: Package
 Title: Spatial and Spatiotemporal Relative Risk
-Version: 2.3-10
-Date: 2023-03-08
+Version: 2.3-14
+Date: 2024-07-05
 Authors@R: c(
   person(c("Tilman", "M."), "Davies", role = c("aut", "cre"), email = "tilman.davies@otago.ac.nz"),
   person(c("Jonathan", "C."), "Marshall", role = c("aut"), email = "j.c.marshall@massey.ac.nz"))
 Description: Provides functions to estimate kernel-smoothed spatial and spatio-temporal densities and relative risk functions, and perform subsequent inference. Methodological details can be found in the accompanying tutorial: Davies et al. (2018) <DOI:10.1002/sim.7577>.
 Depends: R (>= 2.10.1), spatstat (>= 2.3-0)
-Imports: spatstat.utils, spatstat.geom, spatstat.explore, spatstat.random, doParallel, parallel, foreach, misc3d
+Imports: spatstat.utils, spatstat.geom, spatstat.explore, spatstat.random, spatstat.univar, doParallel, parallel, foreach, misc3d
 Suggests: fftwtools (>= 0.9.8)
 License: GPL (>= 2)
 LazyLoad: yes
 NeedsCompilation: no
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 URL: https://tilmandavies.github.io/sparr/, https://github.com/tilmandavies/sparr/
 BugReports: https://github.com/tilmandavies/sparr/issues/
+Encoding: UTF-8

@@ -55,11 +55,11 @@ BOOT.density <- function(pp,hlim=NULL,eta=NULL,type=c("fixed","adaptive"),hp=NUL
       if(edg){
         d.eta$edg[d.eta$edg>1] <- 1
         d.etadens <- d.eta$raw/d.eta$edg
-        d.etaint <- integral(d.etadens)
+        d.etaint <- spatstat.univar::integral(d.etadens)
         d.etadens <- as.matrix(d.etadens)[inn]/d.etaint
         epsilon.eta <- safelookup(d.eta$edg,pp,warn=FALSE)
       } else {
-        d.etadens <- as.matrix(d.eta$raw/integral(d.eta$raw))[inn]
+        d.etadens <- as.matrix(d.eta$raw/spatstat.univar::integral(d.eta$raw))[inn]
         epsilon.eta <- rep(1,n)
       }
       
@@ -79,7 +79,7 @@ BOOT.density <- function(pp,hlim=NULL,eta=NULL,type=c("fixed","adaptive"),hp=NUL
         epsilon.eta <- safelookup(ref.density$q,pp,warn=FALSE)
       }
       
-      d.etadens <- ref.density$z/integral(ref.density$z)
+      d.etadens <- ref.density$z/spatstat.univar::integral(ref.density$z)
       d.etadens <- as.matrix(d.etadens)[inn]
     }
     
@@ -155,7 +155,7 @@ BOOT.density <- function(pp,hlim=NULL,eta=NULL,type=c("fixed","adaptive"),hp=NUL
       d.eta <- ref.density$z
     }
     
-    d.eta <- d.eta/integral(d.eta)
+    d.eta <- d.eta/spatstat.univar::integral(d.eta)
     
     if(is.null(sim.adapt)) sim.adapt <- list()
     if(is.null(sim.adapt$N)) sim.adapt$N <- 50

@@ -181,11 +181,12 @@ g <- bivariate.density(pbccon,h0=h0,hp=2,adapt=TRUE,pilot.density=pbccas,
                        edge="diggle",davies.baddeley=0.05,verbose=FALSE)
 pbcrr5 <- risk(f,g,tolerate=TRUE,verbose=FALSE)
 
-par(mfrow=c(2,2))
+oldpar <- par(mfrow=c(2,2))
 plot(pbcrr1,override.par=FALSE,main="Fixed")
 plot(pbcrr2,override.par=FALSE,main="Fixed shrinkage")
 plot(pbcrr3,override.par=FALSE,main="Asymmetric adaptive")
 plot(pbcrr4,override.par=FALSE,main="Symmetric (pooled) adaptive") 
+par(oldpar)
 
 }
 \references{

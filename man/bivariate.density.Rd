@@ -227,8 +227,9 @@ chden3 <- bivariate.density(chorley,h0=1.5,hp=1,adapt=TRUE)
 # Adaptive smoothing; uniform edge correction; partitioning approximation
 chden4 <- bivariate.density(chorley,h0=1.5,hp=1,adapt=TRUE,davies.baddeley=0.025)
  
-par(mfrow=c(2,2))
-plot(chden1);plot(chden2);plot(chden3);plot(chden4)  
+oldpar <- par(mfrow=c(2,2))
+plot(chden1);plot(chden2);plot(chden3);plot(chden4)
+par(oldpar)
 }
 
 }

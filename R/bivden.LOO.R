@@ -20,7 +20,7 @@ bivden.LOO <- function(pp,h0,hp,edge,gamma.scale,trim,resolution,parallel,weight
       
       pilot.density <- density(ppmi,sigma=hp,dimyx=rep(resolution,2),edge=edge,positive=FALSE,weights=wi)
       pilot.density.spec <- safelookup(pilot.density,ppmi,warn=FALSE)#density(ppmi,sigma=hp,dimyx=rep(resolution,2),at="points",positive=TRUE,leaveoneout=FALSE)
-      pi.int <- integral(pilot.density)
+      pi.int <- spatstat.univar::integral(pilot.density)
       pilot.density <- pilot.density/pi.int
       pilot.density.spec <- pilot.density.spec/pi.int
       
@@ -58,7 +58,7 @@ bivden.LOO <- function(pp,h0,hp,edge,gamma.scale,trim,resolution,parallel,weight
       
       pilot.density <- density(ppmi,sigma=hp,dimyx=rep(resolution,2),edge=edge,positive=TRUE,weights=wi)
       pilot.density.spec <- safelookup(pilot.density,ppmi,warn=FALSE)#density(ppmi,sigma=hp,dimyx=rep(resolution,2),at="points",positive=TRUE,leaveoneout=FALSE)
-      pi.int <- integral(pilot.density)
+      pi.int <- spatstat.univar::integral(pilot.density)
       pilot.density$v <- pilot.density$v/pi.int
       pilot.density.spec <- pilot.density.spec/pi.int
       

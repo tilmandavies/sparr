@@ -1,3 +1,26 @@
+# sparr 2.3-14
+
+* Further updates to handle new `spatstat` structures
+* Internal formalities updated regarding overriding `par`
+
+# sparr 2.3-12
+
+* Enables unique tolerance contour classifications
+* New function to view unique tolerance contour classification scheme
+
+## Significant user-visible changes
+
+* `tol.classplot`: New function for viewing unique tolerance contour regions
+* `tol.classify`: Expanded capabilities to enable unique tolerance contour classification
+
+# sparr 2.3-11
+
+* New function for classifying case and control points based on tolerance contours
+
+## Significant user-visible changes
+
+* `tol.classify`: New function for tolerance-contour-based classification
+
 # sparr 2.3-10
 
 * Incorporated new shrinkage estimator of spatial relative risk
@@ -8,7 +31,7 @@
 
 # sparr 2.2-17
 
-* Further further updated to handle new `spatstat` structure
+* Further updated to handle new `spatstat` structure
 
 # sparr 2.2-16
 

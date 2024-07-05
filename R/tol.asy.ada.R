@@ -77,7 +77,7 @@ tol.asy.ada <- function(f,g,beta,verbose=FALSE){
       
       gxy <- ht^(-2)*(exp(-0.5*rowSums((cbind(evalxy[,1]-evalxy[i,1],evalxy[,2]-evalxy[i,2])/ht)^2))/(2*pi))
       gxy[notin] <- NA
-      qhz[i] <- integral(im(matrix(gxy,pres,pres,byrow=TRUE),xcol=oo$z$xcol,yrow=oo$z$yrow))
+      qhz[i] <- spatstat.univar::integral(im(matrix(gxy,pres,pres,byrow=TRUE),xcol=oo$z$xcol,yrow=oo$z$yrow))
     }
     if(verbose) cat("Done.\n")
     return(im(matrix(qhz,pres,pres,byrow=TRUE),xcol=oo$z$xcol,yrow=oo$z$yrow))

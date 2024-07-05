@@ -21,7 +21,11 @@ plot.msden <- function(x, what = c("z", "edge", "bw"), sleep = 0.2, override.par
     stop("invalid 'what'")
   }
   
-  if(override.par) par(mfrow=c(1,1),mar=rep(2,4))
+  if(override.par){
+    oldpar <- par(no.readonly = TRUE)
+    on.exit(par(oldpar))
+    par(mfrow=c(1,1),mar=rep(2,4))
+  }
   
   hv <- as.numeric(names(lst))
   for(i in 1:length(lst)){

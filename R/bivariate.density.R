@@ -220,8 +220,9 @@
 #' # Adaptive smoothing; uniform edge correction; partitioning approximation
 #' chden4 <- bivariate.density(chorley,h0=1.5,hp=1,adapt=TRUE,davies.baddeley=0.025)
 #'  
-#' par(mfrow=c(2,2))
-#' plot(chden1);plot(chden2);plot(chden3);plot(chden4)  
+#' oldpar <- par(mfrow=c(2,2))
+#' plot(chden1);plot(chden2);plot(chden3);plot(chden4)
+#' par(oldpar)
 #' }
 #' 
 #' @export
@@ -274,7 +275,7 @@ bivariate.density <- function(pp,h0,hp=NULL,adapt=FALSE,resolution=128,gamma.sca
 		}
 		
 		pilot.density.spec <- safelookup(pilot.density,pp,warn=FALSE)
-		pi.int <- integral(pilot.density)
+		pi.int <- spatstat.univar::integral(pilot.density)
 		pilot.density <- pilot.density/pi.int
 		pilot.density.spec <- pilot.density.spec/pi.int
 		pspec <- pilot.density.spec^(-0.5)
@@ -394,7 +395,7 @@ bivariate.density <- function(pp,h0,hp=NULL,adapt=FALSE,resolution=128,gamma.sca
 		}
 	}
 	
-	if(!intensity) surf <- surf/integral(surf)
+	if(!intensity) surf <- surf/spatstat.univar::integral(surf)
 	result <- list(z=surf,h0=h0,hp=hp,h=h.spec,him=h.hypo,q=ef,gamma=gamma,geometric=gs,pp=pp)
 	class(result) <- "bivden"		
 	

@@ -11,7 +11,7 @@ ms.loo <- function(h0,object,za){
     if(any(rz<=0)) return(Inf)
   }
   
-  rint <- integral(requested$z)
+  rint <- spatstat.univar::integral(requested$z)
   zpoints <- safelookup(rz,X,warn=FALSE)
   
   if(is.null(rq)) qpoints <- rep(1,n)
@@ -20,7 +20,7 @@ ms.loo <- function(h0,object,za){
   rzn <- (rz/rint)^2
   loo.atpoints <- (zpoints-dnorm(0,sd=rh)^2/qpoints)/(n-1)
 
-  rznint <- integral(rzn)
+  rznint <- spatstat.univar::integral(rzn)
   if(any(loo.atpoints<=0)){
     if(za==2){
       loo.atpoints[loo.atpoints<=0] <- min(loo.atpoints[loo.atpoints>0])
@@ -107,6 +107,6 @@ ms.loo.risk <- function(h0,fob,gob,hazey=FALSE){
   gminus <- g.gpoints - dnorm(0,sd=grh)^2/n2/gqpoints
   gminus[gminus<=0] <- limz
   
-  if(!hazey) return(2*mean((log(f.gpoints) - log(gminus))/gminus) - 2*mean((log(fminus) - log(g.fpoints))/fminus) - integral((log(frz)-log(grz))^2))
+  if(!hazey) return(2*mean((log(f.gpoints) - log(gminus))/gminus) - 2*mean((log(fminus) - log(g.fpoints))/fminus) - spatstat.univar::integral((log(frz)-log(grz))^2))
   else return(mean((f.gpoints/gminus)^2) - 2*mean(fminus/g.fpoints))
 }

@@ -16,7 +16,11 @@ plot.stden <- function(x, tselect = NULL, type = c("joint", "conditional"), fix.
     lst <- x$z.cond
   } else stop("Invalid 'type'")
   
-  if(override.par) par(mfrow=c(1,1),mar=rep(2,4))
+  if(override.par){
+    oldpar <- par(no.readonly = TRUE)
+    on.exit(par(oldpar))
+    par(mfrow=c(1,1),mar=rep(2,4))
+  }
   
   zlimeq <- c(0,min(sapply(lst,max)[sapply(lst,max)>0]))
   zlimconstant <- range(sapply(lst,range))

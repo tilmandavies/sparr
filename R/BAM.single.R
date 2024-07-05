@@ -38,15 +38,15 @@ BAM.single <- function(h,edge,BP){
     qq2[!xyin] <- NA
     qqi <- im(matrix(qq,res,res),xcol=WM$xcol,yrow=WM$yrow)
     qq2i <- im(matrix(qq2,res,res),xcol=WM$xcol,yrow=WM$yrow)
-    rk <- integral(qq2i)/(qqi^2*h^2) ### now using 'image' qq
+    rk <- spatstat.univar::integral(qq2i)/(qqi^2*h^2) ### now using 'image' qq
   } else {
     rk <- rep(1/(4*pi),res^2)
     rk[!xyin] <- NA
     rk <- im(matrix(rk,res,res),xcol=WM$xcol,yrow=WM$yrow)
   }
   
-  fd <- fd/integral(fd)
-  gd <- gd/integral(gd)
+  fd <- fd/spatstat.univar::integral(fd)
+  gd <- gd/spatstat.univar::integral(gd)
   
   # RK <- function(xs,ys,h,W,ca,xyin){
   #   qres <- qhzfunc(xs,ys,"gaus",W,h)
@@ -61,9 +61,9 @@ BAM.single <- function(h,edge,BP){
 
 
 zeta1 <- function(fh,gh,n1,n2,rk){
-  return(integral(rk/fh)/n1+integral(rk/gh)/n2)
+  return(spatstat.univar::integral(rk/fh)/n1+spatstat.univar::integral(rk/gh)/n2)
 }
 
 zeta2 <- function(fh,gh,fdd,gdd){
-  return(integral(fdd^2/fh^2)/2-integral((fdd*gdd)/(fh*gh))+integral(gdd^2/gh^2)/2)
+  return(spatstat.univar::integral(fdd^2/fh^2)/2-spatstat.univar::integral((fdd*gdd)/(fh*gh))+spatstat.univar::integral(gdd^2/gh^2)/2)
 }

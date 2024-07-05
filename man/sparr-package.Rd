@@ -12,8 +12,8 @@ risk surfaces via the density-ratio method and perform subsequent inference. Fix
 \details{
 \tabular{ll}{
 Package: \tab sparr\cr
-Date:\tab 2023-03-08\cr
-Version:\tab 2.3-10\cr
+Date:\tab 2024-07-05\cr
+Version:\tab 2.3-14\cr
 License: \tab GPL (>= 2)\cr
 }
 
@@ -117,6 +117,9 @@ pre-existing bivariate density estimates; fixed (Kelsall and Diggle, 1995a); fix
 \code{\link{tolerance}}
 calculation of asymptotic or Monte-Carlo \emph{p}-value surfaces.
 
+\code{\link{tol.classify}} classification of individual points based on a 
+ \emph{p}-value surface from which tolerance contours are produced.
+
 \emph{Visualisation}
 
 \code{S3} methods of the \code{plot} function; see
@@ -129,6 +132,11 @@ multi-scale density estimates from \code{\link{multiscale.density}}.
 \code{\link{tol.contour}} provides more flexibility for plotting and
 superimposing tolerance contours upon an existing plot of spatial relative risk (i.e. given output from
 \code{\link{tolerance}}).
+
+\code{\link{tol.classplot}} is a utility to view the classification scheme
+with respect to unique tolerance contours/significance regions as 
+identified by \code{\link{tol.classify}}.
+
 
 \emph{Printing and summarising}
 
@@ -304,6 +312,15 @@ Wheeler, D. C. (2007), A comparison
 of spatial clustering and cluster detection techniques for childhood
 leukemia incidence in Ohio, 1996-2003, \emph{International Journal of Health
 Geographics}, \bold{6}(13).
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://tilmandavies.github.io/sparr/}
+  \item \url{https://github.com/tilmandavies/sparr/}
+  \item Report bugs at \url{https://github.com/tilmandavies/sparr/issues/}
+}
+
 }
 \author{
 T.M. Davies\cr \emph{Dept. of Mathematics & Statistics, University of

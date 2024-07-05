@@ -41,10 +41,11 @@ from 1960 to 1975.
 data(burk)
 summary(burk$cases)
 
-par(mfrow=c(1,3))
+oldpar <- par(mfrow=c(1,3))
 plot(burk$cases)
 plot(burk$controls)
 plot(density(marks(burk$cases)),xlim=range(marks(burk$cases)))
+par(oldpar)
 }
 \references{
 Bailey, T.C. and Gatrell, A.C. (1995), \emph{Interactive spatial data analysis}, Longman; Harlow.

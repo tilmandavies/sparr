@@ -118,21 +118,23 @@
 #' riskada <- risk(pbc,h0=h0,adapt=TRUE,hp=NS(pbc),pilot.symmetry="pooled",davies.baddeley=0.025)
 #' adatol1 <- tolerance(riskada)
 #' 
-#' par(mfrow=c(1,2))
+#' oldpar <- par(mfrow=c(1,2))
 #' plot(riskfix)
 #' tol.contour(fixtol1,levels=c(0.1,0.05,0.01),lty=3:1,add=TRUE)
 #' plot(riskada)
 #' tol.contour(adatol1,levels=c(0.1,0.05,0.01),lty=3:1,add=TRUE)
-#' 
+#' par(oldpar)
 #'
 #' # MC
 #' fixtol2 <- tolerance(riskfix,method="MC",ITER=200) 
 #' adatol2 <- tolerance(riskada,method="MC",ITER=200,parallelise=2) # ~90secs with parallelisation
-#' par(mfrow=c(1,2))
+#' 
+#' oldpar <- par(mfrow=c(1,2))
 #' plot(riskfix)
 #' tol.contour(fixtol2,levels=c(0.1,0.05,0.01),lty=3:1,add=TRUE)
 #' plot(riskada)
 #' tol.contour(adatol2,levels=c(0.1,0.05,0.01),lty=3:1,add=TRUE)
+#' par(oldpar)
 #' }
 #' 
 #' 
@@ -160,7 +162,7 @@ tolerance <- function(rs, method = c("ASY", "MC"), ref.density = NULL, beta = 0.
       # 	rq$v[!is.na(rq$v)] <- 1
       # 	ref.density <- list(z=ref.density,q=rq)
       }
-      ref.density$z <- ref.density$z/integral(ref.density$z)
+      ref.density$z <- ref.density$z/spatstat.univar::integral(ref.density$z)
       if(!compatible(rs$f$z,rs$g$z,ref.density$z)) stop("incompatible 'ref.density'... must be evaluated on domain identical to case/control densities")
       psurf <- tol.asy.fix(rs$f,rs$g,ref.density,verbose)$p
     }

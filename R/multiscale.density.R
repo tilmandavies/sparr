@@ -192,7 +192,7 @@ multiscale.density <- function(pp,h0,hp=NULL,h0fac=c(0.25,1.5),edge=c("uniform",
   }
   
   pilot.density.spec <- safelookup(pilot.density,pp,warn=FALSE)
-  pi.int <- integral(pilot.density)
+  pi.int <- spatstat.univar::integral(pilot.density)
   pilot.density <- pilot.density/pi.int
   pilot.density.spec <- pilot.density.spec/pi.int
   pspec <- pilot.density.spec^(-0.5)
@@ -317,7 +317,7 @@ multiscale.density <- function(pp,h0,hp=NULL,h0fac=c(0.25,1.5),edge=c("uniform",
   for(i in 1:length(eiw)) rawlist[[i]] <- im(raw[,,eiw[i]],xcol=WM$xcol,yrow=WM$yrow)[W,drop=FALSE]
   names(rawlist) <- bwvals
   names(hlist) <- bwvals
-  if(!intensity) rawlist <- lapply(rawlist,function(x) x/integral(x))
+  if(!intensity) rawlist <- lapply(rawlist,function(x) x/spatstat.univar::integral(x))
   result <- list(z=rev(rawlist),q=NULL,him=rev(hlist))
   WK <- elist <- NULL
   edgeW <- 1
@@ -365,7 +365,7 @@ multiscale.density <- function(pp,h0,hp=NULL,h0fac=c(0.25,1.5),edge=c("uniform",
     }
     
     # Construct a list of images, with names reflecting the global bandwidth scaling
-    if(!intensity) lambda <- lapply(lambda,function(x) x/integral(x))
+    if(!intensity) lambda <- lapply(lambda,function(x) x/spatstat.univar::integral(x))
     names(elist) <- names(lambda) <- bwvals
     result$q <- rev(elist)
     result$z <- rev(lambda)

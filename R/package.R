@@ -106,6 +106,9 @@
 #' \code{\link{tolerance}}
 #' calculation of asymptotic or Monte-Carlo \emph{p}-value surfaces.
 #' 
+#' \code{\link{tol.classify}} classification of individual points based on a 
+#'  \emph{p}-value surface from which tolerance contours are produced.
+#' 
 #' \emph{Visualisation}
 #' 
 #' \code{S3} methods of the \code{plot} function; see
@@ -118,6 +121,11 @@
 #' \code{\link{tol.contour}} provides more flexibility for plotting and
 #' superimposing tolerance contours upon an existing plot of spatial relative risk (i.e. given output from
 #' \code{\link{tolerance}}).
+#' 
+#' \code{\link{tol.classplot}} is a utility to view the classification scheme
+#' with respect to unique tolerance contours/significance regions as 
+#' identified by \code{\link{tol.classify}}.
+#' 
 #' 
 #' \emph{Printing and summarising}
 #' 
@@ -306,11 +314,11 @@
 #' Geographics}, \bold{6}(13).
 #' 
 #' @keywords package
-NULL
+"_PACKAGE"
 
 #' @importFrom utils setTxtProgressBar txtProgressBar packageDescription packageVersion
 #' @importFrom stats IQR density dnorm fft optimise pnorm quantile rnorm sd var bw.SJ spline optim
-#' @importFrom graphics axis box contour pairs par plot points title
+#' @importFrom graphics axis box contour pairs par plot points title text
 #' @importFrom grDevices dev.hold dev.flush
 #' @importFrom spatstat.utils prange tapplysum inside.range
 #' @importFrom parallel detectCores

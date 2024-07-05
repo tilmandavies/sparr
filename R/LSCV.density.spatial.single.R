@@ -1,10 +1,10 @@
 LSCV.density.spatial.single <- function(h,pp,res,edge,za){
   if(h<=0) return(NA)
   temp.dens <- density(pp,h,edge=edge,dimyx=res,positive=FALSE,diggle=FALSE)
-  temp.int <- integral(temp.dens)
+  temp.int <- spatstat.univar::integral(temp.dens)
   temp.dens.pts <- density(pp,sigma=h,edge=edge,dimyx=res,at="points",positive=FALSE,leaveoneout=TRUE,diggle=FALSE)/temp.int
   temp.dens <- temp.dens/temp.int
-  t2int <- integral(temp.dens^2)
+  t2int <- spatstat.univar::integral(temp.dens^2)
   
   ## tiny bandwidth protector action
   if(za==-1){

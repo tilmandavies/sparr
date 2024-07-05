@@ -69,7 +69,7 @@ spattemp.density <- function(pp,h=NULL,tt=NULL,lambda=NULL,tlim=NULL,sedge=c("un
   }
   
   spatial.z <- sz$raw/sq
-  spatial.z <- spatial.z/integral(spatial.z)
+  spatial.z <- spatial.z/spatstat.univar::integral(spatial.z)
   temporal.z <- density(tt,bw=lam,from=min(grt),to=max(grt),n=tres)
   temporal.z$y <- temporal.z$y/tq
   if(verbose&&(sedge=="uniform"||tedge=="uniform")) message("Done.")
@@ -81,7 +81,7 @@ spattemp.density <- function(pp,h=NULL,tt=NULL,lambda=NULL,tlim=NULL,sedge=c("un
     z[[i]] <- z[[i]]/(sq*tq[i])
     z[[i]][!inside] <- NA
     z.cond[[i]] <- z[[i]]/temporal.z$y[i]
-    # z.cond[[i]] <- z.cond[[i]]/integral(z.cond[[i]])
+    # z.cond[[i]] <- z.cond[[i]]/spatstat.univar::integral(z.cond[[i]])
   }
   names(z) <- names(z.cond) <- grt
   if(verbose) message("Done.")

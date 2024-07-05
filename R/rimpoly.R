@@ -48,10 +48,11 @@
 #' C <- rimpoly(500,Y$z,Window(Y$pp))
 #' npoints(C)
 #' 
-#' par(mfrow=c(1,3))
+#' oldpar <- par(mfrow=c(1,3))
 #' plot(A,main="rpoint")
 #' plot(B,main="rimpoly (no polygon supplied)")
 #' plot(C,main="rimpoly (original polygon supplied)")
+#' par(oldpar)
 #' 
 #' @export
 rimpoly <- function(n,z,w=NULL,correction=1.1,maxpass=50){

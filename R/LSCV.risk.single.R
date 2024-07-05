@@ -3,8 +3,8 @@ LSCV.risk.single <- function(h,cases,controls,res,edge,hazey){
   
   temp.case <- density.ppp(cases,sigma=h,edge=edge,dimyx=res,positive=TRUE)
   temp.con <- density.ppp(controls,sigma=h,edge=edge,dimyx=res,positive=TRUE)
-  tcase.int <- integral(temp.case)
-  tcon.int <- integral(temp.con)
+  tcase.int <- spatstat.univar::integral(temp.case)
+  tcon.int <- spatstat.univar::integral(temp.con)
   temp.case <- temp.case/tcase.int
   temp.con <- temp.con/tcon.int
   
@@ -18,7 +18,7 @@ LSCV.risk.single <- function(h,cases,controls,res,edge,hazey){
 
   if(any(temp.case.pts<=0)||any(temp.con.pts<=0)||any(caseatcon<=0)||any(conatcase<=0)) return(NA) ## tiny bandwidth protector
   
-  if(!hazey) result <- 2*mean(log(caseatcon/temp.con.pts)/temp.con.pts) - 2*mean(log(temp.case.pts/conatcase)/temp.case.pts) - integral((log(temp.case)-log(temp.con))^2)
+  if(!hazey) result <- 2*mean(log(caseatcon/temp.con.pts)/temp.con.pts) - 2*mean(log(temp.case.pts/conatcase)/temp.case.pts) - spatstat.univar::integral((log(temp.case)-log(temp.con))^2)
   else result <- mean((caseatcon/temp.con.pts)^2)-2*mean(temp.case.pts/conatcase)
   
   return(result)
