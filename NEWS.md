@@ -1,3 +1,7 @@
+# sparr 2.3-15
+
+* Internal tweaks
+
 # sparr 2.3-14
 
 * Further updates to handle new `spatstat` structures

@@ -58,7 +58,7 @@
 #' @author T. M. Davies
 #'
 #' @seealso Functions for bandwidth selection in package
-#'   \code{\link{spatstat}}: \code{\link[spatstat.explore]{bw.diggle}};
+#'   \code{spatstat}: \code{\link[spatstat.explore]{bw.diggle}};
 #'   \code{\link[spatstat.explore]{bw.ppl}}; \code{\link[spatstat.explore]{bw.scott}};
 #'   \code{\link[spatstat.explore]{bw.frac}}.
 #'
