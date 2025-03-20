@@ -1,3 +1,7 @@
+# sparr 2.3-16
+
+* Bug in `tol.classify` squashed
+
 # sparr 2.3-15
 
 * Internal tweaks

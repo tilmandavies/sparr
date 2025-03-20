@@ -157,7 +157,24 @@ tol.classify <- function(rs,cutoff=0.05,pim=NULL,...){
   if(length(findex)/nrow(fdata)>0.95) warning("over 95% of 'case' points inside tolerance contours")
   if(length(gindex)/nrow(gdata)>0.95) warning("over 95% of 'control' points inside tolerance contours")
   
-  pcpolysplit <- lapply(pcpoly$bdry,function(wn) owin(poly=list(x=wn$x,y=wn$y)))
+  pareas <- summary(pcpoly)$areas
+  paneg <- which(pareas<0)
+  npneg <- length(paneg)
+  
+  if(npneg==0){
+    pcpolysplit <- lapply(pcpoly$bdry,function(wn) owin(poly=list(x=wn$x,y=wn$y)))
+  } else {
+    papos <-  which(pareas>0)
+    pholeown <- rep(NA,npneg)
+    for(j in 1:npneg) pholeown[j] <- max(which(papos<paneg[j]))
+    pcpolysplit <- list()
+    for(i in 1:length(papos)){
+      holy <- which(pholeown==i)
+      temppoly <- owin(poly=pcpoly$bdry[c(papos[i],paneg[holy])])
+      pcpolysplit[[i]] <- temppoly
+    }
+  }
+  
   pclen <- length(pcpolysplit)
   fpsplit <- gpsplit <- list()
   for(i in 1:pclen){
